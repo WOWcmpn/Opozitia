@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>Виджеты</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link rel="stylesheet" href="css/style.min.css?_v=20240328170004">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="help">
+			<div class="help__wrap">
+				<p class="help__text"><span class="highlight">Check</span> with us and help Moldova</p>
+				<button class="help__btn">x</button>
+			</div>
+		</div>
+		<header class="header">
+			<div class="header__container">
+				<div class="header__top top-header">
+					<a href="home.html" class="top-header__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<div class="top-header__right">
+						<div class="top-header__actions">
+							<a href="oprosi.html" class="top-header__link link-top-header">
+								<img src="img/icons/message.svg" alt="Icon">
+							</a>
+							<a data-popup="#search" href="#" class="top-header__link-search link-top-header">
+								<img src="img/icons/search.svg" alt="Icon">
+							</a>
+							<a data-popup="#popup-login" href="#" class="top-header__link-login link-top-header">
+								<picture><source srcset="img/icons/login.webp" type="image/webp"><img src="img/icons/login.png" alt="Icon"></picture>
+							</a>
+						</div>
+						<div data-da=".bottom-header,540,2" class="top-header__weather weather-header">
+							<a href="#" class="weather-header__info">
+								<span id="temperature" class="weather-header__temperature">11°</span>
+								<img src="img/icons/sun.svg" class="weather-header__icon" alt="icon">
+							</a>
+							<div class="weather-header__location">
+								<span id="location" class="weather-header__city">Москва</span>
+								<img src="img/icons/location.svg" alt="icon">
+							</div>
+						</div>
+						<button type="button" class="top-header__icon-menu icon-menu"><span></span><span></span></button>
+					</div>
+				</div>
+				<div class="header__bottom bottom-header">
+					<div class="bottom-header__menu menu">
+						<nav class="menu__body">
+							<ul class="menu__list">
+								<li class="menu__item">
+									<a href="economika.html" class="menu__link">ЭКОНОМИКА</a>
+								</li>
+								<li class="menu__item">
+									<a href="policy.html" class="menu__link">ПОЛИТИКА</a>
+								</li>
+								<li class="menu__item">
+									<a href="business.html" class="menu__link">БИЗНЕС</a>
+								</li>
+								<li class="menu__item">
+									<a href="world-news.html" class="menu__link">МИРОВЫЕ НОВОСТИ</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<a href="#" data-popup="#popup-vote" class="bottom-header__link">Сообщить новость</a>
+				</div>
+			</div>
+		</header>
+		<main class="page">
+			<section class="page__vidgets vidgets">
+				<div class="vidgets__container">
+					<div class="vidgets__body">
+						<div class="vidgets__left left-vidgets">
+							<div class="left-vidgets__events events-left-vidgets">
+								<h3 class="events-left-vidgets__title">События дня</h3>
+								<ul class="events-left-vidgets__list">
+									<li class="events-left-vidgets__item events-left-vidgets__item_1">
+										День конституции Молдовы
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_2">
+										Новый год по лунному календарю
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_3">
+										Европейский день безопасного Интернета
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_4">
+										Всемирный день зернобобовых
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_1">
+										День конституции Молдовы
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_2">
+										Новый год по лунному календарю
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_3">
+										Европейский день безопасного Интернета
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_4">
+										Всемирный день зернобобовых
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_1">
+										День конституции Молдовы
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_2">
+										Новый год по лунному календарю
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_3">
+										Европейский день безопасного Интернета
+									</li>
+									<li class="events-left-vidgets__item events-left-vidgets__item_4">
+										Всемирный день зернобобовых
+									</li>
+								</ul>
+							</div>
+							<div class="left-vidgets__wheather wheather-left-vidgets">
+								<div class="wheather-left-vidgets__top-location">
+									Москва <img src="img/icons/location.svg" alt="Иконка">
+								</div>
+								<div class="wheather-left-vidgets__top">
+									<div class="wheather-left-vidgets__image">
+										<img src="img/icons/sun.svg" alt="Иконка">
+									</div>
+									<div class="wheather-left-vidgets__temp-block">
+										<span class="wheather-left-vidgets__temp-today">11°</span>
+										<p class="wheather-left-vidgets__temp-allday">16° / 6°</p>
+									</div>
+									<ul class="wheather-left-vidgets__temp-more-list">
+										<li class="wheather-left-vidgets__temp-more-item">
+											<img src="img/icons/wind.svg" alt="Иконка">
+											<span>35 м/с</span>
+										</li>
+										<li class="wheather-left-vidgets__temp-more-item">
+											<img src="img/icons/humidity.svg" alt="Иконка">
+											<span>44%</span>
+										</li>
+										<li class="wheather-left-vidgets__temp-more-item">
+											<img src="img/icons/humidity2.svg" alt="Иконка">
+											<span>31%</span>
+										</li>
+									</ul>
+								</div>
+								<div class="wheather-left-vidgets__body">
+									<h3 class="wheather-left-vidgets__title">
+										Погода на неделю:
+									</h3>
+									<ul class="wheather-left-vidgets__list-week-temp">
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+										<li class="wheather-left-vidgets__item-week-temp">
+											<span class="wheather-left-vidgets__date">01.02.2024</span>
+											<span class="wheather-left-vidgets__temp-week-day">16° <img src="img/icons/sun.svg" alt="Иконка"></span>
+											<span class="wheather-left-vidgets__temp-week-day">6° <img src="img/icons/sun.svg" alt="Иконка"></span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="left-vidgets__horoscope horoscope-left-vidgets">
+								<div class="horoscope-left-vidgets__top">
+									<div class="horoscope-left-vidgets__image">
+										<img src="img/icons/horoscope-icon.svg" alt="Иконка">
+									</div>
+									<div class="horoscope-left-vidgets__right-top">
+										<h3 class="horoscope-left-vidgets__right-title">СКОРПИОН</h3>
+										<span class="horoscope-left-vidgets__date">03.02.2024</span>
+									</div>
+								</div>
+								<div data-tabs class="horoscope-left-vidgets__tabs">
+									<nav data-tabs-titles class="horoscope-left-vidgets__navigation">
+										<button type="button" class="horoscope-left-vidgets__title _tab-active">Сегодня</button>
+										<button type="button" class="horoscope-left-vidgets__title">Завтра</button>
+									</nav>
+									<div data-tabs-body class="horoscope-left-vidgets__content">
+										<div class="horoscope-left-vidgets__body">
+											<h4 class="horoscope-left-vidgets__body-title">Гороскоп</h4>
+											<p class="horoscope-left-vidgets__text">
+												Удачный день: ваша работоспособность будет на высоком уровне, а дела принесут достойный
+												результат. Наступил удачный момент для разговора с возлюбленным: удастся разрешить спорные
+												моменты и вернуть гармонию в отношения
+											</p>
+										</div>
+										<div class="horoscope-left-vidgets__body">
+											<h4 class="horoscope-left-vidgets__body-title">Гороскоп2</h4>
+											<p class="horoscope-left-vidgets__text">
+												Удачный день: ваша работоспособность будет на высоком уровне, а дела принесут достойный
+												результат. Наступил удачный момент для разговора с возлюбленным: удастся разрешить спорные
+												моменты и вернуть гармонию в отношения
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="vidgets__calendar calendar-vidgets">
+							<header class="calendar-vidgets__header">
+								<p class="calendar-vidgets__current-date"></p>
+								<div class="calendar-vidgets__icons">
+									<span id="prev" class="calendar-vidgets__arrow"><img src="img/icons/arrow-left-calendar.svg" alt="Иконка"></span>
+									<span id="next" class="calendar-vidgets__arrow"><img src="img/icons/arrow-right-calendar.svg" alt="Иконка"></span>
+								</div>
+							</header>
+							<div class="calendar-vidgets__calendar">
+								<ul class="calendar-vidgets__weeks">
+									<li>ПН</li>
+									<li>ВТ</li>
+									<li>СР</li>
+									<li>ЧТ</li>
+									<li>ПТ</li>
+									<li>СБ</li>
+									<li>ВС</li>
+								</ul>
+								<ul class="calendar-vidgets__days">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="footer">
+			<div class="footer__container">
+				<p class="footer__text">©2024 Opozitia</p>
+			</div>
+		</footer>
+	</div>
+	<div id="search" aria-hidden="true" class="popup popup_search">
+		<div class="popup__wrapper popup__wrapper_search">
+			<div class="popup__content popup__content_search">
+				<form action="#" class="popup__search search-popup">
+					<input autocomplete="off" type="text" name="form[]" placeholder="Search..." class="search-popup__input">
+					<button type="submit" class="search-popup__button">
+						<img src="img/icons/search-black.svg" alt="Icon">
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-login" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup popup__content_first">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top">
+						<h3 class="body-popup__title">Войти</h3>
+						<p class="body-popup__text">Введите ваш e-mail, чтобы войти</p>
+					</div>
+					<form action="#" data-dev data-popup-message="#popup-login-password" class="body-popup__form">
+						<input type="email" name="form[]" data-error="Введен не верный E-mail" data-required="email" placeholder="E-mail@mail.ru" class="body-popup__input input">
+						<div class="body-popup__checkbox checkbox">
+							<input id="c_1" class="checkbox__input" data-required type="checkbox" value="1" name="form[]">
+							<label for="c_1" class="checkbox__label"><span class="checkbox__text">Отправляя свои данные, я принимаю
+									политику конфиденциальности</span></label>
+						</div>
+						<button type="submit" class="body-popup__button">Продолжить</button>
+					</form>
+					<ul class="body-popup__list-social">
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/01.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/02.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/03.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/04.svg" alt="icon">
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="popup__bottom bottom-popup">
+					<p class="bottom-popup__text">
+						Ещё нет аккаунта? <a data-popup="#popup-registration" href="#">Зарегистрируйтесь!</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-login-password" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top body-popup__top_single">
+						<h3 class="body-popup__title">Введите пароль</h3>
+					</div>
+					<form action="#" data-dev data-popup-message="#popup-registration-code" class="body-popup__form">
+						<input type="password" name="form[]" minlength="10" data-required placeholder="Введите ваш пароль" class="body-popup__input input">
+						<button type="submit" class="body-popup__button">Подтвердить</button>
+					</form>
+				</div>
+				<div class="popup__bottom bottom-popup">
+					<p class="bottom-popup__text">
+						Забыли пароль? <a href="#">Нажмите сюда для восстановления</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-registration" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top">
+						<h3 class="body-popup__title">Регистрация</h3>
+						<p class="body-popup__text">Для регистрации введите e-mail или воспользуйтесь сервисами ниже</p>
+					</div>
+					<form action="#" data-dev data-popup-message="#popup-login-password" class="body-popup__form">
+						<input type="email" name="form[]" data-error="Введен не верный E-mail" data-required="email" placeholder="E-mail@mail.ru" class="body-popup__input input">
+						<div class="body-popup__checkbox checkbox">
+							<input id="c_3" class="checkbox__input" data-required type="checkbox" value="1" name="form[]">
+							<label for="c_3" class="checkbox__label"><span class="checkbox__text">Отправляя свои данные, я принимаю
+									политику конфиденциальности</span></label>
+						</div>
+						<button type="submit" class="body-popup__button">Продолжить</button>
+					</form>
+					<ul class="body-popup__list-social">
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/01.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/02.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/03.svg" alt="icon">
+							</a>
+						</li>
+						<li class="body-popup__item-social">
+							<a href="#" class="body-popup__link-social link-social">
+								<img src="img/social/04.svg" alt="icon">
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="popup__bottom bottom-popup">
+					<p class="bottom-popup__text">
+						Уже есть аккаунт? <a data-popup="#popup-login" href="#">Войдите!</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-registration-code" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top">
+						<h3 class="body-popup__title">Введите код</h3>
+						<p class="body-popup__text">На E-mail@mail.ru отправлен одноразовый код</p>
+					</div>
+					<form action="#" data-dev data-popup-message="#popup-registration-password" class="body-popup__form body-popup__form_code">
+						<div class="body-popup__wrap-input">
+							<input type="text" maxlength="1" class="body-popup__block " name="digit1" required />
+							<input type="text" maxlength="1" class="body-popup__block " name="digit2" required />
+							<input type="text" maxlength="1" class="body-popup__block " name="digit3" required />
+							<input type="text" maxlength="1" class="body-popup__block " name="digit4" required />
+							<input type="text" maxlength="1" class="body-popup__block " name="digit5" required />
+							<input type="text" maxlength="1" class="body-popup__block " name="digit6" required />
+						</div>
+						<button type="submit" class="body-popup__button">Продолжить</button>
+					</form>
+				</div>
+				<div class="popup__bottom bottom-popup">
+					<p class="bottom-popup__text">
+						Код не пришел? <a data-popup="#popup-login" href="#">Нажмите сюда, чтобы прислать заново</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-registration-password" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top body-popup__top_password">
+						<h3 class="body-popup__title">Придумайте имя и пароль</h3>
+						<p class="body-popup__text">Пароль должен содержать хотя бы 10 символов</p>
+					</div>
+					<form id="form-pass" action="#" data-dev data-popup-message="#popup-registration-recovery" class="body-popup__form body-popup__form_code">
+						<input type="text" name="form[]" placeholder="Введите ваше имя" class="body-popup__input-name input" required>
+						<input type="password" id="pass" name="form[]" minlength="10" data-required placeholder="Введите ваш пароль" class="body-popup__input-password input">
+						<input type="password" id="pass2" name="form[]" minlength="10" data-required placeholder="Повторите введенный пароль" class="body-popup__input-password input">
+						<button type="submit" class="body-popup__button">Подтвердить</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-registration-recovery" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup">
+					<div class="body-popup__top">
+						<h3 class="body-popup__title">Восстановление пароля</h3>
+						<p class="body-popup__text">Введите e-mail, который использовали для регистрации</p>
+					</div>
+					<form action="#" data-dev data-popup-message="#popup-registration-send" class="body-popup__form">
+						<input type="email" name="form[]" data-error="Введен не верный E-mail" data-required="email" placeholder="E-mail@mail.ru" class="body-popup__input input">
+						<button type="submit" class="body-popup__button">Продолжить</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-registration-send" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup body-popup_ok">
+					<div class="body-popup__wrap-top">
+						<div class="body-popup__top">
+							<h3 class="body-popup__title">Инструкция отправлена!</h3>
+							<p class="body-popup__text">На вашу почту отправлена инструкция по восстановлению пароля</p>
+						</div>
+					</div>
+					<div class="popup__bottom bottom-popup">
+						<p class="bottom-popup__text bottom-popup__text_ok">
+							Ничего не пришло? <a class="bottom-popup__link-ok" href="#">Нажмите сюда, чтобы прислать заново</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-vote" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top popup__top_vote">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup body-popup_vote">
+					<div class="body-popup__top">
+						<h3 class="body-popup__title">Спасибо за ваше мнение!</h3>
+						<p class="body-popup__text body-popup__text_vote">После окончания голосования, на вашу почту будут присланы
+							результаты</p>
+					</div>
+					<div class="body-popup__content">
+						<div class="item-tabs-oprosi item-tabs-oprosi_vote">
+							<div class="item-tabs-oprosi__top item-tabs-oprosi__top_vote">
+								<h4 class="item-tabs-oprosi__top-title item-tabs-oprosi__top-title_vote">Премьер-министр Молдовы одобрил
+									вступление в ЕС</h4>
+							</div>
+							<form action="#" class="item-tabs-oprosi__form">
+								<fieldset>
+									<div class="options options_vote">
+										<div class="options__item selected">
+											<input hidden id="o_41" class="options__input" checked type="checkbox" value="supportno" name="opros1">
+											<label for="o_41" class="options__label options__label_1"><span class="options__text">Не
+													поддерживаю</span> <span class="percent percent_nosupport">38%</span>
+												<div class="options__row row">
+													<div class="options__progress progress  progress_nosupport" style='--w:38;'></div>
+												</div>
+											</label>
+											<input hidden id="o_51" class="options__input" type="checkbox" value="support" name="opros1">
+											<label for="o_51" class="options__label options__label_2"><span class="options__text">Поддерживаю</span><span class="percent percent_support">56%</span>
+												<div class="options__row row">
+													<div class="options__progress progress  progress_support" style='--w:56;'></div>
+												</div>
+											</label>
+											<input hidden id="o_61" class="options__input" type="checkbox" value="neutral" name="opros1">
+											<label for="o_61" class="options__label options__label_3"><span class="options__text">Нейтрально</span><span class="percent percent_neutral">6%</span>
+												<div class="options__row row">
+													<div class="options__progress progress  progress_neutral" style='--w:6;'></div>
+												</div>
+											</label>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="popup__bottom bottom-popup">
+					<p class="bottom-popup__text bottom-popup__text_ok">
+						<span class="bottom-popup__text-vote">Не приходят результаты?</span> <a class="bottom-popup__link-ok" href="#">Нажмите сюда, чтобы обратититься в
+							поддержку</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="popup-account-answer" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content content-popup">
+				<div class="popup__top">
+					<a href="#" class="popup__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
+					</a>
+					<button data-close type="button" class="popup__close">
+					</button>
+				</div>
+				<div class="popup__body body-popup body-popup_ok">
+					<div class="body-popup__wrap-top">
+						<div class="body-popup__top">
+							<h3 class="body-popup__title">Спасибо за ваш вопрос!</h3>
+							<p class="body-popup__text">На вашу почту в скором времени поступит ответ.</p>
+						</div>
+					</div>
+					<div class="popup__bottom bottom-popup">
+						<p class="bottom-popup__text">
+							Не приходит ответ? <a class="bottom-popup__link-ok bottom-popup__link-ok_account" href="#">Нажмите сюда,
+								чтобы обратититься еще раз в поддержку</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/app.min.js?_v=20240328170004"></script>
+
+
+</body>
+
+</html>
