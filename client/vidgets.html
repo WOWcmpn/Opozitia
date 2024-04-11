@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20240328170004">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240411144320">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
 				<button class="help__btn">x</button>
 			</div>
 		</div>
-		<header class="header">
+		<header class="header menu-visual">
 			<div class="header__container">
 				<div class="header__top top-header">
 					<a href="home.html" class="top-header__logo">
@@ -38,7 +38,7 @@
 								<picture><source srcset="img/icons/login.webp" type="image/webp"><img src="img/icons/login.png" alt="Icon"></picture>
 							</a>
 						</div>
-						<div data-da=".bottom-header,540,2" class="top-header__weather weather-header">
+						<div class="top-header__weather weather-header">
 							<a href="#" class="weather-header__info">
 								<span id="temperature" class="weather-header__temperature">11°</span>
 								<img src="img/icons/sun.svg" class="weather-header__icon" alt="icon">
@@ -70,7 +70,7 @@
 							</ul>
 						</nav>
 					</div>
-					<a href="#" data-popup="#popup-vote" class="bottom-header__link">Сообщить новость</a>
+					<a href="#" data-popup="#popup-vote" class="bottom-header__link"><span class="bottom-header__link-news">Сообщить новость</span><span class="bottom-header__link-news-icon"><img src="img/icons/plus.svg" alt="Иконка"></span></a>
 				</div>
 			</div>
 		</header>
@@ -190,43 +190,175 @@
 									</ul>
 								</div>
 							</div>
-							<div class="left-vidgets__horoscope horoscope-left-vidgets">
-								<div class="horoscope-left-vidgets__top">
-									<div class="horoscope-left-vidgets__image">
-										<img src="img/icons/horoscope-icon.svg" alt="Иконка">
+							<div class="left-vidgets__championship championship">
+								<!-- Оболочка слайдера -->
+								<div class="championship__slider swiper">
+									<!-- Двигающееся часть слайдера -->
+									<div class="championship__wrap-btns">
+										<button type="button" class="championship__swiper-button-prev championship-btn championship-btn_left"></button>
+										<button type="button" class="championship__swiper-button-next championship-btn"></button>
 									</div>
-									<div class="horoscope-left-vidgets__right-top">
-										<h3 class="horoscope-left-vidgets__right-title">СКОРПИОН</h3>
-										<span class="horoscope-left-vidgets__date">03.02.2024</span>
-									</div>
-								</div>
-								<div data-tabs class="horoscope-left-vidgets__tabs">
-									<nav data-tabs-titles class="horoscope-left-vidgets__navigation">
-										<button type="button" class="horoscope-left-vidgets__title _tab-active">Сегодня</button>
-										<button type="button" class="horoscope-left-vidgets__title">Завтра</button>
-									</nav>
-									<div data-tabs-body class="horoscope-left-vidgets__content">
-										<div class="horoscope-left-vidgets__body">
-											<h4 class="horoscope-left-vidgets__body-title">Гороскоп</h4>
-											<p class="horoscope-left-vidgets__text">
-												Удачный день: ваша работоспособность будет на высоком уровне, а дела принесут достойный
-												результат. Наступил удачный момент для разговора с возлюбленным: удастся разрешить спорные
-												моменты и вернуть гармонию в отношения
-											</p>
+									<div class="championship__wrapper swiper-wrapper">
+										<!-- Слайд -->
+										<div class="championship__slide swiper-slide">
+											<div class="championship__top">
+												<h3 class="championship__title">Чемпионат
+													Германии</h3>
+												<div class="championship__image">
+													<picture><source srcset="img/icons/championship.webp" type="image/webp"><img src="img/icons/championship.png" alt="Иконка"></picture>
+												</div>
+											</div>
+											<div class="championship__wrap-table">
+												<table class="championship__table">
+													<thead>
+														<tr>
+															<th>#</th>
+															<th>Команда</th>
+															<th>Игры</th>
+															<th>Очки</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Байер</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
-										<div class="horoscope-left-vidgets__body">
-											<h4 class="horoscope-left-vidgets__body-title">Гороскоп2</h4>
-											<p class="horoscope-left-vidgets__text">
-												Удачный день: ваша работоспособность будет на высоком уровне, а дела принесут достойный
-												результат. Наступил удачный момент для разговора с возлюбленным: удастся разрешить спорные
-												моменты и вернуть гармонию в отношения
-											</p>
+										<div class="championship__slide swiper-slide">
+											<div class="championship__top">
+												<h3 class="championship__title">Чемпионат
+													Испании</h3>
+												<div class="championship__image">
+													<picture><source srcset="img/icons/championship.webp" type="image/webp"><img src="img/icons/championship.png" alt="Иконка"></picture>
+												</div>
+											</div>
+											<div class="championship__wrap-table">
+												<table class="championship__table">
+													<thead>
+														<tr>
+															<th>#</th>
+															<th>Команда</th>
+															<th>Игры</th>
+															<th>Очки</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+														<tr>
+															<td>1</td>
+															<td class="championship__table-team"><picture><source srcset="img/icons/team.webp" type="image/webp"><img src="img/icons/team.png" alt="Иконка"></picture><span>Барселона</span></td>
+															<td>38</td>
+															<td>115</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="vidgets__calendar calendar-vidgets">
+						<div data-da=".vidgets__left,660" class="vidgets__calendar calendar-vidgets">
 							<header class="calendar-vidgets__header">
 								<p class="calendar-vidgets__current-date"></p>
 								<div class="calendar-vidgets__icons">
@@ -303,7 +435,7 @@
 							</a>
 						</li>
 						<li class="body-popup__item-social">
-							<a href="#" class="body-popup__link-social link-social">
+							<a href="#" class="body-popup__link-social link-social link-social_facebook">
 								<img src="img/social/02.svg" alt="icon">
 							</a>
 						</li>
@@ -369,7 +501,8 @@
 				<div class="popup__body body-popup">
 					<div class="body-popup__top">
 						<h3 class="body-popup__title">Регистрация</h3>
-						<p class="body-popup__text">Для регистрации введите e-mail или воспользуйтесь сервисами ниже</p>
+						<p class="body-popup__text body-popup__text_register">Для регистрации введите e-mail или воспользуйтесь
+							сервисами ниже</p>
 					</div>
 					<form action="#" data-dev data-popup-message="#popup-login-password" class="body-popup__form">
 						<input type="email" name="form[]" data-error="Введен не верный E-mail" data-required="email" placeholder="E-mail@mail.ru" class="body-popup__input input">
@@ -387,7 +520,7 @@
 							</a>
 						</li>
 						<li class="body-popup__item-social">
-							<a href="#" class="body-popup__link-social link-social">
+							<a href="#" class="body-popup__link-social link-social link-social_facebook">
 								<img src="img/social/02.svg" alt="icon">
 							</a>
 						</li>
@@ -429,12 +562,12 @@
 					</div>
 					<form action="#" data-dev data-popup-message="#popup-registration-password" class="body-popup__form body-popup__form_code">
 						<div class="body-popup__wrap-input">
-							<input type="text" maxlength="1" class="body-popup__block " name="digit1" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit2" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit3" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit4" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit5" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit6" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit1" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit2" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit3" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit4" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit5" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit6" required />
 						</div>
 						<button type="submit" class="body-popup__button">Продолжить</button>
 					</form>
@@ -467,7 +600,7 @@
 						<input type="text" name="form[]" placeholder="Введите ваше имя" class="body-popup__input-name input" required>
 						<input type="password" id="pass" name="form[]" minlength="10" data-required placeholder="Введите ваш пароль" class="body-popup__input-password input">
 						<input type="password" id="pass2" name="form[]" minlength="10" data-required placeholder="Повторите введенный пароль" class="body-popup__input-password input">
-						<button type="submit" class="body-popup__button">Подтвердить</button>
+						<button type="submit" class="body-popup__button body-popup__button_code">Подтвердить</button>
 					</form>
 				</div>
 			</div>
@@ -527,7 +660,7 @@
 
 	<div id="popup-vote" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
-			<div class="popup__content content-popup">
+			<div class="popup__content popup__content_vote content-popup">
 				<div class="popup__top popup__top_vote">
 					<a href="#" class="popup__logo">
 						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
@@ -614,7 +747,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20240328170004"></script>
+	<script src="js/app.min.js?_v=20240411144320"></script>
 
 
 </body>

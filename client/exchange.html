@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20240328170004">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240411144320">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
 				<button class="help__btn">x</button>
 			</div>
 		</div>
-		<header class="header">
+		<header class="header menu-visual">
 			<div class="header__container">
 				<div class="header__top top-header">
 					<a href="home.html" class="top-header__logo">
@@ -38,7 +38,7 @@
 								<picture><source srcset="img/icons/login.webp" type="image/webp"><img src="img/icons/login.png" alt="Icon"></picture>
 							</a>
 						</div>
-						<div data-da=".bottom-header,540,2" class="top-header__weather weather-header">
+						<div class="top-header__weather weather-header">
 							<a href="#" class="weather-header__info">
 								<span id="temperature" class="weather-header__temperature">11°</span>
 								<img src="img/icons/sun.svg" class="weather-header__icon" alt="icon">
@@ -70,194 +70,105 @@
 							</ul>
 						</nav>
 					</div>
-					<a href="#" data-popup="#popup-vote" class="bottom-header__link">Сообщить новость</a>
+					<a href="#" data-popup="#popup-vote" class="bottom-header__link"><span class="bottom-header__link-news">Сообщить новость</span><span class="bottom-header__link-news-icon"><img src="img/icons/plus.svg" alt="Иконка"></span></a>
 				</div>
 			</div>
 		</header>
 		<main class="page">
 			<section class="page__exchange exchange">
-				<div class="exchange__container">
-					<div data-tabs data-tabs-hash class="exchange__tabs tabs-oprosi">
-						<nav data-tabs-titles class="tabs-oprosi__navigation tabs-oprosi__navigation_exchange">
-							<button type="button" data-tabs-title="#123" class="tabs-oprosi__title tabs-oprosi__title_exchange _tab-active">Валюты</button>
-							<button type="button" data-tabs-title="#123" class="tabs-oprosi__title tabs-oprosi__title_exchange">Индексы</button>
-						</nav>
-						<div data-tabs-body class="tabs-oprosi__content">
-							<div class="tabs-oprosi__body">
-								<table class="tabs-oprosi__table table-exchange">
-									<thead>
-										<tr>
-											<th>Валюта</th>
-											<th>Курс</th>
-											<th>Изменение, %</th>
-											<th>Изменение</th>
-											<th>Тех. рейтинг</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_negative">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_buy">Покупать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
-												USD
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="tabs-oprosi__body">
-								<table class="tabs-oprosi__table table-exchange">
-									<thead>
-										<tr>
-											<th>Инструмент</th>
-											<th>Цена</th>
-											<th>Изменение, %</th>
-											<th>Изменение</th>
-											<th>Тех. рейтинг</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_negative">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_buy">Покупать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-										<tr data-href="#">
-											<td class="table-exchange__item">
-												<picture><source srcset="img/icons/dxy.webp" type="image/webp"><img src="img/icons/dxy.png" class="table-exchange__index-icon" alt="Иконка"></picture>
-												DXY
-											</td>
-											<td>1.002</td>
-											<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
-											<td>0.17</td>
-											<td class="table-exchange__action">
-												<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+				<div class="exchange__container content-news">
+					<header class="content-news__header content-news__header_exchange">
+						<select name="form[]" class="content-news__form">
+							<option value="1" selected>Валюты</option>
+							<option value="2" data-href="indexes.html">Индексы</option>
+						</select>
+					</header>
+					<div class="tabs-oprosi__body">
+						<table class="tabs-oprosi__table table-exchange">
+							<thead>
+								<tr>
+									<th>Валюта</th>
+									<th>Курс</th>
+									<th>Изменение, %</th>
+									<th>Изменение</th>
+									<th>Тех. рейтинг</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_negative">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_buy">Покупать</a>
+									</td>
+								</tr>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
+									</td>
+								</tr>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
+									</td>
+								</tr>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
+									</td>
+								</tr>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
+									</td>
+								</tr>
+								<tr data-href="#">
+									<td class="table-exchange__item">
+										<picture><source srcset="img/icons/usa.webp" type="image/webp"><img src="img/icons/usa.png" class="table-exchange__icon" alt="Иконка"></picture>
+										USD
+									</td>
+									<td>1.002</td>
+									<td class="table-exchange__change table-exchange__change_plus">0.16%</td>
+									<td>0.17</td>
+									<td class="table-exchange__action">
+										<a href="#" class="table-exchange__link table-exchange__link_sell">Продавать</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</section>
@@ -312,7 +223,7 @@
 							</a>
 						</li>
 						<li class="body-popup__item-social">
-							<a href="#" class="body-popup__link-social link-social">
+							<a href="#" class="body-popup__link-social link-social link-social_facebook">
 								<img src="img/social/02.svg" alt="icon">
 							</a>
 						</li>
@@ -378,7 +289,8 @@
 				<div class="popup__body body-popup">
 					<div class="body-popup__top">
 						<h3 class="body-popup__title">Регистрация</h3>
-						<p class="body-popup__text">Для регистрации введите e-mail или воспользуйтесь сервисами ниже</p>
+						<p class="body-popup__text body-popup__text_register">Для регистрации введите e-mail или воспользуйтесь
+							сервисами ниже</p>
 					</div>
 					<form action="#" data-dev data-popup-message="#popup-login-password" class="body-popup__form">
 						<input type="email" name="form[]" data-error="Введен не верный E-mail" data-required="email" placeholder="E-mail@mail.ru" class="body-popup__input input">
@@ -396,7 +308,7 @@
 							</a>
 						</li>
 						<li class="body-popup__item-social">
-							<a href="#" class="body-popup__link-social link-social">
+							<a href="#" class="body-popup__link-social link-social link-social_facebook">
 								<img src="img/social/02.svg" alt="icon">
 							</a>
 						</li>
@@ -438,12 +350,12 @@
 					</div>
 					<form action="#" data-dev data-popup-message="#popup-registration-password" class="body-popup__form body-popup__form_code">
 						<div class="body-popup__wrap-input">
-							<input type="text" maxlength="1" class="body-popup__block " name="digit1" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit2" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit3" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit4" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit5" required />
-							<input type="text" maxlength="1" class="body-popup__block " name="digit6" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit1" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit2" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit3" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit4" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit5" required />
+							<input type="number" maxlength="1" class="body-popup__block " name="digit6" required />
 						</div>
 						<button type="submit" class="body-popup__button">Продолжить</button>
 					</form>
@@ -476,7 +388,7 @@
 						<input type="text" name="form[]" placeholder="Введите ваше имя" class="body-popup__input-name input" required>
 						<input type="password" id="pass" name="form[]" minlength="10" data-required placeholder="Введите ваш пароль" class="body-popup__input-password input">
 						<input type="password" id="pass2" name="form[]" minlength="10" data-required placeholder="Повторите введенный пароль" class="body-popup__input-password input">
-						<button type="submit" class="body-popup__button">Подтвердить</button>
+						<button type="submit" class="body-popup__button body-popup__button_code">Подтвердить</button>
 					</form>
 				</div>
 			</div>
@@ -536,7 +448,7 @@
 
 	<div id="popup-vote" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
-			<div class="popup__content content-popup">
+			<div class="popup__content popup__content_vote content-popup">
 				<div class="popup__top popup__top_vote">
 					<a href="#" class="popup__logo">
 						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Logo"></picture>
@@ -623,7 +535,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20240328170004"></script>
+	<script src="js/app.min.js?_v=20240411144320"></script>
 
 
 </body>
