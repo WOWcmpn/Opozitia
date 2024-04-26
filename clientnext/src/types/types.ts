@@ -19,3 +19,11 @@ export type GraphicsBlockProps = {
   changeMinus: string;
   img: StaticImageData;
 };
+
+export type BlockContentProps = {
+  title: string;
+  img: StaticImageData;
+  link1: string;
+  link2: string;
+  link3: string;
+};

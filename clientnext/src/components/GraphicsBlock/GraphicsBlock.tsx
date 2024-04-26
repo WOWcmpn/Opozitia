@@ -11,7 +11,7 @@ export const GraphicsBlock = ({
 }: GraphicsBlockProps) => {
   return (
     <div className="graphics-left-block__item">
-      <div className="graphics-left-block__slider2 swiper">
+      <div className="graphics-left-block__slider swiper">
         <div className="graphics-left-block__wrapper swiper-wrapper">
           <div className="graphics-left-block__slide swiper-slide">
             <div className="graphics-left-block__top">

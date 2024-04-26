@@ -7,6 +7,7 @@ import LatestNews02 from "../img/latest-news/02.png";
 import MainBlock from "../img/main-block/01.png";
 import Graphics1 from "../img/graphics/01.svg";
 import ActualNews1 from "../img/actual-news/01.jpg";
+import ActualNews2 from "../img/actual-news/02.jpg";
 import { useRef } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
@@ -16,6 +17,8 @@ import { MainBlockSlide } from "@/components/MainBlockSlide/MainBlockSlide";
 import { GraphicsBlock } from "@/components/GraphicsBlock/GraphicsBlock";
 
 import "swiper/css";
+import 'swiper/css/effect-fade';
+import { BlockContent } from "@/components/BlockContent/BlockContent";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -315,7 +318,7 @@ export default function Home() {
             <div className="block__container">
               <div className="block__graphics graphics-left-block">
                 <div className="graphics-left-block__item">
-                  <div className="graphics-left-block__slider swiper">
+                  <div className="graphics-left-block__slider">
                     <div className="graphics-left-block__wrapper swiper-wrapper">
                       {/* <div className="graphics-left-block__slide swiper-slide">
                         <div className="graphics-left-block__top">
@@ -373,11 +376,13 @@ export default function Home() {
                         effect="fade"
                         modules={[Autoplay, EffectFade]}
                         slidesPerView={1}
-                        
+                        fadeEffect={
+                          {crossFade: true}
+                        }
                         loop={true}
                         simulateTouch={false}
                         autoplay={{
-                          delay: 2000,
+                          delay: 3000,
                           disableOnInteraction: false,
                         }}
                         speed={1000}
@@ -394,7 +399,110 @@ export default function Home() {
                         <SwiperSlide>
                           <GraphicsBlock
                             name="SNPIND"
-                            title="NO JONES"
+                            title="EUR/USD"
+                            tradeInfo="$15400.55"
+                            changeMinus="1.99%"
+                            img={Graphics1}
+                          />
+                        </SwiperSlide>
+                      </Swiper>
+                    </div>
+                  </div>
+
+                  {/* <a
+                    href="exchange.html#tab-0-1"
+                    className="graphics-left-block__image"
+                  >
+                    <Image fill src="/img/graphics/01.svg" alt="image" />
+                  </a> */}
+                </div>
+
+                <div className="graphics-left-block__item">
+                  <div className="graphics-left-block__slider">
+                    <div className="graphics-left-block__wrapper swiper-wrapper">
+                      {/* <div className="graphics-left-block__slide swiper-slide">
+                        <div className="graphics-left-block__top">
+                          <a
+                            href="exchange.html#tab-0-1"
+                            className="graphics-left-block__info"
+                          >
+                            <span className="graphics-left-block__name">
+                              SNPIND
+                            </span>
+                            <h4 className="graphics-left-block__title">
+                              DOW JONES
+                            </h4>
+                          </a>
+                          <a
+                            href="exchange.html#tab-0-1"
+                            className="graphics-left-block__trade"
+                          >
+                            <span className="graphics-left-block__trade-info">
+                              $15400.55
+                            </span>
+                            <span className="graphics-left-block__change graphics-left-block__change_plus">
+                              1.99%
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="graphics-left-block__slide swiper-slide">
+                        <div className="graphics-left-block__top">
+                          <a
+                            href="exchange.html#tab-0-1"
+                            className="graphics-left-block__info"
+                          >
+                            <span className="graphics-left-block__name">
+                              SNPIND
+                            </span>
+                            <h4 className="graphics-left-block__title">
+                              Индекс USD
+                            </h4>
+                          </a>
+                          <a
+                            href="exchange.html#tab-0-1"
+                            className="graphics-left-block__trade"
+                          >
+                            <span className="graphics-left-block__trade-info">
+                              104,43
+                            </span>
+                            <span className="graphics-left-block__change graphics-left-block__change_plus">
+                              1,02%
+                            </span>
+                          </a>
+                        </div>
+                      </div> */}
+                      <Swiper
+                        effect="fade"
+                        preventClicks={false}
+                        preventClicksPropagation={false}
+                        touchStartPreventDefault={false}
+                        loop={true}
+                        modules={[Autoplay, EffectFade]}
+                        slidesPerView={1}
+                        fadeEffect={
+                          {crossFade: false}
+                        }
+                        loop={true}
+                        autoplay={{
+                          delay: 3000,
+                          disableOnInteraction: false,
+                        }}
+                        speed={1000}
+                      >
+                        <SwiperSlide>
+                          <GraphicsBlock
+                            name="SNPIND"
+                            title="DOW JONES"
+                            tradeInfo="$15400.55"
+                            changeMinus="1.99%"
+                            img={Graphics1}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <GraphicsBlock
+                            name="SNPIND"
+                            title="EUR/USD"
                             tradeInfo="$15400.55"
                             changeMinus="1.99%"
                             img={Graphics1}
@@ -490,7 +598,7 @@ export default function Home() {
                 className="block__bottom bottom-left-block"
               >
                 {/* <div className="bottom-left-block-wrapper"> */}
-                <div className="bottom-left-block__thumbs thumbs-images">
+                {/* <div className="bottom-left-block__thumbs thumbs-images">
                   <div className="thumbs-images__wrapper swiper-wrapper">
                     <div className="thumbs-images__slide swiper-slide">
                       <a href="#" className="thumbs-images__image-ibg">
@@ -503,7 +611,7 @@ export default function Home() {
                         </picture>
                       </a>
                     </div>
-                    {/* <div className="thumbs-images__slide swiper-slide">
+                    <div className="thumbs-images__slide swiper-slide">
                       <a href="#" className="thumbs-images__image-ibg">
                         <picture>
                           <source
@@ -577,11 +685,11 @@ export default function Home() {
                           />
                         </picture>
                       </a>
-                    </div> */}
+                    </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="bottom-left-block__content">
+                {/* <div className="bottom-left-block__content">
                   <div className="bottom-left-block__slider-main slider-bottom-left-block swiper">
                     <div className="bottom-left-block__wrapper swiper-wrapper">
                       <div className="bottom-left-block__slide swiper-slide">
@@ -592,7 +700,7 @@ export default function Home() {
                           </h4>
                         </a>
                       </div>
-                      {/* <div className="bottom-left-block__slide swiper-slide">
+                      <div className="bottom-left-block__slide swiper-slide">
                         <a href="#" className="bottom-left-block__news-link">
                           <h4 className="bottom-left-block__title">
                             На Украине заявили о нехватке работников в сельском
@@ -630,7 +738,7 @@ export default function Home() {
                             люди
                           </h4>
                         </a>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                   <div className="bottom-left-block__body">
@@ -642,7 +750,7 @@ export default function Home() {
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
                           </div>
-                          {/* <div className="bottom-left-block__slide swiper-slide">
+                          <div className="bottom-left-block__slide swiper-slide">
                             <a href="#" className="bottom-left-block__link">
                               Молдова высылает сотрудника российского посольства
                             </a>
@@ -651,7 +759,7 @@ export default function Home() {
                             <a href="#" className="bottom-left-block__link">
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -663,7 +771,7 @@ export default function Home() {
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
                           </div>
-                          {/* <div className="bottom-left-block__slide swiper-slide">
+                          <div className="bottom-left-block__slide swiper-slide">
                             <a href="#" className="bottom-left-block__link">
                               Молдова высылает сотрудника российского посольства
                             </a>
@@ -672,7 +780,7 @@ export default function Home() {
                             <a href="#" className="bottom-left-block__link">
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -684,7 +792,7 @@ export default function Home() {
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
                           </div>
-                          {/* <div className="bottom-left-block__slide swiper-slide">
+                          <div className="bottom-left-block__slide swiper-slide">
                             <a href="#" className="bottom-left-block__link">
                               Молдова высылает сотрудника российского посольства
                             </a>
@@ -693,12 +801,57 @@ export default function Home() {
                             <a href="#" className="bottom-left-block__link">
                               Чего ожидать Молдове в ближайшие несколько недель?
                             </a>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <div className="blockslide-wrapper">
+                <Swiper
+                        effect="fade"
+                        modules={[Autoplay, EffectFade]}
+                        slidesPerView={1}
+                        z
+                        fadeEffect={
+                          {crossFade: true}
+                        }
+                        preventClicks={true}
+                        preventClicksPropagation={false}
+                        touchStartPreventDefault={false}
+                        touchStartForcePreventDefault={true}
+                        loop={true}
+                        allowTouchMove={false}
+                        simulateTouch={false}
+                        touchMoveStopPropagation={true}
+                        autoplay={{
+                          delay: 3000,
+                          disableOnInteraction: false,
+                        }}
+                        speed={1000}
+                      >
+                        <SwiperSlide>
+                        <BlockContent
+                          title="В Японии госпитализировали 26 человек после приема
+                          БАДов"
+                          img={ActualNews1}
+                          link1="Чего ожидать Молдове в ближайшие несколько недель?"
+                          link2="Чего ожидать Молдове в ближайшие несколько недель?"
+                          link3="Чего ожидать Молдове в ближайшие несколько недель?"
+                        />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                        <BlockContent
+                          title="В Японии госпитализировали 36 человек после приема
+                          БАДов"
+                          img={ActualNews2}
+                          link1="Чего ожидать Молдове в ближайшие несколько недель?"
+                          link2="Чего ожидать Молдове в ближайшие несколько недель?"
+                          link3="Чего ожидать Молдове в ближайшие несколько недель?"
+                        />
+                        </SwiperSlide>
+                    </Swiper>
+                    </div>
                 {/* </div> */}
               </div>
               <aside className="block__latest-news latest-news">
