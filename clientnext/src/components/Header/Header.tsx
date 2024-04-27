@@ -10,12 +10,12 @@ export const Header = ({className}: HeaderProps) => {
     <header className={className ? className : "header menu-visual-hidden-box"}>
           <div className="header__container">
             <div className="header__top top-header">
-              <a href="home.html" className="top-header__logo">
+              <Link href="/" className="top-header__logo">
                 <picture>
                   <source srcSet="img/logo.webp" type="image-webp" />
                   <Image src={Logo} alt="Logo" />
                 </picture>
-              </a>
+              </Link>
               <div className="top-header__right">
                 <div className="top-header__actions">
                   <a
@@ -36,9 +36,9 @@ export const Header = ({className}: HeaderProps) => {
                       alt="Icon"
                     />
                   </a>
-                  <a
+                  <Link
                     data-popup="#popup-login"
-                    href="#"
+                    href="/account"
                     className="top-header__link-login link-top-header"
                   >
                     <picture>
@@ -50,7 +50,7 @@ export const Header = ({className}: HeaderProps) => {
                         alt="Icon"
                       />
                     </picture>
-                  </a>
+                  </Link>
                 </div>
                 <div className="top-header__weather weather-header">
                   <a href="#" className="weather-header__info">
