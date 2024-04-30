@@ -1,4 +1,5 @@
-import React from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 import MainBlock2 from "@/img/main-block/02.png";
 import LatestNews02 from "@/img/latest-news/02.png";
 import { Header } from "@/components/Header/Header";
@@ -6,16 +7,14 @@ import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { Select } from "@/components/Select/Select";
 
-export default function Politics() {
+export default function LastNews() {
   return (
-    <>
+    <div className="wrapper">
       <Header className={"header menu-visual"} />
-      <br />
-      <br />
       <main className="page">
         <section className="page__news news">
           <div className="news__container">
-            <h1 className="news__title">Политика</h1>
+            <h1 className="news__title">Последние новости</h1>
             <div id="main-content" className="news__body body-sidebar">
               <div className="news__content content-news">
                 <header className="content-news__header content-news__header_small-select">
@@ -178,6 +177,6 @@ export default function Politics() {
           </div>
         </section>
       </main>
-    </>
+    </div>
   );
 }

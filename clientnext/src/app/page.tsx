@@ -1,14 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import Message from "../img/icons/message.svg";
-import Logo from "../img/logo.png";
 import LatestNews02 from "../img/latest-news/02.png";
 import MainBlock from "../img/main-block/01.png";
 import Graphics1 from "../img/graphics/01.svg";
 import ActualNews1 from "../img/actual-news/01.jpg";
 import ActualNews2 from "../img/actual-news/02.jpg";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,465 +14,221 @@ import { MainBlockSlide } from "@/components/MainBlockSlide/MainBlockSlide";
 import { GraphicsBlock } from "@/components/GraphicsBlock/GraphicsBlock";
 
 import "swiper/css";
-import 'swiper/css/effect-fade';
+import "swiper/css/effect-fade";
 import { BlockContent } from "@/components/BlockContent/BlockContent";
 import { Header } from "@/components/Header/Header";
+import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
+import { AnimatePresence } from "framer-motion";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { NextUIProvider } from "@nextui-org/react";
+import { Search } from "@/components/Search/Search";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
+  const [option, setOption] = useState(0);
+  const [login, setLogin] = useState(0);
+  const [search, setSearch] = useState(0);
 
   return (
-    <div className="home">
-      <div className="wrapper">
-        <div className="help">
-          <div className="help__wrap">
-            <p className="help__text">Work with us and help Moldova </p>
-            <button className="help__btn">x</button>
-          </div>
-        </div>
-       <Header />
-        <main className="page">
-          <section className="page__main-block main-block">
-            <div className="main-block__container">
-              <div className="main-block__wrap-slider">
-                <div className="main-block__wrap-btns">
-                  <button
-                    type="button"
-                    data-da=".main-block__wrap-slider,1266,1"
-                    className="main-block__swiper-button-prev btn-slider"
-                    onClick={() => swiperRef.current?.slidePrev()}
-                  ></button>
-                  <button
-                    type="button"
-                    data-da=".main-block__wrap-slider,1266,1"
-                    className="main-block__swiper-button-next btn-slider btn-slider_right"
-                    onClick={() => swiperRef.current?.slideNext()}
-                  ></button>
-                </div>
-                <div className="main-block__slider ">
-                  <div className="main-block__wrapper ">
-                    <Swiper
-                      modules={[Autoplay, Navigation]}
-                      slidesPerView={3}
-                      loop={true}
-                      simulateTouch={false}
-                      autoplay={{
-                        delay: 2000,
-                        disableOnInteraction: false,
-                      }}
-                      speed={1000}
-                      onBeforeInit={(swiper) => {
-                        swiperRef.current = swiper;
-                      }}
-                    >
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <MainBlockSlide
-                          img={MainBlock}
-                          title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                        />
-                      </SwiperSlide>
-                    </Swiper>
-
-                    {/* <div className="main-block__slide slide-main-block swiper-slide">
-                      <a href="#" className="slide-main-block__item-link">
-                        <picture>
-                          <source
-                            srcSet="img/main-block/02.webp"
-                            type="image-webp"
-                          />
-                          <Image
-                            fill
-                            src="/img/main-block/02.png"
-                            alt="Image"
-                          />
-                        </picture>
-                      </a>
-                      <div className="slide-main-block__right">
-                        <h5 className="slide-main-block__sub-title">
-                          Мировые новости
-                        </h5>
-                        <a href="#" className="slide-main-block__right-link">
-                          <h3 className="slide-main-block__title">
-                            Премьер-министр Молдовы одобрил вступление в ЕС
-                          </h3>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="main-block__slide slide-main-block swiper-slide">
-                      <a href="#" className="slide-main-block__item-link">
-                        <picture>
-                          <source
-                            srcSet="img/main-block/03.webp"
-                            type="image-webp"
-                          />
-                          <Image
-                            fill
-                            src="/img/main-block/03.png"
-                            alt="Image"
-                          />
-                        </picture>
-                      </a>
-                      <div className="slide-main-block__right">
-                        <h5 className="slide-main-block__sub-title">
-                          Политика
-                        </h5>
-                        <a href="#" className="slide-main-block__right-link">
-                          <h3 className="slide-main-block__title">
-                            Война в Израиле продолжается. Когда ожидать
-                            переговоры
-                          </h3>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="main-block__slide slide-main-block swiper-slide">
-                      <a href="#" className="slide-main-block__item-link">
-                        <picture>
-                          <source
-                            srcSet="img/main-block/01.webp"
-                            type="image-webp"
-                          />
-                          <Image
-                            fill
-                            src="/img/main-block/01.png"
-                            alt="Image"
-                          />
-                        </picture>
-                      </a>
-                      <div className="slide-main-block__right">
-                        <h5 className="slide-main-block__sub-title">Бизнес</h5>
-                        <a href="#" className="slide-main-block__right-link">
-                          <h3 className="slide-main-block__title">
-                            Курс доллара упал предельно низко в 2024 году. Что
-                            ждать даль...
-                          </h3>
-                        </a>
-                      </div>
-                    </div> */}
-                  </div>
-                </div>
-              </div>
+    <NextUIProvider>
+      <div
+        className={`home ${
+          option == 1 || login == 1 || search == 1 ? "overflow" : ""
+        } w-[100vw]`}
+      >
+        <div
+          className={`wrapper ${
+            option == 1 || login == 1 || search == 1
+              ? " wrapper__popup blur"
+              : ""
+          }`}
+        >
+          <div className="help">
+            <div className="help__wrap">
+              <p className="help__text">Work with us and help Moldova </p>
+              <button className="help__btn">x</button>
             </div>
-          </section>
-          <section className="page__block block">
-            <div className="block__container">
-              <div className="block__graphics graphics-left-block">
-                <div className="graphics-left-block__item">
-                  <div className="graphics-left-block__slider">
-                    <div className="graphics-left-block__wrapper swiper-wrapper">
-                      {/* <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              SNPIND
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              DOW JONES
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              $15400.55
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_plus">
-                              1.99%
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              SNPIND
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              Индекс USD
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              104,43
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_plus">
-                              1,02%
-                            </span>
-                          </a>
-                        </div>
-                      </div> */}
+          </div>
+          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} />
+          <main className="page">
+            <section className="page__main-block main-block">
+              <div className="main-block__container">
+                <div className="main-block__wrap-slider">
+                  <div className="main-block__wrap-btns">
+                    <button
+                      type="button"
+                      data-da=".main-block__wrap-slider,1266,1"
+                      className="main-block__swiper-button-prev btn-slider"
+                      onClick={() => swiperRef.current?.slidePrev()}
+                    ></button>
+                    <button
+                      type="button"
+                      data-da=".main-block__wrap-slider,1266,1"
+                      className="main-block__swiper-button-next btn-slider btn-slider_right"
+                      onClick={() => swiperRef.current?.slideNext()}
+                    ></button>
+                  </div>
+                  <div className="main-block__slider ">
+                    <div className="main-block__wrapper ">
                       <Swiper
-                        effect="fade"
-                        modules={[Autoplay, EffectFade]}
-                        slidesPerView={1}
-                        fadeEffect={
-                          {crossFade: true}
-                        }
+                        modules={[Autoplay, Navigation]}
+                        slidesPerView={3}
                         loop={true}
                         simulateTouch={false}
                         autoplay={{
-                          delay: 3000,
+                          delay: 2000,
                           disableOnInteraction: false,
                         }}
                         speed={1000}
+                        onBeforeInit={(swiper) => {
+                          swiperRef.current = swiper;
+                        }}
                       >
                         <SwiperSlide>
-                          <GraphicsBlock
-                            name="SNPIND"
-                            title="DOW JONES"
-                            tradeInfo="$15400.55"
-                            changeMinus="1.99%"
-                            img={Graphics1}
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
                           />
                         </SwiperSlide>
                         <SwiperSlide>
-                          <GraphicsBlock
-                            name="SNPIND"
-                            title="EUR/USD"
-                            tradeInfo="$15400.55"
-                            changeMinus="1.99%"
-                            img={Graphics1}
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <MainBlockSlide
+                            img={MainBlock}
+                            title=" Курс доллара упал предельно низко в 2024 году. Что
+                      ждать даль..."
                           />
                         </SwiperSlide>
                       </Swiper>
                     </div>
                   </div>
-
-                  {/* <a
-                    href="exchange.html#tab-0-1"
-                    className="graphics-left-block__image"
-                  >
-                    <Image fill src="/img/graphics/01.svg" alt="image" />
-                  </a> */}
                 </div>
-
-                <div className="graphics-left-block__item">
-                  <div className="graphics-left-block__slider">
-                    <div className="graphics-left-block__wrapper swiper-wrapper">
-                      {/* <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              SNPIND
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              DOW JONES
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              $15400.55
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_plus">
-                              1.99%
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              SNPIND
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              Индекс USD
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html#tab-0-1"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              104,43
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_plus">
-                              1,02%
-                            </span>
-                          </a>
-                        </div>
-                      </div> */}
-                      <Swiper
-                        effect="fade"
-                        preventClicks={false}
-                        preventClicksPropagation={false}
-                        touchStartPreventDefault={false}
-                        loop={true}
-                        modules={[Autoplay, EffectFade]}
-                        slidesPerView={1}
-                        fadeEffect={
-                          {crossFade: false}
-                        }
-                        autoplay={{
-                          delay: 3000,
-                          disableOnInteraction: false,
-                        }}
-                        speed={1000}
-                      >
-                        <SwiperSlide>
-                          <GraphicsBlock
-                            name="SNPIND"
-                            title="DOW JONES"
-                            tradeInfo="$15400.55"
-                            changeMinus="1.99%"
-                            img={Graphics1}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <GraphicsBlock
-                            name="SNPIND"
-                            title="EUR/USD"
-                            tradeInfo="$15400.55"
-                            changeMinus="1.99%"
-                            img={Graphics1}
-                          />
-                        </SwiperSlide>
-                      </Swiper>
-                    </div>
-                  </div>
-
-                  {/* <a
-                    href="exchange.html#tab-0-1"
-                    className="graphics-left-block__image"
-                  >
-                    <Image fill src="/img/graphics/01.svg" alt="image" />
-                  </a> */}
-                </div>
-
-                {/* <div className="graphics-left-block__item">
-                  <div className="graphics-left-block__slider2 swiper">
-                    <div className="graphics-left-block__wrapper swiper-wrapper">
-                      <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              FOREX
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              EUR/USD
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              1.08
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_minus">
-                              1.99%
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="graphics-left-block__slide swiper-slide">
-                        <div className="graphics-left-block__top">
-                          <a
-                            href="exchange.html"
-                            className="graphics-left-block__info"
-                          >
-                            <span className="graphics-left-block__name">
-                              FOREX
-                            </span>
-                            <h4 className="graphics-left-block__title">
-                              USD/EUR
-                            </h4>
-                          </a>
-                          <a
-                            href="exchange.html"
-                            className="graphics-left-block__trade"
-                          >
-                            <span className="graphics-left-block__trade-info">
-                              1.18
-                            </span>
-                            <span className="graphics-left-block__change graphics-left-block__change_plus">
-                              1.69%
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <a
-                    href="exchange.html"
-                    className="graphics-left-block__image"
-                  >
-                    <Image fill src="/img/graphics/02.svg" alt="image"/>
-                  </a>
-                </div> */}
-                {/* <GraphicsBlock
-                  name="SNPIND"
-                  title="DOW JONES"
-                  tradeInfo="$15400.55"
-                  changeMinus="1.99%"
-                  img={Graphics1}
-                /> */}
               </div>
+            </section>
+            <section className="page__block block">
+              <div className="block__container">
+                <div className="block__graphics graphics-left-block ">
+                  <div className="graphics-left-block__item ">
+                    <div className="graphics-left-block__slider">
+                      <div className="graphics-left-block__wrapper swiper-wrapper ">
+                        <Swiper
+                          effect="fade"
+                          modules={[Autoplay, EffectFade]}
+                          slidesPerView={1}
+                          fadeEffect={{ crossFade: true }}
+                          loop={true}
+                          simulateTouch={false}
+                          autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                          }}
+                          speed={1000}
+                        >
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="DOW JONES"
+                              tradeInfo="$15400.55"
+                              changeMinus="1.99%"
+                              img={Graphics1}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="EUR/USD"
+                              tradeInfo="$15400.55"
+                              changeMinus="1.99%"
+                              img={Graphics1}
+                            />
+                          </SwiperSlide>
+                        </Swiper>
+                      </div>
+                    </div>
+                  </div>
 
-              <div
-                data-da=".main-block__container,600"
-                className="block__bottom bottom-left-block"
-              >
-                {/* <div className="bottom-left-block-wrapper"> */}
-                {/* <div className="bottom-left-block__thumbs thumbs-images">
+                  <div className="graphics-left-block__item ">
+                    <div className="graphics-left-block__slider">
+                      <div className="graphics-left-block__wrapper swiper-wrapper">
+                        <Swiper
+                          effect="fade"
+                          preventClicks={false}
+                          preventClicksPropagation={false}
+                          touchStartPreventDefault={false}
+                          loop={true}
+                          modules={[Autoplay, EffectFade]}
+                          slidesPerView={1}
+                          fadeEffect={{ crossFade: false }}
+                          autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                          }}
+                          speed={1000}
+                        >
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="DOW JONES"
+                              tradeInfo="$15400.55"
+                              changeMinus="1.99%"
+                              img={Graphics1}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="EUR/USD"
+                              tradeInfo="$15400.55"
+                              changeMinus="1.99%"
+                              img={Graphics1}
+                            />
+                          </SwiperSlide>
+                        </Swiper>
+                      </div>
+                    </div>
+
+                    {/* <a
+                    href="exchange.html#tab-0-1"
+                    className="graphics-left-block__image"
+                  >
+                    <Image fill src="/img/graphics/01.svg" alt="image" />
+                  </a> */}
+                  </div>
+                </div>
+
+                <div
+                  data-da=".main-block__container,600"
+                  className="block__bottom bottom-left-block"
+                >
+                  {/* <div className="bottom-left-block-wrapper"> */}
+                  {/* <div className="bottom-left-block__thumbs thumbs-images">
                   <div className="thumbs-images__wrapper swiper-wrapper">
                     <div className="thumbs-images__slide swiper-slide">
                       <a href="#" className="thumbs-images__image-ibg">
@@ -566,7 +319,7 @@ export default function Home() {
                   </div>
                 </div> */}
 
-                {/* <div className="bottom-left-block__content">
+                  {/* <div className="bottom-left-block__content">
                   <div className="bottom-left-block__slider-main slider-bottom-left-block swiper">
                     <div className="bottom-left-block__wrapper swiper-wrapper">
                       <div className="bottom-left-block__slide swiper-slide">
@@ -684,30 +437,27 @@ export default function Home() {
                     </div>
                   </div>
                 </div> */}
-                <div className="blockslide-wrapper">
-                <Swiper
-                        effect="fade"
-                        modules={[Autoplay, EffectFade]}
-                        slidesPerView={1}
-                        
-                        fadeEffect={
-                          {crossFade: true}
-                        }
-                        preventClicks={true}
-                        preventClicksPropagation={false}
-                        touchStartPreventDefault={false}
-                        touchStartForcePreventDefault={true}
-                        loop={true}
-                        allowTouchMove={false}
-                        simulateTouch={false}
-                        touchMoveStopPropagation={true}
-                        autoplay={{
-                          delay: 3000,
-                          disableOnInteraction: false,
-                        }}
-                        speed={1000}
-                      >
-                        <SwiperSlide>
+                  <div className="blockslide-wrapper">
+                    <Swiper
+                      effect="fade"
+                      modules={[Autoplay, EffectFade]}
+                      slidesPerView={1}
+                      fadeEffect={{ crossFade: true }}
+                      preventClicks={true}
+                      preventClicksPropagation={false}
+                      touchStartPreventDefault={false}
+                      touchStartForcePreventDefault={true}
+                      loop={true}
+                      allowTouchMove={false}
+                      simulateTouch={false}
+                      touchMoveStopPropagation={true}
+                      autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                      }}
+                      speed={1000}
+                    >
+                      <SwiperSlide>
                         <BlockContent
                           title="В Японии госпитализировали 26 человек после приема
                           БАДов"
@@ -716,8 +466,8 @@ export default function Home() {
                           link2="Чего ожидать Молдове в ближайшие несколько недель?"
                           link3="Чего ожидать Молдове в ближайшие несколько недель?"
                         />
-                        </SwiperSlide>
-                        <SwiperSlide>
+                      </SwiperSlide>
+                      <SwiperSlide>
                         <BlockContent
                           title="В Японии госпитализировали 36 человек после приема
                           БАДов"
@@ -726,766 +476,116 @@ export default function Home() {
                           link2="Чего ожидать Молдове в ближайшие несколько недель?"
                           link3="Чего ожидать Молдове в ближайшие несколько недель?"
                         />
-                        </SwiperSlide>
+                      </SwiperSlide>
                     </Swiper>
-                    </div>
-                {/* </div> */}
-              </div>
-              <aside className="block__latest-news latest-news">
-                <a
-                  href="last-news.html"
-                  className="latest-news__main-title-link"
-                >
-                  <h3 className="latest-news__title latest-news__title_posts">
-                    Последние новости
-                  </h3>
-                </a>
-
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-                <LatestNews
-                  title="Молдова высылает сотрудника российского посольства"
-                  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                  img={LatestNews02}
-                  time="11:00"
-                />
-              </aside>
-            </div>
-          </section>
-        </main>
-        <footer className="footer">
-          <div className="footer__container">
-            <p className="footer__text">©2024 Opozitia</p>
-          </div>
-        </footer>
-      </div>
-      <div id="search" aria-hidden="true" className="popup popup_search">
-        <div className="popup__wrapper popup__wrapper_search">
-          <div className="popup__content popup__content_search">
-            <form action="#" className="popup__search search-popup">
-              <input
-                autoComplete="off"
-                type="text"
-                name="form[]"
-                placeholder="Search..."
-                className="search-popup__input"
-              />
-              <button type="submit" className="search-popup__button">
-                <Image fill src="/img/icons/search-black.svg" alt="Icon" />
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-login" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup popup__content_first">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top">
-                <h3 className="body-popup__title">Войти</h3>
-                <p className="body-popup__text">
-                  Введите ваш e-mail, чтобы войти
-                </p>
-              </div>
-              <form
-                action="#"
-                data-dev
-                data-popup-message="#popup-login-password"
-                className="body-popup__form"
-              >
-                <input
-                  type="email"
-                  name="form[]"
-                  data-error="Введен не верный E-mail"
-                  data-required="email"
-                  placeholder="E-mail@mail.ru"
-                  className="body-popup__input input"
-                />
-                <div className="body-popup__checkbox checkbox">
-                  <input
-                    id="c_1"
-                    className="checkbox__input"
-                    data-required
-                    type="checkbox"
-                    value="1"
-                    name="form[]"
-                  />
-                  <label htmlFor="c_1" className="checkbox__label">
-                    <span className="checkbox__text">
-                      Отправляя свои данные, я принимаю политику
-                      конфиденциальности
-                    </span>
-                  </label>
-                </div>
-                <button type="submit" className="body-popup__button">
-                  Продолжить
-                </button>
-              </form>
-              <ul className="body-popup__list-social">
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/01.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a
-                    href="#"
-                    className="body-popup__link-social link-social link-social_facebook"
-                  >
-                    <Image fill src="/img/social/02.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/03.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/04.svg" alt="icon" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="popup__bottom bottom-popup">
-              <p className="bottom-popup__text">
-                Ещё нет аккаунта?{" "}
-                <a data-popup="#popup-registration" href="#">
-                  Зарегистрируйтесь!
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-login-password" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top body-popup__top_single">
-                <h3 className="body-popup__title">Введите пароль</h3>
-              </div>
-              <form
-                action="#"
-                data-dev
-                data-popup-message="#popup-registration-code"
-                className="body-popup__form"
-              >
-                <input
-                  type="password"
-                  name="form[]"
-                  minLength={10}
-                  data-required
-                  placeholder="Введите ваш пароль"
-                  className="body-popup__input input"
-                />
-                <button type="submit" className="body-popup__button">
-                  Подтвердить
-                </button>
-              </form>
-            </div>
-            <div className="popup__bottom bottom-popup">
-              <p className="bottom-popup__text">
-                Забыли пароль? <a href="#">Нажмите сюда для восстановления</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-registration" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top">
-                <h3 className="body-popup__title">Регистрация</h3>
-                <p className="body-popup__text body-popup__text_register">
-                  Для регистрации введите e-mail или воспользуйтесь сервисами
-                  ниже
-                </p>
-              </div>
-              <form
-                action="#"
-                data-dev
-                data-popup-message="#popup-login-password"
-                className="body-popup__form"
-              >
-                <input
-                  type="email"
-                  name="form[]"
-                  data-error="Введен не верный E-mail"
-                  data-required="email"
-                  placeholder="E-mail@mail.ru"
-                  className="body-popup__input input"
-                />
-                <div className="body-popup__checkbox checkbox">
-                  <input
-                    id="c_3"
-                    className="checkbox__input"
-                    data-required
-                    type="checkbox"
-                    value="1"
-                    name="form[]"
-                  />
-                  <label htmlFor="c_3" className="checkbox__label">
-                    <span className="checkbox__text">
-                      Отправляя свои данные, я принимаю политику
-                      конфиденциальности
-                    </span>
-                  </label>
-                </div>
-                <button type="submit" className="body-popup__button">
-                  Продолжить
-                </button>
-              </form>
-              <ul className="body-popup__list-social">
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/01.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a
-                    href="#"
-                    className="body-popup__link-social link-social link-social_facebook"
-                  >
-                    <Image fill src="/img/social/02.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/03.svg" alt="icon" />
-                  </a>
-                </li>
-                <li className="body-popup__item-social">
-                  <a href="#" className="body-popup__link-social link-social">
-                    <Image fill src="/img/social/04.svg" alt="icon" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="popup__bottom bottom-popup">
-              <p className="bottom-popup__text">
-                Уже есть аккаунт?{" "}
-                <a data-popup="#popup-login" href="#">
-                  Войдите!
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-registration-code" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top">
-                <h3 className="body-popup__title">Введите код</h3>
-                <p className="body-popup__text">
-                  На E-mail@mail.ru отправлен одноразовый код
-                </p>
-              </div>
-              <form
-                action="#"
-                data-dev
-                data-popup-message="#popup-registration-password"
-                className="body-popup__form body-popup__form_code"
-              >
-                <div className="body-popup__wrap-input">
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit1"
-                    required
-                  />
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit2"
-                    required
-                  />
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit3"
-                    required
-                  />
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit4"
-                    required
-                  />
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit5"
-                    required
-                  />
-                  <input
-                    type="number"
-                    maxLength={1}
-                    className="body-popup__block "
-                    name="digit6"
-                    required
-                  />
-                </div>
-                <button type="submit" className="body-popup__button">
-                  Продолжить
-                </button>
-              </form>
-            </div>
-            <div className="popup__bottom bottom-popup">
-              <p className="bottom-popup__text">
-                Код не пришел?{" "}
-                <a data-popup="#popup-login" href="#">
-                  Нажмите сюда, чтобы прислать заново
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        id="popup-registration-password"
-        aria-hidden="true"
-        className="popup"
-      >
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top body-popup__top_password">
-                <h3 className="body-popup__title">Придумайте имя и пароль</h3>
-                <p className="body-popup__text">
-                  Пароль должен содержать хотя бы 10 символов
-                </p>
-              </div>
-              <form
-                id="form-pass"
-                action="#"
-                data-dev
-                data-popup-message="#popup-registration-recovery"
-                className="body-popup__form body-popup__form_code"
-              >
-                <input
-                  type="text"
-                  name="form[]"
-                  placeholder="Введите ваше имя"
-                  className="body-popup__input-name input"
-                  required
-                />
-                <input
-                  type="password"
-                  id="pass"
-                  name="form[]"
-                  minLength={10}
-                  data-required
-                  placeholder="Введите ваш пароль"
-                  className="body-popup__input-password input"
-                />
-                <input
-                  type="password"
-                  id="pass2"
-                  name="form[]"
-                  minLength={10}
-                  data-required
-                  placeholder="Повторите введенный пароль"
-                  className="body-popup__input-password input"
-                />
-                <button
-                  type="submit"
-                  className="body-popup__button body-popup__button_code"
-                >
-                  Подтвердить
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        id="popup-registration-recovery"
-        aria-hidden="true"
-        className="popup"
-      >
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup">
-              <div className="body-popup__top">
-                <h3 className="body-popup__title">Восстановление пароля</h3>
-                <p className="body-popup__text">
-                  Введите e-mail, который использовали для регистрации
-                </p>
-              </div>
-              <form
-                action="#"
-                data-dev
-                data-popup-message="#popup-registration-send"
-                className="body-popup__form"
-              >
-                <input
-                  type="email"
-                  name="form[]"
-                  data-error="Введен не верный E-mail"
-                  data-required="email"
-                  placeholder="E-mail@mail.ru"
-                  className="body-popup__input input"
-                />
-                <button type="submit" className="body-popup__button">
-                  Продолжить
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-registration-send" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup body-popup_ok">
-              <div className="body-popup__wrap-top">
-                <div className="body-popup__top">
-                  <h3 className="body-popup__title">Инструкция отправлена!</h3>
-                  <p className="body-popup__text">
-                    На вашу почту отправлена инструкция по восстановлению пароля
-                  </p>
-                </div>
-              </div>
-              <div className="popup__bottom bottom-popup">
-                <p className="bottom-popup__text bottom-popup__text_ok">
-                  Ничего не пришло?{" "}
-                  <a className="bottom-popup__link-ok" href="#">
-                    Нажмите сюда, чтобы прислать заново
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-vote" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content popup__content_vote content-popup">
-            <div className="popup__top popup__top_vote">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup body-popup_vote">
-              <div className="body-popup__top">
-                <h3 className="body-popup__title">Спасибо за ваше мнение!</h3>
-                <p className="body-popup__text body-popup__text_vote">
-                  После окончания голосования, на вашу почту будут присланы
-                  результаты
-                </p>
-              </div>
-              <div className="body-popup__content">
-                <div className="item-tabs-oprosi item-tabs-oprosi_vote">
-                  <div className="item-tabs-oprosi__top item-tabs-oprosi__top_vote">
-                    <h4 className="item-tabs-oprosi__top-title item-tabs-oprosi__top-title_vote">
-                      Премьер-министр Молдовы одобрил вступление в ЕС
-                    </h4>
                   </div>
-                  <form action="#" className="item-tabs-oprosi__form">
-                    <fieldset>
-                      <div className="options options_vote">
-                        <div className="options__item selected">
-                          <input
-                            hidden
-                            id="o_41"
-                            className="options__input"
-                            checked
-                            type="checkbox"
-                            value="supportno"
-                            name="opros1"
-                          />
-                          <label
-                            htmlFor="o_41"
-                            className="options__label options__label_1"
-                          >
-                            <span className="options__text">
-                              Не поддерживаю
-                            </span>{" "}
-                            <span className="percent percent_nosupport">
-                              38%
-                            </span>
-                            <div className="options__row row">
-                              {/* <div className="options__progress progress  progress_nosupport" style='--w:38;'></div> */}
-                            </div>
-                          </label>
-                          <input
-                            hidden
-                            id="o_51"
-                            className="options__input"
-                            type="checkbox"
-                            value="support"
-                            name="opros1"
-                          />
-                          <label
-                            htmlFor="o_51"
-                            className="options__label options__label_2"
-                          >
-                            <span className="options__text">Поддерживаю</span>
-                            <span className="percent percent_support">56%</span>
-                            <div className="options__row row">
-                              {/* <div className="options__progress progress  progress_support" style='--w:56;'></div> */}
-                            </div>
-                          </label>
-                          <input
-                            hidden
-                            id="o_61"
-                            className="options__input"
-                            type="checkbox"
-                            value="neutral"
-                            name="opros1"
-                          />
-                          <label
-                            htmlFor="o_61"
-                            className="options__label options__label_3"
-                          >
-                            <span className="options__text">Нейтрально</span>
-                            <span className="percent percent_neutral">6%</span>
-                            <div className="options__row row">
-                              {/* <div className="options__progress progress  progress_neutral" style='--w:6;'></div> */}
-                            </div>
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </form>
+                  {/* </div> */}
                 </div>
-              </div>
-            </div>
-            <div className="popup__bottom bottom-popup">
-              <p className="bottom-popup__text bottom-popup__text_ok">
-                <span className="bottom-popup__text-vote">
-                  Не приходят результаты?
-                </span>{" "}
-                <a className="bottom-popup__link-ok" href="#">
-                  Нажмите сюда, чтобы обратититься в поддержку
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-account-answer" aria-hidden="true" className="popup">
-        <div className="popup__wrapper">
-          <div className="popup__content content-popup">
-            <div className="popup__top">
-              <a href="#" className="popup__logo">
-                <picture>
-                  <source srcSet="img/logo.webp" type="image-webp" />
-                  <Image fill src="/img/logo.png" alt="Logo" />
-                </picture>
-              </a>
-              <button
-                data-close
-                type="button"
-                className="popup__close"
-              ></button>
-            </div>
-            <div className="popup__body body-popup body-popup_ok">
-              <div className="body-popup__wrap-top">
-                <div className="body-popup__top">
-                  <h3 className="body-popup__title">Спасибо за ваш вопрос!</h3>
-                  <p className="body-popup__text">
-                    На вашу почту в скором времени поступит ответ.
-                  </p>
-                </div>
-              </div>
-              <div className="popup__bottom bottom-popup">
-                <p className="bottom-popup__text">
-                  Не приходит ответ?{" "}
+                <aside className="block__latest-news latest-news">
                   <a
-                    className="bottom-popup__link-ok bottom-popup__link-ok_account"
-                    href="#"
+                    href="last-news.html"
+                    className="latest-news__main-title-link"
                   >
-                    Нажмите сюда, чтобы обратититься еще раз в поддержку
+                    <h3 className="latest-news__title latest-news__title_posts">
+                      Последние новости
+                    </h3>
                   </a>
-                </p>
+
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                  <LatestNews
+                    title="Молдова высылает сотрудника российского посольства"
+                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
+                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
+                  РФ, сообщила пресс-служба МИД Молдавии."
+                    img={LatestNews02}
+                    time="11:00"
+                  />
+                </aside>
               </div>
+            </section>
+          </main>
+          <footer className="footer">
+            <div className="footer__container">
+              <p className="footer__text">©2024 Opozitia</p>
             </div>
-          </div>
+          </footer>
         </div>
+        <AnimatePresence>
+          {option == 1 && (
+            <PopupPolls onClick={setOption} classes="popup popup__active" />
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {login == 1 && <PopupAccount onClick={setLogin} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {search == 1 && <Search onSearch={setLogin} />}
+        </AnimatePresence>
       </div>
-    </div>
+    </NextUIProvider>
   );
 }

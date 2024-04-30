@@ -11,10 +11,10 @@ export const GraphicsBlock = ({
 }: GraphicsBlockProps) => {
   return (
     <div className="graphics-left-block__item">
-      <div className="graphics-left-block__slider swiper">
-        <div className="graphics-left-block__wrapper swiper-wrapper">
-          <div className="graphics-left-block__slide swiper-slide">
-            <div className="graphics-left-block__top">
+      <div className="graphics-left-block__slider ">
+        <div className="graphics-left-block__wrapper ">
+          <div className="graphics-left-block__slide ">
+            <div className="graphics-left-block__top ml-[10px]">
               <a href="exchange.html" className="graphics-left-block__info">
                 <span className="graphics-left-block__name">{name}</span>
                 <h4 className="graphics-left-block__title">{title}</h4>
