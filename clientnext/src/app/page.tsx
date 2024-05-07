@@ -22,23 +22,27 @@ import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
+import { PopupNews } from "@/components/PopupNews/PopupNews";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
   const [option, setOption] = useState(0);
   const [login, setLogin] = useState(0);
   const [search, setSearch] = useState(0);
+  const [news, setNews] = useState(0);
 
   return (
     <NextUIProvider>
       <div
         className={`home ${
-          option == 1 || login == 1 || search == 1 ? "overflow" : ""
+          option == 1 || login == 1 || search == 1 || news == 1
+            ? "overflow"
+            : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            option == 1 || login == 1 || search == 1
+            option == 1 || login == 1 || search == 1 || news == 1
               ? " wrapper__popup blur"
               : ""
           }`}
@@ -49,7 +53,12 @@ export default function Home() {
               <button className="help__btn">x</button>
             </div>
           </div>
-          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} />
+          <Header
+            onClick={setOption}
+            onLogin={setLogin}
+            onSearch={setSearch}
+            onNews={setNews}
+          />
           <main className="page">
             <section className="page__main-block main-block">
               <div className="main-block__container">
@@ -584,6 +593,9 @@ export default function Home() {
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setLogin} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {news == 1 && <PopupNews onClick={setNews} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>
