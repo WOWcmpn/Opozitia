@@ -52,7 +52,7 @@ export default async function Economy() {
               <div className="news__wrap-right sidebar">
                 <aside className="news__latest-news latest-news latest-news_big">
                   <a
-                    href="last-news.html"
+                    href="lastnews"
                     className="latest-news__main-title-link"
                   >
                     <h3 className="latest-news__title latest-news__title_posts">
@@ -66,6 +66,7 @@ export default async function Economy() {
                                 text={n.description}
                                 img={LatestNews02}
                                 time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
                     />
                   ))}
                 </aside>

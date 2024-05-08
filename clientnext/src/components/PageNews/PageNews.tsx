@@ -13,6 +13,12 @@ export const PageNews = ({
   createdAtTime,
   category
 }: PageNewsProps) => {
+  let viewCategory = ''
+  if(category === 'policy') viewCategory = 'Политика'
+  if(category === 'world') viewCategory = 'Мир'
+  if(category === 'economy') viewCategory = 'Экономика'
+  if(category === 'business') viewCategory = 'Бизнес'
+
   return (
     <div className="content-news__item item-content-news item-block">
       <div className="item-content-news__left">
@@ -25,17 +31,17 @@ export const PageNews = ({
           <span className="item-content-news__time time">{createdAtTime}</span>
           <ul className="item-content-news__list-bottom list-bottom-search">
             <li className="list-bottom-search__item-bottom">
-              <a href="#" className="list-bottom-search__link-bottom ">
-                {link1}
+              <a href={`${category}`} className="list-bottom-search__link-bottom ">
+                {viewCategory}
               </a>
             </li>
             <li className="list-bottom-search__item-bottom">
-              <a href="#" className="list-bottom-search__link-bottom">
+              <a href="world" className="list-bottom-search__link-bottom">
                 {link2}
               </a>
             </li>
             <li className="list-bottom-search__item-bottom">
-              <a href="#" className="list-bottom-search__link-bottom">
+              <a href="world" className="list-bottom-search__link-bottom">
                 {link3}
               </a>
             </li>

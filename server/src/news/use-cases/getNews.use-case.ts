@@ -20,7 +20,7 @@ export class GetNewsUseCase {
           const imgUrl = $(elem).find('img').attr('src');
           const viewDate = $(elem).parent().parent().find('h2').text();
           const createdAtDate = new Date(moment(viewDate, 'DD MMMM YYYY', 'ru').format());
-          const category = newsCategory.Economic;
+          const category = newsCategory.Economy;
           this.checkNewsForAddUseCase.checkNews({ title, link, imgUrl, createdAtDate, category, viewDate });
         });
       })

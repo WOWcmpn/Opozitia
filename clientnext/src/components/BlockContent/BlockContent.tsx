@@ -4,6 +4,8 @@ import React from "react";
 
 export const BlockContent = ({
   title,
+  firstLink,
+  firstCategory,
   img,
   link1,
   link2,
@@ -27,7 +29,7 @@ export const BlockContent = ({
         <div className="bottom-left-block__slider-main slider-bottom-left-block ">
           <div className="bottom-left-block__wrapper">
             <div className="bottom-left-block__slide">
-              <a href="#" className="bottom-left-block__news-link">
+              <a href={`${firstCategory}/${firstLink}`} className="bottom-left-block__news-link">
                 <h4 className="bottom-left-block__title">{title}</h4>
               </a>
             </div>

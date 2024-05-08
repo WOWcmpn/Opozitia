@@ -24,7 +24,7 @@ export interface ISingleNews {
 
 export interface IFullSingleNews {
   news: ISingleNews
-  sidebarNews: ISideBarsNews[]
+  sidebarNews: ISidebarsNews[]
 }
 
 export interface INews {
@@ -36,23 +36,25 @@ export interface INews {
   description: string
 }
 
-export interface ISideBarsNews {
+export interface ISidebarsNews {
   id: string;
   title: string;
   imgUrl: StaticImageData;
   createdAtTime: string;
   description: string
+  category: string
 }
 
 export interface ILastNews {
   news: INews[];
   amount: number
+  sidebarNews: ISidebarsNews[]
 }
 
 export interface IFullNews {
   news: INews[];
   amount: number
-  sidebarNews: ISideBarsNews[]
+  sidebarNews: ISidebarsNews[]
 }
 
 export type LatestNewsProps = {
@@ -61,6 +63,7 @@ export type LatestNewsProps = {
   text: string;
   img: StaticImageData;
   time: string;
+  category: string
 };
 
 export type MainBlockSlideProps = {
@@ -80,6 +83,8 @@ export type GraphicsBlockProps = {
 
 export type BlockContentProps = {
   title: string;
+  firstLink: string
+  firstCategory: string
   img: StaticImageData;
   link1: string;
   link2: string;

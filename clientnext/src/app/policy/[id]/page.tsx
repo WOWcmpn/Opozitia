@@ -31,7 +31,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   <div className="main-block-news__top">
                     <div className="main-block-news__text-block">
                       <h2 className="main-block-news__category-title dot">
-                        Бизнес
+                        Политика
                       </h2>
                       <h1 className="main-block-news__title">
                         {data?.news.title}

@@ -31,7 +31,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   <div className="main-block-news__top">
                     <div className="main-block-news__text-block">
                       <h2 className="main-block-news__category-title dot">
-                        Бизнес
+                        Экономика
                       </h2>
                       <h1 className="main-block-news__title">
                         {data?.news.title}
@@ -438,6 +438,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
                                 text={n.description}
                                 img={LatestNews02}
                                 time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
                     />
                   ))}
                 </aside>

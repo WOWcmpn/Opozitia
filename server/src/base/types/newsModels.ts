@@ -20,7 +20,7 @@ export interface fullNewsModel {
 }
 
 export enum newsCategory {
-  Economic = 'Economic',
+  Economy = 'Economy',
   Policy = 'Policy',
   Business = 'Business',
   World = 'World',

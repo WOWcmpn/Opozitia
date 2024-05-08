@@ -68,6 +68,7 @@ export default async function Business () {
                       text={n.description}
                       img={LatestNews02}
                       time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
                     />
                   ))}
                 </aside>

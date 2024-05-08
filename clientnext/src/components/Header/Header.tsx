@@ -191,7 +191,7 @@ export const Header = ({
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link href="/politics" className="menu__link">
+                  <Link href="/policy" className="menu__link">
                     ПОЛИТИКА
                   </Link>
                 </li>
@@ -201,7 +201,7 @@ export const Header = ({
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link href="/globalnews" className="menu__link">
+                  <Link href="/world" className="menu__link">
                     МИРОВЫЕ НОВОСТИ
                   </Link>
                 </li>

@@ -35,7 +35,7 @@ export class NewsQueryRepository {
   async getAllLastNews(searchNameTerm: string = ' ', sortBy: string, pageNumber: number) {
     return await this.newsRepository
       .createQueryBuilder('n')
-      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.description'])
+      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
       .where('n.title ilike :name', { name: `%${searchNameTerm.toString()}%` })
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')

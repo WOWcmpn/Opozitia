@@ -20,12 +20,12 @@ export class NewsController {
   @HttpCode(200)
   async findAllEconomic(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllNewsByCategory(
-      newsCategory.Economic,
+      newsCategory.Economy,
       query.form,
       query.sortBy,
       query.pageNumber,
     );
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.Economic);
+    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.Economy);
     return { news, amount: news.length, sidebarNews: lastNews };
   }
 
@@ -72,7 +72,8 @@ export class NewsController {
   @HttpCode(200)
   async getLastNews(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllLastNews(query.form, query.sortBy, query.pageNumber);
-    return { news, amount: news.length };
+    const sidebarNews = await this.newsQueryRepository.getLastNewsSidebar('');
+    return { news, amount: news.length, sidebarNews };
   }
 
   @Get('home')

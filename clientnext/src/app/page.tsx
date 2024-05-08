@@ -1,11 +1,10 @@
 "use client";
-
-import LatestNews02 from "../img/latest-news/02.png";
-import MainBlock from "../img/main-block/01.png";
-import Graphics1 from "../img/graphics/01.svg";
-import ActualNews1 from "../img/actual-news/01.jpg";
-import ActualNews2 from "../img/actual-news/02.jpg";
-import { useRef, useState } from "react";
+import LatestNews02 from "@/img/latest-news/02.png";
+import MainBlock from "@/img/main-block/01.png";
+import Graphics1 from "@/img/graphics/01.svg";
+import ActualNews1 from "@/img/actual-news/01.jpg";
+import ActualNews2 from "@/img/actual-news/02.jpg";
+import { useEffect, useRef, useState } from 'react';
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,27 +21,37 @@ import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
-import { PopupNews } from "@/components/PopupNews/PopupNews";
+import { IHomeNews } from '@/types/types';
+import { NewsService } from '@/service/news.service';
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
   const [option, setOption] = useState(0);
   const [login, setLogin] = useState(0);
   const [search, setSearch] = useState(0);
-  const [news, setNews] = useState(0);
+  const [data, setData] = useState<IHomeNews | null>(null)
+
+  useEffect(() => {
+    async function getData() {
+      const data = await NewsService.getNewsHome()
+      setData(data);
+    }
+
+    getData();
+  }, []);
+
+  const link1 = data?.bottomNewsOne.map(n => (n.title))
 
   return (
     <NextUIProvider>
       <div
         className={`home ${
-          option == 1 || login == 1 || search == 1 || news == 1
-            ? "overflow"
-            : ""
+          option == 1 || login == 1 || search == 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            option == 1 || login == 1 || search == 1 || news == 1
+            option == 1 || login == 1 || search == 1
               ? " wrapper__popup blur"
               : ""
           }`}
@@ -53,12 +62,7 @@ export default function Home() {
               <button className="help__btn">x</button>
             </div>
           </div>
-          <Header
-            onClick={setOption}
-            onLogin={setLogin}
-            onSearch={setSearch}
-            onNews={setNews}
-          />
+          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} />
           <main className="page">
             <section className="page__main-block main-block">
               <div className="main-block__container">
@@ -93,48 +97,16 @@ export default function Home() {
                           swiperRef.current = swiper;
                         }}
                       >
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <MainBlockSlide
-                            img={MainBlock}
-                            title=" Курс доллара упал предельно низко в 2024 году. Что
-                      ждать даль..."
-                          />
-                        </SwiperSlide>
+                        {data?.swipeNews.map(n => (
+                          <SwiperSlide  key={n.id}>
+                            <MainBlockSlide
+                              img={MainBlock}
+                              title={n.title}
+                              category={n.category.toLowerCase()}
+                              id={n.id}
+                            />
+                          </SwiperSlide>
+                        ))}
                       </Swiper>
                     </div>
                   </div>
@@ -466,113 +438,136 @@ export default function Home() {
                       }}
                       speed={1000}
                     >
-                      <SwiperSlide>
-                        <BlockContent
-                          title="В Японии госпитализировали 26 человек после приема
-                          БАДов"
-                          img={ActualNews1}
-                          link1="Чего ожидать Молдове в ближайшие несколько недель?"
-                          link2="Чего ожидать Молдове в ближайшие несколько недель?"
-                          link3="Чего ожидать Молдове в ближайшие несколько недель?"
-                        />
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <BlockContent
-                          title="В Японии госпитализировали 36 человек после приема
-                          БАДов"
-                          img={ActualNews2}
-                          link1="Чего ожидать Молдове в ближайшие несколько недель?"
-                          link2="Чего ожидать Молдове в ближайшие несколько недель?"
-                          link3="Чего ожидать Молдове в ближайшие несколько недель?"
-                        />
-                      </SwiperSlide>
+                      {data?.mainNews.map(n => (
+                        <SwiperSlide key={n.id}>
+                          <BlockContent
+                            title={n.title}
+                            firstLink={n.id}
+                            firstCategory={n.category.toLowerCase()}
+                            img={ActualNews1}
+                            link1="Чего ожидать Молдове в ближайшие несколько недель?"
+                            link2="Чего ожидать Молдове в ближайшие несколько недель?"
+                            link3="Чего ожидать Молдове в ближайшие несколько недель?"
+                          />
+                        </SwiperSlide>
+                      ))}
+                      {/*<SwiperSlide>*/}
+                      {/*  <BlockContent*/}
+                      {/*    title="В Японии госпитализировали 26 человек после приема*/}
+                      {/*    БАДов"*/}
+                      {/*    img={ActualNews1}*/}
+                      {/*    link1="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*    link2="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*    link3="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*  />*/}
+                      {/*</SwiperSlide>*/}
+                      {/*<SwiperSlide>*/}
+                      {/*  <BlockContent*/}
+                      {/*    title="В Японии госпитализировали 36 человек после приема*/}
+                      {/*    БАДов"*/}
+                      {/*    img={ActualNews2}*/}
+                      {/*    link1="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*    link2="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*    link3="Чего ожидать Молдове в ближайшие несколько недель?"*/}
+                      {/*  />*/}
+                      {/*</SwiperSlide>*/}
                     </Swiper>
                   </div>
                   {/* </div> */}
                 </div>
                 <aside className="block__latest-news latest-news">
                   <a
-                    href="last-news.html"
+                    href="lastnews"
                     className="latest-news__main-title-link"
                   >
                     <h3 className="latest-news__title latest-news__title_posts">
                       Последние новости
                     </h3>
                   </a>
+                  {data?.news!.map(n => (
+                    <LatestNews key={n.id}
+                                id={n.id}
+                                title={n.title}
+                                text={n.description}
+                                img={LatestNews02}
+                                time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
+                    />
+                  ))}
 
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
 
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
-                  <LatestNews
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={LatestNews02}
-                    time="11:00"
-                  />
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
+                  {/*<LatestNews*/}
+                  {/*  title="Молдова высылает сотрудника российского посольства"*/}
+                  {/*  text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон*/}
+                  {/*грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента*/}
+                  {/*РФ, сообщила пресс-служба МИД Молдавии."*/}
+                  {/*  img={LatestNews02}*/}
+                  {/*  time="11:00"*/}
+                  {/*/>*/}
                 </aside>
               </div>
             </section>
@@ -593,9 +588,6 @@ export default function Home() {
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setLogin} />}
-        </AnimatePresence>
-        <AnimatePresence>
-          {news == 1 && <PopupNews onClick={setNews} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>
