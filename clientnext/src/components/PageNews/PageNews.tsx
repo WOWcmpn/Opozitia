@@ -1,7 +1,7 @@
 import { PageNewsProps } from "@/types/types";
 import Image from "next/image";
 import React from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
 export const PageNews = ({
   id,
@@ -11,7 +11,7 @@ export const PageNews = ({
   link3,
   img,
   createdAtTime,
-  category
+  category,
 }: PageNewsProps) => {
   return (
     <div className="content-news__item item-content-news item-block">
@@ -45,7 +45,7 @@ export const PageNews = ({
       <div className="item-content-news__image">
         <picture>
           <source srcSet="img/main-block/02.webp" type="image/webp" />
-          <Image src={img} alt="Картинка" />
+          <img src={img} alt="Картинка" />
         </picture>
       </div>
     </div>
