@@ -91,6 +91,7 @@ export type HeaderProps = {
   onClick?: React.Dispatch<React.SetStateAction<number>>;
   onLogin?: React.Dispatch<React.SetStateAction<number>>;
   onSearch?: React.Dispatch<React.SetStateAction<number>>;
+  onNews?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type PageNewsProps = {

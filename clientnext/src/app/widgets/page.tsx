@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Sun from "@/img/icons/sun.svg";
 import ChampionshipImg from "@/img/icons/championship.png";
 import Team from "@/img/icons/team.png";
@@ -16,9 +16,65 @@ import { Swiper as SwiperType } from "swiper";
 import { Championship } from "@/components/Championship/Championship";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import {
+  calendar,
+  getDate,
+  getMonth,
+  getStringMonth,
+  getYear,
+} from "@/utils/calendar";
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    getMonth(new Date())
+  );
+  const [currentYear, setCurrentYear] = useState<number>(getYear(new Date()));
+
+  const [date, setDate] = useState<string>(
+    `${getStringMonth(currentMonth).month} ${getDate(
+      new Date()
+    )}, ${currentYear}`
+  );
+  const [calendarData, setCalendarData] = useState(calendar(new Date(date)));
+  //let calendarData = calendar(new Date(date));
+
+  const refreshCalendar = useCallback(() => {
+    setDate(
+      `${getStringMonth(currentMonth).month} ${getDate(
+        new Date()
+      )}, ${currentYear}`
+    );
+    setCalendarData(calendar(new Date(date)));
+  }, [currentMonth, currentYear, date]);
+
+  const changeMonth = (choice: boolean) => {
+    let temp;
+    if (choice) {
+      if (currentMonth == 11) {
+        setCurrentMonth(0);
+        temp = currentYear + 1;
+        setCurrentYear(temp);
+      } else {
+        temp = currentMonth + 1;
+        setCurrentMonth(temp);
+      }
+    } else {
+      if (currentMonth == 0) {
+        setCurrentMonth(11);
+        temp = currentYear - 1;
+        setCurrentYear(temp);
+      } else {
+        temp = currentMonth - 1;
+        setCurrentMonth(temp);
+      }
+    }
+    refreshCalendar();
+  };
+
+  useEffect(() => {
+    refreshCalendar();
+  }, [refreshCalendar]);
 
   const champs1 = [
     {
@@ -122,6 +178,8 @@ export default function Widgets() {
       scores: 115,
     },
   ];
+
+  console.log(calendarData);
 
   return (
     <div className="wrapper">
@@ -337,62 +395,42 @@ export default function Widgets() {
                 className="vidgets__calendar calendar-vidgets"
               >
                 <header className="calendar-vidgets__header">
-                  <p className="calendar-vidgets__current-date"></p>
+                  <p className="calendar-vidgets__current-date">{`${
+                    getStringMonth(currentMonth).monthRu
+                  } ${currentYear}`}</p>
                   <div className="calendar-vidgets__icons">
-                    <span id="prev" className="calendar-vidgets__arrow">
+                    <span
+                      id="prev"
+                      className="calendar-vidgets__arrow"
+                      onClick={() => changeMonth(false)}
+                    >
                       <Image src={ArrowL} alt="Иконка" />
                     </span>
-                    <span id="next" className="calendar-vidgets__arrow">
+                    <span
+                      id="next"
+                      className="calendar-vidgets__arrow"
+                      onClick={() => changeMonth(true)}
+                    >
                       <Image src={ArrowR} alt="Иконка" />
                     </span>
                   </div>
                 </header>
                 <div className="calendar-vidgets__calendar">
                   <ul className="calendar-vidgets__weeks">
+                    <li>ВС</li>
                     <li>ПН</li>
                     <li>ВТ</li>
                     <li>СР</li>
                     <li>ЧТ</li>
                     <li>ПТ</li>
                     <li>СБ</li>
-                    <li>ВС</li>
                   </ul>
                   <ul className="calendar-vidgets__days">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li>10</li>
-                    <li>11</li>
-                    <li>12</li>
-                    <li>13</li>
-                    <li>14</li>
-                    <li>15</li>
-                    <li>16</li>
-                    <li>17</li>
-                    <li>18</li>
-                    <li>19</li>
-                    <li>20</li>
-                    <li>21</li>
-                    <li>22</li>
-                    <li>23</li>
-                    <li>24</li>
-                    <li>25</li>
-                    <li>26</li>
-                    <li>27</li>
-                    <li className="active">28</li>
-                    <li>29</li>
-                    <li>30</li>
-                    <li className="inactive">1</li>
-                    <li className="inactive">2</li>
-                    <li className="inactive">3</li>
-                    <li className="inactive">4</li>
-                    <li className="inactive">5</li>
+                    {calendarData.map((el) => (
+                      <li className={el.classname} key={el.id}>
+                        {el.day}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

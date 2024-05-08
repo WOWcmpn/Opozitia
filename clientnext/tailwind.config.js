@@ -11,7 +11,11 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        upload: "url('/src/img/icons/uploadfile.svg')",
+      },
+    },
   },
   plugins: [nextui()],
 };

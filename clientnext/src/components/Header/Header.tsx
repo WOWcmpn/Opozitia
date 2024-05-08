@@ -14,6 +14,7 @@ export const Header = ({
   onClick,
   onLogin,
   onSearch,
+  onNews,
 }: HeaderProps) => {
   const [burger, setBurger] = useState(false);
 
@@ -32,6 +33,12 @@ export const Header = ({
   const searchpopup = () => {
     if (onSearch !== undefined) {
       onSearch(1);
+    }
+  };
+
+  const newspopup = () => {
+    if (onNews !== undefined) {
+      onNews(1);
     }
   };
 
@@ -205,7 +212,7 @@ export const Header = ({
             href="#"
             data-popup="#popup-vote"
             className="bottom-header__link"
-            onClick={popup}
+            onClick={newspopup}
           >
             <span className="bottom-header__link-news">Сообщить новость</span>
             {/* <span className="bottom-header__link-news-icon">
