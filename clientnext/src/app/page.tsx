@@ -489,7 +489,7 @@ export default function Home() {
                                 id={n.id}
                                 title={n.title}
                                 text={n.description}
-                                img={LatestNews02}
+                                img={n.imgUrl}
                                 time={n.createdAtTime}
                                 category={n.category.toLowerCase()}
                     />

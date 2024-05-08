@@ -1,13 +1,13 @@
 import { StaticImageData } from "next/image";
 
 export interface IHomeNews {
-  news: INews[]
-  amount: number
-  mainNews: INews[]
-  swipeNews: INews[]
-  bottomNewsOne: INews[]
-  bottomNewsTwo: INews[]
-  bottomNewsThree: INews[]
+  news: INews[];
+  amount: number;
+  mainNews: INews[];
+  swipeNews: INews[];
+  bottomNewsOne: INews[];
+  bottomNewsTwo: INews[];
+  bottomNewsThree: INews[];
 }
 
 export interface ISingleNews {
@@ -23,45 +23,45 @@ export interface ISingleNews {
 }
 
 export interface IFullSingleNews {
-  news: ISingleNews
-  sidebarNews: ISidebarsNews[]
+  news: ISingleNews;
+  sidebarNews: ISideBarsNews[];
 }
 
 export interface INews {
   id: string;
   title: string;
-  imgUrl: StaticImageData;
+  imgUrl: string;
   createdAtTime: string;
   category: string;
-  description: string
+  description: string;
 }
 
-export interface ISidebarsNews {
+export interface ISideBarsNews {
   id: string;
   title: string;
-  imgUrl: StaticImageData;
+  imgUrl: string;
   createdAtTime: string;
-  description: string
+  description: string;
   category: string
 }
 
 export interface ILastNews {
   news: INews[];
-  amount: number
-  sidebarNews: ISidebarsNews[]
+  amount: number;
+  sidebarNews: ISideBarsNews[];
 }
 
 export interface IFullNews {
   news: INews[];
-  amount: number
-  sidebarNews: ISidebarsNews[]
+  amount: number;
+  sidebarNews: ISideBarsNews[];
 }
 
 export type LatestNewsProps = {
   id: string;
   title: string;
   text: string;
-  img: StaticImageData;
+  img: string;
   time: string;
   category: string
 };
@@ -69,8 +69,8 @@ export type LatestNewsProps = {
 export type MainBlockSlideProps = {
   title: string;
   img: StaticImageData;
-  category: string
-  id: string
+  category: string;
+  id: string;
 };
 
 export type GraphicsBlockProps = {
@@ -83,8 +83,8 @@ export type GraphicsBlockProps = {
 
 export type BlockContentProps = {
   title: string;
-  firstLink: string
-  firstCategory: string
+  firstLink: string;
+  firstCategory: string;
   img: StaticImageData;
   link1: string;
   link2: string;
@@ -100,14 +100,14 @@ export type HeaderProps = {
 };
 
 export type PageNewsProps = {
-  id: string
+  id: string;
   title: string;
-  img: StaticImageData | string;
+  img: string;
   link1: string;
   link2: string;
   link3: string;
-  createdAtTime: string
-  category: string
+  createdAtTime: string;
+  category: string;
 };
 
 export type CommentProps = {

@@ -5,10 +5,10 @@ import { Header } from "@/components/Header/Header";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { Select } from "@/components/Select/Select";
-import { NewsService } from '@/service/news.service';
+import { NewsService } from "@/service/news.service";
 
 export default async function Economy() {
-  const data = await NewsService.getEconomyNews()
+  const data = await NewsService.getEconomyNews();
 
   return (
     <>
@@ -28,16 +28,17 @@ export default async function Economy() {
                   <Select />
                 </header>
                 <div className="content-news__body">
-                  {data?.news!.map(n => (
-                    <PageNews key={n.id}
-                              id = {n.id}
-                              title= {n.title}
-                              link1= 'Экономика'
-                              link2='СНГ'
-                              link3="ЕС"
-                              img={MainBlock2}
-                              createdAtTime={n.createdAtTime}
-                              category='economy'
+                  {data?.news!.map((n) => (
+                    <PageNews
+                      key={n.id}
+                      id={n.id}
+                      title={n.title}
+                      link1="Экономика"
+                      link2="СНГ"
+                      link3="ЕС"
+                      img={n.imgUrl}
+                      createdAtTime={n.createdAtTime}
+                      category="economy"
                     />
                   ))}
                 </div>
@@ -59,14 +60,15 @@ export default async function Economy() {
                       Статьи по теме
                     </h3>
                   </a>
-                  {data?.sidebarNews!.map(n => (
-                    <LatestNews key={n.id}
-                                id={n.id}
-                                title={n.title}
-                                text={n.description}
-                                img={LatestNews02}
-                                time={n.createdAtTime}
-                                category={n.category.toLowerCase()}
+                  {data?.sidebarNews!.map((n) => (
+                    <LatestNews
+                      key={n.id}
+                      id={n.id}
+                      title={n.title}
+                      text={n.description}
+                      img={n.imgUrl}
+                      time={n.createdAtTime}
+                      category={n.category.toLowerCase()}
                     />
                   ))}
                 </aside>

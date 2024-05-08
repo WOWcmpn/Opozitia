@@ -8,7 +8,7 @@ export const LatestNews = ({ id, img, time, title, text, category }: LatestNewsP
       <a href={`${category}/${id}`}  className="latest-news__image">
         <picture>
           <source srcSet="img/latest-news/02.webp" type="image-webp" />
-          <Image src={img} alt="image" />
+          <img src={img} alt="image" />
         </picture>
       </a>
       <div className="latest-news__right">
