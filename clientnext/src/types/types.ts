@@ -1,6 +1,62 @@
 import { StaticImageData } from "next/image";
 
+export interface IHomeNews {
+  news: INews[]
+  amount: number
+  mainNews: INews[]
+  swipeNews: INews[]
+  bottomNewsOne: INews[]
+  bottomNewsTwo: INews[]
+  bottomNewsThree: INews[]
+}
+
+export interface ISingleNews {
+  id: string;
+  title: string;
+  imgUrl: StaticImageData;
+  createdAtTime: string;
+  createdAtDate: string;
+  viewDate: string;
+  category: string;
+  description: string;
+  fullImgUrl: StaticImageData;
+}
+
+export interface IFullSingleNews {
+  news: ISingleNews
+  sidebarNews: ISideBarsNews[]
+}
+
+export interface INews {
+  id: string;
+  title: string;
+  imgUrl: StaticImageData;
+  createdAtTime: string;
+  category: string;
+  description: string
+}
+
+export interface ISideBarsNews {
+  id: string;
+  title: string;
+  imgUrl: StaticImageData;
+  createdAtTime: string;
+  description: string
+}
+
+export interface ILastNews {
+  news: INews[];
+  amount: number
+}
+
+export interface IFullNews {
+  news: INews[];
+  amount: number
+  sidebarNews: ISideBarsNews[]
+}
+
 export type LatestNewsProps = {
+  id: string;
   title: string;
   text: string;
   img: StaticImageData;
@@ -10,6 +66,8 @@ export type LatestNewsProps = {
 export type MainBlockSlideProps = {
   title: string;
   img: StaticImageData;
+  category: string
+  id: string
 };
 
 export type GraphicsBlockProps = {
@@ -36,11 +94,14 @@ export type HeaderProps = {
 };
 
 export type PageNewsProps = {
+  id: string
   title: string;
-  img: StaticImageData;
+  img: StaticImageData | string;
   link1: string;
   link2: string;
   link3: string;
+  createdAtTime: string
+  category: string
 };
 
 export type CommentProps = {

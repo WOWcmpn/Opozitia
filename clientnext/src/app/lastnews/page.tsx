@@ -6,8 +6,11 @@ import { Header } from "@/components/Header/Header";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { Select } from "@/components/Select/Select";
+import { NewsService } from '@/service/news.service';
 
-export default function LastNews() {
+export default async function LastNews() {
+  const data = await NewsService.getLastNews()
+
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
@@ -24,29 +27,18 @@ export default function LastNews() {
                   <Select />
                 </header>
                 <div className="content-news__body">
-                  <PageNews
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС..."
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
-
-                  <PageNews
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС..."
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
-
-                  <PageNews
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС..."
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
+                  {data?.news!.map(n => (
+                    <PageNews key={n.id}
+                              id = {n.id}
+                              title= {n.title}
+                              link1= 'Бизнес'
+                              link2='СНГ'
+                              link3="ЕС"
+                              img={MainBlock2}
+                              createdAtTime={n.createdAtTime}
+                              category='business'
+                    />
+                  ))}
                 </div>
                 <br />
                 <button

@@ -1,24 +1,28 @@
 import { PageNewsProps } from "@/types/types";
 import Image from "next/image";
 import React from "react";
+import Link from 'next/link';
 
 export const PageNews = ({
+  id,
   title,
   link1,
   link2,
   link3,
   img,
+  createdAtTime,
+  category
 }: PageNewsProps) => {
   return (
     <div className="content-news__item item-content-news item-block">
       <div className="item-content-news__left">
         <div className="item-content-news__wrap-link">
-          <a href="#" className="item-content-news__link">
+          <Link href={`${category}/${id}`} className="item-content-news__link">
             <h3 className="item-content-news__title">{title}</h3>
-          </a>
+          </Link>
         </div>
         <div className="item-content-news__bottom">
-          <span className="item-content-news__time time">20:19</span>
+          <span className="item-content-news__time time">{createdAtTime}</span>
           <ul className="item-content-news__list-bottom list-bottom-search">
             <li className="list-bottom-search__item-bottom">
               <a href="#" className="list-bottom-search__link-bottom ">
