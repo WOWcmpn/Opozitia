@@ -64,6 +64,10 @@ export interface IRegisterUser {
   confirmPassword: string;
 }
 
+export interface IConfirmationCode {
+  confirmationCode: string;
+}
+
 export interface ILoginUser {
   email: string;
   password: string;
@@ -185,6 +189,35 @@ export type AccountPopupProps = {
 export type LoginPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
   setOption: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export type PassPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setOption: React.Dispatch<React.SetStateAction<number>>;
+  pass: string;
+  setPass: React.Dispatch<React.SetStateAction<string>>;
+  login: () => void;
+};
+
+export type RegisterEmailPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setOption: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export type RegisterPassPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setOption: React.Dispatch<React.SetStateAction<number>>;
+  login: string;
+  setLogin: React.Dispatch<React.SetStateAction<string>>;
+  pass: string;
+  setPass: React.Dispatch<React.SetStateAction<string>>;
+  confirmPass: string;
+  setConfirmPass: React.Dispatch<React.SetStateAction<string>>;
+  register: () => void;
 };
 
 export type SearchProps = {

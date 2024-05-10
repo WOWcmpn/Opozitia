@@ -1,13 +1,16 @@
 import Image from "next/image";
 import React from "react";
 import Logo from "@/img/logo.png";
-import { LoginPopupProps } from "@/types/types";
+import { LoginPopupProps, PassPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
 
 export const PopupPassword = ({
   onClick: onOption,
   setOption,
-}: LoginPopupProps) => {
+  pass,
+  setPass,
+  login,
+}: PassPopupProps) => {
   return (
     <motion.div
       id="popup-login"
@@ -45,7 +48,9 @@ export const PopupPassword = ({
               className="body-popup__form"
               onSubmit={(e: any) => {
                 e.preventDefault();
+                login();
                 setOption(3);
+                onOption(0);
               }}
             >
               <input
@@ -55,6 +60,8 @@ export const PopupPassword = ({
                 data-required
                 placeholder="Введите ваш пароль"
                 className="body-popup__input input"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
               />
               <button type="submit" className="body-popup__button">
                 Подтвердить

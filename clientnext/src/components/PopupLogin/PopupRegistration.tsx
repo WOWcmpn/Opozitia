@@ -1,17 +1,20 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "@/img/logo.png";
-import { LoginPopupProps } from "@/types/types";
+import { LoginPopupProps, RegisterEmailPopupProps } from "@/types/types";
 import Soc1 from "@/img/social/01.svg";
 import Soc2 from "@/img/social/02.svg";
 import Soc3 from "@/img/social/03.svg";
 import Soc4 from "@/img/social/04.svg";
 import { motion } from "framer-motion";
+import { AuthService } from "@/service/auth.service";
 
 export const PopupRegistration = ({
   onClick: onOption,
   setOption,
-}: LoginPopupProps) => {
+  email,
+  setEmail,
+}: RegisterEmailPopupProps) => {
   return (
     <motion.div
       id="popup-registration"
@@ -52,7 +55,7 @@ export const PopupRegistration = ({
               className="body-popup__form"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                setOption(2);
+                setOption(4);
               }}
             >
               <input
@@ -62,6 +65,8 @@ export const PopupRegistration = ({
                 data-required="email"
                 placeholder="E-mail@mail.ru"
                 className="body-popup__input input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <div className="body-popup__checkbox checkbox">
                 <input

@@ -2,12 +2,19 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Logo from "@/img/logo.png";
-import { LoginPopupProps } from "@/types/types";
+import { LoginPopupProps, RegisterPassPopupProps } from "@/types/types";
 
 export const PopupRegPass = ({
   onClick: onOption,
   setOption,
-}: LoginPopupProps) => {
+  login,
+  setLogin,
+  pass,
+  setPass,
+  confirmPass,
+  setConfirmPass,
+  register,
+}: RegisterPassPopupProps) => {
   return (
     <motion.div
       id="popup-registration-password"
@@ -49,6 +56,7 @@ export const PopupRegPass = ({
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
+                register();
                 setOption(5);
               }}
             >
@@ -58,6 +66,8 @@ export const PopupRegPass = ({
                 placeholder="Введите ваше имя"
                 className="body-popup__input-name input"
                 required
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
               />
               <input
                 type="password"
@@ -67,6 +77,8 @@ export const PopupRegPass = ({
                 data-required
                 placeholder="Введите ваш пароль"
                 className="body-popup__input-password input"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
               />
               <input
                 type="password"
@@ -76,6 +88,8 @@ export const PopupRegPass = ({
                 data-required
                 placeholder="Повторите введенный пароль"
                 className="body-popup__input-password input"
+                value={confirmPass}
+                onChange={(e) => setConfirmPass(e.target.value)}
               />
               <button
                 type="submit"

@@ -38,26 +38,6 @@ export default function Home() {
       setData(data);
     }
 
-    // async function register() {
-    //   const data = await AuthService.register({
-    //     email: "testg@gmail.com",
-    //     login: "Test21324",
-    //     password: "Test12345gfgfgfgf",
-    //     confirmPassword: "Test12345gfgfgfgf",
-    //   });
-    //   console.log(data);
-    // }
-
-    // register();
-
-    async function login() {
-      const data = await AuthService.login({
-        email: "testg@gmail.com",
-        password: "Test12345gfgfgfgf",
-      });
-      console.log(data);
-    }
-    login();
     getData();
   }, []);
 
