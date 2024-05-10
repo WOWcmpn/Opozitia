@@ -64,6 +64,11 @@ export interface IRegisterUser {
   confirmPassword: string;
 }
 
+export interface ILoginUser {
+  email: string;
+  password: string;
+}
+
 export type LatestNewsProps = {
   id: string;
   title: string;

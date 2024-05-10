@@ -23,6 +23,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
 import { IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
+import { AuthService } from "@/service/auth.service";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -37,6 +38,26 @@ export default function Home() {
       setData(data);
     }
 
+    // async function register() {
+    //   const data = await AuthService.register({
+    //     email: "testg@gmail.com",
+    //     login: "Test21324",
+    //     password: "Test12345gfgfgfgf",
+    //     confirmPassword: "Test12345gfgfgfgf",
+    //   });
+    //   console.log(data);
+    // }
+
+    // register();
+
+    async function login() {
+      const data = await AuthService.login({
+        email: "testg@gmail.com",
+        password: "Test12345gfgfgfgf",
+      });
+      console.log(data);
+    }
+    login();
     getData();
   }, []);
 
