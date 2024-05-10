@@ -75,7 +75,7 @@ export type LatestNewsProps = {
 
 export type MainBlockSlideProps = {
   title: string;
-  img: StaticImageData;
+  img: StaticImageData | string;
   category: string;
   id: string;
 };

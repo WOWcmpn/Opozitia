@@ -23,7 +23,6 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
 import { IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
-import { AuthService } from "@/service/auth.service";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -37,17 +36,6 @@ export default function Home() {
       const data = await NewsService.getNewsHome();
       setData(data);
     }
-    const regAcc = async () => {
-      const regi = await AuthService.register({
-        email: "testemail@gmail.com",
-        login: "test",
-        password: "Test1234",
-        confirmPassword: "Test1234",
-      });
-      console.log(regi);
-    };
-
-    regAcc();
 
     getData();
   }, []);
@@ -207,6 +195,13 @@ export default function Home() {
                         </Swiper>
                       </div>
                     </div>
+
+                    {/* <a
+                    href="exchange.html#tab-0-1"
+                    className="graphics-left-block__image"
+                  >
+                    <Image fill src="/img/graphics/01.svg" alt="image" />
+                  </a> */}
                   </div>
                 </div>
 

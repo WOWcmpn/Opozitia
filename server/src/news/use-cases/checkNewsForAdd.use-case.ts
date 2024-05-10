@@ -23,7 +23,7 @@ export class CheckNewsForAddUseCase {
       const fullNews = await getFullNewsHelper(news.link, fullImgUuid);
       setTimeout(() => {
         const validFullImg = fs
-          .readdirSync('../clientnext/src/img/fullImage-news')
+          .readdirSync('../clientnext/public/img/fullImage-news')
           .find((img) => img === `${fullImgUuid}.webp`);
         return this.newsRepository.addNews({
           link: news.link!,
@@ -47,14 +47,14 @@ export class CheckNewsForAddUseCase {
     } else if (!isExists) {
       const uuidImgUrl = uuidv4();
       const fullImgUuid = uuidv4();
-      wget.download(news.imgUrl!, `../clientnext/src/img/preview-images/${uuidImgUrl}.webp`);
+      wget.download(news.imgUrl!, `../clientnext/public/img/preview-images/${uuidImgUrl}.webp`);
       const fullNews = await getFullNewsHelperRambler(news.link, fullImgUuid);
       setTimeout(() => {
         const validImg = fs
-          .readdirSync('../clientnext/src/img/preview-images')
+          .readdirSync('../clientnext/public/img/preview-images')
           .find((img) => img === `${uuidImgUrl}.webp`);
         const validFullImg = fs
-          .readdirSync('../clientnext/src/img/fullImage-news')
+          .readdirSync('../clientnext/public/img/fullImage-news')
           .find((img) => img === `${fullImgUuid}.webp`);
         return this.newsRepository.addNews({
           link: news.link!,
