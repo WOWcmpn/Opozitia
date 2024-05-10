@@ -53,6 +53,7 @@ export default function Home() {
   }, []);
 
   const link1 = data?.bottomNewsOne.map((n) => n.title);
+  //comment
 
   return (
     <NextUIProvider>
