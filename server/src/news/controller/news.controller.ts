@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Query } from '@nestjs/common';
+import { Controller, Get, HttpCode, NotFoundException, Param, Query } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
@@ -16,12 +16,19 @@ export class NewsController {
     return this.getNewsUseCase.getNews();
   }
 
+  @Get('search')
+  @HttpCode(200)
+  async findBySearch(@Query() query: { searchNameTerm: string }) {
+    const data = await this.newsQueryRepository.getBySearch(query.searchNameTerm);
+    if (data.news.length === 0) throw new NotFoundException();
+    return { amount: data.count, news: data.news };
+  }
+
   @Get('economika')
   @HttpCode(200)
-  async findAllEconomic(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
+  async findAllEconomic(@Query() query: { sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Economy,
-      query.form,
       query.sortBy,
       query.pageNumber,
     );
@@ -31,10 +38,9 @@ export class NewsController {
 
   @Get('policy')
   @HttpCode(200)
-  async findAllPolicy(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
+  async findAllPolicy(@Query() query: { sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Policy,
-      query.form,
       query.sortBy,
       query.pageNumber,
     );
@@ -44,10 +50,9 @@ export class NewsController {
 
   @Get('business')
   @HttpCode(200)
-  async findAllBusiness(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
+  async findAllBusiness(@Query() query: { sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Business,
-      query.form,
       query.sortBy,
       query.pageNumber,
     );
@@ -57,10 +62,9 @@ export class NewsController {
 
   @Get('world')
   @HttpCode(200)
-  async getAllWorld(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
+  async getAllWorld(@Query() query: { sortBy: string; pageNumber: number }) {
     const news = await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.World,
-      query.form,
       query.sortBy,
       query.pageNumber,
     );
@@ -70,8 +74,8 @@ export class NewsController {
 
   @Get('last-news')
   @HttpCode(200)
-  async getLastNews(@Query() query: { form: string; sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllLastNews(query.form, query.sortBy, query.pageNumber);
+  async getLastNews(@Query() query: { sortBy: string; pageNumber: number }) {
+    const news = await this.newsQueryRepository.getAllLastNews(query.sortBy, query.pageNumber);
     const sidebarNews = await this.newsQueryRepository.getLastNewsSidebar('');
     return { news, amount: news.length, sidebarNews };
   }

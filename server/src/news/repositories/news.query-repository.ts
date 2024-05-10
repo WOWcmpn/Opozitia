@@ -7,38 +7,43 @@ import { Repository } from 'typeorm';
 export class NewsQueryRepository {
   constructor(@InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>) {}
 
-  async getAllNewsByCategory(
-    category: string,
-    searchNameTerm: string = ' ',
-    sortBy: string,
-    pageNumber: number,
-  ) {
-    return await this.newsRepository
+  async getBySearch(searchNameTerm: string = '') {
+    const news = await this.newsRepository
       .createQueryBuilder('n')
-      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.category'])
-      .where('n.category = :category', { category })
-      .andWhere('n.title ilike :name', { name: `%${searchNameTerm.toString()}%` })
+      .select()
+      .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(20)
       .getMany();
+
+    const count = await this.newsRepository
+      .createQueryBuilder('n')
+      .select()
+      .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
+      .getCount();
+    return { count, news };
   }
 
-  async getNewsByTitle(title: string | undefined) {
-    return await this.newsRepository.findOneBy({ title });
+  async getAllNewsByCategory(category: string, sortBy: string, pageNumber: number = 1) {
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.category'])
+      .where('n.category = :category', { category })
+      .orderBy('n.createdAtDate', 'DESC')
+      .addOrderBy('n.createdAtTime', 'DESC')
+      .offset(pageNumber)
+      .limit(20)
+      .getMany();
   }
 
-  async getNewsById(id: string) {
-    return await this.newsRepository.findOneBy({ id });
-  }
-
-  async getAllLastNews(searchNameTerm: string = ' ', sortBy: string, pageNumber: number) {
+  async getAllLastNews(sortBy: string, pageNumber: number = 1) {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-      .where('n.title ilike :name', { name: `%${searchNameTerm.toString()}%` })
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
+      .offset(pageNumber)
       .getMany();
   }
 
@@ -82,5 +87,13 @@ export class NewsQueryRepository {
       .limit(pageSize)
       .offset(pageNumber)
       .getMany();
+  }
+
+  async getNewsByTitle(title: string | undefined) {
+    return await this.newsRepository.findOneBy({ title });
+  }
+
+  async getNewsById(id: string) {
+    return await this.newsRepository.findOneBy({ id });
   }
 }
