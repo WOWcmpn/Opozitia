@@ -16,8 +16,7 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
         className="slide-main-block__right-link"
       >
         <picture>
-          <source srcSet="img/main-block/01.webp" type="image-webp" />
-          <Image src={img} alt="Image" />
+          <Image width={130} height={150} src={`/img/preview-images/${img}`} alt="Image" />
         </picture>
       </Link>
       <div className="slide-main-block__right">
