@@ -42,7 +42,7 @@ export interface ISideBarsNews {
   imgUrl: string;
   createdAtTime: string;
   description: string;
-  category: string
+  category: string;
 }
 
 export interface ILastNews {
@@ -57,13 +57,20 @@ export interface IFullNews {
   sidebarNews: ISideBarsNews[];
 }
 
+export interface IRegisterUser {
+  email: string;
+  login: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export type LatestNewsProps = {
   id: string;
   title: string;
   text: string;
   img: string;
   time: string;
-  category: string
+  category: string;
 };
 
 export type MainBlockSlideProps = {

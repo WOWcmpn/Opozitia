@@ -4,7 +4,7 @@ import MainBlock from "@/img/main-block/01.png";
 import Graphics1 from "@/img/graphics/01.svg";
 import ActualNews1 from "@/img/actual-news/01.jpg";
 import ActualNews2 from "@/img/actual-news/02.jpg";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,26 +21,38 @@ import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
-import { IHomeNews } from '@/types/types';
-import { NewsService } from '@/service/news.service';
+import { IHomeNews } from "@/types/types";
+import { NewsService } from "@/service/news.service";
+import { AuthService } from "@/service/auth.service";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
   const [option, setOption] = useState(0);
   const [login, setLogin] = useState(0);
   const [search, setSearch] = useState(0);
-  const [data, setData] = useState<IHomeNews | null>(null)
+  const [data, setData] = useState<IHomeNews | null>(null);
 
   useEffect(() => {
     async function getData() {
-      const data = await NewsService.getNewsHome()
+      const data = await NewsService.getNewsHome();
       setData(data);
     }
+    const regAcc = async () => {
+      const regi = await AuthService.register({
+        email: "testemail@gmail.com",
+        login: "test",
+        password: "Test1234",
+        confirmPassword: "Test1234",
+      });
+      console.log(regi);
+    };
+
+    regAcc();
 
     getData();
   }, []);
 
-  const link1 = data?.bottomNewsOne.map(n => (n.title))
+  const link1 = data?.bottomNewsOne.map((n) => n.title);
 
   return (
     <NextUIProvider>
@@ -97,8 +109,8 @@ export default function Home() {
                           swiperRef.current = swiper;
                         }}
                       >
-                        {data?.swipeNews.map(n => (
-                          <SwiperSlide  key={n.id}>
+                        {data?.swipeNews.map((n) => (
+                          <SwiperSlide key={n.id}>
                             <MainBlockSlide
                               img={MainBlock}
                               title={n.title}
@@ -194,13 +206,6 @@ export default function Home() {
                         </Swiper>
                       </div>
                     </div>
-
-                    {/* <a
-                    href="exchange.html#tab-0-1"
-                    className="graphics-left-block__image"
-                  >
-                    <Image fill src="/img/graphics/01.svg" alt="image" />
-                  </a> */}
                   </div>
                 </div>
 
@@ -438,7 +443,7 @@ export default function Home() {
                       }}
                       speed={1000}
                     >
-                      {data?.mainNews.map(n => (
+                      {data?.mainNews.map((n) => (
                         <SwiperSlide key={n.id}>
                           <BlockContent
                             title={n.title}
@@ -476,22 +481,20 @@ export default function Home() {
                   {/* </div> */}
                 </div>
                 <aside className="block__latest-news latest-news">
-                  <a
-                    href="lastnews"
-                    className="latest-news__main-title-link"
-                  >
+                  <a href="lastnews" className="latest-news__main-title-link">
                     <h3 className="latest-news__title latest-news__title_posts">
                       Последние новости
                     </h3>
                   </a>
-                  {data?.news!.map(n => (
-                    <LatestNews key={n.id}
-                                id={n.id}
-                                title={n.title}
-                                text={n.description}
-                                img={n.imgUrl}
-                                time={n.createdAtTime}
-                                category={n.category.toLowerCase()}
+                  {data?.news!.map((n) => (
+                    <LatestNews
+                      key={n.id}
+                      id={n.id}
+                      title={n.title}
+                      text={n.description}
+                      img={n.imgUrl}
+                      time={n.createdAtTime}
+                      category={n.category.toLowerCase()}
                     />
                   ))}
 
