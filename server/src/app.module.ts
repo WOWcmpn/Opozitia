@@ -11,6 +11,8 @@ import { QuizModule } from './quiz/quiz.module';
 // import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 // const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
@@ -51,8 +53,8 @@ import { JwtModule } from '@nestjs/jwt';
     ScheduleModule.forRoot(),
     NewsModule,
     QuizModule,
-    // UsersModule,
-    // AuthModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
