@@ -1,8 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { newsCategory } from '../../base/types/newsModels';
-import { v4 as uuidv4 } from 'uuid';
+import { favoriteNewsCategory } from '../../base/types/newsModels';
 import { add } from 'date-fns/add';
-import { inputUserModel } from '../../base/types/userModels';
+import { InputUserModel } from '../../base/types/userModels';
 import { AuthWhiteListEntity } from '../../auth/domain/authWhiteList.entity';
 
 export class EmailConfirmation {
@@ -30,13 +29,13 @@ export class UserEntity {
   passwordHash: string;
 
   @Column({ nullable: true })
-  age: number;
+  age: Date;
 
   @Column({ nullable: true })
   location: string;
 
-  @Column({ nullable: true, enum: newsCategory })
-  favoriteNewsCategory: newsCategory;
+  @Column({ nullable: true, enum: favoriteNewsCategory })
+  favoriteNewsCategory: favoriteNewsCategory;
 
   @Column({ type: 'jsonb' })
   emailConfirmation: EmailConfirmation;
@@ -53,18 +52,24 @@ export class UserEntity {
   @OneToMany(() => AuthWhiteListEntity, (aw) => aw.usersId)
   whiteTokens: AuthWhiteListEntity;
 
-  static createUserFirstStep(userModel: inputUserModel, passwordHash: string) {
+  static createUserFirstStep(userModel: InputUserModel, passwordHash: string) {
     const user = new UserEntity();
+    const confirmationCode = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, '0');
+    const recoveryCode = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, '0');
 
     user.email = userModel.email;
     user.login = userModel.login;
     user.passwordHash = passwordHash;
     user.emailConfirmation = {
-      confirmationCode: uuidv4(),
+      confirmationCode: confirmationCode,
       expirationDate: add(new Date(), { minutes: 3 }),
     };
     user.recoveryConfirmation = {
-      recoveryCode: uuidv4(),
+      recoveryCode: recoveryCode,
       expirationDate: add(new Date(), { months: 100 }),
     };
     user.isConfirmed = false;

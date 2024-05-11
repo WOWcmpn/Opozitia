@@ -7,10 +7,11 @@ import { UsersQueryRepository } from './repositories/users.query-repository';
 import { AuthService } from '../auth/service/auth.service';
 import { EmailManager } from '../base/helpers/emailManager';
 import { AuthWhiteListEntity } from '../auth/domain/authWhiteList.entity';
+import { ChangeProfileUseCase } from './use-cases/changeProfile.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, AuthWhiteListEntity])],
   controllers: [UsersController],
-  providers: [UsersRepository, UsersQueryRepository, AuthService, EmailManager],
+  providers: [UsersRepository, UsersQueryRepository, AuthService, EmailManager, ChangeProfileUseCase],
 })
 export class UsersModule {}

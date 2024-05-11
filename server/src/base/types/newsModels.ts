@@ -25,3 +25,10 @@ export enum newsCategory {
   Business = 'Business',
   World = 'World',
 }
+
+export enum favoriteNewsCategory {
+  Экономика = 'Экономика',
+  Политика = 'Политика',
+  Бизнес = 'Бизнес',
+  Мир = 'Мир',
+}

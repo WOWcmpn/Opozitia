@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { loginUserModel } from '../../base/types/userModels';
+import { LoginUserModel } from '../../base/types/userModels';
 import { UsersQueryRepository } from '../../users/repositories/users.query-repository';
 import * as bcrypt from 'bcrypt';
 
@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 export class CheckCredentialsUseCase {
   constructor(private readonly usersQueryRepository: UsersQueryRepository) {}
 
-  async checkCredentials(inputData: loginUserModel) {
+  async checkCredentials(inputData: LoginUserModel) {
     const user = await this.usersQueryRepository.getUserByEmail(inputData.email);
     if (!user) throw new UnauthorizedException();
     if (!user.isConfirmed) throw new UnauthorizedException();

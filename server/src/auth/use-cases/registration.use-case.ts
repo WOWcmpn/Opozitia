@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { EmailManager } from '../../base/helpers/emailManager';
 import { UserEntity } from '../../users/domain/user.entity';
-import { inputUserModel, viewUserModel } from '../../base/types/userModels';
+import { InputUserModel, ViewUserModel } from '../../base/types/userModels';
 import { AuthService } from '../service/auth.service';
 import { UsersQueryRepository } from '../../users/repositories/users.query-repository';
 import { UsersRepository } from '../../users/repositories/users.repository';
@@ -15,7 +15,7 @@ export class RegistrationUseCase {
     private readonly usersRepository: UsersRepository,
   ) {}
 
-  async createUserForRegistration(userModel: inputUserModel) {
+  async createUserForRegistration(userModel: InputUserModel) {
     const isExistsEmail = await this.usersQueryRepository.getUserByEmail(userModel.email);
     const isExistsLogin = await this.usersQueryRepository.getUserByLogin(userModel.login);
     if (isExistsEmail)
@@ -26,7 +26,7 @@ export class RegistrationUseCase {
       throw new BadRequestException([{ message: "Passwords doesn't match", field: 'password' }]);
     } else {
       const passwordHash = await this.authService.createPasswordHash(userModel.password);
-      const user: viewUserModel = UserEntity.createUserFirstStep(userModel, passwordHash);
+      const user: ViewUserModel = UserEntity.createUserFirstStep(userModel, passwordHash);
       await this.emailManager.sendEmailConfirmationCode(
         userModel.email,
         user.emailConfirmation.confirmationCode,

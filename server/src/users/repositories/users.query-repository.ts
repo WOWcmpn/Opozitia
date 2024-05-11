@@ -7,6 +7,10 @@ import { Repository } from 'typeorm';
 export class UsersQueryRepository {
   constructor(@InjectRepository(UserEntity) private readonly usersRepository: Repository<UserEntity>) {}
 
+  async getUserById(id: string) {
+    return await this.usersRepository.findOneBy({ id });
+  }
+
   async getUserByEmail(email: string) {
     return await this.usersRepository.findOneBy({ email });
   }

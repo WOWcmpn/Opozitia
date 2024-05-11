@@ -7,8 +7,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { QuizModule } from './quiz/quiz.module';
-// import { UsersModule } from './users/users.module';
-// import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from './users/users.module';
