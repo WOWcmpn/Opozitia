@@ -1,6 +1,4 @@
 import React from "react";
-import MainBlock2 from "@/img/main-block/02.png";
-import LatestNews02 from "@/img/latest-news/02.png";
 import { Header } from "@/components/Header/Header";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";

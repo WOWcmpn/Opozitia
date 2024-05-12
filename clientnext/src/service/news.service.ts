@@ -30,7 +30,7 @@ export const NewsService = {
   },
 
   async getNewsById(id: string): Promise<IFullSingleNews | null> {
-    const { data } = await axios.get<IFullSingleNews>(`/${id}`);
+    const { data } = await axios.get<IFullSingleNews>(`news/${id}`);
     return data;
   },
 

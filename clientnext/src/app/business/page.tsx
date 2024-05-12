@@ -1,4 +1,3 @@
-import LatestNews02 from "@/img/latest-news/02.png";
 import { Header } from "@/components/Header/Header";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
@@ -66,7 +65,7 @@ export default async function Business () {
                       id={n.id}
                       title={n.title}
                       text={n.description}
-                      img={LatestNews02}
+                      img={n.imgUrl}
                       time={n.createdAtTime}
                                 category={n.category.toLowerCase()}
                     />

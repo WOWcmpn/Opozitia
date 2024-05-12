@@ -6,13 +6,11 @@ import CopyImage from '@/img/icons/copy.svg';
 import CopyLinkImage from '@/img/icons/copy-link.svg';
 import fb from '@/img/icons/fb.svg';
 import twitter from '@/img/icons/twitter.svg';
-import MainBlock from '@/img/main-block/02.png';
 import ShareGrey from '@/img/icons/share-gray.svg';
 import SortIcon from '@/img/icons/sort.svg';
 import { Comments } from '@/components/Comment/Comments';
 import CommentImage from '@/img/icons/comments-image.png';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
-import LatestNews02 from '@/img/latest-news/02.png';
 import { NewsService } from '@/service/news.service';
 import MainBlock2 from "@/img/main-block/02.png";
 
@@ -296,7 +294,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
               <div className="news-single__wrap-right sidebar">
                 <aside className="news-single__latest-news latest-news latest-news_big">
                   <a
-                    href="last-news.html"
+                    href="lastnews"
                     className="latest-news__main-title-link"
                   >
                     <h3 className="latest-news__title">Latest news</h3>
@@ -436,8 +434,9 @@ export default async function NewsId({params} : {params: {id: string}}) {
                                 id={n.id}
                                 title={n.title}
                                 text={n.description}
-                                img={LatestNews02}
+                                img={n.imgUrl}
                                 time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
                     />
                   ))}
                 </aside>
