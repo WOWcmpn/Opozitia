@@ -6,10 +6,11 @@ import { NewsRepository } from './repositories/news.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NewsEntity } from './domain/news.entity';
 import { NewsQueryRepository } from './repositories/news.query-repository';
+import { CreateNewsUseCase } from './use-cases/createNews.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([NewsEntity])],
   controllers: [NewsController],
-  providers: [GetNewsUseCase, CheckNewsForAddUseCase, NewsRepository, NewsQueryRepository],
+  providers: [GetNewsUseCase, CheckNewsForAddUseCase, NewsRepository, NewsQueryRepository, CreateNewsUseCase],
 })
 export class NewsModule {}

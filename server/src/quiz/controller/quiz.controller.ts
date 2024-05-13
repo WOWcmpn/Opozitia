@@ -4,8 +4,10 @@ import { SendVoteUseCase } from '../use-cases/sendVote.use-case';
 import { QuizQueryRepository } from '../repositories/quiz.query-repository';
 import { AuthService } from '../../auth/service/auth.service';
 import { quizVotes, sendVoteModel } from '../../base/types/quizModels';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('quiz')
+@ApiTags('Quiz news')
 export class QuizController {
   constructor(
     private readonly sendVoteUseCase: SendVoteUseCase,

@@ -17,6 +17,10 @@ export class UsersRepository {
     return await this.usersRepository.update({ id: userId }, { isConfirmed: true });
   }
 
+  async updatePassword(userId: string, password: string) {
+    return await this.usersRepository.update({ id: userId }, { passwordHash: password });
+  }
+
   async updateProfile(
     userId: string,
     login: null | string,

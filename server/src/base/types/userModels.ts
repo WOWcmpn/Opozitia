@@ -9,6 +9,21 @@ import {
   MaxLength,
 } from 'class-validator';
 import { favoriteNewsCategory } from './newsModels';
+import { ApiProperty } from '@nestjs/swagger';
+
+export class CreateNewPassword {
+  @IsString()
+  @Length(6, 25)
+  newPassword: string;
+
+  @IsString()
+  recoveryCode: string;
+}
+
+export class ResendConfirmation {
+  @IsEmail()
+  email: string;
+}
 
 export class ChangeProfile {
   @IsString()
@@ -22,7 +37,7 @@ export class ChangeProfile {
   email: string | null;
 
   @IsString()
-  @Length(10, 25)
+  @Length(6, 25)
   @IsOptional()
   password: string | null;
 
@@ -49,10 +64,10 @@ export class InputUserModel {
   @Length(3, 15)
   login: string;
 
-  @Length(10, 25)
+  @Length(6, 25)
   password: string;
 
-  @Length(10, 25)
+  @Length(6, 25)
   confirmPassword: string;
 }
 
@@ -62,10 +77,12 @@ export class InputConfirmationCode {
 }
 
 export class LoginUserModel {
-  @IsEmail()
+  @ApiProperty()
+  // @IsEmail()
   email: string;
 
-  @Length(10, 25)
+  @ApiProperty()
+  // @Length(10, 25)
   password: string;
 }
 
@@ -84,4 +101,9 @@ export class ViewUserModel {
   };
   isConfirmed: boolean;
   createdAt: Date;
+}
+
+export class TokenModel {
+  @ApiProperty()
+  accessToken: string;
 }

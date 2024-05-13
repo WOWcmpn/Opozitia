@@ -1,3 +1,6 @@
+import { IsEnum, IsString, Length } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+
 export interface newsEconomicModel {
   link: string | undefined;
   title: string | undefined;
@@ -31,4 +34,23 @@ export enum favoriteNewsCategory {
   Политика = 'Политика',
   Бизнес = 'Бизнес',
   Мир = 'Мир',
+}
+
+export class CreateNews {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  file: any;
+
+  @ApiProperty()
+  @IsString()
+  @Length(8, 35)
+  title: string;
+
+  @ApiProperty()
+  @IsString()
+  @Length(30, 5000)
+  description: string;
+
+  @ApiProperty()
+  @IsEnum(favoriteNewsCategory)
+  category: favoriteNewsCategory;
 }

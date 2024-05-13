@@ -26,6 +26,13 @@ export class UsersQueryRepository {
       .getOne();
   }
 
+  async getUserByRecoveryCode(recoveryCode: string) {
+    return await this.usersRepository
+      .createQueryBuilder('u')
+      .where(`u.recoveryConfirmation ->>'recoveryCode' = :code`, { code: recoveryCode })
+      .getOne();
+  }
+
   async getUserProfile(userId: string) {
     return await this.usersRepository
       .createQueryBuilder('u')

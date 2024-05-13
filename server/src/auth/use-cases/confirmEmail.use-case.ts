@@ -1,14 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersQueryRepository } from '../../users/repositories/users.query-repository';
 import { UsersRepository } from '../../users/repositories/users.repository';
-import { EmailManager } from '../../base/helpers/emailManager';
 
 @Injectable()
 export class ConfirmEmailUseCase {
   constructor(
     private readonly usersQueryRepository: UsersQueryRepository,
     private readonly usersRepository: UsersRepository,
-    private readonly emailManager: EmailManager,
   ) {}
 
   async confirmEmail(confirmationCode: string) {
@@ -21,7 +19,6 @@ export class ConfirmEmailUseCase {
     if (user.emailConfirmation.expirationDate < new Date())
       throw new BadRequestException([{ message: 'expirationDate expired', field: 'code' }]);
 
-    await this.emailManager.sendPasswordRecovery(user.email, user.recoveryConfirmation.recoveryCode);
     return await this.usersRepository.updateConfirmation(user.id);
   }
 }

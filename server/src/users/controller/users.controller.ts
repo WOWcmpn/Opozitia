@@ -5,8 +5,10 @@ import { ChangeProfile } from '../../base/types/userModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { ChangeProfileUseCase } from '../use-cases/changeProfile.use-case';
 import { UsersQueryRepository } from '../repositories/users.query-repository';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
+@ApiTags('Users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,

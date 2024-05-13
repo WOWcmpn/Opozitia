@@ -1,19 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-// import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import { useContainer } from 'class-validator';
 import { HttpExceptionFilter } from './httpExceptionFilter';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const config = new DocumentBuilder().setTitle('Новостной портал').setVersion('1.0').addBearerAuth().build();
+  const document = SwaggerModule.createDocument(app, config);
 
+  SwaggerModule.setup('swagger', app, document);
   app.use(cookieParser());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  app.enableCors({ credentials: true });
+  app.enableCors({ credentials: true, origin: true });
   app.useGlobalPipes(
     new ValidationPipe({
       stopAtFirstError: true,
@@ -39,8 +42,7 @@ async function bootstrap() {
   app.set('view engine', 'ejs');
   app.setBaseViewsDir(join(__dirname, '..', 'clientnext'));
 
-  // app.useStaticAssets(join(__dirname, '..', 'clientnext'));
-
   await app.listen(4000);
+  console.log('Server is listening on: http://localhost:4000');
 }
 bootstrap();

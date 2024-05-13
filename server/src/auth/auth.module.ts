@@ -16,6 +16,8 @@ import { AuthBlackListRepository } from './repositories/authBlackList.repository
 import { LogoutUseCase } from './use-cases/logout.use-case';
 import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { AccessTokenGuard } from './guards/accessToken.guard';
+import { PasswordRecoveryUseCase } from './use-cases/passwordRecovery.use-case';
+import { NewPasswordUseCase } from './use-cases/newPassword.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, AuthBlackListEntity, AuthWhiteListEntity])],
@@ -33,6 +35,8 @@ import { AccessTokenGuard } from './guards/accessToken.guard';
     AuthBlackListRepository,
     RefreshTokenGuard,
     AccessTokenGuard,
+    PasswordRecoveryUseCase,
+    NewPasswordUseCase,
   ],
 })
 export class AuthModule {}
