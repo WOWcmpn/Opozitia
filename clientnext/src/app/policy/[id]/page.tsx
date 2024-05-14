@@ -12,10 +12,14 @@ import { Comments } from '@/components/Comment/Comments';
 import CommentImage from '@/img/icons/comments-image.png';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
 import { NewsService } from '@/service/news.service';
-import MainBlock2 from "@/img/main-block/02.png";
 
 export default async function NewsId({params} : {params: {id: string}}) {
   const data = await NewsService.getNewsById(params.id)
+
+  let isUrl = false;
+  if (data!.news.fullImgUrl.substring(0, 4) == "http") isUrl = true;
+
+  const paragraphs = data?.news.description.split('.').filter(paragraph => paragraph.trim() !== '');
 
   return (
     <div className="wrapper">
@@ -101,7 +105,15 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="main-block-news__image">
                     <picture>
-                      <Image src={MainBlock2} alt="Картинка" />
+                      {isUrl ? (
+                        <Image fill={true} src={data!.news.fullImgUrl} alt="Image" />
+                      ) : (
+                        <Image
+                          fill={true}
+                          src={`/img/fullImage-news/${data!.news.fullImgUrl}`}
+                          alt="Image"
+                        />
+                      )}
                     </picture>
                   </div>
                 </div>
@@ -110,16 +122,12 @@ export default async function NewsId({params} : {params: {id: string}}) {
                     {data?.news.title}
                   </h2>
                   <div className="content-news-single__text">
-                    <p className="text">
-                      {data?.news.description}
-                    </p>
+                    {paragraphs!.map((paragraph, index) => (
+                      <p key={index} className="text" >{`${paragraph}.`}</p>
+                    ))}
                   </div>
                   <div className="content-news-single__bottom">
                     <span className="content-news-single__time">{data?.news.createdAtTime}</span>
-
-
-
-
                     <a
                       href="#"
                       className="content-news-single__share flex gap-[5px]"

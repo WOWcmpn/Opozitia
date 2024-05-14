@@ -1,6 +1,7 @@
 import { MainBlockSlideProps } from "@/types/types";
 import Image from "next/image";
 import Link from 'next/link';
+import React from 'react';
 
 export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps) => {
   let viewCategory = ''
@@ -9,6 +10,9 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
   if(category === 'economy') viewCategory = 'Экономика'
   if(category === 'business') viewCategory = 'Бизнес'
 
+  let isUrl = false;
+  if (img.substring(0, 4) == "http") isUrl = true;
+
   return (
     <div className="main-block__slide slide-main-block swiper-slide">
       <Link
@@ -16,7 +20,15 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
         className="slide-main-block__right-link"
       >
         <picture>
-          <Image width={130} height={150} src={`/img/preview-images/${img}`} alt="Image" />
+          {isUrl ? (
+            <Image width={130} height={90} src={img} alt="Image" />
+          ) : (
+            <Image
+              width={130} height={90}
+              src={`/img/preview-images/${img}`}
+              alt="Image"
+            />
+          )}
         </picture>
       </Link>
       <div className="slide-main-block__right">

@@ -12,10 +12,14 @@ import { Comments } from '@/components/Comment/Comments';
 import CommentImage from '@/img/icons/comments-image.png';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
 import { NewsService } from '@/service/news.service';
-import MainBlock2 from "@/img/main-block/02.png";
 
 export default async function NewsId({params} : {params: {id: string}}) {
   const data = await NewsService.getNewsById(params.id)
+
+  let isUrl = false;
+  if (data!.news.fullImgUrl.substring(0, 4) == "http") isUrl = true;
+
+  const paragraphs = data?.news.description.split('.').filter(paragraph => paragraph.trim() !== '');
 
   return (
     <div className="wrapper">
@@ -101,7 +105,15 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="main-block-news__image">
                     <picture>
-                      <Image src={MainBlock2} alt="Картинка" />
+                      {isUrl ? (
+                        <Image fill={true} src={data!.news.fullImgUrl} alt="Image" />
+                      ) : (
+                        <Image
+                          fill={true}
+                          src={`/img/fullImage-news/${data!.news.fullImgUrl}`}
+                          alt="Image"
+                        />
+                      )}
                     </picture>
                   </div>
                 </div>
@@ -110,16 +122,12 @@ export default async function NewsId({params} : {params: {id: string}}) {
                     {data?.news.title}
                   </h2>
                   <div className="content-news-single__text">
-                    <p className="text">
-                      {data?.news.description}
-                    </p>
+                    {paragraphs!.map((paragraph, index) => (
+                      <p key={index} className="text" >{`${paragraph}.`}</p>
+                    ))}
                   </div>
                   <div className="content-news-single__bottom">
                     <span className="content-news-single__time">{data?.news.createdAtTime}</span>
-
-
-
-
                     <a
                       href="#"
                       className="content-news-single__share flex gap-[5px]"
@@ -299,136 +307,6 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   >
                     <h3 className="latest-news__title">Latest news</h3>
                   </a>
-                  {/* <div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/01.webp" type="image/webp"/><Image src="img/latest-news/01.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/03.webp" type="image/webp"/><Image src="img/latest-news/03.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/01.webp" type="image/webp"/><Image src="img/latest-news/01.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/03.webp" type="image/webp"/><Image src="img/latest-news/03.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div>
-								<div className="latest-news__item">
-									<a href="#" className="latest-news__image">
-										<picture><source srcSet="img/latest-news/02.webp" type="image/webp"/><Image src="img/latest-news/02.png" alt="image"/></picture>
-									</a>
-									<div className="latest-news__right">
-										<span className="latest-news__time">11:00</span>
-										<a href="#" className="latest-news__title-link">
-											<h4 className="latest-news__link-title">This is a news Title</h4>
-										</a>
-										<p className="latest-news__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-											tempor incididun...</p>
-									</div>
-								</div> */}
                   {data?.sidebarNews!.map(n => (
                     <LatestNews key={n.id}
                                 id={n.id}

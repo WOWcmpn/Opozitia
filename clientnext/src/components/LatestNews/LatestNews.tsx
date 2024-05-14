@@ -18,14 +18,12 @@ export const LatestNews = ({
     <div className="latest-news__item">
       <a href={`${category}/${id}`} className="latest-news__image">
         <picture>
-          {/* <source srcSet="img/latest-news/02.webp" type="image-webp" />
-          <img src={img} alt="image" /> */}
           {isUrl ? (
-            <Image width={120} height={100} src={img} alt="Image" />
+            <Image width={180} height={160} src={img} alt="Image" />
           ) : (
             <Image
-              width={120}
-              height={100}
+              width={180}
+              height={160}
               src={`/img/preview-images/${img}`}
               alt="Image"
             />

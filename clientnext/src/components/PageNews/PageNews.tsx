@@ -19,6 +19,9 @@ export const PageNews = ({
   if(category === 'economy') viewCategory = 'Экономика'
   if(category === 'business') viewCategory = 'Бизнес'
 
+  let isUrl = false;
+  if (img.substring(0, 4) == "http") isUrl = true;
+
   return (
     <div className="content-news__item item-content-news item-block">
       <div className="item-content-news__left">
@@ -50,8 +53,16 @@ export const PageNews = ({
       </div>
       <div className="item-content-news__image">
         <picture>
-          <source srcSet="img/main-block/02.webp" type="image/webp" />
-          <img src={img} alt="Картинка" />
+          {isUrl ? (
+            <Image width={290} height={100} src={img} alt="Image" />
+          ) : (
+            <Image
+              width={290}
+              height={100}
+              src={`/img/preview-images/${img}`}
+              alt="Image"
+            />
+          )}
         </picture>
       </div>
     </div>

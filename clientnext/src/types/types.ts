@@ -13,13 +13,13 @@ export interface IHomeNews {
 export interface ISingleNews {
   id: string;
   title: string;
-  imgUrl: StaticImageData;
+  imgUrl: string;
   createdAtTime: string;
   createdAtDate: string;
   viewDate: string;
   category: string;
   description: string;
-  fullImgUrl: StaticImageData;
+  fullImgUrl: string;
 }
 
 export interface IFullSingleNews {
@@ -84,7 +84,7 @@ export type LatestNewsProps = {
 
 export type MainBlockSlideProps = {
   title: string;
-  img: StaticImageData | string;
+  img: string;
   category: string;
   id: string;
 };
@@ -101,7 +101,7 @@ export type BlockContentProps = {
   title: string;
   firstLink: string;
   firstCategory: string;
-  img: StaticImageData;
+  img: string;
   link1: string;
   link2: string;
   link3: string;

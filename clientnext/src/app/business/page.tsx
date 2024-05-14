@@ -3,7 +3,6 @@ import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { Select } from "@/components/Select/Select";
 import { NewsService } from '@/service/news.service';
-import MainBlock2 from "@/img/main-block/02.webp";
 import Link from 'next/link';
 
 export default async function Business () {
@@ -34,7 +33,7 @@ export default async function Business () {
                       link1= 'Бизнес'
                       link2='СНГ'
                       link3="ЕС"
-                      img={MainBlock2}
+                      img={n.imgUrl}
                       createdAtTime={n.createdAtTime}
                               category='business'
                     />

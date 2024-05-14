@@ -1,5 +1,4 @@
 import React from "react";
-import MainBlock2 from "@/img/main-block/02.png";
 import { Header } from "@/components/Header/Header";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
@@ -34,7 +33,7 @@ export default async function GlobalNews() {
                               link1= 'Мир'
                               link2='СНГ'
                               link3="ЕС"
-                              img={MainBlock2}
+                              img={n.imgUrl}
                               createdAtTime={n.createdAtTime}
                               category='world'
                     />

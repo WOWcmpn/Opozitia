@@ -11,6 +11,9 @@ export const BlockContent = ({
   link2,
   link3,
 }: BlockContentProps) => {
+  let isUrl = false;
+  if (img.substring(0, 4) == "http") isUrl = true;
+
   return (
     <div className="block-main_wrapper ">
       <div className="bottom-left-block__thumbs thumbs-images">
@@ -18,8 +21,16 @@ export const BlockContent = ({
           <div className="thumbs-images__slide ">
             <a href="#" className="thumbs-images__image-ibg">
               <picture>
-                <source srcSet="img/actual-news/01.webp" type="image-webp" />
-                <Image src={img} alt="Картинка" className="!h-[280px] " />
+                {isUrl ? (
+                  <Image width={350} height={350} src={img} alt="Image" className="!h-[280px] " />
+                ) : (
+                  <Image
+                    width={350} height={350}
+                    src={`/img/preview-images/${img}`}
+                    alt="Image"
+                    className="!h-[280px] "
+                  />
+                )}
               </picture>
             </a>
           </div>

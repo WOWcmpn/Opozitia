@@ -1,9 +1,5 @@
 "use client";
-import LatestNews02 from "@/img/latest-news/02.png";
-import MainBlock from "@/img/main-block/01.png";
 import Graphics1 from "@/img/graphics/01.svg";
-import ActualNews1 from "@/img/actual-news/01.jpg";
-import ActualNews2 from "@/img/actual-news/02.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
@@ -102,7 +98,7 @@ export default function Home() {
                         {data?.swipeNews.map((n) => (
                           <SwiperSlide key={n.id}>
                             <MainBlockSlide
-                              img={MainBlock}
+                              img={n.imgUrl}
                               title={n.title}
                               category={n.category.toLowerCase()}
                               id={n.id}
@@ -446,7 +442,7 @@ export default function Home() {
                             title={n.title}
                             firstLink={n.id}
                             firstCategory={n.category.toLowerCase()}
-                            img={ActualNews1}
+                            img={n.imgUrl}
                             link1="Чего ожидать Молдове в ближайшие несколько недель?"
                             link2="Чего ожидать Молдове в ближайшие несколько недель?"
                             link3="Чего ожидать Молдове в ближайшие несколько недель?"
