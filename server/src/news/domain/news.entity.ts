@@ -1,8 +1,8 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { QuizEntity } from '../../quiz/domain/quiz.entity';
 
 @Entity()
-export class NewsEntity {
+export class NewsEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -35,6 +35,6 @@ export class NewsEntity {
   category: string;
 
   @Column({ nullable: true })
-  @OneToMany(() => QuizEntity, (q) => q.newsId)
+  @OneToMany(() => QuizEntity, (q) => q.newsId, { onDelete: 'CASCADE' })
   quizVote: string;
 }

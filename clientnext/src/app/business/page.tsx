@@ -28,13 +28,13 @@ export default async function Business () {
                 <div className="content-news__body">
                   {data?.news!.map(n => (
                     <PageNews key={n.id}
-                      id = {n.id}
-                      title= {n.title}
-                      link1= 'Бизнес'
-                      link2='СНГ'
-                      link3="ЕС"
-                      img={n.imgUrl}
-                      createdAtTime={n.createdAtTime}
+                              id = {n.id}
+                              title= {n.title}
+                              link1= 'Бизнес'
+                              link2='СНГ'
+                              link3="ЕС"
+                              img={n.imgUrl}
+                              createdAtTime={n.createdAtTime}
                               category='business'
                     />
                   ))}
@@ -49,23 +49,18 @@ export default async function Business () {
               </div>
               <div className="news__wrap-right sidebar">
                 <aside className="news__latest-news latest-news latest-news_big">
-                  {/*<a*/}
-                  {/*  href="last-news.html"*/}
-                  {/*  className="latest-news__main-title-link"*/}
-                  {/*>*/}
                   <Link href='/lastnews' className="latest-news__main-title-link">
                     <h3 className="latest-news__title latest-news__title_posts">
                       Статьи по теме
                     </h3>
                   </Link>
-                  {/*</a>*/}
                   {data?.sidebarNews!.map(n => (
                     <LatestNews key={n.id}
-                      id={n.id}
-                      title={n.title}
-                      text={n.description}
-                      img={n.imgUrl}
-                      time={n.createdAtTime}
+                                id={n.id}
+                                title={n.title}
+                                text={n.description}
+                                img={n.imgUrl}
+                                time={n.createdAtTime}
                                 category={n.category.toLowerCase()}
                     />
                   ))}

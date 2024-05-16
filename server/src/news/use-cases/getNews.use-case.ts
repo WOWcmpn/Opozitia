@@ -25,7 +25,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Test: ', error);
       });
 
     await axios
@@ -43,7 +43,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Test: ', error);
       });
 
     await axios
@@ -59,7 +59,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Test: ', error);
       });
 
     await axios
@@ -75,7 +75,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Test: ', error);
       });
   }
 }

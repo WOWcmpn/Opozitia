@@ -20,6 +20,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@adminjs/express": "^6.1.0",
+    "@adminjs/nestjs": "^6.1.0",
+    "@adminjs/typeorm": "^5.0.1",
+    "@babel/plugin-syntax-import-assertions": "^7.24.1",
     "@nestjs-modules/mailer": "^1.11.2",
     "@nestjs/common": "^10.3.7",
     "@nestjs/config": "^3.2.2",
@@ -33,6 +37,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/nodemailer": "^6.4.14",
+    "adminjs": "^7.8.1",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cheerio": "1.0.0-rc.12",
@@ -42,6 +47,8 @@
     "date-fns": "^3.6.0",
     "dom-parser": "^1.1.5",
     "express": "^4.19.2",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.18.0",
     "fetch": "^1.1.0",
     "jsdom": "^24.0.0",
     "mime": "^4.0.1",

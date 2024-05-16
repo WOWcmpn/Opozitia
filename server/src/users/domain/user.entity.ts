@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { favoriteNewsCategory } from '../../base/types/newsModels';
 import { add } from 'date-fns/add';
 import { InputUserModel } from '../../base/types/userModels';
@@ -15,7 +15,7 @@ export class RecoveryConfirmation {
 }
 
 @Entity()
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -49,7 +49,7 @@ export class UserEntity {
   @Column()
   createdAt: Date;
 
-  @OneToMany(() => AuthWhiteListEntity, (aw) => aw.usersId)
+  @OneToMany(() => AuthWhiteListEntity, (aw) => aw.usersId, { onDelete: 'CASCADE' })
   whiteTokens: AuthWhiteListEntity;
 
   static createUserFirstStep(userModel: InputUserModel, passwordHash: string) {

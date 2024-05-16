@@ -7,9 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { NewsEntity } from './domain/news.entity';
 import { NewsQueryRepository } from './repositories/news.query-repository';
 import { CreateNewsUseCase } from './use-cases/createNews.use-case';
+import { QuizEntity } from '../quiz/domain/quiz.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([NewsEntity])],
+  imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity])],
   controllers: [NewsController],
   providers: [GetNewsUseCase, CheckNewsForAddUseCase, NewsRepository, NewsQueryRepository, CreateNewsUseCase],
 })

@@ -12,7 +12,7 @@ export class AuthWhiteListEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(() => UserEntity, (u) => u.whiteTokens)
+  @ManyToOne(() => UserEntity, (u) => u.whiteTokens, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   usersId: UserEntity;
 }

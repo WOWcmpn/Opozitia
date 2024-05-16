@@ -11,8 +11,23 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { dynamicImport } from './base/helpers/dymicImport';
+import { NewsEntity } from './news/domain/news.entity';
+import { UserEntity } from './users/domain/user.entity';
 
 // const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+
+// const DEFAULT_ADMIN = {
+//   email: 'admin@example.com',
+//   password: 'password',
+// };
+//
+// const authenticate = async (email: string, password: string) => {
+//   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+//     return Promise.resolve(DEFAULT_ADMIN);
+//   }
+//   return null;
+// };
 
 @Module({
   imports: [
@@ -49,6 +64,92 @@ import { AuthModule } from './auth/auth.module';
       secret: process.env.SECRET || '123',
     }),
     ScheduleModule.forRoot(),
+    dynamicImport('@adminjs/nestjs').then(({ AdminModule }) =>
+      AdminModule.createAdminAsync({
+        useFactory: () => ({
+          adminJsOptions: {
+            rootPath: '/admin',
+            resources: [
+              {
+                resource: NewsEntity,
+                options: {
+                  id: 'Новости',
+                  sort: {
+                    sortBy: 'createdAtDate',
+                    direction: 'desc',
+                  },
+                  properties: {
+                    title: {
+                      description: 'Заголовок новости',
+                    },
+                    description: {
+                      type: 'textarea',
+                      description: 'Контент новости',
+                      props: {
+                        rows: 20,
+                      },
+                    },
+                    imgUrl: {
+                      description: 'Ссылка на превью картинку',
+                    },
+                    fullImgUrl: {
+                      description: 'Ссылка на главную картинку',
+                    },
+                    category: {
+                      availableValues: [
+                        { value: 'Business', label: 'Бизнес' },
+                        { value: 'Economy', label: 'Экономика' },
+                        { value: 'Policy', label: 'Политика' },
+                        { value: 'World', label: 'Мир' },
+                      ],
+                    },
+                  },
+                  listProperties: ['title', 'createdAtTime', 'viewDate', 'category'],
+                  filterProperties: ['title', 'createdAtTime', 'viewDate', 'category'],
+                  editProperties: [
+                    'title',
+                    'description',
+                    'imgUrl',
+                    'fullImgUrl',
+                    'createdAtTime',
+                    'createdAtDate',
+                    'viewDate',
+                    'category',
+                    'quizVote',
+                  ],
+                  showProperties: [
+                    'title',
+                    'description',
+                    'imgUrl',
+                    'fullImgUrl',
+                    'createdAtTime',
+                    'viewDate',
+                    'category',
+                    'quizVote',
+                  ],
+                },
+              },
+              {
+                resource: UserEntity,
+                options: {
+                  id: 'Пользователи',
+                },
+              },
+            ],
+          },
+          // auth: {
+          //   authenticate,
+          //   cookieName: 'adminjs',
+          //   cookiePassword: 'secret',
+          // },
+          // sessionOptions: {
+          //   resave: true,
+          //   saveUninitialized: true,
+          //   secret: 'secret',
+          // },
+        }),
+      }),
+    ),
     NewsModule,
     QuizModule,
     UsersModule,
