@@ -11,7 +11,7 @@ export async function getFullNewsHelper(link: string | undefined, fullImgUuid: s
       const description = $(elem).find('.article__body').find('p').text();
       const rawDateTime = $(elem).find('time').text();
       const fullImgUrl = $(elem).find('img').attr('src');
-      wget.download(fullImgUrl!, `../clientnext/public/fullImage-news/${fullImgUuid}.webp`);
+      wget.download(fullImgUrl!, `../clientnext/public/img/fullImage-news/${fullImgUuid}.webp`);
       const createdAtTime = rawDateTime.substring(rawDateTime.length - 5, rawDateTime.length);
       news.description = description;
       news.createdAtTime = createdAtTime;

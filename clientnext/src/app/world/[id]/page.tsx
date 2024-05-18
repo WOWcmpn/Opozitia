@@ -12,6 +12,7 @@ import { Comments } from '@/components/Comment/Comments';
 import CommentImage from '@/img/icons/comments-image.png';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
 import { NewsService } from '@/service/news.service';
+import Link from 'next/link';
 
 export default async function NewsId({params} : {params: {id: string}}) {
   const data = await NewsService.getNewsById(params.id)
@@ -301,12 +302,10 @@ export default async function NewsId({params} : {params: {id: string}}) {
               </div>
               <div className="news-single__wrap-right sidebar">
                 <aside className="news-single__latest-news latest-news latest-news_big">
-                  <a
-                    href="last-news.html"
-                    className="latest-news__main-title-link"
-                  >
+                  <Link href="lastnews"
+                        className="latest-news__main-title-link">
                     <h3 className="latest-news__title">Latest news</h3>
-                  </a>
+                  </Link>
                   {data?.sidebarNews!.map(n => (
                     <LatestNews key={n.id}
                                 id={n.id}

@@ -302,7 +302,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
               <div className="news-single__wrap-right sidebar">
                 <aside className="news-single__latest-news latest-news latest-news_big">
                   <a
-                    href="last-news.html"
+                    href="lastnews"
                     className="latest-news__main-title-link"
                   >
                     <h3 className="latest-news__title">Latest news</h3>

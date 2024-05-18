@@ -8,10 +8,24 @@ import { NewsEntity } from './domain/news.entity';
 import { NewsQueryRepository } from './repositories/news.query-repository';
 import { CreateNewsUseCase } from './use-cases/createNews.use-case';
 import { QuizEntity } from '../quiz/domain/quiz.entity';
+import { AuthService } from '../auth/service/auth.service';
+import { CreateCommentUseCase } from './use-cases/createComment.use-case';
+import { UsersQueryRepository } from '../users/repositories/users.query-repository';
+import { CommentsEntity } from '../comments/domain/comments.entity';
+import { UserEntity } from '../users/domain/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity])],
+  imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity, CommentsEntity, UserEntity])],
   controllers: [NewsController],
-  providers: [GetNewsUseCase, CheckNewsForAddUseCase, NewsRepository, NewsQueryRepository, CreateNewsUseCase],
+  providers: [
+    GetNewsUseCase,
+    CheckNewsForAddUseCase,
+    CreateNewsUseCase,
+    CreateCommentUseCase,
+    NewsRepository,
+    NewsQueryRepository,
+    UsersQueryRepository,
+    AuthService,
+  ],
 })
 export class NewsModule {}

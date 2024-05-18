@@ -25,7 +25,7 @@ export class NewsQueryRepository {
     return { count, news };
   }
 
-  async getAllNewsByCategory(category: string, sortBy: string, pageNumber: number = 1) {
+  async getAllNewsByCategory(category: string, sortBy: string, pageNumber: number = 0) {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.category'])
@@ -94,6 +94,11 @@ export class NewsQueryRepository {
   }
 
   async getNewsById(id: string) {
-    return await this.newsRepository.findOneBy({ id });
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select()
+      .leftJoinAndSelect('n.comments', 'comments')
+      .where('n.id = :id', { id })
+      .getOne();
   }
 }

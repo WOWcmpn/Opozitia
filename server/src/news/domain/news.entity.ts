@@ -1,12 +1,12 @@
 import { BaseEntity, Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { QuizEntity } from '../../quiz/domain/quiz.entity';
+import { CommentsEntity } from '../../comments/domain/comments.entity';
 
 @Entity()
 export class NewsEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   link: string;
 
   @Index()
@@ -22,19 +22,21 @@ export class NewsEntity extends BaseEntity {
   @Column({ nullable: true })
   fullImgUrl: string;
 
-  @Column()
+  @Column({ nullable: true })
   createdAtTime: string;
 
-  @Column()
+  @Column({ nullable: true })
   createdAtDate: Date;
 
-  @Column()
+  @Column({ nullable: true })
   viewDate: string;
 
   @Column()
   category: string;
 
   @Column({ nullable: true })
-  @OneToMany(() => QuizEntity, (q) => q.newsId, { onDelete: 'CASCADE' })
   quizVote: string;
+
+  @OneToMany(() => CommentsEntity, (c) => c.news)
+  comments: CommentsEntity[];
 }

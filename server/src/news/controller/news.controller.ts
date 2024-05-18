@@ -9,6 +9,7 @@ import {
   ParseFilePipe,
   Post,
   Query,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -22,6 +23,10 @@ import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileStorage } from '../../base/helpers/storage';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateCommentModel } from '../../base/types/commentsModels';
+import { AuthService } from '../../auth/service/auth.service';
+import { Request } from 'express';
+import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 
 @Controller('news')
 @ApiTags('News')
@@ -30,6 +35,8 @@ export class NewsController {
     private readonly getNewsUseCase: GetNewsUseCase,
     private readonly newsQueryRepository: NewsQueryRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
+    private readonly authService: AuthService,
+    private readonly createCommentUseCase: CreateCommentUseCase,
   ) {}
 
   @Cron(CronExpression.EVERY_HOUR)
@@ -143,5 +150,17 @@ export class NewsController {
       createNewsTest.category,
       file.filename,
     );
+  }
+
+  @Post(':newsId/comments')
+  @UseGuards(AccessTokenGuard)
+  @HttpCode(201)
+  async createComment(
+    @Param('newsId') newsId: string,
+    @Body() data: CreateCommentModel,
+    @Req() req: Request,
+  ) {
+    const userId = await this.authService.getUserId(req.headers.authorization!.split(' ')[1]);
+    return await this.createCommentUseCase.create(newsId, data.text, userId);
   }
 }

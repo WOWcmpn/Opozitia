@@ -1,0 +1,16 @@
+import { IsString, Length } from 'class-validator';
+
+export class CreateCommentModel {
+  @IsString()
+  @Length(5, 350)
+  text: string;
+}
+
+export class CommentModel {
+  id: string;
+  text: string;
+  userId: string;
+  username: string;
+  createdAt: Date;
+  newsId: string;
+}

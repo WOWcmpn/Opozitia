@@ -22,9 +22,15 @@ export class CheckNewsForAddUseCase {
       const fullImgUuid = uuidv4();
       const fullNews = await getFullNewsHelper(news.link, fullImgUuid);
       setTimeout(() => {
-        const validFullImg = fs
-          .readdirSync('../clientnext/public/img/fullImage-news')
-          .find((img) => img === `${fullImgUuid}.webp`);
+        let validFullImg = '';
+        try {
+          const test = fs
+            .readdirSync('../clientnext/public/img/fullImage-news')
+            .find((img) => img === `${fullImgUuid}.webp`);
+          validFullImg = test!;
+        } catch (error) {
+          console.log('1 ', error);
+        }
         return this.newsRepository.addNews({
           link: news.link!,
           title: news.title!,
@@ -53,9 +59,16 @@ export class CheckNewsForAddUseCase {
         const validImg = fs
           .readdirSync('../clientnext/public/img/preview-images')
           .find((img) => img === `${uuidImgUrl}.webp`);
-        const validFullImg = fs
-          .readdirSync('../clientnext/public/img/fullImage-news')
-          .find((img) => img === `${fullImgUuid}.webp`);
+        let validFullImg = '';
+        try {
+          const test2 = fs
+            .readdirSync('../clientnext/public/img/fullImage-news')
+            .find((img) => img === `${fullImgUuid}.webp`);
+          validFullImg = test2!;
+        } catch (error) {
+          console.log('2 ', error);
+        }
+
         return this.newsRepository.addNews({
           link: news.link!,
           title: news.title!,
