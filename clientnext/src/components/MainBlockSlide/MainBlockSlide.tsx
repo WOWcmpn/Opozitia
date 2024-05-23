@@ -33,9 +33,9 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
       </Link>
       <div className="slide-main-block__right">
         <h5 className="slide-main-block__sub-title">{viewCategory}</h5>
-        <a href={`${category}/${id}`} className="slide-main-block__right-link">
+        <Link href={`${category}/${id}`} className="slide-main-block__right-link">
           <h3 className="slide-main-block__title">{title}</h3>
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -34,19 +34,19 @@ export const PageNews = ({
           <span className="item-content-news__time time">{createdAtTime}</span>
           <ul className="item-content-news__list-bottom list-bottom-search">
             <li className="list-bottom-search__item-bottom">
-              <a href={`${category}`} className="list-bottom-search__link-bottom ">
+              <Link href={`/${category}`} className="list-bottom-search__link-bottom ">
                 {viewCategory}
-              </a>
+              </Link>
             </li>
             <li className="list-bottom-search__item-bottom">
-              <a href="world" className="list-bottom-search__link-bottom">
+              <Link href={'/world'} className="list-bottom-search__link-bottom">
                 {link2}
-              </a>
+              </Link>
             </li>
             <li className="list-bottom-search__item-bottom">
-              <a href="world" className="list-bottom-search__link-bottom">
+              <Link href={'/world'} className="list-bottom-search__link-bottom">
                 {link3}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

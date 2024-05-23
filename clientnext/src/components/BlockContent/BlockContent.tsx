@@ -1,6 +1,7 @@
 import { BlockContentProps } from "@/types/types";
 import Image from "next/image";
 import React from "react";
+import Link from 'next/link';
 
 export const BlockContent = ({
   title,
@@ -19,7 +20,7 @@ export const BlockContent = ({
       <div className="bottom-left-block__thumbs thumbs-images">
         <div className="thumbs-images__wrapper ">
           <div className="thumbs-images__slide ">
-            <a href="#" className="thumbs-images__image-ibg">
+            <Link href="#" className="thumbs-images__image-ibg">
               <picture>
                 {isUrl ? (
                   <Image width={350} height={350} src={img} alt="Image" className="!h-[280px] " />
@@ -32,7 +33,7 @@ export const BlockContent = ({
                   />
                 )}
               </picture>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -40,9 +41,9 @@ export const BlockContent = ({
         <div className="bottom-left-block__slider-main slider-bottom-left-block ">
           <div className="bottom-left-block__wrapper">
             <div className="bottom-left-block__slide">
-              <a href={`${firstCategory}/${firstLink}`} className="bottom-left-block__news-link">
+              <Link href={`${firstCategory}/${firstLink}`} className="bottom-left-block__news-link">
                 <h4 className="bottom-left-block__title">{title}</h4>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -51,9 +52,9 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider slider-bottom-left-block ">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <a href="#" className="bottom-left-block__link">
+                  <Link href="#" className="bottom-left-block__link">
                     {link1}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -62,9 +63,9 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider2 slider-bottom-left-block ">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <a href="#" className="bottom-left-block__link">
+                  <Link href="#" className="bottom-left-block__link">
                     {link2}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -73,9 +74,9 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider3 slider-bottom-left-block">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <a href="#" className="bottom-left-block__link">
+                  <Link href="#" className="bottom-left-block__link">
                     {link3}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

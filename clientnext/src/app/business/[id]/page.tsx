@@ -1,5 +1,6 @@
+"use client"
 import { Header } from "@/components/Header/Header";
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 import CommentsImage from '@/img/icons/comments.svg';
 import CopyImage from '@/img/icons/copy.svg';
@@ -8,22 +9,76 @@ import fb from '@/img/icons/fb.svg';
 import twitter from '@/img/icons/twitter.svg';
 import ShareGrey from '@/img/icons/share-gray.svg';
 import SortIcon from '@/img/icons/sort.svg';
-import { Comments } from '@/components/Comment/Comments';
-import CommentImage from '@/img/icons/comments-image.png';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
 import { NewsService } from '@/service/news.service';
+import Link from 'next/link';
+import { IComments, INews, ISingleNews } from "@/types/types";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { Comments } from "@/components/Comment/Comments";
 
-export default async function NewsId({params} : {params: {id: string}}) {
-  const data = await NewsService.getNewsById(params.id)
+export default function NewsId({params} : {params: {id: string}}) {
+  const [news, setNews] = useState<ISingleNews>();
+  const [comments, setComments] = useState<IComments[]>([]);
+  const [sidebar, setSidebar] = useState<INews[]>([]);
+  const [comment, setComment] = useState<string>();
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const handleSubmit = async(e: any) => {
+    try {
+      e.preventDefault()
+      await NewsService.createComment(params.id, comment!)
+      setComment('')
+      toast.success('Комментарий был успешно создан')
+      window.location.reload()
+    } catch (e: any) {
+      console.warn(e);
+      toast.error('Комментарий должен содержать больше четырёх символов')
+    }
+  }
+
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true)
+      try{
+        const newComments = await NewsService.getComments(params.id, page)
+        setComments(prevData => [...prevData, ...newComments])
+        setLoading(false)
+        setHasMore(newComments.length === 5)
+      } catch (error) {
+        console.log('Error loading data:', error);
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadData()
+  }, [page, params.id])
+
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1)
+  }
+
+  useEffect(() => {
+    async function loadNews() {
+      const newData = await NewsService.getNewsById(params.id)
+      const news = await NewsService.getSidebarNews('Business')
+      setSidebar(news)
+      setNews(newData)
+    }
+    loadNews()
+  }, [params.id]);
 
   let isUrl = false;
-  if (data!.news.fullImgUrl.substring(0, 4) == "http") isUrl = true;
+  if (news?.fullImgUrl.substring(0, 4) == "http") isUrl = true;
 
-  const paragraphs = data?.news.description.split('.').filter(paragraph => paragraph.trim() !== '');
+  const paragraphs = news?.description.split('.').filter(paragraph => paragraph.trim() !== '');
 
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <main className="page">
         <section className="page__news-single news-single">
           <div className="news-single__container">
@@ -36,14 +91,14 @@ export default async function NewsId({params} : {params: {id: string}}) {
                         Бизнес
                       </h2>
                       <h1 className="main-block-news__title">
-                        {data?.news.title}
+                        {news?.title}
                       </h1>
                     </div>
                   </div>
                   <div className="main-block-news__bottom">
                     <div className="main-block-news__left-bottom">
                       <span className="main-block-news__date dot">
-                        {data?.news.viewDate}
+                        {news?.viewDate}
                       </span>
                       <p className="main-block-news__time-reading">
                         <span className="main-block-news__minutes">
@@ -53,7 +108,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
                       </p>
                     </div>
                     <div className="main-block-news__right-bottom">
-                      <a
+                      <Link
                         href="#"
                         data-goto="#comments"
                         data-goto-header
@@ -61,9 +116,9 @@ export default async function NewsId({params} : {params: {id: string}}) {
                       >
                         <Image src={CommentsImage} alt="Иконка" />
                         <span className="main-block-news__comments-number">
-                          7
+                          {comments?.length}
                         </span>
-                      </a>
+                      </Link>
                       <div className="main-block-news__right-share">
                         <button
                           type="button"
@@ -73,31 +128,31 @@ export default async function NewsId({params} : {params: {id: string}}) {
                         </button>
                         <ul className="main-block-news__actions-list">
                           <li className="main-block-news__actions-item">
-                            <a
+                            <Link
                               href="#"
                               className="main-block-news__actions-link"
                             >
                               <Image src={CopyLinkImage} alt="Иконка" />{" "}
                               Скопировать ссылку
-                            </a>
+                            </Link>
                           </li>
                           <li className="main-block-news__actions-item">
-                            <a
+                            <Link
                               href="#"
                               className="main-block-news__actions-link"
                             >
                               <Image src={fb} alt="Иконка" />
                               Facebook
-                            </a>
+                            </Link>
                           </li>
                           <li className="main-block-news__actions-item">
-                            <a
+                            <Link
                               href="#"
                               className="main-block-news__actions-link"
                             >
                               <Image src={twitter} alt="Иконка" />
                               Twitter
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -106,11 +161,11 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   <div className="main-block-news__image">
                     <picture>
                       {isUrl ? (
-                        <Image fill={true} src={data!.news.fullImgUrl} alt="Image" />
+                        <Image fill={true} src={news!.fullImgUrl} alt="Image" />
                       ) : (
                         <Image
                           fill={true}
-                          src={`/img/fullImage-news/${data!.news.fullImgUrl}`}
+                          src={`/img/fullImage-news/${news?.fullImgUrl}`}
                           alt="Image"
                         />
                       )}
@@ -119,22 +174,22 @@ export default async function NewsId({params} : {params: {id: string}}) {
                 </div>
                 <div className="news-single__content content-news-single">
                   <h2 className="content-news-single__title">
-                    {data?.news.title}
+                    {news?.title}
                   </h2>
                   <div className="content-news-single__text">
-                    {paragraphs!.map((paragraph, index) => (
+                    {paragraphs?.map((paragraph, index) => (
                       <p key={index} className="text" >{`${paragraph}.`}</p>
                     ))}
                   </div>
                   <div className="content-news-single__bottom">
-                    <span className="content-news-single__time">{data?.news.createdAtTime}</span>
-                    <a
+                    <span className="content-news-single__time">{news?.createdAtTime}</span>
+                    <Link
                       href="#"
                       className="content-news-single__share flex gap-[5px]"
                     >
                       <Image src={ShareGrey} alt="Иконка" />
                       Поделиться
-                    </a>
+                    </Link>
                   </div>
                   <div className="content-news-single__choose-like">
                     <form action="#" className="content-news-single__form">
@@ -181,7 +236,7 @@ export default async function NewsId({params} : {params: {id: string}}) {
                   <div className="content-news-single__comments comments-content-news">
                     <div className="comments-content-news__top top-comments-news">
                       <p className="top-comments-news__comments-quantity">
-                        <span className="top-comments-news__number">7</span>{" "}
+                        <span className="top-comments-news__number">{comments?.length}</span>{" "}
                         комментариев
                       </p>
                       <div className="top-comments-news__sort">
@@ -193,14 +248,14 @@ export default async function NewsId({params} : {params: {id: string}}) {
                         </button>
                         <ul className="top-comments-news__list">
                           <li className="top-comments-news__item">
-                            <a href="#" className="top-comments-news__link">
+                            <Link href="#" className="top-comments-news__link">
                               Лучшие
-                            </a>
+                            </Link>
                           </li>
                           <li className="top-comments-news__item">
-                            <a href="#" className="top-comments-news__link">
+                            <Link href="#" className="top-comments-news__link">
                               Последние
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -209,13 +264,15 @@ export default async function NewsId({params} : {params: {id: string}}) {
                       <form
                         action="#"
                         className="comments-content-news__comments-form"
+                        onSubmit={handleSubmit}
                       >
                         <textarea
                           autoComplete="off"
                           name="form[]"
                           placeholder="Написать комментарий..."
                           className="comments-content-news__input"
-                        ></textarea>
+                          onChange={e => setComment(e.target.value)}
+                        />
                         <button
                           type="submit"
                           className="comments-content-news__button"
@@ -229,85 +286,32 @@ export default async function NewsId({params} : {params: {id: string}}) {
                       className="comments-content-news__bottom bottom-comments-news"
                     >
                       <div className="bottom-comments-news__level-1">
-                        <Comments
-                          name="Dmitry"
-                          text="Maecenas dictum diam non purus facilisis, ut egestas nulla eleifend. Suspendisse non ante
-                                                condimentum, pharetra arcu eu, mattis massa. Nam ullamcorper nisl sit amet neque pretium, vel
-                                                scelerisque eros dapibus. Aliquam erat volutpat. In a nisl faucibus, tincidunt mi ac, ornare
-                                                tortor. Pellentesque felis lacus, viverra vel molestie ut, viverra eu nisl."
-                          class1="bottom-comments-news__comment-item"
-                          img={CommentImage}
-                          time="5 часов назад"
-                          likes={5}
-                        />
-                      </div>
-                      <div className="bottom-comments-news__level-2">
-                        <Comments
-                          name="Dmitry"
-                          text="Maecenas dictum diam non purus facilisis, ut egestas nulla eleifend. Suspendisse non ante
-                                                condimentum, pharetra arcu eu, mattis, tincidunt mi ac, ornare
-                                                tortor. Pellentesque felis lacus, viverra vel molestie ut, viverra eu nisl."
-                          class1="bottom-comments-news__comment-item item-block"
-                          img={CommentImage}
-                          time="5 часов назад"
-                          likes={5}
-                        />
-                        <Comments
-                          name="Dmitry"
-                          text="Maecenas dictum diam non purus facilisis, ut egestas nulla eleifend. Suspendisse non ante
-                                                condimentum, pharetra arcu eu, mattis, tincidunt mi ac, ornare
-                                                tortor. Pellentesque felis lacus, viverra vel molestie ut, viverra eu nisl."
-                          class1="bottom-comments-news__comment-item item-block"
-                          img={CommentImage}
-                          time="5 часов назад"
-                          likes={5}
-                        />
-                      </div>
-                      <div className="bottom-comments-news__level-1 item-block hidden">
-                        <Comments
-                          name="Dmitry"
-                          text="Maecenas dictum diam non purus facilisis, ut egestas nulla eleifend. Suspendisse non ante
-                                                condimentum, pharetra arcu eu, mattis massa. Nam ullamcorper nisl sit amet neque pretium, vel
-                                                scelerisque eros dapibus. Aliquam erat volutpat. In a nisl faucibus, tincidunt mi ac, ornare
-                                                tortor. Pellentesque felis lacus, viverra vel molestie ut, viverra eu nisl."
-                          class1="bottom-comments-news__comment-item"
-                          img={CommentImage}
-                          time="5 часов назад"
-                          likes={5}
-                        />
-                      </div>
-                      <div className="bottom-comments-news__level-1 item-block hidden">
-                        <Comments
-                          name="Dmitry"
-                          text="Maecenas dictum diam non purus facilisis, ut egestas nulla eleifend. Suspendisse non ante
-                                                condimentum, pharetra arcu eu, mattis massa. Nam ullamcorper nisl sit amet neque pretium, vel
-                                                scelerisque eros dapibus. Aliquam erat volutpat. In a nisl faucibus, tincidunt mi ac, ornare
-                                                tortor. Pellentesque felis lacus, viverra vel molestie ut, viverra eu nisl."
-                          class1="bottom-comments-news__comment-item"
-                          img={CommentImage}
-                          time="5 часов назад"
-                          likes={5}
-                        />
+                        {comments?.map((item, index) => (
+                          <Comments key={index}
+                                    name={item.username}
+                                    text={item.text!}
+                                    class1="bottom-comments-news__comment-item"
+                                    img={item.userImage!}
+                                    time={item.viewDate!}
+                                    likes={0}
+                          />
+                        ))}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      className="comments-content-news__btn-more btn-more"
-                    >
-                      Еще 6 комментариев
-                    </button>
+                    {loading && <p>Загрузка...</p>}
+                    {hasMore && !loading &&
+                      <button onClick={handleLoadMore} className="comments-content-news__btn-more btn-more">
+                        Ещё 5 комментариев
+                      </button>}
                   </div>
                 </div>
               </div>
               <div className="news-single__wrap-right sidebar">
                 <aside className="news-single__latest-news latest-news latest-news_big">
-                  <a
-                    href="lastnews"
-                    className="latest-news__main-title-link"
-                  >
-                    <h3 className="latest-news__title">Latest news</h3>
-                  </a>
-                  {data?.sidebarNews!.map(n => (
+                  <Link href={'/lastnews'} className="latest-news__main-title-link">
+                    <h3 className="latest-news__title">Последние новости</h3>
+                  </Link>
+                  {sidebar?.map(n => (
                     <LatestNews key={n.id}
                                 id={n.id}
                                 title={n.title}

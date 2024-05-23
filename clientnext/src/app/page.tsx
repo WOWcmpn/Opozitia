@@ -20,6 +20,7 @@ import { Search } from "@/components/Search/Search";
 import { IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { AuthService } from "@/service/auth.service";
+import Link from 'next/link';
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -263,11 +264,11 @@ export default function Home() {
                   {/* </div> */}
                 </div>
                 <aside className="block__latest-news latest-news">
-                  <a href="lastnews" className="latest-news__main-title-link">
+                  <Link href={'lastnews'} className="latest-news__main-title-link">
                     <h3 className="latest-news__title latest-news__title_posts">
                       Последние новости
                     </h3>
-                  </a>
+                  </Link>
                   {data?.news!.map((n) => (
                     <LatestNews
                       key={n.id}

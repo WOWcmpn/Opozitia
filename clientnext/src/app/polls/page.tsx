@@ -12,6 +12,7 @@ import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
 import { Select as SelectMenu, SelectItem } from "@nextui-org/react";
 import { IHomeNews } from '@/types/types';
 import { NewsService } from '@/service/news.service';
+import Link from 'next/link';
 
 export default function Polls() {
   const [option, setOption] = useState(0);
@@ -137,14 +138,14 @@ export default function Polls() {
                 </div>
                 <div className="news__wrap-right sidebar">
                   <aside className="news__latest-news latest-news latest-news_big">
-                    <a
+                    <Link
                       href="lastnews"
                       className="latest-news__main-title-link"
                     >
                       <h3 className="latest-news__title latest-news__title_posts">
                         Статьи по теме
                       </h3>
-                    </a>
+                    </Link>
                     {data?.news!.map((n) => (
                       <LatestNews
                         key={n.id}

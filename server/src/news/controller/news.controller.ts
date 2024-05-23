@@ -44,60 +44,60 @@ export class NewsController {
     return this.getNewsUseCase.getNews();
   }
 
+  @Get('sidebar')
+  @HttpCode(200)
+  async getSidebar(@Query() category: newsCategory) {
+    return await this.newsQueryRepository.getLastNewsSidebar(category);
+  }
+
   @Get('policy')
   @HttpCode(200)
-  async findAllPolicy(@Query() query: { sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllNewsByCategory(
+  async findAllPolicy(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+    return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Policy,
       query.sortBy,
       query.pageNumber,
+      query.pageSize,
     );
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.Policy);
-    return { amount: news.length, news, sidebarNews: lastNews };
   }
 
   @Get('business')
   @HttpCode(200)
-  async findAllBusiness(@Query() query: { sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllNewsByCategory(
+  async findAllBusiness(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+    return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Business,
       query.sortBy,
       query.pageNumber,
+      query.pageSize,
     );
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.Business);
-    return { amount: news.length, news, sidebarNews: lastNews };
   }
 
   @Get('economika')
   @HttpCode(200)
-  async findAllEconomic(@Query() query: { sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllNewsByCategory(
+  async findAllEconomic(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+    return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Economy,
       query.sortBy,
       query.pageNumber,
+      query.pageSize,
     );
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.Economy);
-    return { amount: news.length, news, sidebarNews: lastNews };
   }
 
   @Get('world')
   @HttpCode(200)
-  async getAllWorld(@Query() query: { sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllNewsByCategory(
+  async getAllWorld(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+    return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.World,
       query.sortBy,
       query.pageNumber,
+      query.pageSize,
     );
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar(newsCategory.World);
-    return { amount: news.length, news, sidebarNews: lastNews };
   }
 
   @Get('last-news')
   @HttpCode(200)
-  async getLastNews(@Query() query: { sortBy: string; pageNumber: number }) {
-    const news = await this.newsQueryRepository.getAllLastNews(query.sortBy, query.pageNumber);
-    const sidebarNews = await this.newsQueryRepository.getLastNewsSidebar('');
-    return { amount: news.length, news, sidebarNews };
+  async getLastNews(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+    return await this.newsQueryRepository.getAllLastNews(query.sortBy, query.pageNumber, query.pageSize);
   }
 
   @Get('home')
@@ -123,9 +123,13 @@ export class NewsController {
   @Get(':id')
   @HttpCode(200)
   async findOne(@Param('id') id: string) {
-    const singleNews = await this.newsQueryRepository.getNewsById(id);
-    const lastNews = await this.newsQueryRepository.getLastNewsSidebar('');
-    return { news: singleNews, sidebarNews: lastNews };
+    return await this.newsQueryRepository.getNewsById(id);
+  }
+
+  @Get(':id/comments')
+  @HttpCode(200)
+  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number }) {
+    return await this.newsQueryRepository.getComments(id, query.pageNumber);
   }
 
   @Post('create-news')
@@ -162,5 +166,11 @@ export class NewsController {
   ) {
     const userId = await this.authService.getUserId(req.headers.authorization!.split(' ')[1]);
     return await this.createCommentUseCase.create(newsId, data.text, userId);
+  }
+
+  @Post(':newsId/test')
+  @HttpCode(201)
+  async createComment1(@Param('newsId') newsId: string, @Body('data') data: CreateCommentModel) {
+    return await this.createCommentUseCase.create(newsId, data.text, '0ef9a584-74ec-4132-ae47-45d36b12b514');
   }
 }

@@ -10,6 +10,13 @@ export interface IHomeNews {
   bottomNewsThree: INews[];
 }
 
+export interface IComments {
+  text: string
+  username: string
+  viewDate: string
+  userImage: string
+}
+
 export interface ISingleNews {
   id: string;
   title: string;
@@ -20,11 +27,6 @@ export interface ISingleNews {
   category: string;
   description: string;
   fullImgUrl: string;
-}
-
-export interface IFullSingleNews {
-  news: ISingleNews;
-  sidebarNews: ISideBarsNews[];
 }
 
 export interface INews {
@@ -128,7 +130,7 @@ export type PageNewsProps = {
 
 export type CommentProps = {
   name: string;
-  img: StaticImageData;
+  img: string;
   class1: string;
   time: string;
   text: string;

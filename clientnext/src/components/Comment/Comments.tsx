@@ -15,10 +15,7 @@ export const Comments = ({
     <div className={class1}>
       <div className="bottom-comments-news__top-info">
         <div className="bottom-comments-news__image">
-          <picture>
-            <source srcSet="img/icons/comments-image.webp" type="image/webp" />
-            <Image src={img} alt="Картинка" />
-          </picture>
+          <Image height={50} width={50} src={`/img/icons/${img}`} alt='Image' />
         </div>
         <div className="bottom-comments-news__right">
           <h4 className="bottom-comments-news__name">{name}</h4>

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { LatestNewsProps } from "@/types/types";
+import Link from 'next/link';
 
 export const LatestNews = ({
   id,
@@ -16,7 +17,7 @@ export const LatestNews = ({
 
   return (
     <div className="latest-news__item">
-      <a href={`${category}/${id}`} className="latest-news__image">
+      <Link href={`/${category}/${id}`} className="latest-news__image">
         <picture>
           {isUrl ? (
             <Image width={180} height={160} src={img} alt="Image" />
@@ -29,12 +30,12 @@ export const LatestNews = ({
             />
           )}
         </picture>
-      </a>
+      </Link>
       <div className="latest-news__right">
         <span className="latest-news__time">{time}</span>
-        <a href={`${category}/${id}`} className="latest-news__title-link">
+        <Link href={`/${category}/${id}`} className="latest-news__title-link">
           <h4 className="latest-news__link-title">{title}</h4>
-        </a>
+        </Link>
         <p className="latest-news__text">{text}</p>
       </div>
     </div>

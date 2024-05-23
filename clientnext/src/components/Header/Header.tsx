@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 import Message from "@/img/icons/message.svg";
@@ -57,7 +56,7 @@ export const Header = ({
               <Link href="/polls" className="top-header__link link-top-header">
                 <Image src={Message} alt="Icon" />
               </Link>
-              <a
+              <Link
                 data-popup="#search"
                 href="#"
                 className="top-header__link-search link-top-header"
@@ -69,7 +68,7 @@ export const Header = ({
                   src="/img/icons/search.svg"
                   alt="Icon"
                 />
-              </a>
+              </Link>
               <Link
                 data-popup="#popup-login"
                 href=""
@@ -91,7 +90,7 @@ export const Header = ({
               </Link>
             </div>
             <div className="top-header__weather weather-header">
-              <a href="#" className="weather-header__info">
+              <Link href="#" className="weather-header__info">
                 <span id="temperature" className="weather-header__temperature">
                   11°
                 </span>
@@ -102,7 +101,7 @@ export const Header = ({
                   className="weather-header__icon"
                   alt="icon"
                 />
-              </a>
+              </Link>
               <div className="weather-header__location">
                 <span id="location" className="weather-header__city">
                   Москва
@@ -126,36 +125,36 @@ export const Header = ({
                 </div>
                 <ul className={`menubox ${burger ? "active-burger" : ""}`}>
                   <li>
-                    <a href="home.html" className="top-header__logo">
+                    <Link href="home" className="top-header__logo">
                       <picture>
                         <source srcSet="img/logo.webp" type="image/webp" />
                         <Image src={Logo} alt="Logo" />
                       </picture>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="menu-item menu__link" href="#">
+                    <Link className="menu-item menu__link" href="#">
                       ЭКОНОМИКА
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="menu-item menu__link" href="#">
+                    <Link className="menu-item menu__link" href="#">
                       ПОЛИТИКА
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="menu-item menu__link" href="#">
+                    <Link className="menu-item menu__link" href="#">
                       БИЗНЕС
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="menu-item menu__link" href="#">
+                    <Link className="menu-item menu__link" href="#">
                       МИРОВЫЕ НОВОСТИ
-                    </a>
+                    </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
                     {/* <a className="menu-item menu-item-widgets" href="#"></a> */}
-                    <a
+                    <Link
                       href="#"
                       data-popup="#popup-vote"
                       className="menu-item menu-item-widgets bottom-header__link !py-[16px] !px-[65px] "
@@ -163,15 +162,15 @@ export const Header = ({
                       <span className="text-[10px] !whitespace-nowrap">
                         Сообщить новость
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper mt-[30px] ml-[22px]">
-                    <a href="oprosi.html" className="menu-item-widgets-oprosi ">
+                    <Link href="oprosi" className="menu-item-widgets-oprosi ">
                       <p>Выскажи свое мнение!</p>
                       <div className="menu-item-widgets-oprosi__img">
                         <Image src={Message} alt="Icon" />
                       </div>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -211,7 +210,7 @@ export const Header = ({
               </ul>
             </nav>
           </div>
-          <a
+          <Link
             href="#"
             data-popup="#popup-vote"
             className="bottom-header__link"
@@ -221,7 +220,7 @@ export const Header = ({
             {/* <span className="bottom-header__link-news-icon">
               <Image src={Plus} alt="Иконка" />
             </span> */}
-          </a>
+          </Link>
         </div>
       </div>
     </header>

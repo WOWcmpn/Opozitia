@@ -1,6 +1,7 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { NewsEntity } from '../../news/domain/news.entity';
 import { UserEntity } from '../../users/domain/user.entity';
+import { formatDate } from '../../base/helpers/formatDate';
 
 @Entity()
 export class CommentsEntity extends BaseEntity {
@@ -20,7 +21,13 @@ export class CommentsEntity extends BaseEntity {
   createdAt: Date;
 
   @Column()
+  viewDate: string;
+
+  @Column()
   newsId: string;
+
+  @Column()
+  userImage: string;
 
   @ManyToOne(() => NewsEntity, (n) => n.comments)
   news: NewsEntity;
@@ -36,6 +43,8 @@ export class CommentsEntity extends BaseEntity {
     comment.username = username;
     comment.newsId = newsId;
     comment.createdAt = new Date();
+    comment.viewDate = formatDate(new Date().toLocaleDateString());
+    comment.userImage = 'comments-image.webp';
 
     return comment;
   }
