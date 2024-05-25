@@ -7,6 +7,7 @@ import Plus from "@/img/icons/plus.svg";
 import Link from "next/link";
 import { HeaderProps } from "@/types/types";
 import { PopupPolls } from "../PopupPolls/PopupPolls";
+import { PopupNews } from "@/components/PopupNews/PopupNews";
 
 export const Header = ({
   className,
@@ -132,26 +133,46 @@ export const Header = ({
                       </picture>
                     </Link>
                   </li>
-                  <li>
-                    <Link className="menu-item menu__link" href="#">
+                  <li className="menu__item">
+                    <Link href="/economy" className="menu__link">
                       ЭКОНОМИКА
                     </Link>
                   </li>
-                  <li>
-                    <Link className="menu-item menu__link" href="#">
+                  <li className="menu__item">
+                    <Link href="/policy" className="menu__link">
                       ПОЛИТИКА
                     </Link>
                   </li>
-                  <li>
-                    <Link className="menu-item menu__link" href="#">
+                  <li className="menu__item">
+                    <Link href="/business" className="menu__link">
                       БИЗНЕС
                     </Link>
                   </li>
-                  <li>
-                    <Link className="menu-item menu__link" href="#">
+                  <li className="menu__item">
+                    <Link href="/world" className="menu__link">
                       МИРОВЫЕ НОВОСТИ
                     </Link>
                   </li>
+                  {/*<li>*/}
+                  {/*  <Link className="menu-item menu__link" href="#">*/}
+                  {/*    ЭКОНОМИКА*/}
+                  {/*  </Link>*/}
+                  {/*</li>*/}
+                  {/*<li>*/}
+                  {/*  <Link className="menu-item menu__link" href="#">*/}
+                  {/*    ПОЛИТИКА*/}
+                  {/*  </Link>*/}
+                  {/*</li>*/}
+                  {/*<li>*/}
+                  {/*  <Link className="menu-item menu__link" href="#">*/}
+                  {/*    БИЗНЕС*/}
+                  {/*  </Link>*/}
+                  {/*</li>*/}
+                  {/*<li>*/}
+                  {/*  <Link className="menu-item menu__link" href="#">*/}
+                  {/*    МИРОВЫЕ НОВОСТИ*/}
+                  {/*  </Link>*/}
+                  {/*</li>*/}
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
                     {/* <a className="menu-item menu-item-widgets" href="#"></a> */}
                     <Link
@@ -165,7 +186,7 @@ export const Header = ({
                     </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper mt-[30px] ml-[22px]">
-                    <Link href="oprosi" className="menu-item-widgets-oprosi ">
+                    <Link href={'/oprosi'} className="menu-item-widgets-oprosi ">
                       <p>Выскажи свое мнение!</p>
                       <div className="menu-item-widgets-oprosi__img">
                         <Image src={Message} alt="Icon" />
@@ -214,12 +235,13 @@ export const Header = ({
             href="#"
             data-popup="#popup-vote"
             className="bottom-header__link"
-            onClick={newspopup}
           >
             <span className="bottom-header__link-news">Сообщить новость</span>
-            {/* <span className="bottom-header__link-news-icon">
-              <Image src={Plus} alt="Иконка" />
-            </span> */}
+            {}
+            {/*<PopupNews onClick={popup} />*/}
+            {/*<span className="bottom-header__link-news-icon">*/}
+            {/*  <Image src={Plus} alt="Иконка" />*/}
+            {/*</span>*/}
           </Link>
         </div>
       </div>

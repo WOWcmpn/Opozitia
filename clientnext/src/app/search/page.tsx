@@ -1,13 +1,48 @@
 "use client";
-
 import { SearchResult } from "@/components/SearchResult/SearchResult";
-import Image from "next/image";
-import React, { useState } from "react";
-import MainBlock2 from "@/img/main-block/02.png";
+import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Header/Header";
+import { NewsService } from "@/service/news.service";
+import { ISearchNews } from "@/types/types";
+import Link from "next/link";
 
-export default function Search() {
+export default function Search({searchParams}: {
+  searchParams?: {
+    query?: string
+  }
+}) {
+  let searchNameTerm
+  if(!searchParams) {
+    searchNameTerm = ''
+  } else {
+    searchNameTerm = searchParams.query
+  }
   const [isExist, setIsExist] = useState(true);
+  const [news, setNews] = useState<ISearchNews[]>([]);
+  const [amount, setAmount] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState(searchNameTerm);
+
+  if(!searchTerm) {
+    setSearchTerm(' ')
+    }
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const newData = await NewsService.getSearchNews(searchTerm)
+        const newAmount = await NewsService.getCountSearch(searchTerm)
+        setAmount(newAmount)
+        setNews(newData)
+        if(newData.length > 0) {
+          setIsExist(true)
+        } else {
+          setIsExist(false)
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+    loadData()
+  }, [searchTerm]);
 
   return (
     <div className="wrapper">
@@ -16,7 +51,7 @@ export default function Search() {
         {isExist ? (
           <section className="page__search-block search-block">
             <div className="search-block__container">
-              <form action="#" className="search-block__form">
+              <form className="search-block__form">
                 <div className="search-block__input-wrap">
                   <input
                     autoComplete="off"
@@ -24,106 +59,64 @@ export default function Search() {
                     name="form[]"
                     placeholder="Поиск..."
                     className="search-block__input"
+                    defaultValue={`${searchTerm}`}
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
                   />
                   <button
-                    type="button"
+                    type="submit"
                     className="search-block__cancel-btn"
+                    onClick={() => setSearchTerm(' ')}
                   ></button>
                 </div>
-                <button
-                  type="submit"
-                  className="search-block__btn"
-                  onClick={() => setIsExist(false)}
-                >
-                  Поиск
-                </button>
+                {/*<button*/}
+                {/*  type="submit"*/}
+                {/*  className="search-block__btn"*/}
+                {/*  //onClick={() => setIsExist(false)}*/}
+                {/*>*/}
+                {/*  Поиск*/}
+                {/*</button>*/}
               </form>
               <div className="search-block__results results-search-block">
                 <header className="results-search-block__header">
                   <p className="results-search-block__top-text">Показано </p>
                   <p className="results-search-block__wrap-results">
                     <span className="results-search-block__results-numbers">
-                      1-10
+                      {news?.length}
                     </span>{" "}
                     из{" "}
                     <span className="results-search-block__results-total">
-                      123
+                      {amount}
                     </span>
                   </p>
                 </header>
                 <div className="results-search-block__body">
-                  <SearchResult
-                    topTitle="ПОЛИТИКА"
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                    text="Nunc velit lacus, dictum non tristique non, semper in massa. Aliquam sodales imperdiet dui et
-                            maximus.Maecenas porta sodales arcu, et lacinia
-                            urna bibendum sit amet. Donec non vestibulum odio, eget"
-                    time="20:19"
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
+                  {news?.map(n => (
+                    <SearchResult key={n.id}
+                      category={n.category.toLowerCase()}
+                      title={n.title}
+                      text={n.description.substring(0, 300).padEnd(303, '...')}
+                      time={n.createdAtTime}
+                      id={n.id}
+                      link2="СНГ"
+                      link3="ЕС"
+                      img={n.fullImgUrl}
+                    />
+                  ))}
 
-                  <SearchResult
-                    topTitle="ПОЛИТИКА"
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                    text="Nunc velit lacus, dictum non tristique non, semper in massa. Aliquam sodales imperdiet dui et
-                            maximus.Maecenas porta sodales arcu, et lacinia
-                            urna bibendum sit amet. Donec non vestibulum odio, eget"
-                    time="20:19"
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
-
-                  <SearchResult
-                    topTitle="ПОЛИТИКА"
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                    text="Nunc velit lacus, dictum non tristique non, semper in massa. Aliquam sodales imperdiet dui et
-                            maximus.Maecenas porta sodales arcu, et lacinia
-                            urna bibendum sit amet. Donec non vestibulum odio, eget"
-                    time="20:19"
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
-
-                  <SearchResult
-                    topTitle="ПОЛИТИКА"
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                    text="Nunc velit lacus, dictum non tristique non, semper in massa. Aliquam sodales imperdiet dui et
-                            maximus.Maecenas porta sodales arcu, et lacinia
-                            urna bibendum sit amet. Donec non vestibulum odio, eget"
-                    time="20:19"
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
-
-                  <SearchResult
-                    topTitle="ПОЛИТИКА"
-                    title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                    text="Nunc velit lacus, dictum non tristique non, semper in massa. Aliquam sodales imperdiet dui et
-                            maximus.Maecenas porta sodales arcu, et lacinia
-                            urna bibendum sit amet. Donec non vestibulum odio, eget"
-                    time="20:19"
-                    link1="Экономика"
-                    link2="Молдова"
-                    link3="ЕС"
-                    img={MainBlock2}
-                  />
                 </div>
                 <br />
-                <button
-                  className="results-search-block__btn-more btn-more"
-                  type="button"
-                >
-                  Еще 20 статей
-                </button>
+                {/*{loading && <p>Загрузка...</p>}*/}
+                {/*{hasMore && !loading &&*/}
+                {/*  <button onClick={handleLoadMore} className="results-search-block__btn-more btn-more">*/}
+                {/*    Ещё 10 статей*/}
+                {/*  </button>}*/}
+                {/*<button*/}
+                {/*  className="results-search-block__btn-more btn-more"*/}
+                {/*  type="button"*/}
+                {/*>*/}
+                {/*  Еще 20 статей*/}
+                {/*</button>*/}
               </div>
             </div>
           </section>
@@ -131,7 +124,6 @@ export default function Search() {
           <section className="page__search-block search-block">
             <div className="search-block__container">
               <form
-                action="#"
                 className="search-block__form search-block__form_noresults"
               >
                 <div className="search-block__input-wrap">
@@ -141,23 +133,27 @@ export default function Search() {
                     name="form[]"
                     placeholder="Поиск..."
                     className="search-block__input"
+                    defaultValue={`${searchTerm}`}
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
                   />
                   <button
                     type="button"
                     className="search-block__cancel-btn"
+                    onClick={() => setSearchTerm(' ')}
                   ></button>
                 </div>
-                <button
-                  type="submit"
-                  className="search-block__btn"
-                  onClick={() => setIsExist(true)}
-                >
-                  Поиск
-                </button>
+                {/*<button*/}
+                {/*  type="submit"*/}
+                {/*  className="search-block__btn"*/}
+                {/*  // onClick={() => setIsExist(true)}*/}
+                {/*>*/}
+                {/*  Поиск*/}
+                {/*</button>*/}
               </form>
               <p className="search-block__text-search">
                 <span className="bold">Возможно вы имели в виду:</span>{" "}
-                <a href="#">Политика</a>
+                <Link href={'/policy'}>Политика</Link>
               </p>
               <div className="search-block__results results-search-block">
                 <p className="results-search-block__nothing-found">

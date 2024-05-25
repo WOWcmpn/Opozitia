@@ -1,37 +1,51 @@
 import axios from "axios";
 import {
   IComments,
-  IHomeNews,
-  INews, ISingleNews
+  IHomeNews, IMainNews,
+  INews, ISearchNews, ISingleNews
 } from "@/types/types";
 
 axios.defaults.baseURL = "http://localhost:4000/";
 
 export const NewsService = {
-  async getBusinessNews(pageNumber?: number, pageSize?: number): Promise<INews[]> {
+  async getSearchNews(searchNameTerm?: string, pageNumber?: number): Promise<ISearchNews[]> {
+    const {data} = await axios.get('news/search', {params: {
+      searchNameTerm, pageNumber
+      }})
+    return data
+  },
+
+  async getCountSearch(searchNameTerm?: string): Promise<number> {
+    const {data} = await axios.get('news/search-count', {params: {
+      searchNameTerm
+      }})
+    return data
+  },
+
+  async getBusinessNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get("news/business", {params: {
-        pageNumber, pageSize
+        pageNumber, pageSize, sorting
       }})
     return data;
   },
 
-  async getEconomyNews(pageNumber?: number, pageSize?: number): Promise<INews[]> {
+  async getEconomyNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get("news/economika", {params: {
-        pageNumber, pageSize
+        pageNumber, pageSize, sorting
       }});
     return data;
   },
 
-  async getPolicyNews(pageNumber?: number, pageSize?: number): Promise<INews[]> {
+  async getPolicyNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get("news/policy", {params: {
-        pageNumber, pageSize
+        pageNumber, pageSize, sorting
       }});
     return data;
   },
 
-  async getWorldNews(pageNumber?: number, pageSize?: number): Promise<INews[]> {
+  async getWorldNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get("news/world", {params: {
-        pageNumber, pageSize
+        pageNumber, pageSize, sorting
       }});
     return data;
   },
@@ -53,9 +67,9 @@ export const NewsService = {
     return data
   },
 
-  async getLastNews(pageNumber?: number, pageSize?: number): Promise<INews[]> {
-    const { data } = await axios.get<INews[]>("news/last-news", {params: {
-        pageNumber, pageSize
+  async getLastNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
+    const { data } = await axios.get<IMainNews[]>("news/last-news", {params: {
+        pageNumber, pageSize, sorting
       }});
     return data;
   },

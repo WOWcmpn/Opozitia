@@ -57,12 +57,21 @@ export const PageNews = ({
             <Image width={290} height={100} src={img} alt="Image" />
           ) : (
             <Image
-              width={290}
-              height={100}
-              src={`/img/preview-images/${img}`}
+              width={290} height={100}
+              src={`/img/fullImage-news/${img}`}
               alt="Image"
             />
           )}
+          {/*{isUrl ? (*/}
+          {/*  <Image width={290} height={100} src={img} alt="Image" />*/}
+          {/*) : (*/}
+          {/*  <Image*/}
+          {/*    width={290}*/}
+          {/*    height={100}*/}
+          {/*    src={`/img/preview-images/${img}`}*/}
+          {/*    alt="Image"*/}
+          {/*  />*/}
+          {/*)}*/}
         </picture>
       </div>
     </div>

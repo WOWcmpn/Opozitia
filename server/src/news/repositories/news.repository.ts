@@ -21,4 +21,13 @@ export class NewsRepository {
     await this.commentsRepo.insert(comment);
     return;
   }
+
+  async updateFullImg() {
+    return await this.newsRepository
+      .createQueryBuilder()
+      .update()
+      .set({ fullImgUrl: 'hq720.jpg' })
+      .where('fullImgUrl IS NULL')
+      .execute();
+  }
 }

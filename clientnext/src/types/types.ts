@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 export interface IHomeNews {
   news: INews[];
   amount: number;
-  mainNews: INews[];
+  mainNews: IMainNews[];
   swipeNews: INews[];
   bottomNewsOne: INews[];
   bottomNewsTwo: INews[];
@@ -29,6 +29,15 @@ export interface ISingleNews {
   fullImgUrl: string;
 }
 
+export interface IMainNews {
+  id: string;
+  title: string;
+  fullImgUrl: string;
+  createdAtTime: string;
+  category: string;
+  description: string;
+}
+
 export interface INews {
   id: string;
   title: string;
@@ -38,25 +47,18 @@ export interface INews {
   description: string;
 }
 
-export interface ISideBarsNews {
+export interface ISearchNews {
   id: string;
   title: string;
-  imgUrl: string;
-  createdAtTime: string;
-  description: string;
+  fullImgUrl: string;
   category: string;
+  description: string;
+  createdAtTime: string
 }
 
-export interface ILastNews {
-  news: INews[];
-  amount: number;
-  sidebarNews: ISideBarsNews[];
-}
-
-export interface IFullNews {
-  news: INews[];
-  amount: number;
-  sidebarNews: ISideBarsNews[];
+export interface ISearch {
+  news: ISearchNews[]
+  amount: number
 }
 
 export interface IRegisterUser {
@@ -139,13 +141,13 @@ export type CommentProps = {
 
 export type SearchResultProps = {
   title: string;
-  img: StaticImageData;
-  link1: string;
+  img: string;
+  id: string;
   link2: string;
   link3: string;
   text: string;
   time: string;
-  topTitle: string;
+  category: string;
 };
 
 export type CurrencyBodyProps = {

@@ -232,7 +232,7 @@ export default function Home() {
                             title={n.title}
                             firstLink={n.id}
                             firstCategory={n.category.toLowerCase()}
-                            img={n.imgUrl}
+                            img={n.fullImgUrl}
                             link1="Чего ожидать Молдове в ближайшие несколько недель?"
                             link2="Чего ожидать Молдове в ближайшие несколько недель?"
                             link3="Чего ожидать Молдове в ближайшие несколько недель?"
@@ -299,7 +299,7 @@ export default function Home() {
           {login == 1 && <PopupAccount onClick={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
-          {search == 1 && <Search onSearch={setLogin} />}
+          {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>

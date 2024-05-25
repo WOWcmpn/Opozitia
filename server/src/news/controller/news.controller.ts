@@ -4,7 +4,6 @@ import {
   Get,
   HttpCode,
   MaxFileSizeValidator,
-  NotFoundException,
   Param,
   ParseFilePipe,
   Post,
@@ -27,6 +26,7 @@ import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
 import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
+import { NewsRepository } from '../repositories/news.repository';
 
 @Controller('news')
 @ApiTags('News')
@@ -34,6 +34,7 @@ export class NewsController {
   constructor(
     private readonly getNewsUseCase: GetNewsUseCase,
     private readonly newsQueryRepository: NewsQueryRepository,
+    private readonly newsRepo: NewsRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
     private readonly authService: AuthService,
     private readonly createCommentUseCase: CreateCommentUseCase,
@@ -44,60 +45,65 @@ export class NewsController {
     return this.getNewsUseCase.getNews();
   }
 
+  @Cron(CronExpression.EVERY_30_MINUTES)
+  handleImg() {
+    return this.newsRepo.updateFullImg();
+  }
+
   @Get('sidebar')
   @HttpCode(200)
-  async getSidebar(@Query() category: newsCategory) {
-    return await this.newsQueryRepository.getLastNewsSidebar(category);
+  async getSidebar(@Query() query: { category: newsCategory }) {
+    return await this.newsQueryRepository.getLastNewsSidebar(query.category);
   }
 
   @Get('policy')
   @HttpCode(200)
-  async findAllPolicy(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+  async findAllPolicy(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
     return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Policy,
-      query.sortBy,
       query.pageNumber,
       query.pageSize,
+      query.sorting,
     );
   }
 
   @Get('business')
   @HttpCode(200)
-  async findAllBusiness(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+  async findAllBusiness(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
     return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Business,
-      query.sortBy,
       query.pageNumber,
       query.pageSize,
+      query.sorting,
     );
   }
 
   @Get('economika')
   @HttpCode(200)
-  async findAllEconomic(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+  async findAllEconomic(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
     return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.Economy,
-      query.sortBy,
       query.pageNumber,
       query.pageSize,
+      query.sorting,
     );
   }
 
   @Get('world')
   @HttpCode(200)
-  async getAllWorld(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
+  async getAllWorld(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
     return await this.newsQueryRepository.getAllNewsByCategory(
       newsCategory.World,
-      query.sortBy,
       query.pageNumber,
       query.pageSize,
+      query.sorting,
     );
   }
 
   @Get('last-news')
   @HttpCode(200)
-  async getLastNews(@Query() query: { sortBy: string; pageNumber: number; pageSize: number }) {
-    return await this.newsQueryRepository.getAllLastNews(query.sortBy, query.pageNumber, query.pageSize);
+  async getLastNews(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
+    return await this.newsQueryRepository.getAllLastNews(query.pageNumber, query.pageSize, query.sorting);
   }
 
   @Get('home')
@@ -114,10 +120,14 @@ export class NewsController {
 
   @Get('search')
   @HttpCode(200)
-  async findBySearch(@Query() query: { searchNameTerm: string }) {
-    const data = await this.newsQueryRepository.getBySearch(query.searchNameTerm);
-    if (data.news.length === 0) throw new NotFoundException();
-    return { amount: data.count, news: data.news };
+  async findBySearch(@Query() query: { searchNameTerm: string; pageNumber: number }) {
+    return await this.newsQueryRepository.getBySearch(query.searchNameTerm, query.pageNumber);
+  }
+
+  @Get('search-count')
+  @HttpCode(200)
+  async countSearch(@Query() query: { searchNameTerm: string }) {
+    return await this.newsQueryRepository.getCountSearch(query.searchNameTerm);
   }
 
   @Get(':id')

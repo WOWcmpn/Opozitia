@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import SearchIMG from "@/img/icons/search-black.svg";
 import { SearchProps } from "@/types/types";
 import { redirect } from "next/navigation";
@@ -7,12 +7,16 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 export const Search = ({ onSearch }: SearchProps) => {
-  const router = useRouter();
+  const {replace} = useRouter();
+  const [search, setSearch] = useState<string>();
 
   const toSearch = (e: any) => {
     e.preventDefault();
-    onSearch(0);
-    router.push("/search");
+    if(!search) {
+      replace(`/search?query=`)
+    } else {
+      replace(`/search?query=${search}`)
+    }
   };
   return (
     <motion.div
@@ -37,6 +41,7 @@ export const Search = ({ onSearch }: SearchProps) => {
               name="form[]"
               placeholder=""
               className="search-popup__input"
+              onChange={e => setSearch(e.target.value)}
             />
             <button
               type="submit"

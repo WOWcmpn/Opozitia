@@ -11,50 +11,135 @@ export class NewsQueryRepository {
     @InjectRepository(CommentsEntity) private readonly commentsRepo: Repository<CommentsEntity>,
   ) {}
 
-  async getBySearch(searchNameTerm: string = '') {
-    const news = await this.newsRepository
+  async getBySearch(searchNameTerm: string = '', pageNumber: number = 1) {
+    return await this.newsRepository
       .createQueryBuilder('n')
-      .select()
+      .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
       .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
-      .limit(20)
+      .limit(30)
+      .offset((pageNumber - 1) * 10)
       .getMany();
+  }
 
-    const count = await this.newsRepository
+  async getCountSearch(searchNameTerm: string = '') {
+    return await this.newsRepository
       .createQueryBuilder('n')
-      .select()
+      .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
       .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
       .getCount();
-    return { count, news };
   }
 
   async getAllNewsByCategory(
     category: string,
-    sortBy: string,
     pageNumber: number = 1,
     pageSize: number = 10,
+    sorting: string = 'all',
   ) {
-    return await this.newsRepository
-      .createQueryBuilder('n')
-      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.category'])
-      .where('n.category = :category', { category })
-      .orderBy('n.createdAtDate', 'DESC')
-      .addOrderBy('n.createdAtTime', 'DESC')
-      .limit(pageSize)
-      .offset((pageNumber - 1) * pageSize)
-      .getMany();
+    const DAY = 24 * 3600 * 1000;
+    const MONTH = 30 * DAY;
+    const YEAR = 365.2425 * DAY;
+    const startDate = new Date();
+
+    if (sorting === 'week') {
+      const weekDate = new Date(+startDate - 7 * DAY);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :weekDate', { weekDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'month') {
+      const monthDate = new Date(+startDate - MONTH);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :monthDate', { monthDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'year') {
+      const yearDate = new Date(+startDate - YEAR);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :yearDate', { yearDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'all') {
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    }
   }
 
-  async getAllLastNews(sortBy: string, pageNumber: number = 1, pageSize: number = 10) {
-    return await this.newsRepository
-      .createQueryBuilder('n')
-      .select(['n.id', 'n.title', 'n.imgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-      .orderBy('n.createdAtDate', 'DESC')
-      .addOrderBy('n.createdAtTime', 'DESC')
-      .limit(pageSize)
-      .offset((pageNumber - 1) * pageSize)
-      .getMany();
+  async getAllLastNews(pageNumber: number = 1, pageSize: number = 10, sorting: string = 'all') {
+    const DAY = 24 * 3600 * 1000;
+    const MONTH = 30 * DAY;
+    const YEAR = 365.2425 * DAY;
+    const startDate = new Date();
+
+    if (sorting === 'week') {
+      const weekDate = new Date(+startDate - 7 * DAY);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :weekDate', { weekDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'month') {
+      const monthDate = new Date(+startDate - MONTH);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :monthDate', { monthDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'year') {
+      const yearDate = new Date(+startDate - YEAR);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :yearDate', { yearDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    } else if (sorting === 'all') {
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .limit(pageSize)
+        .offset((pageNumber - 1) * pageSize)
+        .getMany();
+    }
   }
 
   async getLastNewsSidebar(category: string | '') {
@@ -82,7 +167,7 @@ export class NewsQueryRepository {
   async getMainNews() {
     return await this.newsRepository
       .createQueryBuilder('n')
-      .select()
+      .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.category', 'n.description'])
       .orderBy('n.createdAtDate', 'DESC')
       .limit(5)
       .offset(15)

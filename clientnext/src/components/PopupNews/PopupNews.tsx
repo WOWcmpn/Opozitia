@@ -6,6 +6,7 @@ import UploadFile from "@/img/icons/uploadfile.svg";
 import ImageFile from "@/img/icons/imagefile.png";
 import { AccountPopupProps } from "@/types/types";
 import { Select as SelectMenu, SelectItem } from "@nextui-org/react";
+import Link from "next/link";
 
 export const PopupNews = ({ onClick }: AccountPopupProps) => {
   const [option, setOption] = useState(0);
@@ -26,12 +27,12 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
       <div className="popup__wrapper">
         <div className=" popup_show popup__content_vote content-popup !px-[80px] !pt-[30px] !pb-[5px]">
           <div className="popup__top  !w-[100%]">
-            <a href="#" className="popup__logo">
+            <Link href="#" className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
-            </a>
+            </Link>
             <button
               data-close
               type="button"

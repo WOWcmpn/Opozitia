@@ -23,11 +23,11 @@ export const BlockContent = ({
             <Link href="#" className="thumbs-images__image-ibg">
               <picture>
                 {isUrl ? (
-                  <Image width={350} height={350} src={img} alt="Image" className="!h-[280px] " />
+                  <Image fill={true} src={img} alt="Image" className="!h-[280px] " />
                 ) : (
                   <Image
-                    width={350} height={350}
-                    src={`/img/preview-images/${img}`}
+                    fill={true}
+                    src={`/img/fullImage-news/${img}`}
                     alt="Image"
                     className="!h-[280px] "
                   />

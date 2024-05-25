@@ -16,6 +16,8 @@ import { IComments, INews, ISingleNews } from "@/types/types";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Comments } from "@/components/Comment/Comments";
+import { AnimatePresence } from "framer-motion";
+import { Search } from "@/components/Search/Search";
 
 export default function NewsId({params} : {params: {id: string}}) {
   const [news, setNews] = useState<ISingleNews>();
@@ -25,6 +27,7 @@ export default function NewsId({params} : {params: {id: string}}) {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [search, setSearch] = useState(0);
 
   const handleSubmit = async(e: any) => {
     try {
@@ -77,7 +80,19 @@ export default function NewsId({params} : {params: {id: string}}) {
 
   return (
     <div className="wrapper">
-      <Header className={"header menu-visual"} />
+      <div
+        className={`home ${
+          search == 1 ? "overflow" : ""
+        } w-[100vw]`}
+      >
+        <div
+          className={`wrapper ${
+            search == 1
+              ? "wrapper__popup blur"
+              : ""
+          }`}
+        >
+      <Header onSearch={setSearch} className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={2500} />
       <main className="page">
         <section className="page__news-single news-single">
@@ -332,6 +347,11 @@ export default function NewsId({params} : {params: {id: string}}) {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+        </div>
+        <AnimatePresence>
+          {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
