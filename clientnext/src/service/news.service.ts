@@ -2,12 +2,17 @@ import axios from "axios";
 import {
   IComments,
   IHomeNews, IMainNews,
-  INews, ISearchNews, ISingleNews
+  INews, ISearchNews, ISingleNews, IWeather
 } from "@/types/types";
 
 axios.defaults.baseURL = "http://localhost:4000/";
 
 export const NewsService = {
+  async getWeather(city?: string): Promise<IWeather> {
+    const {data} = await axios.get('news/weather')
+    return data
+  },
+
   async getSearchNews(searchNameTerm?: string, pageNumber?: number): Promise<ISearchNews[]> {
     const {data} = await axios.get('news/search', {params: {
       searchNameTerm, pageNumber

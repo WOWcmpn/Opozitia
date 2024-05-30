@@ -13,6 +13,8 @@ import { CreateCommentUseCase } from './use-cases/createComment.use-case';
 import { UsersQueryRepository } from '../users/repositories/users.query-repository';
 import { CommentsEntity } from '../comments/domain/comments.entity';
 import { UserEntity } from '../users/domain/user.entity';
+import { GetWeatherUseCase } from './use-cases/getWeather.use-case';
+import { GetCurrencyUseCase } from './use-cases/getCurrency.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity, CommentsEntity, UserEntity])],
@@ -22,6 +24,8 @@ import { UserEntity } from '../users/domain/user.entity';
     CheckNewsForAddUseCase,
     CreateNewsUseCase,
     CreateCommentUseCase,
+    GetWeatherUseCase,
+    GetCurrencyUseCase,
     NewsRepository,
     NewsQueryRepository,
     UsersQueryRepository,

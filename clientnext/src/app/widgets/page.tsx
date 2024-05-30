@@ -1,8 +1,7 @@
 "use client";
-
 import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Sun from "@/img/icons/sun.svg";
+import Night from "@/img/icons/weather/01n.png"
 import ChampionshipImg from "@/img/icons/championship.png";
 import Team from "@/img/icons/team.png";
 import ArrowL from "@/img/icons/arrow-left-calendar.svg";
@@ -23,6 +22,8 @@ import {
   getStringMonth,
   getYear,
 } from "@/utils/calendar";
+import { IWeather } from "@/types/types";
+import { NewsService } from "@/service/news.service";
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -30,7 +31,6 @@ export default function Widgets() {
     getMonth(new Date())
   );
   const [currentYear, setCurrentYear] = useState<number>(getYear(new Date()));
-
   const [date, setDate] = useState<string>(
     `${getStringMonth(currentMonth).month} ${getDate(
       new Date()
@@ -38,6 +38,7 @@ export default function Widgets() {
   );
   const [calendarData, setCalendarData] = useState(calendar(new Date(date)));
   //let calendarData = calendar(new Date(date));
+  const [weather, setWeather] = useState<IWeather>();
 
   const refreshCalendar = useCallback(() => {
     setDate(
@@ -47,6 +48,48 @@ export default function Widgets() {
     );
     setCalendarData(calendar(new Date(date)));
   }, [currentMonth, currentYear, date]);
+
+  let weatherIcon
+  let weatherDayIconOne
+  let weatherDayIconTwo
+  // let weatherNightIconOne
+  // let weatherNightIconTwo
+  if(!weather?.conditionIcon) {
+    weatherIcon = "/img/icons/weather/unknown.webp"
+  } else {
+    weatherIcon = `https:${weather?.conditionIcon}`
+  }
+  if(!weather?.dayConditionIconOne) {
+    weatherDayIconOne = "/img/icons/weather/unknown.webp"
+  } else {
+    weatherDayIconOne = `https:${weather?.dayConditionIconOne}`
+  }
+  if(!weather?.dayConditionIconTwo) {
+    weatherDayIconTwo = "/img/icons/weather/unknown.webp"
+  } else {
+    weatherDayIconTwo = `https:${weather?.dayConditionIconTwo}`
+  }
+  // if(!weather?.nightConditionIconOne) {
+  //   weatherNightIconOne = "/img/icons/weather/unknown.webp"
+  // } else {
+  //   weatherNightIconOne = `https:${weather?.nightConditionIconOne}`
+  // }
+  // if(!weather?.nightConditionIconTwo) {
+  //   weatherNightIconTwo = "/img/icons/weather/unknown.webp"
+  // } else {
+  //   weatherNightIconTwo = `https:${weather?.nightConditionIconTwo}`
+  // }
+  useEffect(() => {
+    async function loadWeather() {
+      try {
+        const weather = await NewsService.getWeather()
+        setWeather(weather)
+      } catch (err) {
+        console.warn('weather gone wrong: ', err);
+      }
+    }
+    loadWeather()
+  }, []);
 
   const changeMonth = (choice: boolean) => {
     let temp;
@@ -232,115 +275,60 @@ export default function Widgets() {
                 </div>
                 <div className="left-vidgets__wheather wheather-left-vidgets">
                   <div className="wheather-left-vidgets__top-location">
-                    Москва <Image src={Location} alt="Иконка" />
+                    {weather?.location} <Image src={Location} alt="Иконка" />
                   </div>
                   <div className="wheather-left-vidgets__top">
                     <div className="wheather-left-vidgets__image">
-                      <Image src={Sun} alt="Иконка" />
+                      <Image width={125} height={125} src={weatherIcon} alt="Иконка" />
                     </div>
                     <div className="wheather-left-vidgets__temp-block">
                       <span className="wheather-left-vidgets__temp-today">
-                        11°
+                        {weather?.currentTemperature}°
                       </span>
                       <p className="wheather-left-vidgets__temp-allday">
-                        16° / 6°
+                        {weather?.dayTemperature}° / {weather?.nightTemperature}°
                       </p>
                     </div>
                     <ul className="wheather-left-vidgets__temp-more-list">
                       <li className="wheather-left-vidgets__temp-more-item">
                         <Image src={Wind} alt="Иконка" />
-                        <span>35 м/с</span>
+                        <span>{weather?.windMPH} м/с</span>
                       </li>
                       <li className="wheather-left-vidgets__temp-more-item">
                         <Image src={Humidity1} alt="Иконка" />
-                        <span>44%</span>
+                        <span>{weather?.humidity}%</span>
                       </li>
                       <li className="wheather-left-vidgets__temp-more-item">
                         <Image src={Humidity2} alt="Иконка" />
-                        <span>31%</span>
+                        <span>{weather?.chanceOfRain}%</span>
                       </li>
                     </ul>
                   </div>
                   <div className="wheather-left-vidgets__body">
                     <h3 className="wheather-left-vidgets__title">
-                      Погода на неделю:
+                      Погода на следующие два дня:
                     </h3>
                     <ul className="wheather-left-vidgets__list-week-temp">
                       <li className="wheather-left-vidgets__item-week-temp">
                         <span className="wheather-left-vidgets__date">
-                          01.02.2024
+                          {weather?.dateOne}
                         </span>
                         <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
+                          {weather?.dayTemperatureOne}° <Image width={50} height={50} src={weatherDayIconOne} alt="Иконка" />
                         </span>
                         <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
+                          {weather?.nightTemperatureOne}° <Image src={Night} alt="Иконка" />
                         </span>
                       </li>
                       <li className="wheather-left-vidgets__item-week-temp">
                         <span className="wheather-left-vidgets__date">
-                          01.02.2024
+                          {weather?.dateTwo}
                         </span>
                         <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
+                          {weather?.dayTemperatureTwo}° <Image width={50} height={50} src={weatherDayIconTwo} alt="Иконка" />
                         </span>
                         <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
-                        </span>
-                      </li>
-                      <li className="wheather-left-vidgets__item-week-temp">
-                        <span className="wheather-left-vidgets__date">
-                          01.02.2024
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
-                        </span>
-                      </li>
-                      <li className="wheather-left-vidgets__item-week-temp">
-                        <span className="wheather-left-vidgets__date">
-                          01.02.2024
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
-                        </span>
-                      </li>
-                      <li className="wheather-left-vidgets__item-week-temp">
-                        <span className="wheather-left-vidgets__date">
-                          01.02.2024
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
-                        </span>
-                      </li>
-                      <li className="wheather-left-vidgets__item-week-temp">
-                        <span className="wheather-left-vidgets__date">
-                          01.02.2024
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
-                        </span>
-                      </li>
-                      <li className="wheather-left-vidgets__item-week-temp">
-                        <span className="wheather-left-vidgets__date">
-                          01.02.2024
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          16° <Image src={Sun} alt="Иконка" />
-                        </span>
-                        <span className="wheather-left-vidgets__temp-week-day">
-                          6° <Image src={Sun} alt="Иконка" />
+                          {weather?.nightTemperatureTwo}° <Image src={Night} alt="Иконка" />
                         </span>
                       </li>
                     </ul>

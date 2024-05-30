@@ -27,6 +27,8 @@ import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
 import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 import { NewsRepository } from '../repositories/news.repository';
+import { GetWeatherUseCase } from '../use-cases/getWeather.use-case';
+import { GetCurrencyUseCase } from '../use-cases/getCurrency.use-case';
 
 @Controller('news')
 @ApiTags('News')
@@ -38,6 +40,8 @@ export class NewsController {
     private readonly createNewsUseCase: CreateNewsUseCase,
     private readonly authService: AuthService,
     private readonly createCommentUseCase: CreateCommentUseCase,
+    private readonly getWeatherUseCase: GetWeatherUseCase,
+    private readonly getCurrencyUseCase: GetCurrencyUseCase,
   ) {}
 
   @Cron(CronExpression.EVERY_HOUR)
@@ -45,9 +49,21 @@ export class NewsController {
     return this.getNewsUseCase.getNews();
   }
 
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  @Cron(CronExpression.EVERY_10_MINUTES)
   handleImg() {
     return this.newsRepo.updateFullImg();
+  }
+
+  @Get('test')
+  @HttpCode(200)
+  async getCurrency(@Body('value') value: string) {
+    return await this.getCurrencyUseCase.getCurrency(value);
+  }
+
+  @Get('weather')
+  @HttpCode(200)
+  async getWeather(@Body('city') city: string) {
+    return await this.getWeatherUseCase.getWeather(city);
   }
 
   @Get('sidebar')

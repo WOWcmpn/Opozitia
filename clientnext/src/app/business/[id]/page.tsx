@@ -43,20 +43,31 @@ export default function NewsId({params} : {params: {id: string}}) {
   }
 
   useEffect(() => {
-    async function loadData() {
-      setLoading(true)
-      try{
-        const newComments = await NewsService.getComments(params.id, page)
-        setComments(prevData => [...prevData, ...newComments])
-        setLoading(false)
-        setHasMore(newComments.length === 5)
-      } catch (error) {
-        console.log('Error loading data:', error);
-      } finally {
-        setLoading(false)
+    async function loadComments() {
+      if(page > 1) {
+        setLoading(true)
+        try{
+          const newComments = await NewsService.getComments(params.id, page)
+          setComments(prevData => [...prevData, ...newComments])
+          setLoading(false)
+          setHasMore(newComments.length === 5)
+        } catch (error) {
+          console.log('Error loading data:', error);
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        try{
+          const newComments = await NewsService.getComments(params.id, page)
+          setComments(newComments)
+          setLoading(false)
+          setHasMore(newComments.length === 5)
+        } catch (error) {
+          console.log('Error loading data:', error);
+        }
       }
     }
-    loadData()
+    loadComments()
   }, [page, params.id])
 
   const handleLoadMore = () => {

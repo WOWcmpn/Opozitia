@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Message from "@/img/icons/message.svg";
 import Logo from "@/img/logo.png";
-import Plus from "@/img/icons/plus.svg";
 import Link from "next/link";
-import { HeaderProps } from "@/types/types";
+import { HeaderProps, IWeather } from "@/types/types";
 import { PopupPolls } from "../PopupPolls/PopupPolls";
 import { PopupNews } from "@/components/PopupNews/PopupNews";
+import { NewsService } from "@/service/news.service";
 
 export const Header = ({
   className,
@@ -17,6 +17,25 @@ export const Header = ({
   onNews,
 }: HeaderProps) => {
   const [burger, setBurger] = useState(false);
+  const [weather, setWeather] = useState<IWeather>();
+
+  let weatherIcon
+  if(!weather?.conditionIcon) {
+    weatherIcon = "/img/icons/weather/unknown.webp"
+  } else {
+    weatherIcon = `https:${weather?.conditionIcon}`
+  }
+  useEffect(() => {
+    async function loadWeather() {
+      try {
+        const weather = await NewsService.getWeather()
+        setWeather(weather)
+      } catch (err) {
+        console.warn('weather gone wrong: ', err);
+      }
+    }
+    loadWeather()
+  }, []);
 
   const popup = () => {
     if (onClick !== undefined) {
@@ -91,21 +110,21 @@ export const Header = ({
               </Link>
             </div>
             <div className="top-header__weather weather-header">
-              <Link href="#" className="weather-header__info">
+              <Link href={'/widgets'} className="weather-header__info">
                 <span id="temperature" className="weather-header__temperature">
-                  11°
+                  {weather?.currentTemperature}°
                 </span>
                 <Image
-                  width={30}
-                  height={30}
-                  src="/img/icons/sun.svg"
+                  width={60}
+                  height={60}
+                  src={weatherIcon}
                   className="weather-header__icon"
                   alt="icon"
                 />
               </Link>
               <div className="weather-header__location">
                 <span id="location" className="weather-header__city">
-                  Москва
+                  {weather?.location}
                 </span>
                 <Image
                   width={15}

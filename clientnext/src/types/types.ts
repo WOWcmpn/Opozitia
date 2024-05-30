@@ -1,5 +1,32 @@
 import { StaticImageData } from "next/image";
 
+export interface IWeather {
+  location: string,
+  time: string,
+  currentTemperature: number,
+  dayTemperature: number
+  nightTemperature: number
+  conditionText: string
+  conditionIcon: string
+  windMPH: number
+  humidity: number
+  chanceOfRain: number
+  dateOne: string
+  dayTemperatureOne: number
+  nightTemperatureOne: number
+  dayConditionTextOne: string
+  dayConditionIconOne: string
+  nightConditionTextOne: string
+  nightConditionIconOne: string
+  dateTwo: string
+  dayTemperatureTwo: number
+  nightTemperatureTwo: number
+  dayConditionTextTwo: string
+  dayConditionIconTwo: string
+  nightConditionTextTwo: string
+  nightConditionIconTwo: string
+}
+
 export interface IHomeNews {
   news: INews[];
   amount: number;
@@ -54,11 +81,6 @@ export interface ISearchNews {
   category: string;
   description: string;
   createdAtTime: string
-}
-
-export interface ISearch {
-  news: ISearchNews[]
-  amount: number
 }
 
 export interface IRegisterUser {
