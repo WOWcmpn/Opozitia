@@ -1,15 +1,21 @@
 import { GraphicsBlockProps } from "@/types/types";
-import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import Schedule from "@/components/Schedule/Schedule";
+import Image from "next/image";
 
 export const GraphicsBlock = ({
   name,
   title,
   tradeInfo,
   changeMinus,
-  img,
+  labels,
+  data,
+  img
 }: GraphicsBlockProps) => {
+  let isNegative
+  isNegative = changeMinus?.charAt(0) === '-'
+
   return (
     <div className="graphics-left-block__item">
       <div className="graphics-left-block__slider ">
@@ -21,34 +27,32 @@ export const GraphicsBlock = ({
                 <h4 className="graphics-left-block__title">{title}</h4>
               </Link>
               <Link href={'/exchange'} className="graphics-left-block__trade">
+                <Image
+                  width={50}
+                  height={25}
+                  src={`/img/icons/currency/${img}`}
+                  className="table-exchange__icon"
+                  alt="Иконка"
+                />
                 <span className="graphics-left-block__trade-info">
-                  {tradeInfo}
+                  {Number(tradeInfo).toFixed(4)}
                 </span>
-                <span className="graphics-left-block__change graphics-left-block__change_minus">
-                  {changeMinus}
+                {isNegative ?
+                  <span className="graphics-left-block__change graphics-left-block__change_minus">
+                  {changeMinus}%
+                </span> :
+                  <span className="graphics-left-block__change graphics-left-block__change_plus">
+                  {changeMinus}%
                 </span>
+                }
+
               </Link>
             </div>
           </div>
-          {/* <div className="graphics-left-block__slide swiper-slide">
-            <div className="graphics-left-block__top">
-              <a href="exchange.html" className="graphics-left-block__info">
-                <span className="graphics-left-block__name">FOREX</span>
-                <h4 className="graphics-left-block__title">USD/EUR</h4>
-              </a>
-              <a href="exchange.html" className="graphics-left-block__trade">
-                <span className="graphics-left-block__trade-info">1.18</span>
-                <span className="graphics-left-block__change graphics-left-block__change_plus">
-                  1.69%
-                </span>
-              </a>
-            </div>
-          </div> */}
         </div>
       </div>
-      <Link href={'/exchange'} className="graphics-left-block__image">
-        <Image src={img} alt="image" />
-      </Link>
+      <Schedule labels={labels}
+        data={data}/>
     </div>
   );
 };

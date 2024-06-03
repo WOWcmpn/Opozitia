@@ -8,8 +8,7 @@ import Link from 'next/link';
 import { IMainNews, INews } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
-import { Select as SelectMenu } from "@nextui-org/select";
-import { SelectItem } from "@nextui-org/react";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Economy() {
   const ItemPerPage = 10
@@ -115,27 +114,20 @@ export default function Economy() {
                     {data?.length} статей
                   </span>
                   <div className="w-[280px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
-                    <SelectMenu
-                      placeholder="За период"
-                      className="text-black "
-                      size="lg"
-                      variant="bordered"
-                      value={option}
-                      onChange={(option) => setOption(option.target.value)}
-                    >
-                      <SelectItem key={"week"} value="week" onClick={() => setPage(1)}>
-                        За неделю
-                      </SelectItem>
-                      <SelectItem key={"month"} value="month" onClick={() => setPage(1)}>
-                        За месяц
-                      </SelectItem>
-                      <SelectItem key={"year"} value="year" onClick={() => setPage(1)}>
-                        За год
-                      </SelectItem>
-                      <SelectItem key={"all"} value="all" onClick={() => setPage(1)}>
-                        За все время
-                      </SelectItem>
-                    </SelectMenu>
+                    <Select onValueChange={(option) => setOption(option)}>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="За период" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white rounded">
+                        <SelectGroup>
+                          {/*<SelectLabel>Fruits</SelectLabel>*/}
+                          <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"all"} value="all">За всё время</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </header>
                 <div className="content-news__body">

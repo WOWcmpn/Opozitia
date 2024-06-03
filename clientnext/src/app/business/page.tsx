@@ -8,8 +8,6 @@ import React, { useEffect, useState } from 'react';
 import { IMainNews, INews } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
-// import { Select as SelectMenu } from "@nextui-org/select";
-// import { SelectItem } from "@nextui-org/react";
 import {
   Select,
   SelectContent,
@@ -125,44 +123,21 @@ export default function Business () {
                     {data?.length} статей
                   </span>
                   <div className="w-[280px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
-                    <Select>
+                    <Select onValueChange={(option) => setOption(option)}>
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a fruit" />
+                        <SelectValue placeholder="За период" />
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
                         <SelectGroup>
-                          <SelectLabel>Fruits</SelectLabel>
-                          <SelectItem className="cursor-pointer bg-blue-500 md:bg-green-500" key={1} value="apple">Съешь мой хуй</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={1} value="banana">Banana</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={1} value="blueberry">Blueberry</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={1} value="grapes">Grapes</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={1} value="pineapple">Pineapple</SelectItem>
+                          {/*<SelectLabel>Fruits</SelectLabel>*/}
+                          <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"all"} value="all">За всё время</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    {/*<SelectMenu*/}
-                    {/*  placeholder="За период"*/}
-                    {/*  className="text-black "*/}
-                    {/*  size="lg"*/}
-                    {/*  variant="bordered"*/}
-                    {/*  value={option}*/}
-                    {/*  onChange={(option) => setOption(option.target.value)}*/}
-                    {/*>*/}
-                    {/*  <SelectItem key={"week"} value="week" onClick={() => setPage(1)}>*/}
-                    {/*    За неделю*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={"month"} value="month" onClick={() => setPage(1)}>*/}
-                    {/*    За месяц*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={"year"} value="year" onClick={() => setPage(1)}>*/}
-                    {/*    За год*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={"all"} value="all" onClick={() => setPage(1)}>*/}
-                    {/*    За все время*/}
-                    {/*  </SelectItem>*/}
-                    {/*</SelectMenu>*/}
                   </div>
-                  {/*<Select />*/}
                 </header>
                 <div className="content-news__body">
                   {data?.map(n => (

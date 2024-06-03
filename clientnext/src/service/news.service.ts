@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-  IComments,
+  IComments, ICurrency,
   IHomeNews, IMainNews,
   INews, ISearchNews, ISingleNews, IWeather
 } from "@/types/types";
@@ -8,6 +8,16 @@ import {
 axios.defaults.baseURL = "http://localhost:4000/";
 
 export const NewsService = {
+  async getCurrency(): Promise<ICurrency> {
+    const {data} = await axios.get('news/currency')
+    return data
+  },
+
+  async getGraphicCurrency(): Promise<ICurrency[]> {
+    const {data} = await axios.get('news/graphic-currency')
+    return data
+  },
+
   async getWeather(city?: string): Promise<IWeather> {
     const {data} = await axios.get('news/weather')
     return data

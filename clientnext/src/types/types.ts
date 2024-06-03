@@ -1,5 +1,37 @@
 import { StaticImageData } from "next/image";
 
+export interface ISchedule {
+  labels: string[]
+  data: string[]
+}
+
+export interface ICurrency {
+  id: string
+  date: string
+  viewDate: string
+  EURToUSD: string
+  USDToJPY: string
+  GBPToUSD: string
+  USDToRUB: string
+  EURToRUB: string
+  USDToRON: string
+  EURToRON: string
+  percentageEURToUSD: string,
+  percentageUSDToJPY: string,
+  percentageGBPToUSD: string,
+  percentageUSDToRUB: string,
+  percentageEURToRUB: string,
+  percentageUSDToRON: string,
+  percentageEURToRON: string,
+  differenceEURToUSD: string,
+  differenceUSDToJPY: string,
+  differenceGBPToUSD: string,
+  differenceUSDToRUB: string,
+  differenceEURToRUB: string,
+  differenceUSDToRON: string,
+  differenceEURToRON: string,
+}
+
 export interface IWeather {
   location: string,
   time: string,
@@ -120,7 +152,9 @@ export type GraphicsBlockProps = {
   title: string;
   tradeInfo: string;
   changeMinus: string;
-  img: StaticImageData;
+  labels: string[];
+  data: string[];
+  img?: string
 };
 
 export type BlockContentProps = {
@@ -151,6 +185,16 @@ export type PageNewsProps = {
   createdAtTime: string;
   category: string;
 };
+
+export type CurrencyProps = {
+  name1: string;
+  name2: string;
+  img1: string;
+  img2: string;
+  rate: string;
+  percentage: string;
+  difference: string;
+}
 
 export type CommentProps = {
   name: string;

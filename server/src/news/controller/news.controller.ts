@@ -29,12 +29,14 @@ import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 import { NewsRepository } from '../repositories/news.repository';
 import { GetWeatherUseCase } from '../use-cases/getWeather.use-case';
 import { GetCurrencyUseCase } from '../use-cases/getCurrency.use-case';
+import { CurrencyRepo } from '../repositories/currency.repo';
 
 @Controller('news')
 @ApiTags('News')
 export class NewsController {
   constructor(
     private readonly getNewsUseCase: GetNewsUseCase,
+    private readonly currencyQueryRepo: CurrencyRepo,
     private readonly newsQueryRepository: NewsQueryRepository,
     private readonly newsRepo: NewsRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
@@ -53,11 +55,21 @@ export class NewsController {
   handleImg() {
     return this.newsRepo.updateFullImg();
   }
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  handleCurrency() {
+    return this.getCurrencyUseCase.getCurrency();
+  }
 
-  @Get('test')
+  @Get('currency')
   @HttpCode(200)
-  async getCurrency(@Body('value') value: string) {
-    return await this.getCurrencyUseCase.getCurrency(value);
+  async getCurrency() {
+    return await this.currencyQueryRepo.getCurrency();
+  }
+
+  @Get('graphic-currency')
+  @HttpCode(200)
+  async getGraphicCurrency() {
+    return await this.currencyQueryRepo.getGraphicCurrency();
   }
 
   @Get('weather')

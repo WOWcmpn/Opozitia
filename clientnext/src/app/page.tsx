@@ -1,5 +1,4 @@
 "use client";
-import Graphics1 from "@/img/graphics/01.svg";
 import { useEffect, useRef, useState } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
@@ -17,7 +16,7 @@ import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
-import { IHomeNews } from "@/types/types";
+import { ICurrency, IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { AuthService } from "@/service/auth.service";
 import Link from 'next/link';
@@ -28,11 +27,18 @@ export default function Home() {
   const [login, setLogin] = useState(0);
   const [search, setSearch] = useState(0);
   const [data, setData] = useState<IHomeNews | null>(null);
+  const [currency, setCurrency] = useState<ICurrency[]>([]);
 
   useEffect(() => {
     async function getData() {
-      const data = await NewsService.getNewsHome();
-      setData(data);
+      try {
+        const data = await NewsService.getNewsHome();
+        setData(data);
+        const currencyData = await NewsService.getGraphicCurrency()
+        setCurrency(currencyData)
+      } catch (err) {
+        console.warn(err);
+      }
     }
 
     getData();
@@ -133,19 +139,78 @@ export default function Home() {
                           <SwiperSlide>
                             <GraphicsBlock
                               name="SNPIND"
-                              title="DOW JONES"
-                              tradeInfo="$15400.55"
-                              changeMinus="1.99%"
-                              img={Graphics1}
+                              title="EUR/USD"
+                              tradeInfo={currency[0]?.EURToUSD}
+                              changeMinus={currency[0]?.percentageEURToUSD}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.EURToUSD).reverse()}
+                              img={'usa.webp'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
                             <GraphicsBlock
                               name="SNPIND"
-                              title="EUR/USD"
-                              tradeInfo="$15400.55"
-                              changeMinus="1.99%"
-                              img={Graphics1}
+                              title="USD/JPY"
+                              tradeInfo={currency[0]?.USDToJPY}
+                              changeMinus={currency[0]?.percentageUSDToJPY}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.USDToJPY).reverse()}
+                              img={'china.webp'}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="GBP/USD"
+                              tradeInfo={currency[0]?.GBPToUSD}
+                              changeMinus={currency[0]?.percentageGBPToUSD}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.GBPToUSD).reverse()}
+                              img={'usa.webp'}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="USD/RUB"
+                              tradeInfo={currency[0]?.USDToRUB}
+                              changeMinus={currency[0]?.percentageUSDToRUB}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.USDToRUB).reverse()}
+                              img={'rub.svg'}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="EUR/RUB"
+                              tradeInfo={currency[0]?.EURToRUB}
+                              changeMinus={currency[0]?.percentageEURToRUB}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.EURToRUB).reverse()}
+                              img={'rub.svg'}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="USD/RON"
+                              tradeInfo={currency[0]?.USDToRON}
+                              changeMinus={currency[0]?.percentageUSDToRON}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.USDToRON).reverse()}
+                              img={'roman.svg'}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <GraphicsBlock
+                              name="SNPIND"
+                              title="EUR/RON"
+                              tradeInfo={currency[0]?.EURToRON}
+                              changeMinus={currency[0]?.percentageEURToRON}
+                              labels={currency.map(c => c.viewDate).reverse()}
+                              data={currency.map(c => c.EURToRON).reverse()}
+                              img={'roman.svg'}
                             />
                           </SwiperSlide>
                         </Swiper>
@@ -174,21 +239,113 @@ export default function Home() {
                           <SwiperSlide>
                             <GraphicsBlock
                               name="SNPIND"
-                              title="DOW JONES"
+                              title="Swiss"
                               tradeInfo="$15400.55"
                               changeMinus="1.99%"
-                              img={Graphics1}
+                              labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}
+                              data={['38686.33', '34686.33', '35686.33', '34686.33', '37686.33', '36686.33', '39686.33']}
                             />
                           </SwiperSlide>
-                          <SwiperSlide>
-                            <GraphicsBlock
-                              name="SNPIND"
-                              title="EUR/USD"
-                              tradeInfo="$15400.55"
-                              changeMinus="1.99%"
-                              img={Graphics1}
-                            />
-                          </SwiperSlide>
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="nasdaq"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[34686.33, 34686.33, 34686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="DOW JONES"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="sp500"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="moex"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="hengseng"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="Russel"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="French"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="British index"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="Taiwan"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
+                          {/*<SwiperSlide>*/}
+                          {/*  <GraphicsBlock*/}
+                          {/*    name="SNPIND"*/}
+                          {/*    title="Nikkei"*/}
+                          {/*    tradeInfo="$15400.55"*/}
+                          {/*    changeMinus="1.99%"*/}
+                          {/*    labels={['01.02.24', '02.02.24', '03.02.24', '04.02.24', '05.02.24', '06.02.24', '07.02.24']}*/}
+                          {/*    data={[38686.33, 34686.33, 35686.33, 34686.33, 37686.33, 36686.33, 39686.33]}*/}
+                          {/*  />*/}
+                          {/*</SwiperSlide>*/}
                         </Swiper>
                       </div>
                     </div>
