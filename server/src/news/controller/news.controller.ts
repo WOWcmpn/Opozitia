@@ -170,29 +170,29 @@ export class NewsController {
     return await this.newsQueryRepository.getComments(id, query.pageNumber);
   }
 
-  @Post('create-news')
-  @UseGuards(AccessTokenGuard)
-  @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
-  @ApiResponse({ status: 201, description: 'Success' })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'Create news by user' })
-  @ApiBearerAuth()
-  @ApiConsumes('multipart/form-data', 'string')
-  @ApiBody({ type: CreateNews })
-  @HttpCode(201)
-  async createNews(
-    @UploadedFile(new ParseFilePipe({ validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 })] }))
-    file: Express.Multer.File,
-    @Body() createNewsTest: CreateNews,
-  ) {
-    return await this.createNewsUseCase.createNews(
-      createNewsTest.title,
-      createNewsTest.description,
-      createNewsTest.category,
-      file.filename,
-    );
-  }
+  // @Post('create-news')
+  // @UseGuards(AccessTokenGuard)
+  // @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
+  // @ApiResponse({ status: 201, description: 'Success' })
+  // @ApiResponse({ status: 400, description: 'Bad Request' })
+  // @ApiResponse({ status: 401, description: 'Unauthorized' })
+  // @ApiOperation({ summary: 'Create news by user' })
+  // @ApiBearerAuth()
+  // @ApiConsumes('multipart/form-data', 'string')
+  // @ApiBody({ type: CreateNews })
+  // @HttpCode(201)
+  // async createNews(
+  //   @UploadedFile(new ParseFilePipe({ validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 })] }))
+  //   file: Express.Multer.File,
+  //   @Body() createNewsTest: CreateNews,
+  // ) {
+  //   return await this.createNewsUseCase.createNews(
+  //     createNewsTest.title,
+  //     createNewsTest.description,
+  //     createNewsTest.category,
+  //     file.filename,
+  //   );
+  // }
 
   @Post(':newsId/comments')
   @UseGuards(AccessTokenGuard)
