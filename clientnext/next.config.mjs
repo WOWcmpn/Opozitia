@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     domains: ["static.mk.ru", "localhost", "picsum.photos",
-      'plus.unsplash.com', 'cdn.weatherapi.com', 'opozitia-test.vercel.app',
+      'plus.unsplash.com', 'cdn.weatherapi.com', 'opozitia.vercel.app', 'opozitia-server.vercel.app',
       'finance.rambler.ru'], // <== Domain name
   },
 };
