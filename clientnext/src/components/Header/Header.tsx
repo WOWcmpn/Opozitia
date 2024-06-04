@@ -149,46 +149,26 @@ export const Header = ({
                       </picture>
                     </Link>
                   </li>
-                  <li className="menu__item">
-                    <Link href="/economy" className="menu__link">
+                  <li>
+                    <Link className="menu-item menu__link" href={'/economy'}>
                       ЭКОНОМИКА
                     </Link>
                   </li>
-                  <li className="menu__item">
-                    <Link href="/policy" className="menu__link">
+                  <li>
+                    <Link className="menu-item menu__link" href={'/policy'}>
                       ПОЛИТИКА
                     </Link>
                   </li>
-                  <li className="menu__item">
-                    <Link href="/business" className="menu__link">
+                  <li>
+                    <Link className="menu-item menu__link" href={'business'}>
                       БИЗНЕС
                     </Link>
                   </li>
-                  <li className="menu__item">
-                    <Link href="/world" className="menu__link">
+                  <li>
+                    <Link className="menu-item menu__link" href={'world'}>
                       МИРОВЫЕ НОВОСТИ
                     </Link>
                   </li>
-                  {/*<li>*/}
-                  {/*  <Link className="menu-item menu__link" href="#">*/}
-                  {/*    ЭКОНОМИКА*/}
-                  {/*  </Link>*/}
-                  {/*</li>*/}
-                  {/*<li>*/}
-                  {/*  <Link className="menu-item menu__link" href="#">*/}
-                  {/*    ПОЛИТИКА*/}
-                  {/*  </Link>*/}
-                  {/*</li>*/}
-                  {/*<li>*/}
-                  {/*  <Link className="menu-item menu__link" href="#">*/}
-                  {/*    БИЗНЕС*/}
-                  {/*  </Link>*/}
-                  {/*</li>*/}
-                  {/*<li>*/}
-                  {/*  <Link className="menu-item menu__link" href="#">*/}
-                  {/*    МИРОВЫЕ НОВОСТИ*/}
-                  {/*  </Link>*/}
-                  {/*</li>*/}
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
                     {/* <a className="menu-item menu-item-widgets" href="#"></a> */}
                     <Link
