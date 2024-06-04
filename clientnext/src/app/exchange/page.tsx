@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import DXY from "@/img/icons/dxy.png";
 import { Header } from "@/components/Header/Header";
-import { Currency } from "@/components/Сurrency/Currency";
+import { CurrencyValue } from "@/components/СurrencyValue/CurrencyValue";
 import { ICurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -62,27 +62,27 @@ export default function Exchange() {
                     </tr>
                   </thead>
                   <tbody>
-                  <Currency percentage={currency?.percentageEURToUSD!} difference={currency?.differenceEURToUSD!}
-                            name1={'EUR'} name2={'USD'}
-                            rate={Number(currency?.EURToUSD!).toFixed(4)!} img1={'euro.png'} img2={'usa.webp'} />
-                  <Currency percentage={currency?.percentageUSDToJPY!} difference={currency?.differenceUSDToJPY!}
-                            name1={'USD'} name2={'JPY'}
-                            rate={Number(currency?.USDToJPY!).toFixed(4)!} img1={'usa.webp'} img2={'china.webp'} />
-                  <Currency percentage={currency?.percentageGBPToUSD!} difference={currency?.differenceGBPToUSD!}
-                            name1={'GBP'} name2={'USD'}
-                            rate={Number(currency?.GBPToUSD!).toFixed(4)!} img1={'UK.svg'} img2={'usa.webp'} />
-                  <Currency percentage={currency?.percentageUSDToRUB!} difference={currency?.differenceUSDToRUB!}
-                            name1={'USD'} name2={'RUB'}
-                            rate={Number(currency?.USDToRUB!).toFixed(4)!} img1={'usa.webp'} img2={'rub.svg'} />
-                  <Currency percentage={currency?.percentageEURToRUB!} difference={currency?.differenceEURToRUB!}
-                            name1={'EUR'} name2={'RUB'}
-                            rate={Number(currency?.EURToRUB!).toFixed(4)!} img1={'euro.png'} img2={'rub.svg'} />
-                  <Currency percentage={currency?.percentageUSDToRON!} difference={currency?.differenceUSDToRON!}
-                            name1={'USD'} name2={'RON'}
-                            rate={Number(currency?.USDToRON!).toFixed(4)!} img1={'usa.webp'} img2={'roman.svg'} />
-                  <Currency percentage={currency?.percentageEURToRON!} difference={currency?.differenceEURToRON!}
-                            name1={'EUR'} name2={'RON'}
-                            rate={Number(currency?.EURToRON!).toFixed(4)!} img1={'euro.png'} img2={'roman.svg'} />
+                  <CurrencyValue percentage={currency?.percentageEURToUSD!} difference={currency?.differenceEURToUSD!}
+                                 name1={'EUR'} name2={'USD'}
+                                 rate={Number(currency?.EURToUSD!).toFixed(4)!} img1={'euro.png'} img2={'usa.webp'} />
+                  <CurrencyValue percentage={currency?.percentageUSDToJPY!} difference={currency?.differenceUSDToJPY!}
+                                 name1={'USD'} name2={'JPY'}
+                                 rate={Number(currency?.USDToJPY!).toFixed(4)!} img1={'usa.webp'} img2={'china.webp'} />
+                  <CurrencyValue percentage={currency?.percentageGBPToUSD!} difference={currency?.differenceGBPToUSD!}
+                                 name1={'GBP'} name2={'USD'}
+                                 rate={Number(currency?.GBPToUSD!).toFixed(4)!} img1={'UK.svg'} img2={'usa.webp'} />
+                  <CurrencyValue percentage={currency?.percentageUSDToRUB!} difference={currency?.differenceUSDToRUB!}
+                                 name1={'USD'} name2={'RUB'}
+                                 rate={Number(currency?.USDToRUB!).toFixed(4)!} img1={'usa.webp'} img2={'rub.svg'} />
+                  <CurrencyValue percentage={currency?.percentageEURToRUB!} difference={currency?.differenceEURToRUB!}
+                                 name1={'EUR'} name2={'RUB'}
+                                 rate={Number(currency?.EURToRUB!).toFixed(4)!} img1={'euro.png'} img2={'rub.svg'} />
+                  <CurrencyValue percentage={currency?.percentageUSDToRON!} difference={currency?.differenceUSDToRON!}
+                                 name1={'USD'} name2={'RON'}
+                                 rate={Number(currency?.USDToRON!).toFixed(4)!} img1={'usa.webp'} img2={'roman.svg'} />
+                  <CurrencyValue percentage={currency?.percentageEURToRON!} difference={currency?.differenceEURToRON!}
+                                 name1={'EUR'} name2={'RON'}
+                                 rate={Number(currency?.EURToRON!).toFixed(4)!} img1={'euro.png'} img2={'roman.svg'} />
                   </tbody>
                 </table>
               </div>

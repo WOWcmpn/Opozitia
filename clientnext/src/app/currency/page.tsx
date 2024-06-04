@@ -1,20 +1,81 @@
 "use client";
-
 import { LatestNews } from "@/components/LatestNews/LatestNews";
-
-import LatestNews02 from "@/img/latest-news/02.png";
+import { CurrencyValue } from "@/components/СurrencyValue/CurrencyValue";
 import Graph1 from "@/img/graphics/03.svg";
 import Graph2 from "@/img/graphics/01.svg";
 import Gold from "@/img/latest-news/gold.png";
-import USA from "@/img/icons/usa.png";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CurrencyBody } from "@/components/CurrencyBody/CurrencyBody";
 import { Header } from "@/components/Header/Header";
+import Link from "next/link";
+import { ICurrency, IMainNews, INews } from "@/types/types";
+import { NewsService } from "@/service/news.service";
+import { CurrencyElement } from "@/components/CurrencyElement/CurrencyElement";
+import { PageNews } from "@/components/PageNews/PageNews";
 
 export default function Currency() {
   const [option, setOption] = useState(0);
   const [graph, setGraph] = useState(0);
+  const [currency, setCurrency] = useState<ICurrency>();
+  const [bottomNews, setBottomNews] = useState<IMainNews[]>([]);
+  const [sidebar, setSidebar] = useState<INews[]>([]);
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await NewsService.getCurrency()
+        setCurrency(data)
+      } catch (err) {
+        console.warn('Currency error: ', err);
+      }
+    }
+    loadData()
+  }, []);
+
+  useEffect(() => {
+    async function loadData() {
+      if(page > 1) {
+          setLoading(true)
+          try{
+            const newData = await NewsService.getEconomyNews(page, 10)
+            setBottomNews(prevData => [...prevData, ...newData])
+            setLoading(false)
+            setHasMore(newData.length === 10)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          } finally {
+            setLoading(false)
+          }
+      } else {
+          try{
+            const newData = await NewsService.getEconomyNews(page, 10)
+            setBottomNews(newData)
+            setLoading(false)
+            setHasMore(newData.length === 10)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          }
+        }
+    }
+    loadData()
+  }, [page, option]);
+
+  useEffect(() => {
+    async function getSidebar() {
+      const news = await NewsService.getSidebarNews('Policy')
+      setSidebar(news)
+    }
+
+    getSidebar()
+  }, []);
+
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1)
+  }
 
   const price = [
     "1.089",
@@ -47,8 +108,7 @@ export default function Currency() {
                 <div className="main-block-currency__top top-block-currency">
                   <h1 className="top-block-currency__title">
                     <picture>
-                      <source srcSet="img/icons/usa.webp" type="image/webp" />
-                      <Image src={USA} alt="Иконка" />
+                      <Image width={50} height={25} src={"/img/icons/currency/usa.webp"} alt="Иконка" />
                     </picture>
                     USD
                   </h1>
@@ -313,345 +373,48 @@ export default function Currency() {
               </div>
               <div className="currency__actual-news actual-news">
                 <h2 className="actual-news__title">
-                  Актуальные новости по теме
+                  Актуальные новости
                 </h2>
                 <div className="actual-news__body">
-                  <div className="item-content-news item-content-news_actual">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
-                  <div className="item-content-news item-content-news_actual item-block">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
-                  <div className="item-content-news item-content-news_actual item-block">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
-                  <div className="item-content-news item-content-news_actual item-block hidden">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
-                  <div className="item-content-news item-content-news_actual item-block hidden">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
-                  <div className="item-content-news item-content-news_actual item-block hidden">
-                    <div className="item-content-news__left">
-                      <div className="item-content-news__wrap-link">
-                        <a href="#" className="item-content-news__link">
-                          <h3 className="item-content-news__title">
-                            Gold Up And Dollar Down As The Fed Stays Firm
-                          </h3>
-                        </a>
-                      </div>
-                      <div className="item-content-news__bottom">
-                        <span className="item-content-news__time time">
-                          14 часов назад
-                        </span>
-                        <ul className="item-content-news__list-bottom list-bottom-search">
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom "
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Молдова
-                            </a>
-                          </li>
-                          <li className="list-bottom-search__item-bottom">
-                            <a
-                              href="#"
-                              className="list-bottom-search__link-bottom"
-                            >
-                              Золото
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="item-content-news__image">
-                      <picture>
-                        <source
-                          srcSet="img/latest-news/gold.webp"
-                          type="image/webp"
-                        />
-                        <Image src={Gold} alt="Картинка" />
-                      </picture>
-                    </div>
-                  </div>
+                  {bottomNews?.map(n => (
+                    <PageNews key={n.id}
+                              id = {n.id}
+                              title= {n.title}
+                              img={n.fullImgUrl}
+                              createdAtTime={n.createdAtTime}
+                              category='economy'
+                    />
+                  ))}
                 </div>
-                <button
-                  className="actual-news__btn-more btn-more"
-                  type="button"
-                >
-                  Еще 20 статей
-                </button>
+                <br />
+                {loading && <p>Загрузка...</p>}
+                {hasMore && !loading &&
+                  <button onClick={handleLoadMore} className="actual-news__btn-more btn-more">
+                    Ещё 10 статей
+                  </button>}
               </div>
             </div>
             <div className="currency__right sidebar">
               <aside className="currency__latest-news">
                 <div className="latest-news latest-news_big">
-                  <a
-                    href="last-news.html"
+                  <Link
+                    href={'/lastnews'}
                     className="latest-news__main-title-link"
                   >
                     <h3 className="latest-news__title latest-news__title_posts">
-                      Статьи по данной тематике
+                      Также читают
                     </h3>
-                  </a>
-                  <LatestNews
-                    id={"1"}
-                    title="Молдова высылает сотрудника российского посольства"
-                    text="Один из сотрудников посольства России в Кишиневе объявлен персоной нон
-                  грата в знак протеста против открытия в Приднестровье избирательных участков по выборам президента
-                  РФ, сообщила пресс-служба МИД Молдавии."
-                    img={'https://finance.rambler.ru/business/52762596-fas-obratila-vnimanie-na-tseny-na-toplivo-v-dalnevostochnyh-regionah/'}
-                    time="11:00"
-                    category='economy'
-                  />
+                  </Link>
+                  {sidebar?.map(n => (
+                    <LatestNews key={n.id}
+                                id={n.id}
+                                title={n.title}
+                                text={n.description}
+                                img={n.imgUrl}
+                                time={n.createdAtTime}
+                                category={n.category.toLowerCase()}
+                    />
+                  ))}
                 </div>
                 <div className="latest-news__wrap">
                   <h3 className="latest-news__title latest-news__title_posts latest-news__title_posts2">
@@ -667,111 +430,27 @@ export default function Currency() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr data-href="#">
-                        <td className="table-exchange__item">
-                          <picture>
-                            <source
-                              srcSet="img/icons/usa.webp"
-                              type="image/webp"
-                            />
-                            <Image
-                              src={USA}
-                              className="table-exchange__icon"
-                              alt="Иконка"
-                            />
-                          </picture>
-                          USD
-                        </td>
-                        <td>1.002</td>
-                        <td className="table-exchange__change table-exchange__change_negative-currency">
-                          0.016%
-                        </td>
-                        <td>0.017</td>
-                      </tr>
-                      <tr data-href="#">
-                        <td className="table-exchange__item">
-                          <picture>
-                            <source
-                              srcSet="img/icons/usa.webp"
-                              type="image/webp"
-                            />
-                            <Image
-                              src={USA}
-                              className="table-exchange__icon"
-                              alt="Иконка"
-                            />
-                          </picture>
-                          USD
-                        </td>
-                        <td>1.002</td>
-                        <td className="table-exchange__change table-exchange__change_negative-currency">
-                          0.016%
-                        </td>
-                        <td>0.017</td>
-                      </tr>
-                      <tr data-href="#">
-                        <td className="table-exchange__item">
-                          <picture>
-                            <source
-                              srcSet="img/icons/usa.webp"
-                              type="image/webp"
-                            />
-                            <Image
-                              src={USA}
-                              className="table-exchange__icon"
-                              alt="Иконка"
-                            />
-                          </picture>
-                          USD
-                        </td>
-                        <td>1.002</td>
-                        <td className="table-exchange__change table-exchange__change_negative-currency">
-                          0.016%
-                        </td>
-                        <td>0.017</td>
-                      </tr>
-                      <tr data-href="#">
-                        <td className="table-exchange__item">
-                          <picture>
-                            <source
-                              srcSet="img/icons/usa.webp"
-                              type="image/webp"
-                            />
-                            <Image
-                              src={USA}
-                              className="table-exchange__icon"
-                              alt="Иконка"
-                            />
-                          </picture>
-                          USD
-                        </td>
-                        <td>1.002</td>
-                        <td className="table-exchange__change table-exchange__change_negative-currency">
-                          0.016%
-                        </td>
-                        <td>0.017</td>
-                      </tr>
-                      <tr data-href="#">
-                        <td className="table-exchange__item">
-                          <picture>
-                            <source
-                              srcSet="img/icons/usa.webp"
-                              type="image/webp"
-                            />
-                            <Image
-                              src={USA}
-                              className="table-exchange__icon"
-                              alt="Иконка"
-                            />
-                          </picture>
-                          USD
-                        </td>
-                        <td>1.002</td>
-                        <td className="table-exchange__change table-exchange__change_negative-currency">
-                          0.016%
-                        </td>
-                        <td>0.017</td>
-                      </tr>
+                    <CurrencyElement percentage={currency?.percentageEURToUSD!} difference={currency?.differenceEURToUSD!}
+                              name={'USD'}
+                              rate={Number(currency?.EURToUSD!).toFixed(4)!} img={'usa.webp'} />
+                    <CurrencyElement percentage={currency?.percentageUSDToJPY!} difference={currency?.differenceUSDToJPY!}
+                              name={'JPY'}
+                              rate={Number(currency?.USDToJPY!).toFixed(4)!} img={'china.webp'} />
+                    <CurrencyElement percentage={currency?.percentageGBPToUSD!} difference={currency?.differenceGBPToUSD!}
+                              name={'USD'}
+                              rate={Number(currency?.GBPToUSD!).toFixed(4)!} img={'usa.webp'} />
+                    <CurrencyElement percentage={currency?.percentageUSDToRUB!} difference={currency?.differenceUSDToRUB!}
+                              name={'RUB'}
+                              rate={Number(currency?.USDToRUB!).toFixed(4)!} img={'rub.svg'} />
+                    <CurrencyElement percentage={currency?.percentageEURToRUB!} difference={currency?.differenceEURToRUB!}
+                              name={'RUB'}
+                              rate={Number(currency?.EURToRUB!).toFixed(4)!} img={'rub.svg'} />
+                    <CurrencyElement percentage={currency?.percentageUSDToRON!} difference={currency?.differenceUSDToRON!}
+                              name={'RON'}
+                              rate={Number(currency?.USDToRON!).toFixed(4)!} img={'roman.svg'} />
+                    <CurrencyElement percentage={currency?.percentageEURToRON!} difference={currency?.differenceEURToRON!}
+                              name={'RON'}
+                              rate={Number(currency?.EURToRON!).toFixed(4)!} img={'roman.svg'} />
                     </tbody>
                   </table>
                 </div>

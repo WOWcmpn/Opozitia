@@ -183,7 +183,15 @@ export type PageNewsProps = {
   category: string;
 };
 
-export type CurrencyProps = {
+export interface ICurrencyElement {
+  img: string
+  name: string;
+  rate: string;
+  percentage: string;
+  difference: string;
+}
+
+export type CurrencyValueProps = {
   name1: string;
   name2: string;
   img1: string;
