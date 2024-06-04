@@ -19,8 +19,8 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateNews, newsCategory } from '../../base/types/newsModels';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { fileStorage } from '../../base/helpers/storage';
+// import { FileInterceptor } from '@nestjs/platform-express';
+// import { fileStorage } from '../../base/helpers/storage';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
@@ -51,7 +51,7 @@ export class NewsController {
     return this.getNewsUseCase.getNews();
   }
 
-  @Cron(CronExpression.EVERY_10_MINUTES)
+  @Cron(CronExpression.EVERY_MINUTE)
   handleImg() {
     return this.newsRepo.updateFullImg();
   }

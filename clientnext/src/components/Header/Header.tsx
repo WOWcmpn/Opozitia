@@ -132,7 +132,7 @@ export const Header = ({
               </div>
             </div>
 
-            {window.screen.width < 650 && (
+            {typeof window !== 'undefined' && window.screen.width < 650 && (
               <div className={`burger-menu`}>
                 <div
                   className={`menu-btn ${burger ? "active-burger" : ""}`}
@@ -216,7 +216,7 @@ export const Header = ({
         </div>
         <div
           className={` ${
-            window.screen.width < 650
+            typeof window !== 'undefined' && window.screen.width < 650
               ? "hidden"
               : "header__bottom bottom-header"
           }`}
