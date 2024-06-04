@@ -1,1 +1,1 @@
-export const dynamicImport = async (packageName: string) => new Function(`return import('${packageName}')`)();
+// export const dynamicImport = async (packageName: string) => new Function(`return import('${packageName}')`)();
