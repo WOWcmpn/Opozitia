@@ -23,7 +23,7 @@ export const PageNews = ({
     <div className="content-news__item item-content-news item-block">
       <div className="item-content-news__left">
         <div className="item-content-news__wrap-link">
-          <Link href={`${category}/${id}`} className="item-content-news__link">
+          <Link href={`/${category}/${id}`} className="item-content-news__link">
             <h3 className="item-content-news__title">{title}</h3>
           </Link>
         </div>

@@ -39,7 +39,7 @@ export const CurrencyValue = ({
       <td>{rate}</td>
       {!isNegative ?
         <td className="table-exchange__change table-exchange__change_negative">
-          {percentage}%
+          {percentage.slice(1)}%
         </td> :
         <td className="table-exchange__change table-exchange__change_plus">
           {percentage}%
@@ -50,13 +50,13 @@ export const CurrencyValue = ({
       <td className="table-exchange__action">
         {!isNegative ?
           <Link
-            href={'/currency'}
+            href={`/currency/${name1}To${name2}`}
             className="table-exchange__link table-exchange__link_buy"
           >
             Покупать
           </Link> :
           <Link
-            href={'/currency'}
+            href={`/currency/${name1}To${name2}`}
             className="table-exchange__link table-exchange__link_sell"
           >
             Продавать

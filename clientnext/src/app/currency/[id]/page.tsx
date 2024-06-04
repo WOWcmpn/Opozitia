@@ -3,21 +3,21 @@ import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { CurrencyValue } from "@/components/СurrencyValue/CurrencyValue";
 import Graph1 from "@/img/graphics/03.svg";
 import Graph2 from "@/img/graphics/01.svg";
-import Gold from "@/img/latest-news/gold.png";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { CurrencyBody } from "@/components/CurrencyBody/CurrencyBody";
 import { Header } from "@/components/Header/Header";
 import Link from "next/link";
-import { ICurrency, IMainNews, INews } from "@/types/types";
+import { ICurrency, IMainCurrency, IMainNews, INews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { CurrencyElement } from "@/components/CurrencyElement/CurrencyElement";
 import { PageNews } from "@/components/PageNews/PageNews";
 
-export default function Currency() {
+export default function Currency({params} : {params: { id: string }}) {
   const [option, setOption] = useState(0);
   const [graph, setGraph] = useState(0);
   const [currency, setCurrency] = useState<ICurrency>();
+  const [mainCurrency, setMainCurrency] = useState<IMainCurrency>();
   const [bottomNews, setBottomNews] = useState<IMainNews[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [page, setPage] = useState(1)
@@ -27,14 +27,16 @@ export default function Currency() {
   useEffect(() => {
     async function loadData() {
       try {
+        const mainData = await NewsService.getCurrencyById(params.id)
         const data = await NewsService.getCurrency()
+        setMainCurrency(mainData)
         setCurrency(data)
       } catch (err) {
         console.warn('Currency error: ', err);
       }
     }
     loadData()
-  }, []);
+  }, [params.id]);
 
   useEffect(() => {
     async function loadData() {
@@ -97,6 +99,14 @@ export default function Currency() {
     "14:00",
     "13:00",
   ];
+  const name1 = params.id.slice(0, 3)
+  const name2 = params.id.slice(5, 8)
+  let img
+  if(name2 === 'USD') img = 'usa.webp'
+  if(name2 === 'JPY') img = 'china.webp'
+  if(name2 === 'RUB') img = 'rub.svg'
+  if(name2 === 'RON') img = 'roman.svg'
+
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
@@ -108,21 +118,21 @@ export default function Currency() {
                 <div className="main-block-currency__top top-block-currency">
                   <h1 className="top-block-currency__title">
                     <picture>
-                      <Image width={50} height={25} src={"/img/icons/currency/usa.webp"} alt="Иконка" />
+                      <Image width={50} height={25} src={`/img/icons/currency/${img}`} alt="Иконка" />
                     </picture>
-                    USD
+                    {name1} / {name2}
                   </h1>
                   <div className="top-block-currency__change">
-                    <p className="top-block-currency__now">1.0886</p>
+                    <p className="top-block-currency__now">{Number(mainCurrency?.rate).toFixed(4)}</p>
                     <span className="top-block-currency__change-info">
-                      +0.0029
+                      {mainCurrency?.difference}
                     </span>
                     <span className="top-block-currency__change-info">
-                      (+0.02920%)
+                      ({mainCurrency?.percentage}%)
                     </span>
                   </div>
                   <span className="top-block-currency__time">
-                    As of 02:18PM GMT.
+                    {new Date().toLocaleDateString()}
                   </span>
                 </div>
                 <div data-tabs className="main-block-currency__tabs">
@@ -227,7 +237,7 @@ export default function Currency() {
                                 </span>{" "}
                                 <br />
                                 <span className="body-main-currency__number">
-                                  0.43%
+                                  {mainCurrency?.percentage}%
                                 </span>{" "}
                               </button>
                               <button

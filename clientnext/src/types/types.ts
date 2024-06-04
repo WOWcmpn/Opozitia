@@ -1,5 +1,11 @@
 import { StaticImageData } from "next/image";
 
+export interface IMainCurrency {
+  rate: string
+  percentage: string
+  difference: string
+}
+
 export interface ISchedule {
   labels: string[]
   data: string[]

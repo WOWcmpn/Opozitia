@@ -3,15 +3,15 @@ import {
   Controller,
   Get,
   HttpCode,
-  MaxFileSizeValidator,
+  // MaxFileSizeValidator,
   Param,
-  ParseFilePipe,
+  // ParseFilePipe,
   Post,
   Query,
   Req,
-  UploadedFile,
+  // UploadedFile,
   UseGuards,
-  UseInterceptors,
+  // UseInterceptors,
 } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
@@ -21,7 +21,8 @@ import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
 // import { FileInterceptor } from '@nestjs/platform-express';
 // import { fileStorage } from '../../base/helpers/storage';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+//ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse,
+import { ApiTags } from '@nestjs/swagger';
 import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
@@ -36,7 +37,7 @@ import { CurrencyRepo } from '../repositories/currency.repo';
 export class NewsController {
   constructor(
     private readonly getNewsUseCase: GetNewsUseCase,
-    private readonly currencyQueryRepo: CurrencyRepo,
+    private readonly currencyRepo: CurrencyRepo,
     private readonly newsQueryRepository: NewsQueryRepository,
     private readonly newsRepo: NewsRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
@@ -60,16 +61,22 @@ export class NewsController {
     return this.getCurrencyUseCase.getCurrency();
   }
 
+  @Get('currency/:id')
+  @HttpCode(200)
+  async getCurrencyById(@Param('id') id: string) {
+    return await this.currencyRepo.getCurrencyById(id);
+  }
+
   @Get('currency')
   @HttpCode(200)
   async getCurrency() {
-    return await this.currencyQueryRepo.getCurrency();
+    return await this.currencyRepo.getCurrency();
   }
 
   @Get('graphic-currency')
   @HttpCode(200)
   async getGraphicCurrency() {
-    return await this.currencyQueryRepo.getGraphicCurrency();
+    return await this.currencyRepo.getGraphicCurrency();
   }
 
   @Get('weather')

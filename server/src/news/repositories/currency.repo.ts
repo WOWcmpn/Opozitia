@@ -8,14 +8,13 @@ import { ICurrency } from '../../base/types/currencyModels';
 export class CurrencyRepo {
   constructor(@InjectRepository(CurrencyEntity) private readonly currencyRepo: Repository<CurrencyEntity>) {}
 
-  // async getTwoCurrencies() {
-  //   return await this.currencyRepo
-  //     .createQueryBuilder('c')
-  //     .select()
-  //     .orderBy('c.date', 'DESC')
-  //     .limit(2)
-  //     .getMany();
-  // }
+  async getCurrencyById(name: string) {
+    return await this.currencyRepo
+      .createQueryBuilder('c')
+      .orderBy('c.date', 'DESC')
+      .select([`c.${name} AS rate`, `c.difference${name} AS difference`, `c.percentage${name} AS percentage`])
+      .getRawOne();
+  }
 
   async getCurrency() {
     return await this.currencyRepo.createQueryBuilder('c').select().orderBy('c.date', 'DESC').getOne();
