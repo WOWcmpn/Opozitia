@@ -179,9 +179,6 @@ export type PageNewsProps = {
   id: string;
   title: string;
   img: string;
-  link1: string;
-  link2: string;
-  link3: string;
   createdAtTime: string;
   category: string;
 };
@@ -209,8 +206,6 @@ export type SearchResultProps = {
   title: string;
   img: string;
   id: string;
-  link2: string;
-  link3: string;
   text: string;
   time: string;
   category: string;

@@ -105,9 +105,6 @@ export const Header = ({
                   />
                 </picture>
               </Link>
-              <Link href='/admin'>
-                Админка
-              </Link>
             </div>
             <div className="top-header__weather weather-header">
               <Link href={'/widgets'} className="weather-header__info">

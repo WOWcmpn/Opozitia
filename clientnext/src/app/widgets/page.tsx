@@ -334,49 +334,49 @@ export default function Widgets() {
                     </ul>
                   </div>
                 </div>
-                <div className="left-vidgets__championship championship">
-                  <div className="championship__slider swiper">
-                    <div className="championship__wrap-btns">
-                      <button
-                        type="button"
-                        className="championship__swiper-button-prev championship-btn championship-btn_left"
-                        onClick={() => swiperRef.current?.slidePrev()}
-                      ></button>
-                      <button
-                        type="button"
-                        className="championship__swiper-button-next championship-btn"
-                        onClick={() => swiperRef.current?.slideNext()}
-                      ></button>
-                    </div>
-                    <div className="championship__wrapper swiper-wrapper">
-                      <Swiper
-                        modules={[Navigation]}
-                        slidesPerView={1}
-                        loop={false}
-                        simulateTouch={false}
-                        speed={200}
-                        onBeforeInit={(swiper) => {
-                          swiperRef.current = swiper;
-                        }}
-                      >
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Германии"
-                            img={ChampionshipImg}
-                            champs={champs1}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Испании"
-                            img={ChampionshipImg}
-                            champs={champs1}
-                          />
-                        </SwiperSlide>
-                      </Swiper>
-                    </div>
-                  </div>
-                </div>
+                {/*<div className="left-vidgets__championship championship">*/}
+                {/*  <div className="championship__slider swiper">*/}
+                {/*    <div className="championship__wrap-btns">*/}
+                {/*      <button*/}
+                {/*        type="button"*/}
+                {/*        className="championship__swiper-button-prev championship-btn championship-btn_left"*/}
+                {/*        onClick={() => swiperRef.current?.slidePrev()}*/}
+                {/*      ></button>*/}
+                {/*      <button*/}
+                {/*        type="button"*/}
+                {/*        className="championship__swiper-button-next championship-btn"*/}
+                {/*        onClick={() => swiperRef.current?.slideNext()}*/}
+                {/*      ></button>*/}
+                {/*    </div>*/}
+                {/*    <div className="championship__wrapper swiper-wrapper">*/}
+                {/*      <Swiper*/}
+                {/*        modules={[Navigation]}*/}
+                {/*        slidesPerView={1}*/}
+                {/*        loop={false}*/}
+                {/*        simulateTouch={false}*/}
+                {/*        speed={200}*/}
+                {/*        onBeforeInit={(swiper) => {*/}
+                {/*          swiperRef.current = swiper;*/}
+                {/*        }}*/}
+                {/*      >*/}
+                {/*        <SwiperSlide>*/}
+                {/*          <Championship*/}
+                {/*            title="Чемпионат Германии"*/}
+                {/*            img={ChampionshipImg}*/}
+                {/*            champs={champs1}*/}
+                {/*          />*/}
+                {/*        </SwiperSlide>*/}
+                {/*        <SwiperSlide>*/}
+                {/*          <Championship*/}
+                {/*            title="Чемпионат Испании"*/}
+                {/*            img={ChampionshipImg}*/}
+                {/*            champs={champs1}*/}
+                {/*          />*/}
+                {/*        </SwiperSlide>*/}
+                {/*      </Swiper>*/}
+                {/*    </div>*/}
+                {/*  </div>*/}
+                {/*</div>*/}
               </div>
               <div
                 data-da=".vidgets__left,660"

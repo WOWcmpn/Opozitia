@@ -50,13 +50,13 @@ export const Currency = ({
       <td className="table-exchange__action">
         {!isNegative ?
           <Link
-            href="#"
+            href={'/currency'}
             className="table-exchange__link table-exchange__link_buy"
           >
             Покупать
           </Link> :
           <Link
-            href="#"
+            href={'/currency'}
             className="table-exchange__link table-exchange__link_sell"
           >
             Продавать

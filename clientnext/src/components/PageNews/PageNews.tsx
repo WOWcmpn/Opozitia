@@ -6,9 +6,6 @@ import Link from "next/link";
 export const PageNews = ({
   id,
   title,
-  link1,
-  link2,
-  link3,
   img,
   createdAtTime,
   category,
@@ -36,16 +33,6 @@ export const PageNews = ({
             <li className="list-bottom-search__item-bottom">
               <Link href={`/${category}`} className="list-bottom-search__link-bottom ">
                 {viewCategory}
-              </Link>
-            </li>
-            <li className="list-bottom-search__item-bottom">
-              <Link href={'/world'} className="list-bottom-search__link-bottom">
-                {link2}
-              </Link>
-            </li>
-            <li className="list-bottom-search__item-bottom">
-              <Link href={'/world'} className="list-bottom-search__link-bottom">
-                {link3}
               </Link>
             </li>
           </ul>

@@ -9,10 +9,10 @@ import { Header } from "@/components/Header/Header";
 import { PollsItem } from "@/components/PollsItem/PollsItem";
 import { AnimatePresence } from "framer-motion";
 import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
-import { Select as SelectMenu, SelectItem } from "@nextui-org/react";
 import { IHomeNews } from '@/types/types';
 import { NewsService } from '@/service/news.service';
 import Link from 'next/link';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Polls() {
   const [option, setOption] = useState(0);
@@ -37,29 +37,42 @@ export default function Polls() {
               <div className="content-news__wrap-header">
                 <header className="content-news__header content-news__header_oprosi">
                   <div className="w-[780px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] ">
-                    <SelectMenu
-                      className="text-black text-[25px] max-h-xs"
-                      size="lg"
-                      variant="bordered"
-                      defaultSelectedKeys={[1]}
-                    >
-                      <SelectItem
-                        key={1}
-                        value="1"
-                        className="text-black text-[25px] hidden"
-                      >
-                        Экономика
-                      </SelectItem>
-                      <SelectItem key={2} value="2">
-                        Политика
-                      </SelectItem>
-                      <SelectItem key={3} value="3">
-                        Мировые новости
-                      </SelectItem>
-                      <SelectItem key={4} value="4">
-                        Бизнес
-                      </SelectItem>
-                    </SelectMenu>
+                    <Select>
+                      <SelectTrigger className="text-black text-[25px] max-h-xs">
+                        <SelectValue placeholder="Экономика" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white rounded text-black">
+                        <SelectGroup>
+                          <SelectItem className="cursor-pointer" key={"policy"} value="policy">Политика</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"economy"} value="economy">Экономика</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"business"} value="business">Бизнес</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"world"} value="world">Мировые новости</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    {/*<SelectMenu*/}
+                    {/*  className="text-black text-[25px] max-h-xs"*/}
+                    {/*  size="lg"*/}
+                    {/*  variant="bordered"*/}
+                    {/*  defaultSelectedKeys={[1]}*/}
+                    {/*>*/}
+                    {/*  <SelectItem*/}
+                    {/*    key={1}*/}
+                    {/*    value="1"*/}
+                    {/*    className="text-black text-[25px] hidden"*/}
+                    {/*  >*/}
+                    {/*    Экономика*/}
+                    {/*  </SelectItem>*/}
+                    {/*  <SelectItem key={2} value="2">*/}
+                    {/*    Политика*/}
+                    {/*  </SelectItem>*/}
+                    {/*  <SelectItem key={3} value="3">*/}
+                    {/*    Мировые новости*/}
+                    {/*  </SelectItem>*/}
+                    {/*  <SelectItem key={4} value="4">*/}
+                    {/*    Бизнес*/}
+                    {/*  </SelectItem>*/}
+                    {/*</SelectMenu>*/}
                   </div>
                 </header>
               </div>

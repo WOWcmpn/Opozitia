@@ -98,8 +98,6 @@ export default function Search({searchParams}: {
                       text={n.description.substring(0, 300).padEnd(303, '...')}
                       time={n.createdAtTime}
                       id={n.id}
-                      link2="СНГ"
-                      link3="ЕС"
                       img={n.fullImgUrl}
                     />
                   ))}

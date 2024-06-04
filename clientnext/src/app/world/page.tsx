@@ -113,9 +113,9 @@ export default function GlobalNews() {
                   <span className="content-news__number-news">
                     {data?.length} статей
                   </span>
-                  <div className="w-[280px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
+                  <div className="w-[200px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
                     <Select onValueChange={(option) => setOption(option)}>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="За период" />
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
@@ -135,9 +135,6 @@ export default function GlobalNews() {
                     <PageNews key={n.id}
                               id = {n.id}
                               title= {n.title}
-                              link1= 'Мир'
-                              link2='СНГ'
-                              link3="ЕС"
                               img={n.fullImgUrl}
                               createdAtTime={n.createdAtTime}
                               category='world'

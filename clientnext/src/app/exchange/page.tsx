@@ -3,14 +3,13 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import DXY from "@/img/icons/dxy.png";
 import { Header } from "@/components/Header/Header";
-import { Select as SelectMenu, SelectItem } from "@nextui-org/react";
 import { Currency } from "@/components/Сurrency/Currency";
 import { ICurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
-// import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Exchange() {
-  const [option, setOption] = useState<string>("1");
+  const [option, setOption] = useState<string>("currency");
   const [currency, setCurrency] = useState<ICurrency>();
 
   useEffect(() => {
@@ -25,8 +24,8 @@ export default function Exchange() {
     loadData()
   }, []);
 
-  function handleOption(e: React.ChangeEvent<HTMLSelectElement>) {
-    setOption(e.target.value);
+  function handleOption(e: string) {
+    setOption(e);
   }
 
   return (
@@ -37,40 +36,20 @@ export default function Exchange() {
           <div className="exchange__container content-news">
             <header className="content-news__header content-news__header_exchange">
               <div className="w-[1180px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] ">
-                {/*<Select defaultValue={'Валюты'}>*/}
-                {/*  <SelectTrigger className="w-[180px]">*/}
-                {/*    <SelectValue placeholder="Валюты" />*/}
-                {/*  </SelectTrigger>*/}
-                {/*  <SelectContent className="bg-white rounded text-black text-[25px]">*/}
-                {/*    <SelectGroup className="text-black text-[25px]">*/}
-                {/*      /!*<SelectLabel>Fruits</SelectLabel>*!/*/}
-                {/*      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"week"} value="week">Валюты</SelectItem>*/}
-                {/*      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"month"} value="month">Индексы</SelectItem>*/}
-                {/*    </SelectGroup>*/}
-                {/*  </SelectContent>*/}
-                {/*</Select>*/}
-                <SelectMenu
-                  className="text-black text-[25px] max-h-xs"
-                  size="lg"
-                  variant="bordered"
-                  defaultSelectedKeys={[1]}
-                  selectedKeys={[option]}
-                  onChange={handleOption}
-                >
-                  <SelectItem
-                    key={1}
-                    value="1"
-                    className="text-black text-[25px]"
-                  >
-                    Валюты
-                  </SelectItem>
-                  <SelectItem key={2} value="2">
-                    Индексы
-                  </SelectItem>
-                </SelectMenu>
+                <Select onValueChange={(option) => handleOption(option)}>
+                  <SelectTrigger className="w-[1180px] text-[25px]">
+                    <SelectValue placeholder="Валюты" defaultValue={'currency'} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white rounded text-black text-[25px]">
+                    <SelectGroup className="text-black text-[25px]">
+                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"currency"} value="currency">Валюты</SelectItem>
+                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"indexes"} value="indexes">Индексы</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </header>
-            {option == "1" ? (
+            {option == "currency" ? (
               <div className="tabs-oprosi__body">
                 <table className="tabs-oprosi__table table-exchange">
                   <thead>
