@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import { MainBlockSlide } from "@/components/MainBlockSlide/MainBlockSlide";
 import { GraphicsBlock } from "@/components/GraphicsBlock/GraphicsBlock";
-
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { BlockContent } from "@/components/BlockContent/BlockContent";

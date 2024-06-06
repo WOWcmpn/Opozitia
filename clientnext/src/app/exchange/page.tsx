@@ -35,9 +35,9 @@ export default function Exchange() {
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
             <header className="content-news__header content-news__header_exchange">
-              <div className="w-[1180px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] ">
+              <div className="w-[1180px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] select_currency">
                 <Select onValueChange={(option) => handleOption(option)}>
-                  <SelectTrigger className="w-[1180px] text-[25px]">
+                  <SelectTrigger className="select_currency-trigger">
                     <SelectValue placeholder="Валюты" defaultValue={'currency'} />
                   </SelectTrigger>
                   <SelectContent className="bg-white rounded text-black text-[25px]">
