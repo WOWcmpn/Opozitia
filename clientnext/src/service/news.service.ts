@@ -1,14 +1,19 @@
 import axios from "axios";
 import {
-  IComments, ICurrency,
+  IComments, ICurrency, IFullCurrency,
   IHomeNews, IMainNews,
   INews, ISearchNews, ISingleNews, IWeather
 } from "@/types/types";
 
-// axios.defaults.baseURL = "http://localhost:4000/"
-axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
+axios.defaults.baseURL = "http://localhost:4000/"
+// axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async getCurrencyFullById(id: string): Promise<IFullCurrency[]> {
+    const {data} = await axios.get(`news/currency-full/${id}`)
+    return data
+  },
+
   async getCurrencyById(id: string) {
     const {data} = await axios.get(`news/currency/${id}`)
     return data

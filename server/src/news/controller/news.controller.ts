@@ -61,6 +61,12 @@ export class NewsController {
     return this.getCurrencyUseCase.getCurrency();
   }
 
+  @Get('currency-full/:id')
+  @HttpCode(200)
+  async getCurrencyFullById(@Param('id') id: string) {
+    return await this.currencyRepo.getCurrencyFullById(id);
+  }
+
   @Get('currency/:id')
   @HttpCode(200)
   async getCurrencyById(@Param('id') id: string) {

@@ -1,5 +1,12 @@
 import { StaticImageData } from "next/image";
 
+export interface IFullCurrency {
+  rate: string
+  percentage: string
+  difference: string
+  viewDate: string
+}
+
 export interface IMainCurrency {
   rate: string
   percentage: string
@@ -226,11 +233,15 @@ export type SearchResultProps = {
 };
 
 export type CurrencyBodyProps = {
-  graph1: StaticImageData;
-  graph2: StaticImageData;
-  colr: Array<string>;
-  colb: Array<string>;
+  name: string
 };
+
+// export type CurrencyBodyProps = {
+//   graph1: StaticImageData;
+//   graph2: StaticImageData;
+//   colr: Array<string>;
+//   colb: Array<string>;
+// };
 
 export type PopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;

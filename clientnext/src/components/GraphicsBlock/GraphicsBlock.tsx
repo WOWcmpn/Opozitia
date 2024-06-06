@@ -1,5 +1,5 @@
 import { GraphicsBlockProps } from "@/types/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Schedule from "@/components/Schedule/Schedule";
 import Image from "next/image";
@@ -13,8 +13,13 @@ export const GraphicsBlock = ({
   data,
   img
 }: GraphicsBlockProps) => {
-  let isNegative
-  isNegative = changeMinus?.charAt(0) === '-'
+  const [isNegative, setIsNegative] = useState<boolean>();
+  useEffect(() => {
+    async function loadUtils() {
+      setIsNegative(changeMinus?.charAt(0) === '-')
+    }
+    loadUtils()
+  }, [changeMinus]);
 
   return (
     <div className="graphics-left-block__item">

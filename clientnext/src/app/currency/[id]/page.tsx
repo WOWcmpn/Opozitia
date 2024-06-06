@@ -23,6 +23,10 @@ export default function Currency({params} : {params: { id: string }}) {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [img, setImg] = useState<string>();
+
+  const name1 = params.id.slice(0, 3)
+  const name2 = params.id.slice(5, 8)
 
   useEffect(() => {
     async function loadData() {
@@ -68,44 +72,20 @@ export default function Currency({params} : {params: { id: string }}) {
 
   useEffect(() => {
     async function getSidebar() {
+      if(name2 === 'USD') setImg('usa.webp')
+      if(name2 === 'JPY') setImg('china.webp')
+      if(name2 === 'RUB') setImg('rub.svg')
+      if(name2 === 'RON') setImg('roman.svg')
       const news = await NewsService.getSidebarNews('Policy')
       setSidebar(news)
     }
 
     getSidebar()
-  }, []);
+  }, [name2]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1)
   }
-
-  const price = [
-    "1.089",
-    "1.079",
-    "1.069",
-    "1.059",
-    "1.049",
-    "1.039",
-    "1.029",
-    "1.019",
-  ];
-  const time = [
-    "20:00",
-    "19:00",
-    "18:00",
-    "17:00",
-    "16:00",
-    "15:00",
-    "14:00",
-    "13:00",
-  ];
-  const name1 = params.id.slice(0, 3)
-  const name2 = params.id.slice(5, 8)
-  let img
-  if(name2 === 'USD') img = 'usa.webp'
-  if(name2 === 'JPY') img = 'china.webp'
-  if(name2 === 'RUB') img = 'rub.svg'
-  if(name2 === 'RON') img = 'roman.svg'
 
   return (
     <div className="wrapper">
@@ -240,81 +220,81 @@ export default function Currency({params} : {params: { id: string }}) {
                                   {mainCurrency?.percentage}%
                                 </span>{" "}
                               </button>
-                              <button
-                                type="button"
-                                className={`body-main-currency__title ${
-                                  graph == 1 ? "_tab-active" : ""
-                                } `}
-                                onClick={() => setGraph(1)}
-                              >
-                                <span className="body-main-currency__title-info">
-                                  1 неделя
-                                </span>{" "}
-                                <br />
-                                <span className="body-main-currency__number">
-                                  1.95%
-                                </span>{" "}
-                              </button>
-                              <button
-                                type="button"
-                                className={`body-main-currency__title ${
-                                  graph == 2 ? "_tab-active" : ""
-                                } `}
-                                onClick={() => setGraph(2)}
-                              >
-                                <span className="body-main-currency__title-info">
-                                  1 месяц
-                                </span>{" "}
-                                <br />
-                                <span className="body-main-currency__number">
-                                  4.95%
-                                </span>
-                              </button>
-                              <button
-                                type="button"
-                                className={`body-main-currency__title ${
-                                  graph == 3 ? "_tab-active" : ""
-                                } `}
-                                onClick={() => setGraph(3)}
-                              >
-                                <span className="body-main-currency__title-info">
-                                  6 месяцев
-                                </span>{" "}
-                                <br />
-                                <span className="body-main-currency__number">
-                                  12.85%
-                                </span>
-                              </button>
-                              <button
-                                type="button"
-                                className={`body-main-currency__title ${
-                                  graph == 4 ? "_tab-active" : ""
-                                } `}
-                                onClick={() => setGraph(4)}
-                              >
-                                <span className="body-main-currency__title-info">
-                                  1 год
-                                </span>{" "}
-                                <br />
-                                <span className="body-main-currency__number">
-                                  14.6%
-                                </span>
-                              </button>
-                              <button
-                                type="button"
-                                className={`body-main-currency__title ${
-                                  graph == 5 ? "_tab-active" : ""
-                                } `}
-                                onClick={() => setGraph(5)}
-                              >
-                                <span className="body-main-currency__title-info">
-                                  5 лет
-                                </span>{" "}
-                                <br />
-                                <span className="body-main-currency__number">
-                                  54.21%
-                                </span>
-                              </button>
+                              {/*<button*/}
+                              {/*  type="button"*/}
+                              {/*  className={`body-main-currency__title ${*/}
+                              {/*    graph == 1 ? "_tab-active" : ""*/}
+                              {/*  } `}*/}
+                              {/*  onClick={() => setGraph(1)}*/}
+                              {/*>*/}
+                              {/*  <span className="body-main-currency__title-info">*/}
+                              {/*    1 неделя*/}
+                              {/*  </span>{" "}*/}
+                              {/*  <br />*/}
+                              {/*  <span className="body-main-currency__number">*/}
+                              {/*    1.95%*/}
+                              {/*  </span>{" "}*/}
+                              {/*</button>*/}
+                              {/*<button*/}
+                              {/*  type="button"*/}
+                              {/*  className={`body-main-currency__title ${*/}
+                              {/*    graph == 2 ? "_tab-active" : ""*/}
+                              {/*  } `}*/}
+                              {/*  onClick={() => setGraph(2)}*/}
+                              {/*>*/}
+                              {/*  <span className="body-main-currency__title-info">*/}
+                              {/*    1 месяц*/}
+                              {/*  </span>{" "}*/}
+                              {/*  <br />*/}
+                              {/*  <span className="body-main-currency__number">*/}
+                              {/*    4.95%*/}
+                              {/*  </span>*/}
+                              {/*</button>*/}
+                              {/*<button*/}
+                              {/*  type="button"*/}
+                              {/*  className={`body-main-currency__title ${*/}
+                              {/*    graph == 3 ? "_tab-active" : ""*/}
+                              {/*  } `}*/}
+                              {/*  onClick={() => setGraph(3)}*/}
+                              {/*>*/}
+                              {/*  <span className="body-main-currency__title-info">*/}
+                              {/*    6 месяцев*/}
+                              {/*  </span>{" "}*/}
+                              {/*  <br />*/}
+                              {/*  <span className="body-main-currency__number">*/}
+                              {/*    12.85%*/}
+                              {/*  </span>*/}
+                              {/*</button>*/}
+                              {/*<button*/}
+                              {/*  type="button"*/}
+                              {/*  className={`body-main-currency__title ${*/}
+                              {/*    graph == 4 ? "_tab-active" : ""*/}
+                              {/*  } `}*/}
+                              {/*  onClick={() => setGraph(4)}*/}
+                              {/*>*/}
+                              {/*  <span className="body-main-currency__title-info">*/}
+                              {/*    1 год*/}
+                              {/*  </span>{" "}*/}
+                              {/*  <br />*/}
+                              {/*  <span className="body-main-currency__number">*/}
+                              {/*    14.6%*/}
+                              {/*  </span>*/}
+                              {/*</button>*/}
+                              {/*<button*/}
+                              {/*  type="button"*/}
+                              {/*  className={`body-main-currency__title ${*/}
+                              {/*    graph == 5 ? "_tab-active" : ""*/}
+                              {/*  } `}*/}
+                              {/*  onClick={() => setGraph(5)}*/}
+                              {/*>*/}
+                              {/*  <span className="body-main-currency__title-info">*/}
+                              {/*    5 лет*/}
+                              {/*  </span>{" "}*/}
+                              {/*  <br />*/}
+                              {/*  <span className="body-main-currency__number">*/}
+                              {/*    54.21%*/}
+                              {/*  </span>*/}
+                              {/*</button>*/}
                             </nav>
                             <div
                               data-tabs-body
@@ -322,57 +302,54 @@ export default function Currency({params} : {params: { id: string }}) {
                             >
                               {graph == 0 && (
                                 <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph1}
-                                  graph2={Graph2}
+                                  name={params.id}
                                 />
                               )}
 
-                              {graph == 1 && (
-                                <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph1}
-                                  graph2={Graph2}
-                                />
-                              )}
+                              {/*{graph == 1 && (*/}
+                              {/*  <CurrencyBody*/}
+                              {/*    colr={price}*/}
+                              {/*    colb={time}*/}
+                              {/*    graph1={Graph1}*/}
+                              {/*    graph2={Graph2}*/}
+                              {/*  />*/}
+                              {/*)}*/}
 
-                              {graph == 2 && (
-                                <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph2}
-                                  graph2={Graph1}
-                                />
-                              )}
+                              {/*{graph == 2 && (*/}
+                              {/*  <CurrencyBody*/}
+                              {/*    colr={price}*/}
+                              {/*    colb={time}*/}
+                              {/*    graph1={Graph2}*/}
+                              {/*    graph2={Graph1}*/}
+                              {/*  />*/}
+                              {/*)}*/}
 
-                              {graph == 3 && (
-                                <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph1}
-                                  graph2={Graph2}
-                                />
-                              )}
+                              {/*{graph == 3 && (*/}
+                              {/*  <CurrencyBody*/}
+                              {/*    colr={price}*/}
+                              {/*    colb={time}*/}
+                              {/*    graph1={Graph1}*/}
+                              {/*    graph2={Graph2}*/}
+                              {/*  />*/}
+                              {/*)}*/}
 
-                              {graph == 4 && (
-                                <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph2}
-                                  graph2={Graph1}
-                                />
-                              )}
+                              {/*{graph == 4 && (*/}
+                              {/*  <CurrencyBody*/}
+                              {/*    colr={price}*/}
+                              {/*    colb={time}*/}
+                              {/*    graph1={Graph2}*/}
+                              {/*    graph2={Graph1}*/}
+                              {/*  />*/}
+                              {/*)}*/}
 
-                              {graph == 5 && (
-                                <CurrencyBody
-                                  colr={price}
-                                  colb={time}
-                                  graph1={Graph2}
-                                  graph2={Graph1}
-                                />
-                              )}
+                              {/*{graph == 5 && (*/}
+                              {/*  <CurrencyBody*/}
+                              {/*    colr={price}*/}
+                              {/*    colb={time}*/}
+                              {/*    graph1={Graph2}*/}
+                              {/*    graph2={Graph1}*/}
+                              {/*  />*/}
+                              {/*)}*/}
                             </div>
                           </div>
                         </div>
