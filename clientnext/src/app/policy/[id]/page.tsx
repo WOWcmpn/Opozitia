@@ -28,6 +28,9 @@ export default function NewsId({params} : {params: {id: string}}) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState(0);
+  const [isUrl, setIsUrl] = useState<boolean>(false);
+  const [imgPath, setImgPath] = useState<string>('');
+  const [currImg, setCurrImg] = useState<string>('');
 
   const handleSubmit = async(e: any) => {
     try {
@@ -84,8 +87,19 @@ export default function NewsId({params} : {params: {id: string}}) {
     loadNews()
   }, [params.id]);
 
-  let isUrl = false;
-  if (news?.fullImgUrl.substring(0, 4) == "http") isUrl = true;
+  useEffect(() => {
+    async function loadUtils() {
+      if(news?.fullImgUrl?.startsWith('http')) setIsUrl(true)
+      if(!news?.fullImgUrl) {
+        setImgPath('/img/preview-images/')
+        setCurrImg(news?.imgUrl!)
+      } else if(news.fullImgUrl) {
+        setImgPath('/img/fullImage-news/')
+        setCurrImg(news?.fullImgUrl!)
+      }
+    }
+    loadUtils()
+  }, [news?.fullImgUrl, news?.imgUrl]);
 
   const paragraphs = news?.description.split('.').filter(paragraph => paragraph.trim() !== '');
 
@@ -128,7 +142,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                       </span>
                       <p className="main-block-news__time-reading">
                         <span className="main-block-news__minutes">
-                          1 минута
+                          1 минута {' '}
                         </span>
                           на чтение
                       </p>
@@ -191,7 +205,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                       ) : (
                         <Image
                           fill={true}
-                          src={`/img/fullImage-news/${news?.fullImgUrl}`}
+                          src={`${imgPath}${currImg}`}
                           alt="Image"
                         />
                       )}

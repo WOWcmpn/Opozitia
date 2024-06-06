@@ -18,13 +18,16 @@ export const Header = ({
 }: HeaderProps) => {
   const [burger, setBurger] = useState(false);
   const [weather, setWeather] = useState<IWeather>();
+  const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
 
-  let weatherIcon
-  if(!weather?.conditionIcon) {
-    weatherIcon = "/img/icons/weather/unknown.webp"
-  } else {
-    weatherIcon = `https:${weather?.conditionIcon}`
-  }
+  useEffect(() => {
+    async function loadUtils() {
+      if(!weather?.conditionIcon) setWeatherIcon("/img/icons/weather/unknown.webp")
+      if(weather?.conditionIcon) setWeatherIcon(`https:${weather?.conditionIcon}`)
+    }
+    loadUtils()
+  }, [weather?.conditionIcon]);
+
   useEffect(() => {
     async function loadWeather() {
       try {

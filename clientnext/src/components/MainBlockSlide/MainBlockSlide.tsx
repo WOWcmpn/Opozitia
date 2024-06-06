@@ -1,17 +1,26 @@
 import { MainBlockSlideProps } from "@/types/types";
 import Image from "next/image";
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
 export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps) => {
-  let viewCategory = ''
-  if(category === 'policy') viewCategory = 'Политика'
-  if(category === 'world') viewCategory = 'Мир'
-  if(category === 'economy') viewCategory = 'Экономика'
-  if(category === 'business') viewCategory = 'Бизнес'
+  const [viewCategory, setViewCategory] = useState<string>('');
+  const [isUrl, setIsUrl] = useState<boolean>(false);
 
-  let isUrl = false;
-  if (img.substring(0, 4) == "http") isUrl = true;
+  useEffect(() => {
+    async function loadData() {
+      try {
+        if(img.startsWith('http')) setIsUrl(true)
+        if(category === 'policy') setViewCategory('Политика')
+        if(category === 'world') setViewCategory('Мир')
+        if(category === 'economy') setViewCategory('Экономика')
+        if(category === 'business') setViewCategory('Бизнес')
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+    loadData()
+  }, [category, img]);
 
   return (
     <div className="main-block__slide slide-main-block swiper-slide">

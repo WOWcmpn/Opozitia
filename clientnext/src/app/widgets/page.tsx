@@ -27,18 +27,14 @@ import { NewsService } from "@/service/news.service";
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
-  const [currentMonth, setCurrentMonth] = useState<number>(
-    getMonth(new Date())
-  );
+  const [currentMonth, setCurrentMonth] = useState<number>(getMonth(new Date()));
   const [currentYear, setCurrentYear] = useState<number>(getYear(new Date()));
-  const [date, setDate] = useState<string>(
-    `${getStringMonth(currentMonth).month} ${getDate(
-      new Date()
-    )}, ${currentYear}`
-  );
+  const [date, setDate] = useState<string>(`${getStringMonth(currentMonth).month} ${getDate(new Date())}, ${currentYear}`);
   const [calendarData, setCalendarData] = useState(calendar(new Date(date)));
-  //let calendarData = calendar(new Date(date));
   const [weather, setWeather] = useState<IWeather>();
+  const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
+  const [weatherDayIconOne, setWeatherDayIconOne] = useState<string>("/img/icons/weather/unknown.webp");
+  const [weatherDayIconTwo, setWeatherDayIconTwo] = useState<string>("/img/icons/weather/unknown.webp");
 
   const refreshCalendar = useCallback(() => {
     setDate(
@@ -49,36 +45,14 @@ export default function Widgets() {
     setCalendarData(calendar(new Date(date)));
   }, [currentMonth, currentYear, date]);
 
-  let weatherIcon
-  let weatherDayIconOne
-  let weatherDayIconTwo
-  // let weatherNightIconOne
-  // let weatherNightIconTwo
-  if(!weather?.conditionIcon) {
-    weatherIcon = "/img/icons/weather/unknown.webp"
-  } else {
-    weatherIcon = `https:${weather?.conditionIcon}`
-  }
-  if(!weather?.dayConditionIconOne) {
-    weatherDayIconOne = "/img/icons/weather/unknown.webp"
-  } else {
-    weatherDayIconOne = `https:${weather?.dayConditionIconOne}`
-  }
-  if(!weather?.dayConditionIconTwo) {
-    weatherDayIconTwo = "/img/icons/weather/unknown.webp"
-  } else {
-    weatherDayIconTwo = `https:${weather?.dayConditionIconTwo}`
-  }
-  // if(!weather?.nightConditionIconOne) {
-  //   weatherNightIconOne = "/img/icons/weather/unknown.webp"
-  // } else {
-  //   weatherNightIconOne = `https:${weather?.nightConditionIconOne}`
-  // }
-  // if(!weather?.nightConditionIconTwo) {
-  //   weatherNightIconTwo = "/img/icons/weather/unknown.webp"
-  // } else {
-  //   weatherNightIconTwo = `https:${weather?.nightConditionIconTwo}`
-  // }
+  useEffect(() => {
+    async function loadUtils() {
+      if(weather?.conditionIcon) setWeatherIcon(`https:${weather?.conditionIcon}`)
+      if(weather?.dayConditionIconOne) setWeatherDayIconOne(`https:${weather?.dayConditionIconOne}`)
+      if(weather?.dayConditionIconTwo) setWeatherDayIconTwo(`https:${weather?.dayConditionIconTwo}`)
+    }
+    loadUtils()
+  }, [weather?.conditionIcon, weather?.dayConditionIconOne, weather?.dayConditionIconTwo]);
   useEffect(() => {
     async function loadWeather() {
       try {
@@ -119,110 +93,108 @@ export default function Widgets() {
     refreshCalendar();
   }, [refreshCalendar]);
 
-  const champs1 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-  ];
-  const champs2 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-  ];
-
-  console.log(calendarData);
+  // const champs1 = [
+  //   {
+  //     num: 1,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 2,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 3,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 4,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 5,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 6,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 7,
+  //     img: Team,
+  //     name: "Байер",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  // ];
+  // const champs2 = [
+  //   {
+  //     num: 1,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 2,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 3,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 4,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 5,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 6,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  //   {
+  //     num: 7,
+  //     img: Team,
+  //     name: "Барселона",
+  //     games: 38,
+  //     scores: 115,
+  //   },
+  // ];
 
   return (
     <div className="wrapper">
