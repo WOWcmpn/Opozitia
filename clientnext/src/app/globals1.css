@@ -729,9 +729,9 @@ body::after {
   padding: 40px;
   border-radius: 50px;
   -webkit-box-shadow: -3px -3px 10px 0px rgba(0, 0, 0, 0.25),
-    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  3px 3px 10px 0px rgba(0, 0, 0, 0.25);
   box-shadow: -3px -3px 10px 0px rgba(0, 0, 0, 0.25),
-    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  3px 3px 10px 0px rgba(0, 0, 0, 0.25);
   background: rgb(255, 255, 255);
 }
 
@@ -1045,9 +1045,9 @@ body::after {
   border: 1px solid rgb(0, 0, 0);
   border-radius: 20px;
   -webkit-box-shadow: -3px -3px 10px 0px rgba(0, 0, 0, 0.25),
-    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  3px 3px 10px 0px rgba(0, 0, 0, 0.25);
   box-shadow: -3px -3px 10px 0px rgba(0, 0, 0, 0.25),
-    3px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  3px 3px 10px 0px rgba(0, 0, 0, 0.25);
   background: rgb(255, 255, 255);
   padding: 20px 30px 22px;
   max-width: 858px;
@@ -1344,7 +1344,7 @@ body::after {
 .thumbs-images__image-ibg {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 280px;
 
   background-color: #fff;
   padding-bottom: 35.84%;
@@ -3000,16 +3000,35 @@ body::after {
   align-items: start;
 }
 
-.block-main_wrapper {
-  width: 720px;
-  max-width: 720px;
-  display: flex;
-  justify-content: space-between;
+@media (max-width: 5000px) {
+  .block-main_wrapper {
+    width: 720px;
+    max-width: 720px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .blockslide-wrapper {
+    z-index: 5 !important;
+    max-width: 720px;
+  }
 }
 
-.blockslide-wrapper {
-  z-index: 5 !important;
-  max-width: 720px;
+@media (max-width: 425px) {
+  .block-main_wrapper {
+    width: 320px;
+    max-width: 320px;
+    max-height: 400px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .blockslide-wrapper {
+    z-index: 5 !important;
+    max-width: 320px;
+    max-height: 400px;
+  }
+
 }
 
 .main-block-news {
@@ -5017,7 +5036,7 @@ body::after {
 
 .air-datepicker-body {
   -webkit-transition: all var(--adp-transition-duration)
-    var(--adp-transition-ease);
+  var(--adp-transition-ease);
   transition: all var(--adp-transition-duration) var(--adp-transition-ease);
 }
 
@@ -5306,19 +5325,19 @@ body::after {
   font-size: 11px;
   height: 17px;
   background: -webkit-gradient(
-      linear,
-      left top,
-      right top,
-      from(var(--adp-time-track-color)),
-      to(var(--adp-time-track-color))
-    )
-    left 50%/100% var(--adp-time-track-height) no-repeat;
+          linear,
+          left top,
+          right top,
+          from(var(--adp-time-track-color)),
+          to(var(--adp-time-track-color))
+  )
+  left 50%/100% var(--adp-time-track-height) no-repeat;
   background: linear-gradient(
-      to right,
-      var(--adp-time-track-color),
-      var(--adp-time-track-color)
-    )
-    left 50%/100% var(--adp-time-track-height) no-repeat;
+          to right,
+          var(--adp-time-track-color),
+          var(--adp-time-track-color)
+  )
+  left 50%/100% var(--adp-time-track-height) no-repeat;
 }
 
 .air-datepicker-time--row:first-child {
@@ -5452,8 +5471,8 @@ body::after {
 
 .air-datepicker {
   --adp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
+  Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol";
   --adp-font-size: 14px;
   --adp-width: 246px;
   --adp-z-index: 100;
@@ -5551,15 +5570,15 @@ body::after {
   width: var(--adp-width);
   position: absolute;
   -webkit-transition: opacity var(--adp-transition-duration)
-      var(--adp-transition-ease),
-    -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
+  var(--adp-transition-ease),
+  -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
   transition: opacity var(--adp-transition-duration) var(--adp-transition-ease),
-    -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
+  -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
   transition: opacity var(--adp-transition-duration) var(--adp-transition-ease),
-    transform var(--adp-transition-duration) var(--adp-transition-ease);
+  transform var(--adp-transition-duration) var(--adp-transition-ease);
   transition: opacity var(--adp-transition-duration) var(--adp-transition-ease),
-    transform var(--adp-transition-duration) var(--adp-transition-ease),
-    -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
+  transform var(--adp-transition-duration) var(--adp-transition-ease),
+  -webkit-transform var(--adp-transition-duration) var(--adp-transition-ease);
   z-index: var(--adp-z-index);
 }
 
@@ -5816,17 +5835,17 @@ body::after {
   height: 0;
   opacity: 0;
   -webkit-transition: opacity var(--adp-overlay-transition-duration)
-      var(--adp-overlay-transition-ease),
-    left 0s, height 0s, width 0s;
+  var(--adp-overlay-transition-ease),
+  left 0s, height 0s, width 0s;
   transition: opacity var(--adp-overlay-transition-duration)
-      var(--adp-overlay-transition-ease),
-    left 0s, height 0s, width 0s;
+  var(--adp-overlay-transition-ease),
+  left 0s, height 0s, width 0s;
   -webkit-transition-delay: 0s, var(--adp-overlay-transition-duration),
-    var(--adp-overlay-transition-duration),
-    var(--adp-overlay-transition-duration);
+  var(--adp-overlay-transition-duration),
+  var(--adp-overlay-transition-duration);
   transition-delay: 0s, var(--adp-overlay-transition-duration),
-    var(--adp-overlay-transition-duration),
-    var(--adp-overlay-transition-duration);
+  var(--adp-overlay-transition-duration),
+  var(--adp-overlay-transition-duration);
   z-index: var(--adp-overlay-z-index);
 }
 
@@ -5835,11 +5854,11 @@ body::after {
   width: 100%;
   height: 100%;
   -webkit-transition: opacity var(--adp-overlay-transition-duration)
-      var(--adp-overlay-transition-ease),
-    height 0s, width 0s;
+  var(--adp-overlay-transition-ease),
+  height 0s, width 0s;
   transition: opacity var(--adp-overlay-transition-duration)
-      var(--adp-overlay-transition-ease),
-    height 0s, width 0s;
+  var(--adp-overlay-transition-ease),
+  height 0s, width 0s;
 }
 
 .air-datepicker.-inline- {
@@ -5893,6 +5912,20 @@ body::after {
     -ms-grid-row: 3;
     -ms-grid-column: 1;
     grid-area: news;
+  }
+}
+
+@media (max-width: 5000px) {
+  .swiper-images {
+    width: 130px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 425px) {
+  .swiper-images {
+    width: 50px;
+    height: 25px;
   }
 }
 
@@ -7296,6 +7329,12 @@ body::after {
   }
 }
 
+@media (max-width: 425px) {
+  .slide-main-block__title {
+    font-size: 0.5rem;
+  }
+}
+
 @media (max-width: 41.25em) {
   .vidgets__left {
     -ms-grid-columns: 1fr;
@@ -7358,7 +7397,9 @@ body::after {
   }
 
   .thumbs-images__image-ibg {
-    padding-bottom: 50%;
+    width: 170px;
+    height: 160px;
+    padding-bottom: 80%;
   }
 
   .header.menu-visual-hidden-box {

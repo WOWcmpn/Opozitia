@@ -19,7 +19,7 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
         href={`${category}/${id}`}
         className="slide-main-block__right-link"
       >
-        <picture>
+        <div className='swiper-images'>
           {isUrl ? (
             <Image width={130} height={90} src={img} alt="Image" />
           ) : (
@@ -29,7 +29,7 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
               alt="Image"
             />
           )}
-        </picture>
+        </div>
       </Link>
       <div className="slide-main-block__right">
         <h5 className="slide-main-block__sub-title">{viewCategory}</h5>
