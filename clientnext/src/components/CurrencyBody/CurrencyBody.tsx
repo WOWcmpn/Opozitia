@@ -1,13 +1,11 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import btn1 from "@/img/icons/graphic-btn1.svg";
-import btn2 from "@/img/icons/graphic-btn2.svg";
 import { CurrencyBodyProps, IFullCurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import Schedule from "@/components/Schedule/Schedule";
 
 export const CurrencyBody = ({
   name,
+  page
 }: CurrencyBodyProps) => {
   // const [option, setOption] = useState(0);
   const [currency, setCurrency] = useState<IFullCurrency[]>([]);
@@ -15,15 +13,14 @@ export const CurrencyBody = ({
   useEffect(() => {
     async function loadCurrency() {
       try {
-        const data = await NewsService.getCurrencyFullById(name)
+        const data = await NewsService.getCurrencyParams(name, page)
         setCurrency(data)
       } catch (err) {
         console.warn('Currency body: ', err);
       }
     }
     loadCurrency()
-  }, [name]);
-  console.log(currency.map(c => c.viewDate).reverse());
+  }, [name, page]);
 
   return (
     <div className="body-main-currency__body">

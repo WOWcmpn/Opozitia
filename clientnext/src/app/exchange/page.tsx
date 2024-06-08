@@ -1,22 +1,24 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import DXY from "@/img/icons/dxy.png";
 import { Header } from "@/components/Header/Header";
-import { CurrencyValue } from "@/components/СurrencyValue/CurrencyValue";
-import { ICurrency } from "@/types/types";
+import { CurrencyValue } from "@/components/CurrencyValue/CurrencyValue";
+import { ICrypto, ICurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CryptoValue } from "@/components/CryptoValue/CryptoValue";
 
 export default function Exchange() {
   const [option, setOption] = useState<string>("currency");
   const [currency, setCurrency] = useState<ICurrency>();
+  const [crypto, setCrypto] = useState<ICrypto>();
 
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await NewsService.getCurrency()
-        setCurrency(data)
+        const currencyData = await NewsService.getCurrency()
+        setCurrency(currencyData)
+        const cryptoData = await NewsService.getLastCrypto()
+        setCrypto(cryptoData)
       } catch (err) {
         console.warn('Currency error: ', err);
       }
@@ -43,7 +45,7 @@ export default function Exchange() {
                   <SelectContent className="bg-white rounded text-black text-[25px]">
                     <SelectGroup className="text-black text-[25px]">
                       <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"currency"} value="currency">Валюты</SelectItem>
-                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"indexes"} value="indexes">Индексы</SelectItem>
+                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"crypto"} value="indexes">Криптовалюта</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -99,180 +101,20 @@ export default function Exchange() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_negative">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_buy"
-                        >
-                          Покупать
-                        </a>
-                      </td>
-                    </tr>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_plus">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_sell"
-                        >
-                          Продавать
-                        </a>
-                      </td>
-                    </tr>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_plus">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_sell"
-                        >
-                          Продавать
-                        </a>
-                      </td>
-                    </tr>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_plus">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_sell"
-                        >
-                          Продавать
-                        </a>
-                      </td>
-                    </tr>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_plus">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_sell"
-                        >
-                          Продавать
-                        </a>
-                      </td>
-                    </tr>
-                    <tr data-href="#">
-                      <td className="table-exchange__item">
-                        <picture>
-                          <source
-                            srcSet="img/icons/dxy.webp"
-                            type="image/webp"
-                          />
-                          <Image
-                            src={DXY}
-                            className="table-exchange__index-icon"
-                            alt="Иконка"
-                          />
-                        </picture>
-                        DXY
-                      </td>
-                      <td>1.002</td>
-                      <td className="table-exchange__change table-exchange__change_plus">
-                        0.16%
-                      </td>
-                      <td>0.17</td>
-                      <td className="table-exchange__action">
-                        <a
-                          href="#"
-                          className="table-exchange__link table-exchange__link_sell"
-                        >
-                          Продавать
-                        </a>
-                      </td>
-                    </tr>
+                  <CryptoValue name={'Bitcoin'} img={'btc.svg'} rate={Number(crypto?.rateBTC!).toFixed(4)}
+                               percentage={crypto?.percentageBTC!} difference={crypto?.differenceBTC!} />
+                  <CryptoValue name={'Ethereum'} img={'eth.svg'} rate={Number(crypto?.rateETH!).toFixed(4)}
+                               percentage={crypto?.percentageETH!} difference={crypto?.differenceETH!} />
+                  <CryptoValue name={'BNB'} img={'bnb.svg'} rate={Number(crypto?.rateBNB!).toFixed(4)}
+                               percentage={crypto?.percentageBNB!} difference={crypto?.differenceBNB!} />
+                  <CryptoValue name={'Notcoin'} img={'not.png'} rate={Number(crypto?.rateNOT!).toFixed(4)}
+                               percentage={crypto?.percentageNOT!} difference={crypto?.differenceNOT!} />
+                  <CryptoValue name={'Solana'} img={'sol.svg'} rate={Number(crypto?.rateSOL!).toFixed(4)}
+                               percentage={crypto?.percentageSOL!} difference={crypto?.differenceSOL!} />
+                  <CryptoValue name={'Litecoin'} img={'ltc.svg'} rate={Number(crypto?.rateLTC!).toFixed(4)}
+                               percentage={crypto?.percentageLTC!} difference={crypto?.differenceLTC!} />
+                  <CryptoValue name={'Bitcoin Cash'} img={'bch.svg'} rate={Number(crypto?.rateBCH!).toFixed(4)}
+                               percentage={crypto?.percentageBCH!} difference={crypto?.differenceBCH!} />
                   </tbody>
                 </table>
               </div>

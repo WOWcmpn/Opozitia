@@ -1,14 +1,11 @@
 "use client";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
-import { CurrencyValue } from "@/components/СurrencyValue/CurrencyValue";
-import Graph1 from "@/img/graphics/03.svg";
-import Graph2 from "@/img/graphics/01.svg";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { CurrencyBody } from "@/components/CurrencyBody/CurrencyBody";
 import { Header } from "@/components/Header/Header";
 import Link from "next/link";
-import { ICurrency, IMainCurrency, IMainNews, INews } from "@/types/types";
+import { ICurrency, IFullCurrency, IMainCurrency, IMainNews, INews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { CurrencyElement } from "@/components/CurrencyElement/CurrencyElement";
 import { PageNews } from "@/components/PageNews/PageNews";
@@ -16,14 +13,19 @@ import { PageNews } from "@/components/PageNews/PageNews";
 export default function Currency({params} : {params: { id: string }}) {
   const [option, setOption] = useState(0);
   const [graph, setGraph] = useState(0);
+  const [weekCurrency, setWeekCurrency] = useState<IFullCurrency[]>([]);
+  const [monthCurrency, setMonthCurrency] = useState<IFullCurrency[]>([]);
+  const [sixMonthCurrency, setSixMonthCurrency] = useState<IFullCurrency[]>([]);
+  const [yearCurrency, setYearCurrency] = useState<IFullCurrency[]>([]);
   const [currency, setCurrency] = useState<ICurrency>();
   const [mainCurrency, setMainCurrency] = useState<IMainCurrency>();
   const [bottomNews, setBottomNews] = useState<IMainNews[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState<number>(1)
+  const [currencyPage, setCurrencyPage] = useState<number>(2);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [img, setImg] = useState<string>();
+  const [img, setImg] = useState<string>('question.svg');
 
   const name1 = params.id.slice(0, 3)
   const name2 = params.id.slice(5, 8)
@@ -32,9 +34,17 @@ export default function Currency({params} : {params: { id: string }}) {
     async function loadData() {
       try {
         const mainData = await NewsService.getCurrencyById(params.id)
-        const data = await NewsService.getCurrency()
         setMainCurrency(mainData)
+        const data = await NewsService.getCurrency()
         setCurrency(data)
+        const weekData = await NewsService.getCurrencyParams(params.id, 7)
+        setWeekCurrency(weekData)
+        const monthData = await NewsService.getCurrencyParams(params.id, 30)
+        setMonthCurrency(monthData)
+        const sixMonthData = await NewsService.getCurrencyParams(params.id, 182)
+        setSixMonthCurrency(sixMonthData)
+        const yearData = await NewsService.getCurrencyParams(params.id, 365)
+        setYearCurrency(yearData)
       } catch (err) {
         console.warn('Currency error: ', err);
       }
@@ -87,6 +97,22 @@ export default function Currency({params} : {params: { id: string }}) {
     setPage(prevPage => prevPage + 1)
   }
 
+  const handleGraphic = (pageSize: number, graph: number) => {
+    setCurrencyPage(pageSize)
+    setGraph(graph)
+  }
+
+  const avgWeek = ((weekCurrency.reduce((c, acc) => c + +acc.rate, 0)) / 7).toFixed(4)
+  const minWeek = Math.min.apply(null, weekCurrency.map(c => +c.rate)).toFixed(4)
+  const maxWeek = Math.max.apply(null, weekCurrency.map(c => +c.rate)).toFixed(4)
+  const minMonth = Math.min.apply(null, monthCurrency.map(c => +c.rate)).toFixed(4)
+  const maxMonth = Math.max.apply(null, monthCurrency.map(c => +c.rate)).toFixed(4)
+
+  const avgWeekPercentage = ((weekCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 7).toFixed(2)
+  const avgMonthPercentage = ((monthCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 30).toFixed(2)
+  const avgSixMonthPercentage = ((sixMonthCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 182).toFixed(2)
+  const avgYearPercentage = ((yearCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 365).toFixed(2)
+
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
@@ -103,21 +129,41 @@ export default function Currency({params} : {params: { id: string }}) {
                     {name1} / {name2}
                   </h1>
                   <div className="top-block-currency__change">
-                    <p className="top-block-currency__now">{Number(mainCurrency?.rate).toFixed(4)}</p>
+                    <p className="top-block-currency__now">
+                      {mainCurrency ? (
+                        <div>
+                          {Number(mainCurrency?.rate).toFixed(4)}
+                        </div>
+                      ) : (
+                        'Загрузка'
+                      )}
+                    </p>
                     <span className="top-block-currency__change-info">
-                      {mainCurrency?.difference}
+                      {mainCurrency ? (
+                        <div>
+                          {mainCurrency?.difference}
+                        </div>
+                      ) : (
+                        ''
+                      )}
                     </span>
                     <span className="top-block-currency__change-info">
-                      ({mainCurrency?.percentage}%)
+                      {mainCurrency ? (
+                        <div>
+                          ({mainCurrency?.percentage}%)
+                        </div>
+                      ) : (
+                        ''
+                      )}
                     </span>
                   </div>
                   <span className="top-block-currency__time">
                     {new Date().toLocaleDateString()}
                   </span>
                 </div>
-                <div data-tabs className="main-block-currency__tabs">
+                <div data-tabs={''} className="main-block-currency__tabs">
                   <nav
-                    data-tabs-titles
+                    data-tabs-titles={''}
                     className="main-block-currency__navigation navigation-tabs"
                   >
                     <button
@@ -139,59 +185,59 @@ export default function Currency({params} : {params: { id: string }}) {
                       Параметры
                     </button>
                   </nav>
-                  <div data-tabs-body className="main-block-currency__content">
+                  <div data-tabs-body={''} className="main-block-currency__content">
                     {option == 1 ? (
                       <div className="main-block-currency__body body-main-currency">
                         <div className="body-main-currency__wrap-columns">
                           <div className="body-main-currency__column">
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                Previous Close
+                                Прошлое значение
                               </span>
                               <span className="body-main-currency__info">
-                                1.0902
+                                {Number(weekCurrency[1]?.rate).toFixed(4)}
                               </span>
                             </div>
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                Open
+                                Настоящее значение
                               </span>
                               <span className="body-main-currency__info">
-                                1.0902
+                                {Number(mainCurrency?.rate).toFixed(4)}
                               </span>
                             </div>
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                Bid
+                                Среднее значение
                               </span>
                               <span className="body-main-currency__info">
-                                1.0902
+                                {avgWeek}
                               </span>
                             </div>
                           </div>
                           <div className="body-main-currency__column">
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                Day’s range
+                                Недельный диапазон
                               </span>
                               <span className="body-main-currency__info">
-                                1.0891 - 1.0910
+                                {minWeek} - {maxWeek}
                               </span>
                             </div>
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                52 week range
+                                Месячный диапазон
                               </span>
                               <span className="body-main-currency__info">
-                                1.0450 - 1.1276
+                                {minMonth} - {maxMonth}
                               </span>
                             </div>
                             <div className="body-main-currency__item">
                               <span className="body-main-currency__name">
-                                Ask
+                                Прямо сейчас
                               </span>
                               <span className="body-main-currency__info">
-                                1.0902
+                                {Number(mainCurrency?.rate).toFixed(4)}
                               </span>
                             </div>
                           </div>
@@ -199,10 +245,10 @@ export default function Currency({params} : {params: { id: string }}) {
                       </div>
                     ) : (
                       <div className="main-block-currency__body body-main-currency">
-                        <div data-tabs className="body-main-currency">
+                        <div data-tabs={''} className="body-main-currency">
                           <div className="body-main-currency__wrap-currency">
                             <nav
-                              data-tabs-titles
+                              data-tabs-titles={''}
                               className="body-main-currency__navigation"
                             >
                               <button
@@ -210,7 +256,7 @@ export default function Currency({params} : {params: { id: string }}) {
                                 className={`body-main-currency__title ${
                                   graph == 0 ? "_tab-active" : ""
                                 } `}
-                                onClick={() => setGraph(0)}
+                                onClick={() => handleGraphic(2, 0)}
                               >
                                 <span className="body-main-currency__title-info">
                                   Сегодня
@@ -220,66 +266,66 @@ export default function Currency({params} : {params: { id: string }}) {
                                   {mainCurrency?.percentage}%
                                 </span>{" "}
                               </button>
-                              {/*<button*/}
-                              {/*  type="button"*/}
-                              {/*  className={`body-main-currency__title ${*/}
-                              {/*    graph == 1 ? "_tab-active" : ""*/}
-                              {/*  } `}*/}
-                              {/*  onClick={() => setGraph(1)}*/}
-                              {/*>*/}
-                              {/*  <span className="body-main-currency__title-info">*/}
-                              {/*    1 неделя*/}
-                              {/*  </span>{" "}*/}
-                              {/*  <br />*/}
-                              {/*  <span className="body-main-currency__number">*/}
-                              {/*    1.95%*/}
-                              {/*  </span>{" "}*/}
-                              {/*</button>*/}
-                              {/*<button*/}
-                              {/*  type="button"*/}
-                              {/*  className={`body-main-currency__title ${*/}
-                              {/*    graph == 2 ? "_tab-active" : ""*/}
-                              {/*  } `}*/}
-                              {/*  onClick={() => setGraph(2)}*/}
-                              {/*>*/}
-                              {/*  <span className="body-main-currency__title-info">*/}
-                              {/*    1 месяц*/}
-                              {/*  </span>{" "}*/}
-                              {/*  <br />*/}
-                              {/*  <span className="body-main-currency__number">*/}
-                              {/*    4.95%*/}
-                              {/*  </span>*/}
-                              {/*</button>*/}
-                              {/*<button*/}
-                              {/*  type="button"*/}
-                              {/*  className={`body-main-currency__title ${*/}
-                              {/*    graph == 3 ? "_tab-active" : ""*/}
-                              {/*  } `}*/}
-                              {/*  onClick={() => setGraph(3)}*/}
-                              {/*>*/}
-                              {/*  <span className="body-main-currency__title-info">*/}
-                              {/*    6 месяцев*/}
-                              {/*  </span>{" "}*/}
-                              {/*  <br />*/}
-                              {/*  <span className="body-main-currency__number">*/}
-                              {/*    12.85%*/}
-                              {/*  </span>*/}
-                              {/*</button>*/}
-                              {/*<button*/}
-                              {/*  type="button"*/}
-                              {/*  className={`body-main-currency__title ${*/}
-                              {/*    graph == 4 ? "_tab-active" : ""*/}
-                              {/*  } `}*/}
-                              {/*  onClick={() => setGraph(4)}*/}
-                              {/*>*/}
-                              {/*  <span className="body-main-currency__title-info">*/}
-                              {/*    1 год*/}
-                              {/*  </span>{" "}*/}
-                              {/*  <br />*/}
-                              {/*  <span className="body-main-currency__number">*/}
-                              {/*    14.6%*/}
-                              {/*  </span>*/}
-                              {/*</button>*/}
+                              <button
+                                type="button"
+                                className={`body-main-currency__title ${
+                                  graph == 1 ? "_tab-active" : ""
+                                } `}
+                                onClick={() => handleGraphic(7, 1)}
+                              >
+                                <span className="body-main-currency__title-info">
+                                  1 неделя
+                                </span>{" "}
+                                <br />
+                                <span className="body-main-currency__number">
+                                  {avgWeekPercentage}%
+                                </span>{" "}
+                              </button>
+                              <button
+                                type="button"
+                                className={`body-main-currency__title ${
+                                  graph == 2 ? "_tab-active" : ""
+                                } `}
+                                onClick={() => handleGraphic(30, 2)}
+                              >
+                                <span className="body-main-currency__title-info">
+                                  1 месяц
+                                </span>{" "}
+                                <br />
+                                <span className="body-main-currency__number">
+                                  {avgMonthPercentage}%
+                                </span>
+                              </button>
+                              <button
+                                type="button"
+                                className={`body-main-currency__title ${
+                                  graph == 3 ? "_tab-active" : ""
+                                } `}
+                                onClick={() => handleGraphic(182, 3)}
+                              >
+                                <span className="body-main-currency__title-info">
+                                  6 месяцев
+                                </span>{" "}
+                                <br />
+                                <span className="body-main-currency__number">
+                                  {avgSixMonthPercentage}%
+                                </span>
+                              </button>
+                              <button
+                                type="button"
+                                className={`body-main-currency__title ${
+                                  graph == 4 ? "_tab-active" : ""
+                                } `}
+                                onClick={() => handleGraphic(365, 4)}
+                              >
+                                <span className="body-main-currency__title-info">
+                                  1 год
+                                </span>{" "}
+                                <br />
+                                <span className="body-main-currency__number">
+                                  {avgYearPercentage}%
+                                </span>
+                              </button>
                               {/*<button*/}
                               {/*  type="button"*/}
                               {/*  className={`body-main-currency__title ${*/}
@@ -297,50 +343,43 @@ export default function Currency({params} : {params: { id: string }}) {
                               {/*</button>*/}
                             </nav>
                             <div
-                              data-tabs-body
+                              data-tabs-body={''}
                               className="body-main-currency__content"
                             >
                               {graph == 0 && (
                                 <CurrencyBody
                                   name={params.id}
+                                  page={currencyPage}
                                 />
                               )}
 
-                              {/*{graph == 1 && (*/}
-                              {/*  <CurrencyBody*/}
-                              {/*    colr={price}*/}
-                              {/*    colb={time}*/}
-                              {/*    graph1={Graph1}*/}
-                              {/*    graph2={Graph2}*/}
-                              {/*  />*/}
-                              {/*)}*/}
+                              {graph == 1 && (
+                                <CurrencyBody
+                                  name={params.id}
+                                  page={currencyPage}
+                                />
+                              )}
 
-                              {/*{graph == 2 && (*/}
-                              {/*  <CurrencyBody*/}
-                              {/*    colr={price}*/}
-                              {/*    colb={time}*/}
-                              {/*    graph1={Graph2}*/}
-                              {/*    graph2={Graph1}*/}
-                              {/*  />*/}
-                              {/*)}*/}
+                              {graph == 2 && (
+                                <CurrencyBody
+                                  name={params.id}
+                                  page={currencyPage}
+                                />
+                              )}
 
-                              {/*{graph == 3 && (*/}
-                              {/*  <CurrencyBody*/}
-                              {/*    colr={price}*/}
-                              {/*    colb={time}*/}
-                              {/*    graph1={Graph1}*/}
-                              {/*    graph2={Graph2}*/}
-                              {/*  />*/}
-                              {/*)}*/}
+                              {graph == 3 && (
+                                <CurrencyBody
+                                  name={params.id}
+                                  page={currencyPage}
+                                />
+                              )}
 
-                              {/*{graph == 4 && (*/}
-                              {/*  <CurrencyBody*/}
-                              {/*    colr={price}*/}
-                              {/*    colb={time}*/}
-                              {/*    graph1={Graph2}*/}
-                              {/*    graph2={Graph1}*/}
-                              {/*  />*/}
-                              {/*)}*/}
+                              {graph == 4 && (
+                                <CurrencyBody
+                                  name={params.id}
+                                  page={currencyPage}
+                                />
+                              )}
 
                               {/*{graph == 5 && (*/}
                               {/*  <CurrencyBody*/}
@@ -418,25 +457,25 @@ export default function Currency({params} : {params: { id: string }}) {
                     </thead>
                     <tbody>
                     <CurrencyElement percentage={currency?.percentageEURToUSD!} difference={currency?.differenceEURToUSD!}
-                              name={'USD'}
+                              name={'USD'} url={'EURToUSD'}
                               rate={Number(currency?.EURToUSD!).toFixed(4)!} img={'usa.webp'} />
                     <CurrencyElement percentage={currency?.percentageUSDToJPY!} difference={currency?.differenceUSDToJPY!}
-                              name={'JPY'}
+                              name={'JPY'} url={'USDToJPY'}
                               rate={Number(currency?.USDToJPY!).toFixed(4)!} img={'china.webp'} />
                     <CurrencyElement percentage={currency?.percentageGBPToUSD!} difference={currency?.differenceGBPToUSD!}
-                              name={'USD'}
+                              name={'USD'} url={'GBPToUSD'}
                               rate={Number(currency?.GBPToUSD!).toFixed(4)!} img={'usa.webp'} />
                     <CurrencyElement percentage={currency?.percentageUSDToRUB!} difference={currency?.differenceUSDToRUB!}
-                              name={'RUB'}
+                              name={'RUB'} url={'USDToRUB'}
                               rate={Number(currency?.USDToRUB!).toFixed(4)!} img={'rub.svg'} />
                     <CurrencyElement percentage={currency?.percentageEURToRUB!} difference={currency?.differenceEURToRUB!}
-                              name={'RUB'}
+                              name={'RUB'} url={'EURToRUB'}
                               rate={Number(currency?.EURToRUB!).toFixed(4)!} img={'rub.svg'} />
                     <CurrencyElement percentage={currency?.percentageUSDToRON!} difference={currency?.differenceUSDToRON!}
-                              name={'RON'}
+                              name={'RON'} url={'USDToRON'}
                               rate={Number(currency?.USDToRON!).toFixed(4)!} img={'roman.svg'} />
                     <CurrencyElement percentage={currency?.percentageEURToRON!} difference={currency?.differenceEURToRON!}
-                              name={'RON'}
+                              name={'RON'} url={'EURToRON'}
                               rate={Number(currency?.EURToRON!).toFixed(4)!} img={'roman.svg'} />
                     </tbody>
                   </table>

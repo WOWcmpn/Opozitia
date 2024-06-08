@@ -8,7 +8,7 @@ export const GraphicsBlock = ({
   name,
   title,
   tradeInfo,
-  changeMinus,
+  percentage,
   labels,
   data,
   img
@@ -16,10 +16,10 @@ export const GraphicsBlock = ({
   const [isNegative, setIsNegative] = useState<boolean>();
   useEffect(() => {
     async function loadUtils() {
-      setIsNegative(changeMinus?.charAt(0) === '-')
+      setIsNegative(percentage?.charAt(0) === '-')
     }
     loadUtils()
-  }, [changeMinus]);
+  }, [percentage]);
 
   return (
     <div className="graphics-left-block__item">
@@ -40,14 +40,20 @@ export const GraphicsBlock = ({
                   alt="Иконка"
                 />
                 <span className="graphics-left-block__trade-info">
-                  {Number(tradeInfo).toFixed(4)}
+                  {tradeInfo ? (
+                    <div>
+                      {Number(tradeInfo).toFixed(2)}
+                    </div>
+                  ) : (
+                    'загрузка...'
+                  )}
                 </span>
                 {isNegative ?
                   <span className="graphics-left-block__change graphics-left-block__change_minus">
-                  {changeMinus}%
+                  {percentage}%
                 </span> :
                   <span className="graphics-left-block__change graphics-left-block__change_plus">
-                  {changeMinus}%
+                  {percentage}%
                 </span>
                 }
 

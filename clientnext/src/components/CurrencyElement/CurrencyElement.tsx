@@ -1,6 +1,6 @@
 import { ICurrencyElement } from "@/types/types";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 export const CurrencyElement = ({
@@ -8,15 +8,22 @@ export const CurrencyElement = ({
   name,
   rate,
   percentage,
-  difference
+  difference,
+  url
 }: ICurrencyElement) => {
-  let isNegative
-  isNegative = percentage?.charAt(0) !== '-';
+  const [isNegative, setIsNegative] = useState(false);
+  useEffect(() => {
+    async function loadUtils() {
+      setIsNegative(percentage?.charAt(0) !== '-')
+    }
+    loadUtils()
+  }, [percentage]);
 
   return (
     <tr data-href="#">
       <td className="table-exchange__item">
         <picture>
+          <Link href={`/currency/${url}`} >
           <Image
             width={50}
             height={25}
@@ -24,18 +31,31 @@ export const CurrencyElement = ({
             className="table-exchange__icon"
             alt="Иконка"
           />
+          </Link>
         </picture>
-        {name}
+        <div>
+          <Link href={`/currency/${url}`} >
+          {name}
+          </Link>
+        </div>
       </td>
-      <td>{rate}</td>
+      <td>
+        <Link href={`/currency/${url}`} >
+          {rate}
+        </Link>
+      </td>
       {isNegative ?
         <td className="table-exchange__change table-exchange__change_plus">
+          <Link href={`/currency/${url}`} >
           {percentage}%
+          </Link>
         </td> :
         <td className="table-exchange__change table-exchange__change_negative-currency">
+          <Link href={`/currency/${url}`} >
           {percentage?.slice(1)}%
+          </Link>
         </td>}
-      <td>{Math.abs(+difference)}</td>
+      <td><Link href={`/currency/${url}`} >{Math.abs(+difference)}</Link></td>
     </tr>
   )
 }

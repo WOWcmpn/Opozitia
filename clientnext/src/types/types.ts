@@ -1,10 +1,23 @@
 import { StaticImageData } from "next/image";
 
+export interface IFullCrypto {
+  rate: string
+  percentage: string
+  difference: string
+  viewDate: string
+}
+
 export interface IFullCurrency {
   rate: string
   percentage: string
   difference: string
   viewDate: string
+}
+
+export interface IMainCrypto {
+  rate: string
+  percentage: string
+  difference: string
 }
 
 export interface IMainCurrency {
@@ -16,6 +29,34 @@ export interface IMainCurrency {
 export interface ISchedule {
   labels: string[]
   data: string[]
+}
+
+export interface ICrypto {
+  id: string,
+  date: string,
+  viewDate: string,
+  time: string,
+  rateBTC: string,
+  rateETH: string,
+  rateBNB: string,
+  rateNOT: string,
+  rateSOL: string,
+  rateLTC: string,
+  rateBCH: string,
+  percentageBTC: string,
+  percentageETH: string,
+  percentageBNB: string,
+  percentageNOT: string,
+  percentageSOL: string,
+  percentageLTC: string,
+  percentageBCH: string,
+  differenceBTC: string,
+  differenceETH: string,
+  differenceBNB: string,
+  differenceNOT: string,
+  differenceSOL: string,
+  differenceLTC: string,
+  differenceBCH: string
 }
 
 export interface ICurrency {
@@ -164,7 +205,7 @@ export type GraphicsBlockProps = {
   name: string;
   title: string;
   tradeInfo: string;
-  changeMinus: string;
+  percentage: string;
   labels: string[];
   data: string[];
   img?: string
@@ -202,6 +243,15 @@ export interface ICurrencyElement {
   rate: string;
   percentage: string;
   difference: string;
+  url: string;
+}
+
+export type CryptoValueProps = {
+  name: string;
+  img: string;
+  rate: string;
+  percentage: string;
+  difference: string;
 }
 
 export type CurrencyValueProps = {
@@ -233,7 +283,8 @@ export type SearchResultProps = {
 };
 
 export type CurrencyBodyProps = {
-  name: string
+  name: string,
+  page: number
 };
 
 // export type CurrencyBodyProps = {

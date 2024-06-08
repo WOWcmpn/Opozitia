@@ -48,7 +48,7 @@ export class NewsController {
   ) {}
 
   @Cron(CronExpression.EVERY_HOUR)
-  handleEveryHour() {
+  handleNews() {
     return this.getNewsUseCase.getNews();
   }
 
@@ -61,10 +61,10 @@ export class NewsController {
     return this.getCurrencyUseCase.getCurrency();
   }
 
-  @Get('currency-full/:id')
+  @Get('currency-params/:id')
   @HttpCode(200)
-  async getCurrencyFullById(@Param('id') id: string) {
-    return await this.currencyRepo.getCurrencyFullById(id);
+  async getCurrencyParam(@Param('id') id: string, @Query('pageSize') pageSize: number) {
+    return await this.currencyRepo.getCurrencyByParam(id, pageSize);
   }
 
   @Get('currency/:id')

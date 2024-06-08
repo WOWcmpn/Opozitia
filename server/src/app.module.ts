@@ -16,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
 // import { UserEntity } from './users/domain/user.entity';
 import { CommentsModule } from './comments/comments.module';
 // import { CommentsEntity } from './comments/domain/comments.entity';
+import { CryptoModule } from './crypto/crypto.module';
 
 // const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 //
@@ -245,6 +246,7 @@ import { CommentsModule } from './comments/comments.module';
     UsersModule,
     AuthModule,
     CommentsModule,
+    CryptoModule,
   ],
   controllers: [],
   providers: [],

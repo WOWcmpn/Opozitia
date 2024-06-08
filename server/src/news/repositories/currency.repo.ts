@@ -8,7 +8,7 @@ import { ICurrency } from '../../base/types/currencyModels';
 export class CurrencyRepo {
   constructor(@InjectRepository(CurrencyEntity) private readonly currencyRepo: Repository<CurrencyEntity>) {}
 
-  async getCurrencyFullById(name: string) {
+  async getCurrencyByParam(name: string, pageSize: number = 7) {
     return await this.currencyRepo
       .createQueryBuilder('c')
       .orderBy('c.date', 'DESC')
@@ -18,6 +18,7 @@ export class CurrencyRepo {
         `c.percentage${name} AS percentage`,
         'c.viewDate AS "viewDate"',
       ])
+      .limit(pageSize)
       .getRawMany();
   }
 
