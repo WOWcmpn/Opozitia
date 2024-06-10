@@ -307,7 +307,7 @@ export default function Home() {
                           <SwiperSlide>
                             <GraphicsBlock
                               name="SNPIND"
-                              title="Bitcoin Cash"
+                              title="BCH"
                               tradeInfo={crypto[0]?.rateBCH}
                               percentage={crypto[0]?.percentageBCH}
                               labels={crypto.map(c => c.viewDate).reverse()}

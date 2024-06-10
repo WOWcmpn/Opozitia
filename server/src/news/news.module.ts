@@ -14,12 +14,9 @@ import { UsersQueryRepository } from '../users/repositories/users.query-reposito
 import { CommentsEntity } from '../comments/domain/comments.entity';
 import { UserEntity } from '../users/domain/user.entity';
 import { GetWeatherUseCase } from './use-cases/getWeather.use-case';
-import { GetCurrencyUseCase } from './use-cases/getCurrency.use-case';
-import { CurrencyEntity } from './domain/currency.entity';
-import { CurrencyRepo } from './repositories/currency.repo';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity, CommentsEntity, UserEntity, CurrencyEntity])],
+  imports: [TypeOrmModule.forFeature([NewsEntity, QuizEntity, CommentsEntity, UserEntity])],
   controllers: [NewsController],
   providers: [
     GetNewsUseCase,
@@ -27,11 +24,9 @@ import { CurrencyRepo } from './repositories/currency.repo';
     CreateNewsUseCase,
     CreateCommentUseCase,
     GetWeatherUseCase,
-    GetCurrencyUseCase,
     NewsRepository,
     NewsQueryRepository,
     UsersQueryRepository,
-    CurrencyRepo,
     AuthService,
   ],
 })

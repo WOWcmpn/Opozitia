@@ -29,22 +29,18 @@ import { Request } from 'express';
 import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 import { NewsRepository } from '../repositories/news.repository';
 import { GetWeatherUseCase } from '../use-cases/getWeather.use-case';
-import { GetCurrencyUseCase } from '../use-cases/getCurrency.use-case';
-import { CurrencyRepo } from '../repositories/currency.repo';
 
 @Controller('news')
 @ApiTags('News')
 export class NewsController {
   constructor(
     private readonly getNewsUseCase: GetNewsUseCase,
-    private readonly currencyRepo: CurrencyRepo,
     private readonly newsQueryRepository: NewsQueryRepository,
     private readonly newsRepo: NewsRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
     private readonly authService: AuthService,
     private readonly createCommentUseCase: CreateCommentUseCase,
     private readonly getWeatherUseCase: GetWeatherUseCase,
-    private readonly getCurrencyUseCase: GetCurrencyUseCase,
   ) {}
 
   @Cron(CronExpression.EVERY_HOUR)
@@ -55,34 +51,6 @@ export class NewsController {
   @Cron(CronExpression.EVERY_MINUTE)
   handleImg() {
     return this.newsRepo.updateFullImg();
-  }
-  @Cron(CronExpression.EVERY_DAY_AT_1AM)
-  handleCurrency() {
-    return this.getCurrencyUseCase.getCurrency();
-  }
-
-  @Get('currency-params/:id')
-  @HttpCode(200)
-  async getCurrencyParam(@Param('id') id: string, @Query('pageSize') pageSize: number) {
-    return await this.currencyRepo.getCurrencyByParam(id, pageSize);
-  }
-
-  @Get('currency/:id')
-  @HttpCode(200)
-  async getCurrencyById(@Param('id') id: string) {
-    return await this.currencyRepo.getCurrencyById(id);
-  }
-
-  @Get('currency')
-  @HttpCode(200)
-  async getCurrency() {
-    return await this.currencyRepo.getCurrency();
-  }
-
-  @Get('graphic-currency')
-  @HttpCode(200)
-  async getGraphicCurrency() {
-    return await this.currencyRepo.getGraphicCurrency();
   }
 
   @Get('weather')

@@ -5,8 +5,8 @@ import {
   INews, ISearchNews, ISingleNews, IWeather
 } from "@/types/types";
 
-//axios.defaults.baseURL = "http://localhost:4000/"
-axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
+axios.defaults.baseURL = "http://localhost:4000/"
+// axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
   async getCryptoFull(id: string, pageSize: number): Promise<IFullCrypto[]> {
@@ -32,22 +32,22 @@ export const NewsService = {
   },
 
   async getCurrencyParams(id: string, pageSize: number): Promise<IFullCurrency[]> {
-    const {data} = await axios.get(`news/currency-params/${id}`, { params: { pageSize} })
+    const {data} = await axios.get(`currency/params/${id}`, { params: { pageSize} })
     return data
   },
 
   async getCurrencyById(id: string) {
-    const {data} = await axios.get(`news/currency/${id}`)
+    const {data} = await axios.get(`currency/${id}`)
     return data
   },
 
   async getCurrency(): Promise<ICurrency> {
-    const {data} = await axios.get('news/currency')
+    const {data} = await axios.get('currency')
     return data
   },
 
   async getGraphicCurrency(): Promise<ICurrency[]> {
-    const {data} = await axios.get('news/graphic-currency')
+    const {data} = await axios.get('currency/graphic')
     return data
   },
 

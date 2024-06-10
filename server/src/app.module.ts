@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
 // import { CommentsEntity } from './comments/domain/comments.entity';
 import { CryptoModule } from './crypto/crypto.module';
+import { CurrencyModule } from './currency/currency.module';
 
 // const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 //
@@ -247,6 +248,7 @@ import { CryptoModule } from './crypto/crypto.module';
     AuthModule,
     CommentsModule,
     CryptoModule,
+    CurrencyModule,
   ],
   controllers: [],
   providers: [],
