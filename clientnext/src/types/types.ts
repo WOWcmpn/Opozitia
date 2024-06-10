@@ -1,5 +1,18 @@
 import { StaticImageData } from "next/image";
 
+export interface INewsVotes {
+  title: string
+  votePositive: number
+  voteNegative: number
+  voteNeutral: number
+}
+
+export enum quizVotes {
+  Dislike = 'Не поддерживаю',
+  Like = 'Поддерживаю',
+  Whatever = 'Нейтрально',
+}
+
 export interface IFullCrypto {
   rate: string
   percentage: string
@@ -111,6 +124,16 @@ export interface IWeather {
   dayConditionIconTwo: string
   nightConditionTextTwo: string
   nightConditionIconTwo: string
+}
+
+export interface IPollsNews {
+  id: string
+  title: string
+  fullImgUrl: string
+  category: string
+  votePositive: string
+  voteNegative: string
+  voteNeutral: string
 }
 
 export interface IHomeNews {
@@ -298,6 +321,10 @@ export type PopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
   onPolls?: React.Dispatch<React.SetStateAction<number>>;
   classes: string;
+  positive: number
+  negative: number
+  neutral: number
+  title: string
 };
 
 interface Champs {
@@ -315,12 +342,17 @@ export type ChampionshipProps = {
 };
 
 export type PollsItemProps = {
-  img: StaticImageData;
+  id: string
+  img: string;
   title: string;
-  agree: string;
-  neutral: string;
-  disagree: string;
+  agree: number;
+  neutral: number;
+  disagree: number;
   onClick: React.Dispatch<React.SetStateAction<number>>;
+  onPositiveVote: React.Dispatch<React.SetStateAction<number>>
+  onNegativeVote: React.Dispatch<React.SetStateAction<number>>
+  onNeutralVote: React.Dispatch<React.SetStateAction<number>>
+  onTitle: React.Dispatch<React.SetStateAction<string>>
 };
 
 export type AccountPopupProps = {

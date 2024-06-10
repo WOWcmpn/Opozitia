@@ -1,6 +1,6 @@
 import { PageNewsProps } from "@/types/types";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 export const PageNews = ({
@@ -10,14 +10,24 @@ export const PageNews = ({
   createdAtTime,
   category,
 }: PageNewsProps) => {
+  const [isUrl, setIsUrl] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function loadUtils() {
+      try {
+        if(img.startsWith('http')) setIsUrl(true)
+      } catch (err) {
+        console.warn('PageNews err ', err);
+      }
+    }
+    loadUtils()
+  }, [img]);
+
   let viewCategory = ''
   if(category === 'policy') viewCategory = 'Политика'
   if(category === 'world') viewCategory = 'Мир'
   if(category === 'economy') viewCategory = 'Экономика'
   if(category === 'business') viewCategory = 'Бизнес'
-
-  let isUrl = false;
-  if (img.substring(0, 4) == "http") isUrl = true;
 
   return (
     <div className="content-news__item item-content-news item-block">
@@ -49,16 +59,6 @@ export const PageNews = ({
               alt="Image"
             />
           )}
-          {/*{isUrl ? (*/}
-          {/*  <Image width={290} height={100} src={img} alt="Image" />*/}
-          {/*) : (*/}
-          {/*  <Image*/}
-          {/*    width={290}*/}
-          {/*    height={100}*/}
-          {/*    src={`/img/preview-images/${img}`}*/}
-          {/*    alt="Image"*/}
-          {/*  />*/}
-          {/*)}*/}
         </picture>
       </div>
     </div>

@@ -11,6 +11,26 @@ export class NewsQueryRepository {
     @InjectRepository(CommentsEntity) private readonly commentsRepo: Repository<CommentsEntity>,
   ) {}
 
+  async getNewsByCategory(pageNumber: number, pageSize: number, category: string = 'Economy') {
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select([
+        'n.id',
+        'n.title',
+        'n.fullImgUrl',
+        'n.category',
+        'n.votePositive',
+        'n.voteNegative',
+        'n.voteNeutral',
+      ])
+      .where('n.category = :category', { category })
+      .orderBy('n.createdAtDate', 'DESC')
+      .addOrderBy('n.createdAtTime', 'DESC')
+      .limit(pageSize)
+      .offset((pageNumber - 1) * pageSize)
+      .getMany();
+  }
+
   async getBySearch(searchNameTerm: string = '', pageNumber: number = 1) {
     return await this.newsRepository
       .createQueryBuilder('n')
@@ -186,6 +206,14 @@ export class NewsQueryRepository {
 
   async getNewsByTitle(title: string | undefined) {
     return await this.newsRepository.findOneBy({ title });
+  }
+
+  async getNewsVotes(id: string) {
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select(['n.title', 'n.votePositive', 'n.voteNegative', 'n.voteNeutral'])
+      .where('n.id = :id', { id })
+      .getOne();
   }
 
   async getNewsById(id: string) {

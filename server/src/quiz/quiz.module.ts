@@ -5,9 +5,10 @@ import { QuizEntity } from './domain/quiz.entity';
 import { QuizQueryRepository } from './repositories/quiz.query-repository';
 import { SendVoteUseCase } from './use-cases/sendVote.use-case';
 import { AuthService } from '../auth/service/auth.service';
+import { NewsEntity } from '../news/domain/news.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([QuizEntity])],
+  imports: [TypeOrmModule.forFeature([QuizEntity, NewsEntity])],
   controllers: [QuizController],
   providers: [QuizQueryRepository, QuizQueryRepository, SendVoteUseCase, AuthService],
 })

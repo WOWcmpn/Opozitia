@@ -3,12 +3,15 @@ import { motion } from "framer-motion";
 import React from "react";
 import Logo from "@/img/logo.png";
 import { PopupProps } from "@/types/types";
+import Link from "next/link";
 
-export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
+export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neutral, title }: PopupProps) => {
+
   const popup = () => {
     onClick(0);
     if (onPolls !== undefined) onPolls(0);
   };
+
   return (
     <motion.div
       id="popup-vote"
@@ -21,12 +24,12 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
       <div className="popup__wrapper">
         <div className=" popup_show popup__content_vote content-popup">
           <div className="popup__top popup__top_vote">
-            <a href="#" className="popup__logo">
+            <Link href="#" className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
-            </a>
+            </Link>
             <button
               data-close
               type="button"
@@ -46,7 +49,7 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
               <div className="item-tabs-oprosi item-tabs-oprosi_vote">
                 <div className="item-tabs-oprosi__top item-tabs-oprosi__top_vote">
                   <h4 className="item-tabs-oprosi__top-title item-tabs-oprosi__top-title_vote">
-                    Премьер-министр Молдовы одобрил вступление в ЕС
+                    {title}
                   </h4>
                 </div>
                 <form action="#" className="item-tabs-oprosi__form">
@@ -67,7 +70,7 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
                           className="options__label options__label_1"
                         >
                           <span className="options__text">Не поддерживаю</span>{" "}
-                          <span className="percent percent_nosupport">38%</span>
+                          <span className="percent percent_nosupport">{negative || 0}%</span>
                           <div className="options__row row">
                             <div className="options__progress progress  progress_nosupport"></div>
                           </div>
@@ -85,7 +88,7 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
                           className="options__label options__label_2"
                         >
                           <span className="options__text">Поддерживаю</span>
-                          <span className="percent percent_support">56%</span>
+                          <span className="percent percent_support">{positive || 0}%</span>
                           <div className="options__row row">
                             <div className="options__progress progress  progress_support"></div>
                           </div>
@@ -103,7 +106,7 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
                           className="options__label options__label_3"
                         >
                           <span className="options__text">Нейтрально</span>
-                          <span className="percent percent_neutral">6%</span>
+                          <span className="percent percent_neutral">{neutral || 0}%</span>
                           <div className="options__row row">
                             <div className="options__progress progress  progress_neutral"></div>
                           </div>
@@ -120,9 +123,9 @@ export const PopupPolls = ({ onClick, classes, onPolls }: PopupProps) => {
               <span className="bottom-popup__text-vote">
                 Не приходят результаты?
               </span>{" "}
-              <a className="bottom-popup__link-ok" href="#">
+              <Link className="bottom-popup__link-ok" href="#">
                 Нажмите сюда, чтобы обратититься в поддержку
-              </a>
+              </Link>
             </p>
           </div>
         </div>

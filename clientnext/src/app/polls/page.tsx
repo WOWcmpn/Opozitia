@@ -1,31 +1,110 @@
 "use client";
-
 import Image from "next/image";
 import React, { useEffect, useState } from 'react';
-import Polls1 from "@/img/oprosi/01.png";
 import { LatestNews } from "@/components/LatestNews/LatestNews";
 import Arrow from "@/img/icons/arrow-select.svg";
 import { Header } from "@/components/Header/Header";
 import { PollsItem } from "@/components/PollsItem/PollsItem";
 import { AnimatePresence } from "framer-motion";
 import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
-import { IHomeNews } from '@/types/types';
+import { IHomeNews, IPollsNews } from "@/types/types";
 import { NewsService } from '@/service/news.service';
 import Link from 'next/link';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Polls() {
+  const ItemPerPage = 10
   const [option, setOption] = useState(0);
+  const [mainNews, setMainNews] = useState<IPollsNews[]>([]);
   const [data, setData] = useState<IHomeNews | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1)
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [negative, setNegative] = useState<number>(0);
+  const [positive, setPositive] = useState<number>(0);
+  const [neutral, setNeutral] = useState<number>(0);
+  const [title, setTitle] = useState<string>('');
+
+  useEffect(() => {
+    const loadData = async () => {
+      if(page > 1) {
+        if(category) {
+          if(category !== mainNews[0].category) {
+            setLoading(true)
+            setPage(1)
+            try{
+              const newData = await NewsService.getNewsByCategory(page, ItemPerPage, category)
+              setMainNews(newData)
+              setLoading(false)
+              setHasMore(newData.length === ItemPerPage)
+            } catch (error) {
+              console.log('Error loading data:', error);
+            } finally {
+              setLoading(false)
+            }
+          } else {
+            setLoading(true)
+            try{
+              const newData = await NewsService.getNewsByCategory(page, ItemPerPage, category)
+              setMainNews(prevData => [...prevData, ...newData])
+              setLoading(false)
+              setHasMore(newData.length === ItemPerPage)
+            } catch (error) {
+              console.log('Error loading data:', error);
+            } finally {
+              setLoading(false)
+            }
+          }
+        } else {
+          setLoading(true)
+          try{
+            const newData = await NewsService.getNewsByCategory(page, ItemPerPage)
+            setMainNews(prevData => [...prevData, ...newData])
+            setLoading(false)
+            setHasMore(newData.length === ItemPerPage)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          } finally {
+            setLoading(false)
+          }
+        }
+      } else {
+        if(category) {
+          try{
+            const newData = await NewsService.getNewsByCategory(page, ItemPerPage, category)
+            setMainNews(newData)
+            setLoading(false)
+            setHasMore(newData.length === ItemPerPage)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          }
+        } else {
+          try{
+            const newData = await NewsService.getNewsByCategory(page, ItemPerPage)
+            setMainNews(newData)
+            setLoading(false)
+            setHasMore(newData.length === ItemPerPage)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          }
+        }
+      }
+    }
+    loadData()
+  }, [page, category])
 
   useEffect(() => {
     async function getData() {
-      const data = await NewsService.getNewsHome();
+      const data = await NewsService.getNewsHome() ;
       setData(data);
     }
-
     getData();
   }, []);
+
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1)
+  }
 
   return (
     <div className={`wrapper ${option == 1 ? "overflow" : ""} `}>
@@ -37,42 +116,19 @@ export default function Polls() {
               <div className="content-news__wrap-header">
                 <header className="content-news__header content-news__header_oprosi">
                   <div className="w-[780px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] ">
-                    <Select>
+                    <Select onValueChange={(category) => setCategory(category)}>
                       <SelectTrigger className="text-black text-[25px] max-h-xs">
                         <SelectValue placeholder="Экономика" />
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded text-black">
                         <SelectGroup>
-                          <SelectItem className="cursor-pointer" key={"policy"} value="policy">Политика</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"economy"} value="economy">Экономика</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"business"} value="business">Бизнес</SelectItem>
-                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"world"} value="world">Мировые новости</SelectItem>
+                          <SelectItem className="cursor-pointer" key={"Policy"} value="Policy">Политика</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"Economy"} value="Economy">Экономика</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"Business"} value="Business">Бизнес</SelectItem>
+                          <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"World"} value="World">Мировые новости</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    {/*<SelectMenu*/}
-                    {/*  className="text-black text-[25px] max-h-xs"*/}
-                    {/*  size="lg"*/}
-                    {/*  variant="bordered"*/}
-                    {/*  defaultSelectedKeys={[1]}*/}
-                    {/*>*/}
-                    {/*  <SelectItem*/}
-                    {/*    key={1}*/}
-                    {/*    value="1"*/}
-                    {/*    className="text-black text-[25px] hidden"*/}
-                    {/*  >*/}
-                    {/*    Экономика*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={2} value="2">*/}
-                    {/*    Политика*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={3} value="3">*/}
-                    {/*    Мировые новости*/}
-                    {/*  </SelectItem>*/}
-                    {/*  <SelectItem key={4} value="4">*/}
-                    {/*    Бизнес*/}
-                    {/*  </SelectItem>*/}
-                    {/*</SelectMenu>*/}
                   </div>
                 </header>
               </div>
@@ -82,77 +138,41 @@ export default function Polls() {
               >
                 <div className="news__content content-news content-news_oprosi">
                   <span className="content-news__number-news content-news__number-news_oprosi">
-                    24534 опроса
+                    {mainNews.length === 0 ? (
+                        <div>
+                          загрузка
+                        </div>
+                    ) : (
+                      <div>{mainNews.length} опросов</div>
+                    )}
                   </span>
                   <div className="content-news__body tabs-oprosi tabs-oprosi_oprosi">
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
-                    <PollsItem
-                      title="Премьер-министр Молдовы одобрил вступление в ЕС"
-                      img={Polls1}
-                      agree="56%"
-                      disagree="38%"
-                      neutral="6%"
-                      onClick={setOption}
-                    />
+                    {mainNews?.map(n => (
+                      <PollsItem key={n.id}
+                        id={n.id}
+                        title={n.title}
+                        img={n.fullImgUrl}
+                        agree={+n.votePositive}
+                        disagree={+n.voteNegative}
+                        neutral={+n.voteNeutral}
+                        onClick={setOption}
+                        onPositiveVote={setPositive}
+                        onNegativeVote={setNegative}
+                        onNeutralVote={setNeutral}
+                        onTitle={setTitle}
+                      />
+                    ))}
                   </div>
-                  <button
-                    className="content-news__btn-more btn-more"
-                    type="button"
-                  >
-                    Еще 5 опросов
-                  </button>
+                  {loading && <p>Загрузка...</p>}
+                  {hasMore && !loading &&
+                    <button onClick={handleLoadMore} className="content-news__btn-more btn-more">
+                      Ещё 10 статей
+                    </button>}
                 </div>
                 <div className="news__wrap-right sidebar">
                   <aside className="news__latest-news latest-news latest-news_big">
                     <Link
-                      href="lastnews"
+                      href={"lastnews"}
                       className="latest-news__main-title-link"
                     >
                       <h3 className="latest-news__title latest-news__title_posts">
@@ -192,10 +212,10 @@ export default function Polls() {
           </div>
         </footer>
       </div>
-
       <AnimatePresence>
         {option == 1 && (
-          <PopupPolls onClick={setOption} classes="popup popup__active" />
+          <PopupPolls onClick={setOption} classes="popup popup__active" positive={positive}
+                      negative={negative} neutral={neutral} title={title} />
         )}
       </AnimatePresence>
     </div>

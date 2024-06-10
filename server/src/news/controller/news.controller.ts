@@ -87,7 +87,7 @@ export class NewsController {
     );
   }
 
-  @Get('economika')
+  @Get('economy')
   @HttpCode(200)
   async findAllEconomic(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
     return await this.newsQueryRepository.getAllNewsByCategory(
@@ -127,6 +127,12 @@ export class NewsController {
     return { amount: news.length, news, swipeNews, mainNews, bottomNewsOne, bottomNewsTwo, bottomNewsThree };
   }
 
+  @Get('category')
+  @HttpCode(200)
+  async getByCategory(@Query() query: { pageNumber: number; pageSize: number; category: string }) {
+    return await this.newsQueryRepository.getNewsByCategory(query.pageNumber, query.pageSize, query.category);
+  }
+
   @Get('search')
   @HttpCode(200)
   async findBySearch(@Query() query: { searchNameTerm: string; pageNumber: number }) {
@@ -137,6 +143,12 @@ export class NewsController {
   @HttpCode(200)
   async countSearch(@Query() query: { searchNameTerm: string }) {
     return await this.newsQueryRepository.getCountSearch(query.searchNameTerm);
+  }
+
+  @Get(':id/votes')
+  @HttpCode(200)
+  async getNewsVotes(@Param('id') id: string) {
+    return await this.newsQueryRepository.getNewsVotes(id);
   }
 
   @Get(':id')

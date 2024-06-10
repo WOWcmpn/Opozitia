@@ -7,11 +7,13 @@ export class SendVoteUseCase {
   constructor(private readonly quizQueryRepository: QuizQueryRepository) {}
 
   async sendVote(userId: string, inputVote: quizVotes, newsId: string) {
-    const isExists = await this.quizQueryRepository.getVoteByUserId(userId);
+    const isExists = await this.quizQueryRepository.getVoteByUserId(userId, newsId);
     if (isExists) {
-      if (inputVote === isExists.vote) return;
+      if (inputVote === isExists.vote) {
+        return;
+      }
       if (inputVote !== isExists.vote) {
-        await this.quizQueryRepository.changeVote(userId, inputVote);
+        await this.quizQueryRepository.changeVote(newsId, userId, inputVote, isExists.vote);
         return;
       }
     } else {

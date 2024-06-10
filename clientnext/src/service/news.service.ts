@@ -2,7 +2,7 @@ import axios from "axios";
 import {
   IComments, ICrypto, ICurrency, IFullCrypto, IFullCurrency,
   IHomeNews, IMainCrypto, IMainNews,
-  INews, ISearchNews, ISingleNews, IWeather
+  INews, INewsVotes, IPollsNews, ISearchNews, ISingleNews, IWeather, quizVotes
 } from "@/types/types";
 
 axios.defaults.baseURL = "http://localhost:4000/"
@@ -56,6 +56,23 @@ export const NewsService = {
     return data
   },
 
+  async sendVote(vote: quizVotes, id: string) {
+    const {data} = await axios.post(`quiz/vote/${id}`, {inputVote: vote})
+    return data
+  },
+
+  async getNewsVotes(id: string): Promise<INewsVotes> {
+    const {data} = await axios.get(`news/${id}/votes`)
+    return data
+  },
+
+  async getNewsByCategory(pageNumber: number, pageSize: number, category?: string): Promise<IPollsNews[]> {
+    const { data } = await axios.get('news/category', { params: {
+      pageNumber, pageSize, category
+    }})
+    return data
+  },
+
   async getSearchNews(searchNameTerm?: string, pageNumber?: number): Promise<ISearchNews[]> {
     const {data} = await axios.get('news/search', {params: {
       searchNameTerm, pageNumber
@@ -78,7 +95,7 @@ export const NewsService = {
   },
 
   async getEconomyNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
-    const { data } = await axios.get("news/economika", {params: {
+    const { data } = await axios.get("news/economy", {params: {
         pageNumber, pageSize, sorting
       }});
     return data;
