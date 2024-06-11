@@ -26,11 +26,6 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
     });
     console.log(data);
   }
-  //yarefi3608@nweal.com
-  //yarefi3608
-  //yarefi3608fdfdfd
-  //yarefi3608fdfdfd
-
   // async function confirmationCode() {
   //   const data = await AuthService.registrationCode({
   //     confirmationCode: "bc0db192-49a5-47c5-883e-08474cd671ed",

@@ -235,6 +235,7 @@ export const Header = ({
             href="#"
             data-popup="#popup-vote"
             className="bottom-header__link"
+            onClick={newspopup}
           >
             <span className="bottom-header__link-news">Сообщить новость</span>
             {}

@@ -5,11 +5,12 @@ import Logo from "@/img/logo.png";
 import UploadFile from "@/img/icons/uploadfile.svg";
 import ImageFile from "@/img/icons/imagefile.png";
 import { AccountPopupProps } from "@/types/types";
-import { Select as SelectMenu, SelectItem } from "@nextui-org/react";
 import Link from "next/link";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const PopupNews = ({ onClick }: AccountPopupProps) => {
   const [option, setOption] = useState(0);
+  const [newsCategory, setNewsCategory] = useState<string>("Economy");
 
   const file = useRef<HTMLInputElement>(null);
   const popup = () => {
@@ -80,7 +81,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                     id="fileupload"
                     name="form[]"
                     ref={file}
-                    data-required
+                    data-required={''}
                     onChange={() => setOption(1)}
                     placeholder="Загрузить файл изображения"
                     accept="image/*"
@@ -95,32 +96,44 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   />
                 </label>
 
-                <div className=" bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black  py-[10px] pl-[15px] !text-[35px]">
-                  <SelectMenu
-                    placeholder="Категория новости"
-                    className="text-black !text-[35px] max-h-xs"
-                    size="lg"
-                    variant="bordered"
-                  >
-                    <SelectItem key={1} value="1">
-                      Экономика
-                    </SelectItem>
-                    <SelectItem key={2} value="2">
-                      Политика
-                    </SelectItem>
-                    <SelectItem key={3} value="3">
-                      Мировые новости
-                    </SelectItem>
-                    <SelectItem key={4} value="4">
-                      Бизнес
-                    </SelectItem>
-                  </SelectMenu>
+                <div className="bg-pink !border-[1px] !border-black border-solid rounded-[12px] text-black py-[10px] pl-[15px] !text-[35px]">
+                  <Select onValueChange={(category) => setNewsCategory(category)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Категория новости" />
+                    </SelectTrigger>
+                    <SelectContent className="text-black !text-[35px] max-h-xs">
+                      <SelectGroup>
+                        <SelectItem className="cursor-pointer" key={"Policy"} value="Policy">Политика</SelectItem>
+                        <SelectItem className="cursor-pointer" key={"Economy"} value="Economy">Экономика</SelectItem>
+                        <SelectItem className="cursor-pointer" key={"Business"} value="Business">Бизнес</SelectItem>
+                        <SelectItem className="cursor-pointer" key={"World"} value="World">Мировые новости</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {/*<SelectMenu*/}
+                  {/*  placeholder="Категория новости"*/}
+                  {/*  className="text-black !text-[35px] max-h-xs"*/}
+                  {/*  size="lg"*/}
+                  {/*  variant="bordered"*/}
+                  {/*>*/}
+                  {/*  <SelectItem key={1} value="1">*/}
+                  {/*    Экономика*/}
+                  {/*  </SelectItem>*/}
+                  {/*  <SelectItem key={2} value="2">*/}
+                  {/*    Политика*/}
+                  {/*  </SelectItem>*/}
+                  {/*  <SelectItem key={3} value="3">*/}
+                  {/*    Мировые новости*/}
+                  {/*  </SelectItem>*/}
+                  {/*  <SelectItem key={4} value="4">*/}
+                  {/*    Бизнес*/}
+                  {/*  </SelectItem>*/}
+                  {/*</SelectMenu>*/}
                 </div>
-
                 <input
                   type="text"
                   name="form[]"
-                  data-required
+                  data-required={''}
                   placeholder="Описание новости"
                   className="body-popup__input-password input !pb-[100px] !p-[20px]"
                 />

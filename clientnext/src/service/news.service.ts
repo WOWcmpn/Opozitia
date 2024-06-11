@@ -5,8 +5,8 @@ import {
   INews, INewsVotes, IPollsNews, ISearchNews, ISingleNews, IWeather, quizVotes
 } from "@/types/types";
 
-axios.defaults.baseURL = "http://localhost:4000/"
-// axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
+//axios.defaults.baseURL = "http://localhost:4000/"
+axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
   async getCryptoFull(id: string, pageSize: number): Promise<IFullCrypto[]> {
