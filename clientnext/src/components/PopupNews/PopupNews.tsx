@@ -10,6 +10,7 @@ import Link from "next/link";
 
 export const PopupNews = ({ onClick }: AccountPopupProps) => {
   const [option, setOption] = useState(0);
+
   const file = useRef<HTMLInputElement>(null);
   const popup = () => {
     onClick(0);

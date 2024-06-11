@@ -23,6 +23,13 @@ export class NewsRepository {
   }
 
   async updateFullImg() {
+    await this.newsRepository
+      .createQueryBuilder()
+      .update()
+      .set({ imgUrl: 'hq720.jpg' })
+      .where('imgUrl IS NULL')
+      .execute();
+
     return await this.newsRepository
       .createQueryBuilder()
       .update()

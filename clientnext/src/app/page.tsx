@@ -19,12 +19,14 @@ import { ICrypto, ICurrency, IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { AuthService } from "@/service/auth.service";
 import Link from 'next/link';
+import { PopupNews } from "@/components/PopupNews/PopupNews";
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
-  const [option, setOption] = useState(0);
-  const [login, setLogin] = useState(0);
-  const [search, setSearch] = useState(0);
+  const [option, setOption] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [search, setSearch] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [data, setData] = useState<IHomeNews | null>(null);
   const [currency, setCurrency] = useState<ICurrency[]>([]);
   const [crypto, setCrypto] = useState<ICrypto[]>([]);
@@ -68,7 +70,7 @@ export default function Home() {
               <button className="help__btn">x</button>
             </div>
           </div>
-          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} />
+          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
           <main className="page">
             <section className="page__main-block main-block">
               <div className="main-block__container">
@@ -416,16 +418,19 @@ export default function Home() {
             </div>
           </footer>
         </div>
-        <AnimatePresence>
-          {option == 1 && (
-            <PopupPolls onClick={setOption} classes="popup popup__active" />
-          )}
-        </AnimatePresence>
+        {/*<AnimatePresence>*/}
+        {/*  {option == 1 && (*/}
+        {/*    <PopupPolls onClick={setOption} classes="popup popup__active" />*/}
+        {/*  )}*/}
+        {/*</AnimatePresence>*/}
         <AnimatePresence>
           {login == 1 && <PopupAccount onClick={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {createNews == 1 && <PopupNews onClick={setCreateNews} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>

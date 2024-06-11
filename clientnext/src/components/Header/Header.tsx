@@ -178,6 +178,7 @@ export const Header = ({
                       href="#"
                       data-popup="#popup-vote"
                       className="menu-item menu-item-widgets bottom-header__link !py-[16px] !px-[65px] "
+                      onClick={newspopup}
                     >
                       <span className="text-[10px] !whitespace-nowrap">
                         Сообщить новость
