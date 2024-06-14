@@ -56,7 +56,7 @@ export const PopupPassword = ({
               <input
                 type="password"
                 name="form[]"
-                minLength={10}
+                minLength={5}
                 data-required
                 placeholder="Введите ваш пароль"
                 className="body-popup__input input"
@@ -66,24 +66,9 @@ export const PopupPassword = ({
               <button type="submit" className="body-popup__button">
                 Подтвердить
               </button>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </form>
           </div>
-          <div className="popup__bottom bottom-popup">
+          <div className="popup__bottom bottom-popup mt-20">
             <p className="bottom-popup__text">
               Забыли пароль? <a href="#">Нажмите сюда для восстановления</a>
             </p>

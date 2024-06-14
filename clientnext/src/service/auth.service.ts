@@ -1,4 +1,4 @@
-import { IConfirmationCode, ILoginUser, IRegisterUser } from "@/types/types";
+import { IConfirmationCode, ILogin, ILoginUser, IRegisterUser } from "@/types/types";
 import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import axios from "./axios";
 import inMemoryJWT from "./inMemoryJWT";
@@ -40,7 +40,7 @@ export const AuthService = {
     }
   },
 
-  async login(user: ILoginUser): Promise<AxiosResponse | null> {
+  async login(user: ILoginUser): Promise<ILogin | null> {
     try {
       const response: AxiosResponse = await axios.post("/auth/login", user);
       return response.data;

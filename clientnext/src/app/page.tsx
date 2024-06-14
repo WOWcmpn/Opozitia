@@ -57,12 +57,12 @@ export default function Home() {
       <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
-          option == 1 || login == 1 || search == 1 ? "overflow" : ""
+          option == 1 || login == 1 || search == 1 || createNews == 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            option == 1 || login == 1 || search == 1
+            option == 1 || login == 1 || search == 1 || createNews == 1
               ? " wrapper__popup blur"
               : ""
           }`}

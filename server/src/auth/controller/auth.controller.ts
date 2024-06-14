@@ -72,7 +72,7 @@ export class AuthController {
     await this.authWhiteListRepository.createToken(refreshToken, user.id);
     await this.authService.verifyToken(refreshToken);
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
-    return res.send({ accessToken: accessToken });
+    return res.send({ accessToken: accessToken, login: user.login });
   }
 
   @Post('logout')

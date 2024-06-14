@@ -9,13 +9,15 @@ import { PopupRegSend } from "./PopupRegSend";
 import { PopupRegistration } from "./PopupRegistration";
 import { AuthService } from "@/service/auth.service";
 import inMemoryJWT from "@/service/inMemoryJWT";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const PopupAccount = ({ onClick }: AccountPopupProps) => {
-  const [option, setOption] = useState(1);
-  const [email, setEmail] = useState("");
-  const [login, setLogin] = useState("");
-  const [pass, setPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const [option, setOption] = useState<number>(1);
+  const [email, setEmail] = useState<string>("");
+  const [login, setLogin] = useState<string>("");
+  const [pass, setPass] = useState<string>("");
+  const [confirmPass, setConfirmPass] = useState<string>("");
 
   async function register() {
     const data = await AuthService.register({
@@ -36,13 +38,20 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
   // confirmationCode();
 
   async function loginToAcc() {
-    const data = await AuthService.login({
-      email,
-      password: pass,
-    });
-    console.log(data);
-
-    inMemoryJWT.setToken(data.accessToken);
+    try {
+      const data = await AuthService.login({
+        email,
+        password: pass,
+      });
+      if(data) {
+        inMemoryJWT.setToken(data.accessToken);
+        toast.success(`Добро пожаловать, ${data?.login}`)
+      } else {
+        toast.error('Неверные логин или пароль')
+      }
+    } catch (err) {
+      console.warn('Login error: ', err);
+    }
   }
   console.log(inMemoryJWT.getToken());
   return (
