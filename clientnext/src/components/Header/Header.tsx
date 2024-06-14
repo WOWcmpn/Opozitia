@@ -76,7 +76,7 @@ export const Header = ({
           </Link>
           <div className="top-header__right">
             <div className="top-header__actions">
-              <Link href="/polls" className="top-header__link link-top-header">
+              <Link href="/polls" className="top-header__link link-top-header link-top-header-offer-news">
                 <Image src={Message} alt="Icon" />
               </Link>
               <Link
@@ -163,12 +163,12 @@ export const Header = ({
                     </Link>
                   </li>
                   <li>
-                    <Link className="menu-item menu__link" href={'business'}>
+                    <Link className="menu-item menu__link" href={'/business'}>
                       БИЗНЕС
                     </Link>
                   </li>
                   <li>
-                    <Link className="menu-item menu__link" href={'world'}>
+                    <Link className="menu-item menu__link" href={'/world'}>
                       МИРОВЫЕ НОВОСТИ
                     </Link>
                   </li>
@@ -177,7 +177,7 @@ export const Header = ({
                     <Link
                       href="#"
                       data-popup="#popup-vote"
-                      className="menu-item menu-item-widgets bottom-header__link !py-[16px] !px-[65px] "
+                      className="menu-item menu-item-widgets bottom-header__link menubox-offer-news !py-[16px] !px-[65px] "
                       onClick={newspopup}
                     >
                       <span className="text-[10px] !whitespace-nowrap">
