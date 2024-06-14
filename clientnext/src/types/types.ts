@@ -1,5 +1,19 @@
 import { StaticImageData } from "next/image";
 
+export interface ICreateNews {
+  file: any;
+  title: string;
+  newsCategory: string;
+  description: string;
+}
+
+// export enum newsCategory {
+//   Economy = 'Economy',
+//   Policy = 'Policy',
+//   Business = 'Business',
+//   World = 'World',
+// }
+
 export interface INewsVotes {
   title: string
   votePositive: number

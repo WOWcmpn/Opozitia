@@ -1,6 +1,6 @@
 import { BlockContentProps } from "@/types/types";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Link from 'next/link';
 
 export const BlockContent = ({
@@ -12,8 +12,9 @@ export const BlockContent = ({
   link2,
   link3,
 }: BlockContentProps) => {
-  let isUrl = false;
-  if (img.substring(0, 4) == "http") isUrl = true;
+  const [isUrl, setIsUrl] = useState<boolean>(false);
+
+  if (img.startsWith('http')) setIsUrl(true);
 
   return (
     <div className="block-main_wrapper ">

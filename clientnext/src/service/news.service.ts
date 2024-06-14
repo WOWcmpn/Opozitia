@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
-  IComments, ICrypto, ICurrency, IFullCrypto, IFullCurrency,
+  IComments, ICreateNews, ICrypto, ICurrency, IFullCrypto, IFullCurrency,
   IHomeNews, IMainCrypto, IMainNews,
   INews, INewsVotes, IPollsNews, ISearchNews, ISingleNews, IWeather, quizVotes
 } from "@/types/types";
 
-//axios.defaults.baseURL = "http://localhost:4000/"
-axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
+axios.defaults.baseURL = "http://localhost:4000/"
+//axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
   async getCryptoFull(id: string, pageSize: number): Promise<IFullCrypto[]> {
@@ -58,6 +58,14 @@ export const NewsService = {
 
   async sendVote(vote: quizVotes, id: string) {
     const {data} = await axios.post(`quiz/vote/${id}`, {inputVote: vote})
+    return data
+  },
+
+  async createNews(inputData: ICreateNews): Promise<string> {
+    const {data} = await axios.post('news/create-news', {file: inputData.file,
+      title: inputData.title, description: inputData.description, category: inputData.newsCategory}, {headers: {
+        'Content-Type': ['multipart/form-data', 'string']
+      }})
     return data
   },
 
