@@ -5,9 +5,8 @@ import Message from "@/img/icons/message.svg";
 import Logo from "@/img/logo.png";
 import Link from "next/link";
 import { HeaderProps, IWeather } from "@/types/types";
-import { PopupPolls } from "../PopupPolls/PopupPolls";
-import { PopupNews } from "@/components/PopupNews/PopupNews";
 import { NewsService } from "@/service/news.service";
+import { signOut, useSession } from "next-auth/react";
 
 export const Header = ({
   className,
@@ -19,6 +18,7 @@ export const Header = ({
   const [burger, setBurger] = useState(false);
   const [weather, setWeather] = useState<IWeather>();
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
+  const session = useSession()
 
   useEffect(() => {
     async function loadUtils() {
@@ -46,19 +46,19 @@ export const Header = ({
     }
   };
 
-  const loginpopup = () => {
+  const loginPopup = () => {
     if (onLogin !== undefined) {
       onLogin(1);
     }
   };
 
-  const searchpopup = () => {
+  const searchPopup = () => {
     if (onSearch !== undefined) {
       onSearch(1);
     }
   };
 
-  const newspopup = () => {
+  const newsPopup = () => {
     if (onNews !== undefined) {
       onNews(1);
     }
@@ -76,14 +76,14 @@ export const Header = ({
           </Link>
           <div className="top-header__right">
             <div className="top-header__actions">
-              <Link href="/polls" className="top-header__link link-top-header link-top-header-offer-news">
+              <Link href={"/polls"} className="top-header__link link-top-header link-top-header-offer-news">
                 <Image src={Message} alt="Icon" />
               </Link>
               <Link
                 data-popup="#search"
                 href="#"
                 className="top-header__link-search link-top-header"
-                onClick={searchpopup}
+                onClick={searchPopup}
               >
                 <Image
                   width={20}
@@ -92,22 +92,25 @@ export const Header = ({
                   alt="Icon"
                 />
               </Link>
-              <Link
-                data-popup="#popup-login"
-                href=""
-                className="top-header__link-login link-top-header"
-                onClick={loginpopup}
-              >
-                <picture>
-                  <source srcSet="img/icons/login.webp" type="image-webp" />
-                  <Image
-                    width={55}
-                    height={50}
-                    src="/img/icons/login.png"
-                    alt="Icon"
-                  />
-                </picture>
-              </Link>
+              {session?.data ? (
+                <Link href={'#'} onClick={() => signOut({callbackUrl: '/'})} >
+                  Sign out
+                </Link>
+              ) : (
+                <Link
+                  data-popup="#popup-login"
+                  href=""
+                  className="top-header__link-login link-top-header"
+                  onClick={loginPopup}
+                >
+                    <Image
+                      width={55}
+                      height={50}
+                      src="/img/icons/login.png"
+                      alt="Icon"
+                    />
+                </Link>
+              )}
             </div>
             <div className="top-header__weather weather-header">
               <Link href={'/widgets'} className="weather-header__info">
@@ -145,7 +148,7 @@ export const Header = ({
                 </div>
                 <ul className={`menubox ${burger ? "active-burger" : ""}`}>
                   <li>
-                    <Link href="home" className="top-header__logo">
+                    <Link href={"home"} className="top-header__logo">
                       <picture>
                         <source srcSet="img/logo.webp" type="image/webp" />
                         <Image src={Logo} alt="Logo" />
@@ -178,7 +181,7 @@ export const Header = ({
                       href="#"
                       data-popup="#popup-vote"
                       className="menu-item menu-item-widgets bottom-header__link menubox-offer-news !py-[16px] !px-[65px] "
-                      onClick={newspopup}
+                      onClick={newsPopup}
                     >
                       <span className="text-[10px] !whitespace-nowrap">
                         Сообщить новость
@@ -209,22 +212,22 @@ export const Header = ({
             <nav className="menu__body">
               <ul className="menu__list">
                 <li className="menu__item">
-                  <Link href="/economy" className="menu__link">
+                  <Link href={"/economy"} className="menu__link">
                     ЭКОНОМИКА
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link href="/policy" className="menu__link">
+                  <Link href={"/policy"} className="menu__link">
                     ПОЛИТИКА
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link href="/business" className="menu__link">
+                  <Link href={"/business"} className="menu__link">
                     БИЗНЕС
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link href="/world" className="menu__link">
+                  <Link href={"/world"} className="menu__link">
                     МИРОВЫЕ НОВОСТИ
                   </Link>
                 </li>
@@ -235,7 +238,7 @@ export const Header = ({
             href="#"
             data-popup="#popup-vote"
             className="bottom-header__link"
-            onClick={newspopup}
+            onClick={newsPopup}
           >
             <span className="bottom-header__link-news">Сообщить новость</span>
             {}

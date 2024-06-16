@@ -10,14 +10,12 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import { BlockContent } from "@/components/BlockContent/BlockContent";
 import { Header } from "@/components/Header/Header";
-import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
 import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
 import { ICrypto, ICurrency, IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
-import { AuthService } from "@/service/auth.service";
 import Link from 'next/link';
 import { PopupNews } from "@/components/PopupNews/PopupNews";
 import { ToastContainer } from "react-toastify";
@@ -49,8 +47,6 @@ export default function Home() {
 
     getData();
   }, []);
-
-  //const link1 = data?.bottomNewsOne.map((n) => n.title);
 
   return (
     <NextUIProvider>

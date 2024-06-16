@@ -45,7 +45,7 @@ export const PopupRegistration = ({
             <div className="body-popup__top">
               <h3 className="body-popup__title">Регистрация</h3>
               <p className="body-popup__text body-popup__text_register">
-                Для регистрации введите e-mail или воспользуйтесь сервисами ниже
+                Для регистрации введите e-mail
               </p>
             </div>
             <form
@@ -65,6 +65,7 @@ export const PopupRegistration = ({
                 data-required="email"
                 placeholder="E-mail@mail.ru"
                 className="body-popup__input input"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -76,6 +77,7 @@ export const PopupRegistration = ({
                   type="checkbox"
                   value="1"
                   name="form[]"
+                  required
                 />
                 <label htmlFor="c_3" className="checkbox__label">
                   <span className="checkbox__text">
@@ -88,33 +90,33 @@ export const PopupRegistration = ({
                 Продолжить
               </button>
             </form>
-            <ul className="body-popup__list-social">
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc1} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a
-                  href="#"
-                  className="body-popup__link-social link-social link-social_facebook"
-                >
-                  <Image src={Soc2} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc3} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc4} alt="icon" />
-                </a>
-              </li>
-            </ul>
+            {/*<ul className="body-popup__list-social">*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc1} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a*/}
+            {/*      href="#"*/}
+            {/*      className="body-popup__link-social link-social link-social_facebook"*/}
+            {/*    >*/}
+            {/*      <Image src={Soc2} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc3} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc4} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*</ul>*/}
           </div>
-          <div className="popup__bottom bottom-popup">
+          <div className="popup__bottom bottom-popup mt-6">
             <p className="bottom-popup__text">
               Уже есть аккаунт?{" "}
               <a

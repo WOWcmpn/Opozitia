@@ -3,6 +3,7 @@ import { StaticImageData } from "next/image";
 export interface ILogin {
   accessToken: string
   login: string
+  email: string
 }
 
 export interface ICreateNews {
@@ -378,6 +379,13 @@ export type LoginPopupProps = {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
 };
 
+export type ConfirmCodeProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setInputConfirmCode: React.Dispatch<React.SetStateAction<string>>
+  email: string
+  confirm: () => void
+};
+
 export type PassPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
   setOption: React.Dispatch<React.SetStateAction<number>>;
@@ -395,7 +403,6 @@ export type RegisterEmailPopupProps = {
 
 export type RegisterPassPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
-  setOption: React.Dispatch<React.SetStateAction<number>>;
   login: string;
   setLogin: React.Dispatch<React.SetStateAction<string>>;
   pass: string;

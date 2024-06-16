@@ -20,7 +20,7 @@ axios.interceptors.request.use(
 );
 
 export const AuthService = {
-  async register(user: IRegisterUser): Promise<AxiosResponse | null> {
+  async register(user: IRegisterUser): Promise<{code: string} | null> {
     try {
       const response: AxiosResponse = await axios.post("/auth/registration-password", user);
       return response.data;

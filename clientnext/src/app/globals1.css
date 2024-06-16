@@ -771,7 +771,7 @@ body::after {
 }
 
 .popup__content_first {
-  min-height: 700px;
+  min-height: 580px;
 }
 
 .popup__content_search {
