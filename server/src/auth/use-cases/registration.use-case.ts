@@ -31,7 +31,8 @@ export class RegistrationUseCase {
         userModel.email,
         user.emailConfirmation.confirmationCode,
       );
-      return await this.usersRepository.createUser(user);
+      await this.usersRepository.createUser(user);
+      return { code: user.emailConfirmation.confirmationCode };
     }
   }
 }

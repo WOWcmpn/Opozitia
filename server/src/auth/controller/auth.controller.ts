@@ -34,7 +34,7 @@ export class AuthController {
   ) {}
 
   @Post('registration-password')
-  @HttpCode(204)
+  @HttpCode(201)
   async registration(@Body() userModel: InputUserModel) {
     return await this.registrationUseCase.createUserForRegistration(userModel);
   }
@@ -72,7 +72,7 @@ export class AuthController {
     await this.authWhiteListRepository.createToken(refreshToken, user.id);
     await this.authService.verifyToken(refreshToken);
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
-    return res.send({ accessToken: accessToken });
+    return res.send({ accessToken: accessToken, login: user.login, email: user.email });
   }
 
   @Post('logout')

@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "@/img/logo.png";
 import { LoginPopupProps, PassPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const PopupPassword = ({
   onClick: onOption,
@@ -24,12 +25,12 @@ export const PopupPassword = ({
       <div className="popup__wrapper">
         <div className="popup_show  content-popup popup__login">
           <div className="popup__top">
-            <a href="#" className="popup__logo">
+            <Link href="#" className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
-            </a>
+            </Link>
             <button
               data-close
               type="button"
@@ -56,7 +57,7 @@ export const PopupPassword = ({
               <input
                 type="password"
                 name="form[]"
-                minLength={10}
+                minLength={5}
                 data-required
                 placeholder="Введите ваш пароль"
                 className="body-popup__input input"
@@ -66,24 +67,9 @@ export const PopupPassword = ({
               <button type="submit" className="body-popup__button">
                 Подтвердить
               </button>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </form>
           </div>
-          <div className="popup__bottom bottom-popup">
+          <div className="popup__bottom bottom-popup mt-20">
             <p className="bottom-popup__text">
               Забыли пароль? <a href="#">Нажмите сюда для восстановления</a>
             </p>

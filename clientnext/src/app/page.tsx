@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,16 +10,16 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import { BlockContent } from "@/components/BlockContent/BlockContent";
 import { Header } from "@/components/Header/Header";
-import { PopupPolls } from "@/components/PopupPolls/PopupPolls";
 import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { NextUIProvider } from "@nextui-org/react";
 import { Search } from "@/components/Search/Search";
 import { ICrypto, ICurrency, IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
-import { AuthService } from "@/service/auth.service";
 import Link from 'next/link';
 import { PopupNews } from "@/components/PopupNews/PopupNews";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -48,18 +48,17 @@ export default function Home() {
     getData();
   }, []);
 
-  //const link1 = data?.bottomNewsOne.map((n) => n.title);
-
   return (
     <NextUIProvider>
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
-          option == 1 || login == 1 || search == 1 ? "overflow" : ""
+          option == 1 || login == 1 || search == 1 || createNews == 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            option == 1 || login == 1 || search == 1
+            option == 1 || login == 1 || search == 1 || createNews == 1
               ? " wrapper__popup blur"
               : ""
           }`}

@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "@/img/logo.png";
 import { LoginPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const PopupRegSend = ({ onClick: onOption }: LoginPopupProps) => {
   return (
@@ -43,9 +44,9 @@ export const PopupRegSend = ({ onClick: onOption }: LoginPopupProps) => {
             <div className="popup__bottom bottom-popup">
               <p className="bottom-popup__text bottom-popup__text_ok">
                 Ничего не пришло?{" "}
-                <a className="bottom-popup__link-ok" href="#">
+                <Link className="bottom-popup__link-ok" href="#">
                   Нажмите сюда, чтобы прислать заново
-                </a>
+                </Link>
               </p>
             </div>
           </div>

@@ -12,8 +12,7 @@ export const LatestNews = ({
   category,
 }: LatestNewsProps) => {
   let isUrl = false;
-
-  if (img.substring(0, 4) == "http") isUrl = true;
+  if (img.startsWith("http")) isUrl = true;
 
   return (
     <div className="latest-news__item">

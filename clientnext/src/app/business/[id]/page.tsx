@@ -101,8 +101,6 @@ export default function NewsId({params} : {params: {id: string}}) {
     loadUtils()
   }, [news?.fullImgUrl, news?.imgUrl]);
 
-  const paragraphs = news?.description.split('.').filter(paragraph => paragraph.trim() !== '');
-
   return (
     <div className="wrapper">
       <div
@@ -217,9 +215,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                     {news?.title}
                   </h2>
                   <div className="content-news-single__text">
-                    {paragraphs?.map((paragraph, index) => (
-                      <p key={index} className="text" >{`${paragraph}.`}</p>
-                    ))}
+                    <p className="indent-8 text" >{news?.description}</p>
                   </div>
                   <div className="content-news-single__bottom">
                     <span className="content-news-single__time">{news?.createdAtTime}</span>

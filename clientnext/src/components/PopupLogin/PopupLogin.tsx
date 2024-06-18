@@ -2,12 +2,9 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Logo from "@/img/logo.png";
-import Soc1 from "@/img/social/01.svg";
-import Soc2 from "@/img/social/02.svg";
-import Soc3 from "@/img/social/03.svg";
-import Soc4 from "@/img/social/04.svg";
 import { LoginPopupProps } from "@/types/types";
 import { AuthService } from "@/service/auth.service";
+import Link from "next/link";
 
 export const PopupLogin = ({
   onClick: onOption,
@@ -32,12 +29,12 @@ export const PopupLogin = ({
       <div className="popup__wrapper">
         <div className="popup_show  content-popup popup__content_first popup__login">
           <div className="popup__top">
-            <a href="#" className="popup__logo">
+            <Link href="#" className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
-            </a>
+            </Link>
             <button
               data-close
               type="button"
@@ -80,6 +77,7 @@ export const PopupLogin = ({
                   type="checkbox"
                   value="1"
                   name="form[]"
+                  required
                 />
                 <label htmlFor="c_1" className="checkbox__label">
                   <span className="checkbox__text">
@@ -88,35 +86,36 @@ export const PopupLogin = ({
                   </span>
                 </label>
               </div>
+              <br/>
               <button type="submit" className="body-popup__button">
                 Продолжить
               </button>
             </form>
-            <ul className="body-popup__list-social">
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc1} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a
-                  href="#"
-                  className="body-popup__link-social link-social link-social_facebook"
-                >
-                  <Image src={Soc2} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc3} alt="icon" />
-                </a>
-              </li>
-              <li className="body-popup__item-social">
-                <a href="#" className="body-popup__link-social link-social">
-                  <Image src={Soc4} alt="icon" />
-                </a>
-              </li>
-            </ul>
+            {/*<ul className="body-popup__list-social">*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc1} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a*/}
+            {/*      href="#"*/}
+            {/*      className="body-popup__link-social link-social link-social_facebook"*/}
+            {/*    >*/}
+            {/*      <Image src={Soc2} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc3} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*  <li className="body-popup__item-social">*/}
+            {/*    <a href="#" className="body-popup__link-social link-social">*/}
+            {/*      <Image src={Soc4} alt="icon" />*/}
+            {/*    </a>*/}
+            {/*  </li>*/}
+            {/*</ul>*/}
           </div>
           <div className="popup__bottom bottom-popup">
             <p className="bottom-popup__text">

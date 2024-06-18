@@ -7,16 +7,42 @@ import ImageFile from "@/img/icons/imagefile.png";
 import { AccountPopupProps } from "@/types/types";
 import Link from "next/link";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { NewsService } from "@/service/news.service";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const PopupNews = ({ onClick }: AccountPopupProps) => {
-  const [option, setOption] = useState(0);
-  const [newsCategory, setNewsCategory] = useState<string>("Economy");
+  const [option, setOption] = useState<number>(0);
+  const [title, setTitle] = useState<string>('');
+  const [file, setFile] = useState<File>();
+  const [newsCategory, setNewsCategory] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
-  const file = useRef<HTMLInputElement>(null);
+  const fileTest = useRef<HTMLInputElement>(null);
   const popup = () => {
     onClick(0);
   };
-  console.log(file.current);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if(!file) return
+    try {
+      const data = new FormData()
+      data.set('file', file)
+      const res = await NewsService.createNews({ file, title, newsCategory, description })
+      if(res) {
+        console.log('ok');
+        toast.success('Комментарий был успешно создан')
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+      }
+    } catch (err) {
+      toast.error('Ваши данные невалидны.')
+      console.warn('PopupNews err ', err);
+    }
+  }
+
   return (
     <motion.div
       id="popup-vote"
@@ -28,8 +54,8 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
     >
       <div className="popup__wrapper">
         <div className=" popup_show popup__content_vote content-popup !px-[80px] !pt-[30px] !pb-[5px]">
-          <div className="popup__top  !w-[100%]">
-            <Link href="#" className="popup__logo">
+          <div className="popup__top !w-[100%]">
+            <Link href={'/'} className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
@@ -56,6 +82,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                 data-dev
                 data-popup-message="#popup-registration-recovery"
                 className="body-popup__form body-popup__form_code !gap-[25px]"
+                onSubmit={onSubmit}
               >
                 <input
                   type="text"
@@ -63,6 +90,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   placeholder="Заголовок"
                   className="body-popup__input-name input !p-[20px]"
                   required
+                  onChange={e => setTitle(e.target.value)}
                 />
                 <label
                   htmlFor="file"
@@ -71,8 +99,8 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   }`}
                 >
                   <span className="cursor-pointer text-inherit">
-                    {file.current?.files && option == 1
-                      ? file.current.files[0].name
+                    {fileTest.current?.files && option == 1
+                      ? fileTest.current.files[0].name
                       : "Загрузить файл изображения"}
                   </span>
 
@@ -80,12 +108,16 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                     type="file"
                     id="fileupload"
                     name="form[]"
-                    ref={file}
+                    ref={fileTest}
                     data-required={''}
-                    onChange={() => setOption(1)}
+                    onChange={(e) => {
+                      setOption(1);
+                      setFile(e.target.files?.[0])
+                    }}
                     placeholder="Загрузить файл изображения"
                     accept="image/*"
                     className="absolute opacity-0 cursor-pointer"
+                    required
                   />
                   <Image
                     src={option == 0 ? UploadFile : ImageFile}
@@ -98,37 +130,18 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
 
                 <div className="bg-pink !border-[1px] !border-black border-solid rounded-[12px] text-black py-[10px] pl-[15px] !text-[35px]">
                   <Select onValueChange={(category) => setNewsCategory(category)}>
-                    <SelectTrigger>
+                    <SelectTrigger className='text-[23px] w-full'>
                       <SelectValue placeholder="Категория новости" />
                     </SelectTrigger>
-                    <SelectContent className="text-black !text-[35px] max-h-xs">
+                    <SelectContent className="text-black max-h-xs z-[10000] bg-white rounded border-4 border-b-black">
                       <SelectGroup>
-                        <SelectItem className="cursor-pointer" key={"Policy"} value="Policy">Политика</SelectItem>
-                        <SelectItem className="cursor-pointer" key={"Economy"} value="Economy">Экономика</SelectItem>
-                        <SelectItem className="cursor-pointer" key={"Business"} value="Business">Бизнес</SelectItem>
-                        <SelectItem className="cursor-pointer" key={"World"} value="World">Мировые новости</SelectItem>
+                        <SelectItem className="cursor-pointer text-[18px]" key={"Policy"} value="Policy">Политика</SelectItem>
+                        <SelectItem className="cursor-pointer text-[18px]" key={"Economy"} value="Economy">Экономика</SelectItem>
+                        <SelectItem className="cursor-pointer text-[18px]" key={"Business"} value="Business">Бизнес</SelectItem>
+                        <SelectItem className="cursor-pointer text-[18px]" key={"World"} value="World">Мировые новости</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                  {/*<SelectMenu*/}
-                  {/*  placeholder="Категория новости"*/}
-                  {/*  className="text-black !text-[35px] max-h-xs"*/}
-                  {/*  size="lg"*/}
-                  {/*  variant="bordered"*/}
-                  {/*>*/}
-                  {/*  <SelectItem key={1} value="1">*/}
-                  {/*    Экономика*/}
-                  {/*  </SelectItem>*/}
-                  {/*  <SelectItem key={2} value="2">*/}
-                  {/*    Политика*/}
-                  {/*  </SelectItem>*/}
-                  {/*  <SelectItem key={3} value="3">*/}
-                  {/*    Мировые новости*/}
-                  {/*  </SelectItem>*/}
-                  {/*  <SelectItem key={4} value="4">*/}
-                  {/*    Бизнес*/}
-                  {/*  </SelectItem>*/}
-                  {/*</SelectMenu>*/}
                 </div>
                 <input
                   type="text"
@@ -136,6 +149,8 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   data-required={''}
                   placeholder="Описание новости"
                   className="body-popup__input-password input !pb-[100px] !p-[20px]"
+                  required
+                  onChange={e => setDescription(e.target.value)}
                 />
                 <button
                   type="submit"

@@ -2,7 +2,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import SearchIMG from "@/img/icons/search-black.svg";
 import { SearchProps } from "@/types/types";
-import { redirect } from "next/navigation";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 

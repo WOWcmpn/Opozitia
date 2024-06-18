@@ -3,15 +3,13 @@ import {
   Controller,
   Get,
   HttpCode,
-  // MaxFileSizeValidator,
   Param,
-  // ParseFilePipe,
   Post,
   Query,
   Req,
-  // UploadedFile,
+  UploadedFile,
   UseGuards,
-  // UseInterceptors,
+  UseInterceptors,
 } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
@@ -19,10 +17,9 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateNews, newsCategory } from '../../base/types/newsModels';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
-// import { FileInterceptor } from '@nestjs/platform-express';
-// import { fileStorage } from '../../base/helpers/storage';
-//ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse,
-import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { fileStorage } from '../../base/helpers/storage';
+import { ApiTags, ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
@@ -145,6 +142,30 @@ export class NewsController {
     return await this.newsQueryRepository.getCountSearch(query.searchNameTerm);
   }
 
+  @Post('create-news')
+  // @UseGuards(AccessTokenGuard)
+  @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
+  @ApiResponse({ status: 201, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'Create news by user' })
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data', 'string')
+  @ApiBody({ type: CreateNews })
+  @HttpCode(201)
+  async createNews(
+    @UploadedFile()
+    file: Express.Multer.File,
+    @Body() inputData: CreateNews,
+  ) {
+    return await this.createNewsUseCase.createNews(
+      inputData.title,
+      inputData.description,
+      inputData.category,
+      file.filename,
+    );
+  }
+
   @Get(':id/votes')
   @HttpCode(200)
   async getNewsVotes(@Param('id') id: string) {
@@ -162,30 +183,6 @@ export class NewsController {
   async getComments(@Param('id') id: string, @Query() query: { pageNumber: number }) {
     return await this.newsQueryRepository.getComments(id, query.pageNumber);
   }
-
-  // @Post('create-news')
-  // @UseGuards(AccessTokenGuard)
-  // @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
-  // @ApiResponse({ status: 201, description: 'Success' })
-  // @ApiResponse({ status: 400, description: 'Bad Request' })
-  // @ApiResponse({ status: 401, description: 'Unauthorized' })
-  // @ApiOperation({ summary: 'Create news by user' })
-  // @ApiBearerAuth()
-  // @ApiConsumes('multipart/form-data', 'string')
-  // @ApiBody({ type: CreateNews })
-  // @HttpCode(201)
-  // async createNews(
-  //   @UploadedFile(new ParseFilePipe({ validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 })] }))
-  //   file: Express.Multer.File,
-  //   @Body() createNewsTest: CreateNews,
-  // ) {
-  //   return await this.createNewsUseCase.createNews(
-  //     createNewsTest.title,
-  //     createNewsTest.description,
-  //     createNewsTest.category,
-  //     file.filename,
-  //   );
-  // }
 
   @Post(':newsId/comments')
   @UseGuards(AccessTokenGuard)

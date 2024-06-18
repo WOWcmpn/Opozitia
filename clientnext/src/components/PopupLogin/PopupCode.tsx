@@ -1,25 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "@/img/logo.png";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { LoginPopupProps } from "@/types/types";
-
-function testJump(x: any) {
-  var ml = ~~x.getAttribute("maxlength");
-  if (ml && x.value.length >= ml) {
-    do {
-      x = x.nextSibling;
-    } while (x && !/text/.test(x.type));
-    if (x && /text/.test(x.type)) {
-      x.focus();
-    }
-  }
-}
+import { ConfirmCodeProps, LoginPopupProps } from "@/types/types";
+import Link from "next/link";
 
 export const PopupCode = ({
   onClick: onOption,
-  setOption,
-}: LoginPopupProps) => {
+  setInputConfirmCode,
+  email,
+  confirm
+}: ConfirmCodeProps) => {
+  const [first, setFirst] = useState<string>('');
+  const [second, setSecond] = useState<string>('');
+  const [third, setThird] = useState<string>('');
+  const [fourth, setFourth] = useState<string>('');
+  const [fifth, setFifth] = useState<string>('');
+  const [sixth, setSixth] = useState<string>('');
+
   return (
     <motion.div
       id="popup-registration-code"
@@ -33,12 +31,12 @@ export const PopupCode = ({
       <div className="popup__wrapper">
         <div className="popup_show  content-popup">
           <div className="popup__top">
-            <a href="#" className="popup__logo">
+            <Link href={'/'} className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
-            </a>
+            </Link>
             <button
               data-close
               type="button"
@@ -50,7 +48,7 @@ export const PopupCode = ({
             <div className="body-popup__top">
               <h3 className="body-popup__title">Введите код</h3>
               <p className="body-popup__text">
-                На E-mail@mail.ru отправлен одноразовый код
+                На {email} отправлен одноразовый код
               </p>
             </div>
             <form
@@ -60,7 +58,7 @@ export const PopupCode = ({
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                setOption(4);
+                confirm()
               }}
             >
               <div className="body-popup__wrap-input">
@@ -69,7 +67,7 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit1"
-                  onInput={(e) => testJump(e.target)}
+                  onChange={(e) => setFirst(e.target.value)}
                   required
                 />
                 <input
@@ -77,7 +75,7 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit2"
-                  onInput={(e) => testJump(e.target)}
+                  onChange={(e) => setSecond(e.target.value)}
                   required
                 />
                 <input
@@ -85,7 +83,7 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit3"
-                  onInput={(e) => testJump(e.target)}
+                  onChange={(e) => setThird(e.target.value)}
                   required
                 />
                 <input
@@ -93,7 +91,7 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit4"
-                  onInput={(e) => testJump(e.target)}
+                  onChange={(e) => setFourth(e.target.value)}
                   required
                 />
                 <input
@@ -101,7 +99,7 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit5"
-                  onInput={(e) => testJump(e.target)}
+                  onChange={(e) => setFifth(e.target.value)}
                   required
                 />
                 <input
@@ -109,33 +107,25 @@ export const PopupCode = ({
                   maxLength={1}
                   className="body-popup__block "
                   name="digit6"
+                  onChange={(e) =>  setSixth(e.target.value)}
                   required
                 />
               </div>
-              <button type="submit" className="body-popup__button">
+              <button
+                type="submit"
+                className="body-popup__button"
+                onClick={() => setInputConfirmCode(first + second + third + fourth + fifth + sixth)}
+              >
                 Продолжить
               </button>
             </form>
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <div className="popup__bottom bottom-popup">
+          <div className="popup__bottom bottom-popup mt-6">
             <p className="bottom-popup__text">
               Код не пришел?{" "}
-              <a data-popup="#popup-login" href="#">
+              <Link data-popup="#popup-login" href="#">
                 Нажмите сюда, чтобы прислать заново
-              </a>
+              </Link>
             </p>
           </div>
         </div>

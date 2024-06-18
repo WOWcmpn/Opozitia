@@ -1,5 +1,5 @@
 const inMemoryJWTService = () => {
-  let inMemoryJWT = "";
+  let inMemoryJWT: string | null = null;
 
   const getToken = () => inMemoryJWT;
 

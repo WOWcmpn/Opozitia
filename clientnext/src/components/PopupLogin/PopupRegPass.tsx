@@ -3,10 +3,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import Logo from "@/img/logo.png";
 import { LoginPopupProps, RegisterPassPopupProps } from "@/types/types";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const PopupRegPass = ({
   onClick: onOption,
-  setOption,
   login,
   setLogin,
   pass,
@@ -45,7 +46,7 @@ export const PopupRegPass = ({
             <div className="body-popup__top body-popup__top_password">
               <h3 className="body-popup__title">Придумайте имя и пароль</h3>
               <p className="body-popup__text">
-                Пароль должен содержать хотя бы 10 символов
+                Пароль должен содержать хотя бы 5 символов
               </p>
             </div>
             <form
@@ -56,8 +57,12 @@ export const PopupRegPass = ({
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                register();
-                setOption(5);
+                if(pass === confirmPass) {
+                  register();
+                  // setOption(5);
+                } else {
+                  toast.error('Введенные вами пароли не совпадают')
+                }
               }}
             >
               <input
@@ -73,10 +78,11 @@ export const PopupRegPass = ({
                 type="password"
                 id="pass"
                 name="form[]"
-                minLength={10}
+                minLength={5}
                 data-required
                 placeholder="Введите ваш пароль"
                 className="body-popup__input-password input"
+                required
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
               />
@@ -84,10 +90,11 @@ export const PopupRegPass = ({
                 type="password"
                 id="pass2"
                 name="form[]"
-                minLength={10}
+                minLength={5}
                 data-required
                 placeholder="Повторите введенный пароль"
                 className="body-popup__input-password input"
+                required
                 value={confirmPass}
                 onChange={(e) => setConfirmPass(e.target.value)}
               />
