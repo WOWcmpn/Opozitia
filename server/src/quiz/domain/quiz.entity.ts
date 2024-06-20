@@ -18,5 +18,5 @@ export class QuizEntity extends BaseEntity {
   vote: quizVotes;
 
   @Column()
-  userId: string;
+  login: string;
 }

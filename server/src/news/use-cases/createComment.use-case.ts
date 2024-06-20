@@ -13,8 +13,8 @@ export class CreateCommentUseCase {
     private readonly newsQueryRepo: NewsQueryRepository,
   ) {}
 
-  async create(newsId: string, text: string, userId: string) {
-    const user = await this.usersQueryRepo.getUserById(userId);
+  async create(newsId: string, text: string, login: string) {
+    const user = await this.usersQueryRepo.getUserByLogin(login);
     if (!user) throw UnauthorizedException;
     const news = await this.newsQueryRepo.getNewsById(newsId);
     if (!news) throw new NotFoundException();

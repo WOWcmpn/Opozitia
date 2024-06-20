@@ -10,10 +10,10 @@ export class ChangeProfileUseCase {
     private readonly usersRepo: UsersRepository,
   ) {}
 
-  async changeInformation(userId: string, data: ChangeProfile) {
-    const user = await this.usersQueryRepo.getUserById(userId);
-    let login: null | string = null;
-    let email: null | string = null;
+  async changeInformation(data: ChangeProfile) {
+    const user = await this.usersQueryRepo.getUserById(data.userId);
+    let login: string = '';
+    let email: string = '';
 
     if (data.email && data.email !== user?.email) {
       const isExists = await this.usersQueryRepo.getUserByEmail(data.email);
@@ -23,21 +23,25 @@ export class ChangeProfileUseCase {
         ]);
       email = data.email;
     } else if (data.email === user?.email) {
-      throw new BadRequestException([{ message: 'This already your email', field: 'email' }]);
+      email = data.email;
+      // throw new BadRequestException([{ message: 'This already your email', field: 'email' }]);
     }
 
     if (data.login) {
-      if (data.login === user?.login)
-        throw new BadRequestException([{ message: 'This already your login', field: 'login' }]);
-      const isExists = await this.usersQueryRepo.getUserByLogin(data.login);
-      if (isExists)
-        throw new BadRequestException([
-          { message: 'User with current login already exists', field: 'login' },
-        ]);
+      if (data.login === user?.login) {
+        login = data.login;
+      } else if (data.login !== user?.login) {
+        const isExists = await this.usersQueryRepo.getUserByLogin(data.login);
+        if (isExists)
+          throw new BadRequestException([
+            { message: 'User with current login already exists', field: 'login' },
+          ]);
+      }
       login = data.login;
     }
+
     return await this.usersRepo.updateProfile(
-      userId,
+      data.userId,
       login,
       email,
       data.location,

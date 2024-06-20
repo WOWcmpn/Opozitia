@@ -11,10 +11,15 @@ import { IHomeNews, IPollsNews } from "@/types/types";
 import { NewsService } from '@/service/news.service';
 import Link from 'next/link';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { Search } from "@/components/Search/Search";
+import { ToastContainer } from "react-toastify";
 
 export default function Polls() {
   const ItemPerPage = 10
-  const [option, setOption] = useState(0);
+  const [option, setOption] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [search, setSearch] = useState<number>(0);
   const [mainNews, setMainNews] = useState<IPollsNews[]>([]);
   const [data, setData] = useState<IHomeNews | null>(null);
   const [category, setCategory] = useState<string | null>(null);
@@ -107,9 +112,10 @@ export default function Polls() {
   }
 
   return (
-    <div className={`wrapper ${option == 1 ? "overflow" : ""} `}>
-      <div className={` ${option == 1 ? "wrapper__popup blur" : ""}`}>
-        <Header className={"header menu-visual"} />
+    <div className={`wrapper ${option === 1 || login === 1 || search === 1 ? "overflow" : ""} `}>
+      <div className={` ${option === 1 || login === 1 || search === 1 ? "wrapper__popup blur" : ""}`}>
+        <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
+        <ToastContainer position={'top-center'} autoClose={3000} />
         <main className={`page ${option == 1 ? "wrapper__popup blur" : ""}`}>
           <section className="page__oprosi oprosi">
             <div className="oprosi__container content-news">
@@ -213,10 +219,16 @@ export default function Polls() {
         </footer>
       </div>
       <AnimatePresence>
+        {login == 1 && <PopupAccount onClick={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
         {option == 1 && (
           <PopupPolls onClick={setOption} classes="popup popup__active" positive={positive}
                       negative={negative} neutral={neutral} title={title} />
         )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
       </AnimatePresence>
     </div>
   );

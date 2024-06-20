@@ -9,9 +9,14 @@ import { NewsService } from "@/service/news.service";
 import { PageNews } from "@/components/PageNews/PageNews";
 import { CryptoElement } from "@/components/CryptoElement/CryptoElement";
 import { CryptoBody } from "@/components/CryptoBody/CryptoBody";
+import { AnimatePresence } from "framer-motion";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { Search } from "@/components/Search/Search";
 
 export default function Crypto({params} : {params: { id: string }}) {
   const [option, setOption] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [search, setSearch] = useState<number>(0);
   const [graph, setGraph] = useState<number>(0);
   const [weekCrypto, setWeekCrypto] = useState<IFullCrypto[]>([]);
   const [monthCrypto, setMonthCrypto] = useState<IFullCrypto[]>([]);
@@ -124,8 +129,15 @@ export default function Crypto({params} : {params: { id: string }}) {
   const avgYearPercentage = ((yearCrypto.reduce((c, acc) => c + +acc.percentage, 0)) / 365).toFixed(2)
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      login === 1 || search === 1 ? "overflow" : ""
+    } w-[100vw]`}>
+      <div className={`${
+        login === 1 || search === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
       <main className="page">
         <section className="page__currency currency">
           <div className="currency__container">
@@ -499,6 +511,13 @@ export default function Crypto({params} : {params: { id: string }}) {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+        <AnimatePresence>
+          {login == 1 && <PopupAccount onClick={setLogin} />}
+        </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
     </div>
   );
 }

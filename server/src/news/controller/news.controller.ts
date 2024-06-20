@@ -199,6 +199,6 @@ export class NewsController {
   @Post(':newsId/test')
   @HttpCode(201)
   async createComment1(@Param('newsId') newsId: string, @Body('data') data: CreateCommentModel) {
-    return await this.createCommentUseCase.create(newsId, data.text, '0ef9a584-74ec-4132-ae47-45d36b12b514');
+    return await this.createCommentUseCase.create(newsId, data.text, data.login);
   }
 }

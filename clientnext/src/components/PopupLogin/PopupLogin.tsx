@@ -29,11 +29,8 @@ export const PopupLogin = ({
       <div className="popup__wrapper">
         <div className="popup_show  content-popup popup__content_first popup__login">
           <div className="popup__top">
-            <Link href="#" className="popup__logo">
-              <picture>
-                <source srcSet="img/logo.webp" type="image/webp" />
-                <Image src={Logo} alt="Logo" height={38} />
-              </picture>
+            <Link href={'/'} className="popup__logo">
+              <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
               data-close

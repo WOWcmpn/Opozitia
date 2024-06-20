@@ -33,6 +33,14 @@ export class UsersQueryRepository {
       .getOne();
   }
 
+  async getUserProfileByLogin(login: string) {
+    return await this.usersRepository
+      .createQueryBuilder('u')
+      .select(['u.email', 'u.login', 'u.age', 'u.location', 'u.favoriteNewsCategory'])
+      .where('u.login = :login', { login })
+      .getOne();
+  }
+
   async getUserProfile(userId: string) {
     return await this.usersRepository
       .createQueryBuilder('u')

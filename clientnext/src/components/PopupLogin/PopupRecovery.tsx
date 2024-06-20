@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Logo from "@/img/logo.png";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const PopupRecovery = ({
   onClick: onOption,
@@ -21,12 +22,9 @@ export const PopupRecovery = ({
       <div className="popup__wrapper">
         <div className="popup_show content-popup popup__login">
           <div className="popup__top">
-            <a href="#" className="popup__logo">
-              <picture>
-                <source srcSet="img/logo.webp" type="image/webp" />
-                <Image src={Logo} alt="Logo" height={38} />
-              </picture>
-            </a>
+            <Link href={'/'} className="popup__logo">
+              <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
+            </Link>
             <button
               data-close
               type="button"
@@ -62,21 +60,6 @@ export const PopupRecovery = ({
               <button type="submit" className="body-popup__button">
                 Продолжить
               </button>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </form>
           </div>
         </div>

@@ -5,6 +5,8 @@ import { Header } from "@/components/Header/Header";
 import { NewsService } from "@/service/news.service";
 import { ISearchNews } from "@/types/types";
 import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 
 export default function Search({searchParams}: {
   searchParams?: {
@@ -17,6 +19,7 @@ export default function Search({searchParams}: {
   } else {
     searchNameTerm = searchParams.query
   }
+  const [login, setLogin] = useState<number>(0);
   const [isExist, setIsExist] = useState(true);
   const [news, setNews] = useState<ISearchNews[]>([]);
   const [amount, setAmount] = useState<number>(0);
@@ -45,8 +48,15 @@ export default function Search({searchParams}: {
   }, [searchTerm]);
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      login === 1 ? "overflow" : ""
+    } w-[100vw]`}>
+      <div className={`${
+       login === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onLogin={setLogin} className={"header menu-visual"} />
       <main className="page">
         {isExist ? (
           <section className="page__search-block search-block">
@@ -69,13 +79,6 @@ export default function Search({searchParams}: {
                     onClick={() => setSearchTerm(' ')}
                   ></button>
                 </div>
-                {/*<button*/}
-                {/*  type="submit"*/}
-                {/*  className="search-block__btn"*/}
-                {/*  //onClick={() => setIsExist(false)}*/}
-                {/*>*/}
-                {/*  Поиск*/}
-                {/*</button>*/}
               </form>
               <div className="search-block__results results-search-block">
                 <header className="results-search-block__header">
@@ -104,17 +107,6 @@ export default function Search({searchParams}: {
 
                 </div>
                 <br />
-                {/*{loading && <p>Загрузка...</p>}*/}
-                {/*{hasMore && !loading &&*/}
-                {/*  <button onClick={handleLoadMore} className="results-search-block__btn-more btn-more">*/}
-                {/*    Ещё 10 статей*/}
-                {/*  </button>}*/}
-                {/*<button*/}
-                {/*  className="results-search-block__btn-more btn-more"*/}
-                {/*  type="button"*/}
-                {/*>*/}
-                {/*  Еще 20 статей*/}
-                {/*</button>*/}
               </div>
             </div>
           </section>
@@ -141,13 +133,6 @@ export default function Search({searchParams}: {
                     onClick={() => setSearchTerm(' ')}
                   ></button>
                 </div>
-                {/*<button*/}
-                {/*  type="submit"*/}
-                {/*  className="search-block__btn"*/}
-                {/*  // onClick={() => setIsExist(true)}*/}
-                {/*>*/}
-                {/*  Поиск*/}
-                {/*</button>*/}
               </form>
               <p className="search-block__text-search">
                 <span className="bold">Возможно вы имели в виду:</span>{" "}
@@ -167,6 +152,10 @@ export default function Search({searchParams}: {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onClick={setLogin} />}
+      </AnimatePresence>
     </div>
   );
 }

@@ -227,30 +227,12 @@ export class NewsQueryRepository {
         'n.fullImgUrl',
         'n.createdAtTime',
         'n.viewDate',
-        'n.quizVote',
+        'n.votePositive',
+        'n.voteNegative',
+        'n.voteNeutral',
       ])
       .where('n.id = :id', { id })
       .getOne();
-
-    // const comments = await this.commentsRepo
-    //   .createQueryBuilder('c')
-    //   .select(['c.text', 'c.username', 'c.viewDate', 'c.userImage'])
-    //   .where('c.newsId = :id', { id })
-    //   .limit(5)
-    //   .getMany();
-    //
-    // return {
-    //   id: news?.id,
-    //   title: news?.title,
-    //   description: news?.description,
-    //   imgUrl: news?.imgUrl,
-    //   fullImgUrl: news?.fullImgUrl,
-    //   createdAtTime: news?.createdAtTime,
-    //   viewDate: news?.viewDate,
-    //   category: news?.category,
-    //   quizVote: news?.quizVote,
-    //   comments: comments || [],
-    // };
   }
 
   async getComments(newsId: string, pageNumber: number = 1) {

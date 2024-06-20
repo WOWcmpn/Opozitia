@@ -1,9 +1,34 @@
 import { StaticImageData } from "next/image";
 
+export interface IChangeProfile {
+  originalLogin: string
+  email: string
+  login: string
+  age: string
+  location: string
+  favoriteNewsCategory: string
+}
+
+export interface IProfileInfo {
+  email: string
+  login: string
+  age: string
+  location: string
+  favoriteNewsCategory: string
+}
+
+export type userAccount = {
+  setChange: React.Dispatch<React.SetStateAction<number>>;
+}
+
 export interface ILogin {
   accessToken: string
   login: string
   email: string
+  location: string
+  id: string
+  favoriteNewsCategory: string
+  age: string
 }
 
 export interface ICreateNews {
@@ -176,6 +201,9 @@ export interface ISingleNews {
   category: string;
   description: string;
   fullImgUrl: string;
+  votePositive: string
+  voteNegative: string
+  voteNeutral: string
 }
 
 export interface IMainNews {

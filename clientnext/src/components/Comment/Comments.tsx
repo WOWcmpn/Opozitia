@@ -26,10 +26,10 @@ export const Comments = ({
       </div>
       <p className="bottom-comments-news__text">{text}</p>
       <div className="bottom-comments-news__actions">
-        <button type="button" className="bottom-comments-news__like">
-          <Image src={Like} alt="Иконка" />
-          <span className="bottom-comments-news__quantity-likes">{likes}</span>
-        </button>
+        {/*<button type="button" className="bottom-comments-news__like">*/}
+        {/*  <Image src={Like} alt="Иконка" />*/}
+        {/*  <span className="bottom-comments-news__quantity-likes">{likes}</span>*/}
+        {/*</button>*/}
         <button type="button" className="bottom-comments-news__answer-btn">
           Ответить
         </button>

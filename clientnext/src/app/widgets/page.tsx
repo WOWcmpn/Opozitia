@@ -24,9 +24,14 @@ import {
 } from "@/utils/calendar";
 import { IWeather } from "@/types/types";
 import { NewsService } from "@/service/news.service";
+import { AnimatePresence } from "framer-motion";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { Search } from "@/components/Search/Search";
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
+  const [login, setLogin] = useState<number>(0);
+  const [search, setSearch] = useState<number>(0);
   const [currentMonth, setCurrentMonth] = useState<number>(getMonth(new Date()));
   const [currentYear, setCurrentYear] = useState<number>(getYear(new Date()));
   const [date, setDate] = useState<string>(`${getStringMonth(currentMonth).month} ${getDate(new Date())}, ${currentYear}`);
@@ -197,8 +202,15 @@ export default function Widgets() {
   // ];
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      search === 1 || login === 1 ? "overflow" : ""
+    } w-[100vw]`}>
+      <div className={`${
+        search === 1 || login === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
       <main className="page">
         <section className="page__vidgets vidgets">
           <div className="vidgets__container">
@@ -403,6 +415,13 @@ export default function Widgets() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onClick={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
     </div>
   );
 }

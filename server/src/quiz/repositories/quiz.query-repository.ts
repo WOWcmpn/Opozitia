@@ -12,15 +12,15 @@ export class QuizQueryRepository {
     @InjectRepository(NewsEntity) private newsRepo: Repository<NewsEntity>,
   ) {}
 
-  async getVoteByUserId(userId: string, newsId: string) {
-    return await this.quizRepository.findOneBy({ userId, newsId });
+  async getVoteByLogin(login: string, newsId: string) {
+    return await this.quizRepository.findOneBy({ login, newsId });
   }
 
   async getVotesCountByNewsId(newsId: string, vote: quizVotes) {
     return await this.quizRepository.countBy({ newsId, vote });
   }
 
-  async changeVote(newsId: string, userId: string, vote: quizVotes, prevVote: quizVotes) {
+  async changeVote(newsId: string, login: string, vote: quizVotes, prevVote: quizVotes) {
     if (prevVote === 'Поддерживаю')
       await this.newsRepo.update({ id: newsId }, { votePositive: () => 'votePositive - 1' });
     if (prevVote === 'Не поддерживаю')
@@ -35,11 +35,11 @@ export class QuizQueryRepository {
     if (vote === 'Нейтрально')
       await this.newsRepo.update({ id: newsId }, { voteNeutral: () => 'voteNeutral + 1' });
 
-    await this.quizRepository.update({ userId }, { vote });
+    await this.quizRepository.update({ login }, { vote });
   }
 
-  async createVote(newsId: string, vote: quizVotes, userId: string) {
-    await this.quizRepository.insert({ newsId, vote, userId });
+  async createVote(newsId: string, vote: quizVotes, login: string) {
+    await this.quizRepository.insert({ newsId, vote, login });
     if (vote === 'Поддерживаю')
       await this.newsRepo.update({ id: newsId }, { votePositive: () => 'votePositive + 1' });
     if (vote === 'Не поддерживаю')

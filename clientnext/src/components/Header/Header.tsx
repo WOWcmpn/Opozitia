@@ -40,11 +40,12 @@ export const Header = ({
     loadWeather()
   }, []);
 
-  const popup = () => {
-    if (onClick !== undefined) {
-      onClick(1);
-    }
-  };
+  console.log(session.data?.user);
+  // const popup = () => {
+  //   if (onClick !== undefined) {
+  //     onClick(1);
+  //   }
+  // };
 
   const loginPopup = () => {
     if (onLogin !== undefined) {
@@ -93,9 +94,23 @@ export const Header = ({
                 />
               </Link>
               {session?.data ? (
-                <Link href={'#'} onClick={() => signOut({callbackUrl: '/'})} >
-                  Sign out
-                </Link>
+                <div className={'grid grid-cols-2 gap-0.5 place-items-stretch'}>
+                  <Link href={'/account'} className={'w-[55px]'} >
+                    <Image
+                      width={55}
+                      height={50}
+                      src="/img/icons/login.png"
+                      alt="Icon"
+                    />
+                  </Link>
+                  <button
+                    className={'border-solid rounded-2xl border-2 border-red-500' +
+                      ' bg-red-500 h-10 w-20 text-white font-medium items-center'}
+                    onClick={() => signOut({callbackUrl: '/'})}
+                  >
+                    Sign out
+                  </button>
+                </div>
               ) : (
                 <Link
                   data-popup="#popup-login"
@@ -234,19 +249,18 @@ export const Header = ({
               </ul>
             </nav>
           </div>
-          <Link
-            href="#"
-            data-popup="#popup-vote"
-            className="bottom-header__link"
-            onClick={newsPopup}
-          >
-            <span className="bottom-header__link-news">Сообщить новость</span>
-            {}
-            {/*<PopupNews onClick={popup} />*/}
-            {/*<span className="bottom-header__link-news-icon">*/}
-            {/*  <Image src={Plus} alt="Иконка" />*/}
-            {/*</span>*/}
-          </Link>
+          {session.data ? (
+            <Link
+              href="#"
+              data-popup="#popup-vote"
+              className="bottom-header__link"
+              onClick={newsPopup}
+            >
+              <span className="bottom-header__link-news">Сообщить новость</span>
+            </Link>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </header>

@@ -4,6 +4,9 @@ export class CreateCommentModel {
   @IsString()
   @Length(5, 350)
   text: string;
+
+  @IsString()
+  login: string;
 }
 
 export class CommentModel {

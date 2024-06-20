@@ -9,15 +9,17 @@ import { IMainNews, INews } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 
 export default function GlobalNews() {
   const ItemPerPage = 10
   const [data, setData] = useState<IMainNews[]>([])
   const [sidebar, setSidebar] = useState<INews[]>([]);
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [search, setSearch] = useState(0);
+  const [page, setPage] = useState<number>(1)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function GlobalNews() {
               : ""
           }`}
         >
-      <Header onSearch={setSearch} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
       <br />
       <br />
       <main className="page">
@@ -172,6 +174,9 @@ export default function GlobalNews() {
         </section>
       </main>
         </div>
+        <AnimatePresence>
+          {login == 1 && <PopupAccount onClick={setLogin} />}
+        </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>

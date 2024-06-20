@@ -13,32 +13,69 @@ import { Comments } from '@/components/Comment/Comments';
 import { LatestNews } from '@/components/LatestNews/LatestNews';
 import { NewsService } from '@/service/news.service';
 import Link from 'next/link';
-import { IComments, INews, ISingleNews } from "@/types/types";
+import { IComments, INews, ISingleNews, quizVotes } from "@/types/types";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
+import { useSession } from "next-auth/react";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 
 export default function NewsId({params} : {params: {id: string}}) {
   const [news, setNews] = useState<ISingleNews>();
   const [comments, setComments] = useState<IComments[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [comment, setComment] = useState<string>();
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [search, setSearch] = useState(0);
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
   const [isUrl, setIsUrl] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
   const [currImg, setCurrImg] = useState<string>('');
+  const [isVoted, setIsVoted] = useState<boolean>(false);
+  const session = useSession()
 
+  const sum = +news?.votePositive! + +news?.voteNegative!
+  const perAgree = (+news?.votePositive! / sum) * 100
+  const perDisagree = (+news?.voteNegative! / sum) * 100
+
+  const handleVote = async (vote: quizVotes) => {
+    if(!session.data) {
+      toast.error("Неавторизованные пользователи не могут голосовать");
+      return
+    } else {
+      if(vote === quizVotes.Like) toast.success('Вам понравилась данная новость')
+      if(vote === quizVotes.Dislike) toast.success('Вам не понравилась данная новость')
+      await NewsService.sendVote(vote, params.id, session.data?.user?.name!)
+      const newData = await NewsService.getNewsById(params.id)
+      setNews(newData)
+      setIsVoted(true)
+    }
+  }
+
+  const throwError = async(name: string) => {
+    if(name === 'comments') {
+      toast.error("Неавторизованные пользователи не могут оставлять комментарии");
+    } else if(name === 'polls') {
+      toast.error("Неавторизованные пользователи не могут голосовать");
+    }
+  }
   const handleSubmit = async(e: any) => {
     try {
-      e.preventDefault()
-      await NewsService.createComment(params.id, comment!)
-      setComment('')
-      toast.success('Комментарий был успешно создан')
-      window.location.reload()
+      if(!session.data) {
+        toast.error("Неавторизованные пользователи не могут оставлять комментарии");
+        return
+      } else {
+        e.preventDefault()
+        await NewsService.createComment(params.id, comment!, session.data.user?.name!)
+        setComment('')
+        toast.success('Комментарий был успешно создан')
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+      }
     } catch (e: any) {
       console.warn(e);
       toast.error('Комментарий должен содержать больше четырёх символов')
@@ -105,17 +142,17 @@ export default function NewsId({params} : {params: {id: string}}) {
     <div className="wrapper">
       <div
         className={`home ${
-          search == 1 ? "overflow" : ""
+          search === 1 || login === 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search == 1
+            search === 1 || login === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={2500} />
       <main className="page">
         <section className="page__news-single news-single">
@@ -229,44 +266,95 @@ export default function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="content-news-single__choose-like">
                     <form action="#" className="content-news-single__form">
-                      <div className="options options_likes">
-                        <div className="options__items options__items_likes">
-                          <input
-                            id="like"
-                            className="options__input"
-                            type="checkbox"
-                            value="like"
-                            name="opros1"
-                          />
-                          <label
-                            htmlFor="like"
-                            className="options__label options__label_like options__label_2"
-                          >
+                      {session.data ? (
+                        <div className="options options_likes">
+                          <div className="options__items options__items_likes">
+                            <input
+                              id="like"
+                              className="options__input"
+                              type="checkbox"
+                              value="like"
+                              name="opros1"
+                              onClick={() => handleVote(quizVotes.Like)}
+                            />
+                            <label
+                              htmlFor="like"
+                              className="options__label options__label_like options__label_2"
+                            >
                             <span className="options__text options__text_like">
                               Понравилось
                             </span>
-                            <span className="options__number-likes">45624</span>
-                          </label>
-                        </div>
-                        <div className="options__items options__items_likes">
-                          <input
-                            id="dislike"
-                            className="options__input"
-                            type="checkbox"
-                            value="nolike"
-                            name="opros1"
-                          />
-                          <label
-                            htmlFor="dislike"
-                            className="options__label options__label_like options__label_1"
-                          >
+                              {isVoted ? (
+                                <span className="options__number-likes">{perAgree || 0}%</span>
+                              ) : (
+                                <span></span>
+                              )}
+                            </label>
+                          </div>
+                          <div className="options__items options__items_likes">
+                            <input
+                              id="dislike"
+                              className="options__input"
+                              type="checkbox"
+                              value="nolike"
+                              name="opros1"
+                              onClick={() => handleVote(quizVotes.Dislike)}
+                            />
+                            <label
+                              htmlFor="dislike"
+                              className="options__label options__label_like options__label_1"
+                            >
                             <span className="options__text options__text_like">
                               Не понравилось
                             </span>
-                            <span className="options__number-likes">45624</span>
-                          </label>
+                              {isVoted ? (
+                                <span className="options__number-likes">{perDisagree || 0}%</span>
+                              ) : (
+                                <span></span>
+                              )}
+                            </label>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div className="options options_likes">
+                          <div className="options__items options__items_likes">
+                            <input
+                              id="like"
+                              className="options__input"
+                              type="checkbox"
+                              value="like"
+                              name="opros1"
+                              onClick={() => throwError('polls')}
+                            />
+                            <label
+                              htmlFor="like"
+                              className="options__label options__label_like options__label_2"
+                            >
+                            <span className="options__text options__text_like">
+                              Понравилось
+                            </span>
+                            </label>
+                          </div>
+                          <div className="options__items options__items_likes">
+                            <input
+                              id="dislike"
+                              className="options__input"
+                              type="checkbox"
+                              value="nolike"
+                              name="opros1"
+                              onClick={() => throwError('polls')}
+                            />
+                            <label
+                              htmlFor="dislike"
+                              className="options__label options__label_like options__label_1"
+                            >
+                            <span className="options__text options__text_like">
+                              Не понравилось
+                            </span>
+                            </label>
+                          </div>
+                        </div>
+                      )}
                     </form>
                   </div>
                   <div className="content-news-single__comments comments-content-news">
@@ -297,11 +385,12 @@ export default function NewsId({params} : {params: {id: string}}) {
                       </div>
                     </div>
                     <div className="comments-content-news__body">
-                      <form
-                        action="#"
-                        className="comments-content-news__comments-form"
-                        onSubmit={handleSubmit}
-                      >
+                      {session.data ? (
+                        <form
+                          action='#'
+                          className="comments-content-news__comments-form"
+                          onSubmit={handleSubmit}
+                        >
                         <textarea
                           autoComplete="off"
                           name="form[]"
@@ -309,13 +398,31 @@ export default function NewsId({params} : {params: {id: string}}) {
                           className="comments-content-news__input"
                           onChange={e => setComment(e.target.value)}
                         />
-                        <button
-                          type="submit"
-                          className="comments-content-news__button"
+                          <button
+                            type="submit"
+                            className="comments-content-news__button"
+                          >
+                            Отправить
+                          </button>
+                        </form>
+                      ) : (
+                        <div
+                          className="comments-content-news__comments-form"
                         >
-                          Отправить
-                        </button>
-                      </form>
+                        <textarea
+                          autoComplete="off"
+                          placeholder="Написать комментарий..."
+                          className="comments-content-news__input"
+                        />
+                          <button
+                            type="submit"
+                            className="comments-content-news__button"
+                            onClick={() => throwError('comments')}
+                          >
+                            Отправить
+                          </button>
+                        </div>
+                      )}
                     </div>
                     <div
                       id="comments"
@@ -369,6 +476,9 @@ export default function NewsId({params} : {params: {id: string}}) {
         </div>
       </footer>
         </div>
+        <AnimatePresence>
+          {login == 1 && <PopupAccount onClick={setLogin} />}
+        </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>

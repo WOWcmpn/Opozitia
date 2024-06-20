@@ -1,13 +1,4 @@
-import {
-  IsDateString,
-  IsEmail,
-  IsEnum,
-  IsOptional,
-  IsString,
-  Length,
-  Matches,
-  MaxLength,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString, Length, Matches, MaxLength } from 'class-validator';
 import { favoriteNewsCategory } from './newsModels';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -27,23 +18,21 @@ export class ResendConfirmation {
 
 export class ChangeProfile {
   @IsString()
+  userId: string;
+
+  @IsString()
   @Matches('^[a-zA-Z0-9_-]*$')
   @Length(3, 15)
   @IsOptional()
-  login: string | null;
+  login: string;
 
   @IsEmail()
   @IsOptional()
-  email: string | null;
+  email: string;
 
   @IsString()
-  @Length(6, 25)
   @IsOptional()
-  password: string | null;
-
-  @IsDateString()
-  @IsOptional()
-  age: Date;
+  age: string;
 
   @IsString()
   @MaxLength(20)

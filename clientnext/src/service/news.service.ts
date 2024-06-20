@@ -1,14 +1,53 @@
 import axios from "axios";
 import {
-  IComments, ICreateNews, ICrypto, ICurrency, IFullCrypto, IFullCurrency,
-  IHomeNews, IMainCrypto, IMainNews,
-  INews, INewsVotes, IPollsNews, ISearchNews, ISingleNews, IWeather, quizVotes
+  IComments,
+  ICreateNews,
+  ICrypto,
+  ICurrency,
+  IFullCrypto,
+  IFullCurrency,
+  IHomeNews,
+  IMainCrypto,
+  IMainNews,
+  INews,
+  INewsVotes,
+  IPollsNews,
+  IProfileInfo,
+  ISearchNews,
+  ISingleNews,
+  IWeather,
+  quizVotes
 } from "@/types/types";
 
 axios.defaults.baseURL = "http://localhost:4000/"
 //axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async changeProfile(
+    userId: string,
+    email: string,
+    login: string,
+    age: string,
+    location: string,
+    favoriteNewsCategory: string
+  ) {
+    return await axios.put('user/profile/change-information', {
+      userId,
+      email,
+      login,
+      age,
+      location,
+      favoriteNewsCategory
+    })
+  },
+
+  async getUserProfile(login: string): Promise<IProfileInfo> {
+    const {data} = await axios.get('user/profile-login', {params: {
+      login
+      }})
+    return data
+  },
+
   async getCryptoFull(id: string, pageSize: number): Promise<IFullCrypto[]> {
     const {data} = await axios.get(`crypto/full/${id}`, {params: {
       pageSize
@@ -56,8 +95,8 @@ export const NewsService = {
     return data
   },
 
-  async sendVote(vote: quizVotes, id: string) {
-    const {data} = await axios.post(`quiz/vote/${id}`, {inputVote: vote})
+  async sendVote(vote: quizVotes, id: string, login: string) {
+    const {data} = await axios.post(`quiz/vote/${id}`, {inputVote: vote, login})
     return data
   },
 
@@ -152,8 +191,8 @@ export const NewsService = {
     return data;
   },
 
-  async createComment(id: string, text: string) {
-    const {data} = await axios.post(`news/${id}/test`, { data: { text } })
+  async createComment(id: string, text: string, login: string) {
+    const {data} = await axios.post(`news/${id}/test`, { data: { text, login } })
     return data
   }
 };

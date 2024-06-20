@@ -76,8 +76,12 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
           password: pass,
           redirect: false
         }, {
+          id: data.id,
           name: data.login,
-          email: email
+          email: data.email,
+          location: data.location,
+          favoriteNewsCategory: data.favoriteNewsCategory,
+          age: data.age
         })
         toast.success(`Добро пожаловать, ${data?.login}`)
       } else {

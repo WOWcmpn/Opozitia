@@ -23,10 +23,10 @@ export class UsersRepository {
 
   async updateProfile(
     userId: string,
-    login: null | string,
-    email: null | string,
+    login: string,
+    email: string,
     location: string,
-    age: Date,
+    age: string,
     favoriteNewsCategory: favoriteNewsCategory,
   ) {
     if (!login && !email) {

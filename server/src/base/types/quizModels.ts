@@ -1,4 +1,4 @@
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
 
 export enum quizVotes {
   Dislike = 'Не поддерживаю',
@@ -9,4 +9,7 @@ export enum quizVotes {
 export class sendVoteModel {
   @IsEnum(quizVotes)
   inputVote: quizVotes;
+
+  @IsString()
+  login: string;
 }

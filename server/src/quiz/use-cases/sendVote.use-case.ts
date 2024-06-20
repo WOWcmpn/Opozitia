@@ -6,18 +6,18 @@ import { QuizQueryRepository } from '../repositories/quiz.query-repository';
 export class SendVoteUseCase {
   constructor(private readonly quizQueryRepository: QuizQueryRepository) {}
 
-  async sendVote(userId: string, inputVote: quizVotes, newsId: string) {
-    const isExists = await this.quizQueryRepository.getVoteByUserId(userId, newsId);
+  async sendVote(login: string, inputVote: quizVotes, newsId: string) {
+    const isExists = await this.quizQueryRepository.getVoteByLogin(login, newsId);
     if (isExists) {
       if (inputVote === isExists.vote) {
         return;
       }
       if (inputVote !== isExists.vote) {
-        await this.quizQueryRepository.changeVote(newsId, userId, inputVote, isExists.vote);
+        await this.quizQueryRepository.changeVote(newsId, login, inputVote, isExists.vote);
         return;
       }
     } else {
-      await this.quizQueryRepository.createVote(newsId, inputVote, userId);
+      await this.quizQueryRepository.createVote(newsId, inputVote, login);
       return;
     }
   }

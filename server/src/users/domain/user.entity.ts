@@ -23,19 +23,19 @@ export class UserEntity extends BaseEntity {
   @Column()
   email: string;
 
-  @Column({ nullable: true })
+  @Column()
   login: string;
 
-  @Column({ nullable: true })
+  @Column()
   passwordHash: string;
 
-  @Column({ nullable: true })
-  age: Date;
+  @Column({ default: 'Неизвестно' })
+  age: string;
 
-  @Column({ nullable: true })
+  @Column({ default: 'Неизвестно' })
   location: string;
 
-  @Column({ nullable: true, enum: favoriteNewsCategory })
+  @Column({ default: 'Неизвестно', enum: favoriteNewsCategory })
   favoriteNewsCategory: favoriteNewsCategory;
 
   @Column({ type: 'jsonb' })

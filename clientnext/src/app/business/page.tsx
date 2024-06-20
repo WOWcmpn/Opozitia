@@ -16,16 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 
 export default function Business () {
   const ItemPerPage = 10
   const [data, setData] = useState<IMainNews[]>([])
   const [sidebar, setSidebar] = useState<INews[]>([]);
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [search, setSearch] = useState(0);
-  const [onNews, setOnNews] = useState(0);
+  const [page, setPage] = useState<number>(1)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [onNews, setOnNews] = useState<number>(0);
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -98,17 +100,17 @@ export default function Business () {
     <>
       <div
         className={`home ${
-          search == 1 ? "overflow" : ""
+          search === 1 || login === 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search == 1
+            search === 1 || login === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} onNews={setOnNews} className={"header menu-visual"}/>
+      <Header onSearch={setSearch} onNews={setOnNews} onLogin={setLogin} className={"header menu-visual"}/>
       <br />
       <br />
       <main className="page">
@@ -180,6 +182,9 @@ export default function Business () {
         </section>
       </main>
         </div>
+        <AnimatePresence>
+          {login == 1 && <PopupAccount onClick={setLogin} />}
+        </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>

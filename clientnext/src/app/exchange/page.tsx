@@ -6,9 +6,14 @@ import { ICrypto, ICurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CryptoValue } from "@/components/CryptoValue/CryptoValue";
+import { AnimatePresence } from "framer-motion";
+import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { Search } from "@/components/Search/Search";
 
 export default function Exchange() {
   const [option, setOption] = useState<string>("currency");
+  const [login, setLogin] = useState<number>(0);
+  const [search, setSearch] = useState<number>(0);
   const [currency, setCurrency] = useState<ICurrency>();
   const [crypto, setCrypto] = useState<ICrypto>();
 
@@ -31,8 +36,15 @@ export default function Exchange() {
   }
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      login === 1 || search === 1 ? "overflow" : ""
+    } w-[100vw]`} >
+      <div className={`${
+        login === 1 || search === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
       <main className="page">
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
@@ -127,6 +139,13 @@ export default function Exchange() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onClick={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
     </div>
   );
 }
