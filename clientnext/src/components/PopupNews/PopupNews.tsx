@@ -53,7 +53,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
       transition={{ ease: "all", duration: 0 }}
     >
       <div className="popup__wrapper">
-        <div className=" popup_show popup__content_vote content-popup !px-[80px] !pt-[30px] !pb-[5px]">
+        <div className=" popup_show popup__content_vote content-popup !px-[40px] !pt-[30px] !pb-[5px]">
           <div className="popup__top !w-[100%]">
             <Link href={'/'} className="popup__logo">
               <picture>
@@ -128,7 +128,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   />
                 </label>
 
-                <div className="bg-pink !border-[1px] !border-black border-solid rounded-[12px] text-black py-[10px] pl-[15px] !text-[35px]">
+                <div className="popup-news__category bg-pink !border-[1px] !border-black border-solid rounded-[12px] text-black py-[10px] pl-[20px] !text-[35px]">
                   <Select onValueChange={(category) => setNewsCategory(category)}>
                     <SelectTrigger className='text-[23px] w-full'>
                       <SelectValue placeholder="Категория новости" />

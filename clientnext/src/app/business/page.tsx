@@ -113,7 +113,7 @@ export default function Business () {
       <Header onSearch={setSearch} onNews={setOnNews} onLogin={setLogin} className={"header menu-visual"}/>
       <br />
       <br />
-      <main className="page">
+      <main className="page page-news">
         <section className="page__news news">
           <div className="news__container">
             <h1 className="news__title">Бизнес</h1>
