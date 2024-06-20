@@ -326,7 +326,7 @@ body {
 }
 
 .options__number-likes {
-  display: none;
+  /*display: none;*/
   font-weight: 900;
   font-size: 1.4375rem;
 }
