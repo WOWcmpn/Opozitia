@@ -103,7 +103,7 @@ export default function Politics() {
       <Header onSearch={setSearch} className={"header menu-visual"} />
       <br />
       <br />
-      <main className="page">
+      <main className="page page-news">
         <section className="page__news news">
           <div className="news__container">
             <h1 className="news__title">Политика</h1>

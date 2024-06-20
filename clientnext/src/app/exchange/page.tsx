@@ -33,7 +33,7 @@ export default function Exchange() {
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
-      <main className="page">
+      <main className="page page-exchange">
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
             <header className="content-news__header content-news__header_exchange">
@@ -44,8 +44,8 @@ export default function Exchange() {
                   </SelectTrigger>
                   <SelectContent className="bg-white rounded text-black text-[25px]">
                     <SelectGroup className="text-black text-[25px]">
-                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"currency"} value="currency">Валюты</SelectItem>
-                      <SelectItem className="cursor-pointer text-black text-[25px] max-h-xs" key={"crypto"} value="indexes">Криптовалюта</SelectItem>
+                      <SelectItem className="cursor-pointer text-black select-text text-[25px] max-h-xs" key={"currency"} value="currency">Валюты</SelectItem>
+                      <SelectItem className="cursor-pointer text-black select-text text-[25px] max-h-xs" key={"crypto"} value="indexes">Криптовалюта</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

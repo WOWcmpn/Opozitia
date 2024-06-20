@@ -70,8 +70,8 @@ export default function Home() {
             </div>
           </div>
           <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
-          <main className="page">
-            <section className="page__main-block main-block">
+          <main className="page home-page">
+          <section className="page__main-block main-block">
               <div className="main-block__container">
                 <div className="main-block__wrap-slider">
                   <div className="main-block__wrap-btns">
@@ -92,13 +92,14 @@ export default function Home() {
                     <div className="main-block__wrapper ">
                       <Swiper
                         modules={[Autoplay, Navigation]}
-                        slidesPerView={3}
+                        slidesPerView={'auto'}
+                        spaceBetween={30}
                         loop={true}
                         simulateTouch={false}
-                        autoplay={{
-                          delay: 2000,
-                          disableOnInteraction: false,
-                        }}
+                        // autoplay={{
+                        //   delay: 2000,
+                        //   disableOnInteraction: false,
+                        // }}
                         speed={1000}
                         onBeforeInit={(swiper) => {
                           swiperRef.current = swiper;
@@ -133,10 +134,10 @@ export default function Home() {
                           fadeEffect={{ crossFade: true }}
                           loop={true}
                           simulateTouch={false}
-                          autoplay={{
-                            delay: 3000,
-                            disableOnInteraction: false,
-                          }}
+                          // autoplay={{
+                          //   delay: 3000,
+                          //   disableOnInteraction: false,
+                          // }}
                           speed={1000}
                         >
                           <SwiperSlide>
@@ -233,10 +234,10 @@ export default function Home() {
                           modules={[Autoplay, EffectFade]}
                           slidesPerView={1}
                           fadeEffect={{ crossFade: false }}
-                          autoplay={{
-                            delay: 3000,
-                            disableOnInteraction: false,
-                          }}
+                          // autoplay={{
+                          //   delay: 3000,
+                          //   disableOnInteraction: false,
+                          // }}
                           speed={1000}
                         >
                           <SwiperSlide>
@@ -347,10 +348,10 @@ export default function Home() {
                       allowTouchMove={false}
                       simulateTouch={false}
                       touchMoveStopPropagation={true}
-                      autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                      }}
+                      // autoplay={{
+                      //   delay: 3000,
+                      //   disableOnInteraction: false,
+                      // }}
                       speed={1000}
                     >
                       {data?.mainNews.map((n) => (

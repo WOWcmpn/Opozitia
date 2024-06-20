@@ -199,7 +199,7 @@ export default function Widgets() {
   return (
     <div className="wrapper">
       <Header className={"header menu-visual"} />
-      <main className="page">
+      <main className="page page-vidgets">
         <section className="page__vidgets vidgets">
           <div className="vidgets__container">
             <div className="vidgets__body">
