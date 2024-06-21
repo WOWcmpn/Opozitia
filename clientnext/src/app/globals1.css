@@ -649,7 +649,7 @@ body::after {
   z-index: 10;
   -webkit-transition: visibility 0.8s ease 0s;
   transition: visibility 0.8s ease 0s;
-  visibility: hidden;
+  overflow-y: auto;
   pointer-events: none;
 }
 
@@ -658,8 +658,6 @@ body::after {
 }
 
 .popup__login {
-  /* padding-left: 85px !important;
-  padding-right: 85px !important; */
   width: 700px;
 }
 
@@ -755,10 +753,6 @@ body::after {
   -ms-flex-direction: column;
   flex-direction: column;
   max-width: 700px;
-}
-
-.popup__content_first {
-  min-height: 580px;
 }
 
 .popup__content_search {
@@ -929,7 +923,6 @@ body::after {
   -ms-flex: 0 0 2.8125rem;
   flex: 0 0 2.8125rem;
   border-radius: 50%;
-  /* Blueish */
   padding: 6px;
   background: rgb(136, 162, 255);
 }
@@ -2055,7 +2048,6 @@ body::after {
   display: -ms-grid;
   display: grid;
   --ms-grid-columns: (22px) [2];
-  /*fix*/
   grid-template-columns: repeat(2, 22px);
   -webkit-column-gap: 8px;
   -moz-column-gap: 8px;
@@ -2221,11 +2213,9 @@ body::after {
 .graphics-left-block__change::after {
   content: "";
   position: absolute;
-  /* Абсолютное позиционирование */
   display: block;
   left: -13px;
   bottom: 3px;
-  /* Положение треугольника */
 }
 
 .graphics-left-block__change_plus {
@@ -2234,9 +2224,7 @@ body::after {
 
 .graphics-left-block__change_plus::after {
   border: 5px solid transparent;
-  /* Прозрачные границы */
   border-top: 6px solid #309f63;
-  /* Добавляем треугольник */
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -2249,9 +2237,7 @@ body::after {
 
 .graphics-left-block__change_minus::after {
   border: 5px solid transparent;
-  /* Прозрачные границы */
   border-top: 6px solid rgb(218, 20, 20);
-  /* Добавляем треугольник */
 }
 
 .block__graphics .swiper-slide {
@@ -3432,14 +3418,11 @@ body::after {
   padding: 25px 200px 22px 31px;
   outline: none;
   resize: none;
-  /* полоса прокрутки (скроллбар) */
-  /* ползунок скроллбара */
 }
 
 .comments-content-news__input::-webkit-scrollbar {
   border-radius: 8px;
   width: 9px;
-  /* ширина для вертикального скролла */
   background-color: rgb(172, 173, 172);
 }
 
@@ -3709,18 +3692,13 @@ body::after {
   height: 180px;
   overflow-y: scroll;
   padding-right: 6px;
-  /* полоса прокрутки (скроллбар) */
-  /* ползунок скроллбара */
   -ms-overflow-style: 4px;
-  /* IE и Edge */
   scrollbar-width: 4px;
-  /* Firefox */
 }
 
 .events-left-vidgets__list::-webkit-scrollbar {
   border-radius: 8px;
   width: 4px;
-  /* ширина для вертикального скролла */
   background-color: rgb(172, 173, 172);
 }
 
@@ -4106,18 +4084,13 @@ body::after {
 .championship__wrap-table {
   max-height: 280px;
   overflow-y: scroll;
-  /* полоса прокрутки (скроллбар) */
-  /* ползунок скроллбара */
   -ms-overflow-style: 4px;
-  /* IE и Edge */
   scrollbar-width: 4px;
-  /* Firefox */
 }
 
 .championship__wrap-table::-webkit-scrollbar {
   border-radius: 8px;
   width: 4px;
-  /* ширина для вертикального скролла */
   background-color: rgb(172, 173, 172);
 }
 
@@ -6542,10 +6515,6 @@ body::after {
     min-height: 531px;
   }
 
-  .popup__content_first {
-    min-height: 531px;
-  }
-
   .popup__content_search {
     max-width: 700px;
   }
@@ -8822,8 +8791,6 @@ body::after {
 
   .calendar-vidgets {
     max-width: 100%;
-    /*max-width: 180%;*/
-    /*margin-left: -205%;*/
     padding: 14px 18px;
     border-radius: 20px;
   }
@@ -8922,10 +8889,6 @@ body::after {
   }
 
   .table-exchange__item {
-    /* -webkit-column-gap: 4px;
-    -moz-column-gap: 4px;
-    column-gap: 4px;
-    flex-direction: column; */
     column-gap: 2px;
   }
 
@@ -9398,13 +9361,6 @@ body::after {
 }
 
 @media(max-width: 1000px) {
-
-  /* .block-main_wrapper {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    column-gap: 20px;
-    min-width: 100%;
-  } */
   .block-main_wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -9416,13 +9372,6 @@ body::after {
     width: -webkit-fill-available !important;
     max-width: min-content !important;
   }
-
-  /* .bottom-left-block .swiper-wrapper{
-    width: 530px !important;
-  }
-  .bottom-left-block .swiper-slide{
-    width: 530px !important;
-  } */
   .bottom-left-block__content {
     max-width: fit-content;
   }
@@ -9558,6 +9507,9 @@ body::after {
   }
   .page-news{
     margin-top: 60px;
+  }
+  .last-news{
+    margin-top: 80px;
   }
 }
 
