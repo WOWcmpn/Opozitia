@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import Logo from "@/img/logo.png";
 import { LoginPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -23,7 +22,7 @@ export const PopupRegSend = ({ onClick: onOption }: LoginPopupProps) => {
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={() => onOption(0)}

@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Account() {
   const [option, setOption] = useState<number>(0);
   const [change, setChange] = useState<number>(0);
+  const [passRecovery, setPassRecovery] = useState<number>(0);
   const [login, setLogin] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [location, setLocation] = useState<string>('');
@@ -60,7 +61,15 @@ export default function Account() {
   }
 
   return (
-    <div className="wrapper">
+    <div className={`wrapper ${
+      passRecovery === 1
+        ? "overflow" : ""
+    }`}>
+      <div className={`${
+        passRecovery === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}></div>
       <Header className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={3000} />
       <main className="page page_account">
@@ -98,6 +107,7 @@ export default function Account() {
                 {option == 0 && change == 0 ? (
                   <UserAccount
                     setChange={setChange}
+                    setPassRecovery={setPassRecovery}
                   />
                 ) : option == 0 && change == 1 ? (
                   <div className="account__body body-account">

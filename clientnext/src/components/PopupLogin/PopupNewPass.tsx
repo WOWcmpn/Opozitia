@@ -1,21 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import { RegisterPassPopupProps } from "@/types/types";
+import { NewPassPopupProps } from '@/types/types';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "next/link";
 
-export const PopupRegPass = ({
-  onClick: onOption,
-  login,
-  setLogin,
-  pass,
-  setPass,
-  confirmPass,
-  setConfirmPass,
-  register,
-}: RegisterPassPopupProps) => {
+export const PopupNewPass = ({ onClick: onOption,
+                               pass,
+                               setPass,
+                               confirmPass,
+                               setConfirmPass,
+                               newPassword
+                             }: NewPassPopupProps) => {
   return (
     <motion.div
       id="popup-registration-password"
@@ -33,7 +30,7 @@ export const PopupRegPass = ({
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={() => onOption(0)}
@@ -41,7 +38,7 @@ export const PopupRegPass = ({
           </div>
           <div className="popup__body body-popup">
             <div className="body-popup__top body-popup__top_password">
-              <h3 className="body-popup__title">Придумайте имя и пароль</h3>
+              <h3 className="body-popup__title">Придумайте пароль</h3>
               <p className="body-popup__text">
                 Пароль должен содержать хотя бы 5 символов
               </p>
@@ -49,34 +46,24 @@ export const PopupRegPass = ({
             <form
               id="form-pass"
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-registration-recovery"
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
                 if(pass === confirmPass) {
-                  register();
-                  // setOption(5);
+                  newPassword()
                 } else {
                   toast.error('Введенные вами пароли не совпадают')
                 }
               }}
             >
               <input
-                type="text"
-                name="form[]"
-                placeholder="Введите ваше имя"
-                className="body-popup__input-name input"
-                required
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
-              />
-              <input
                 type="password"
                 id="pass"
                 name="form[]"
                 minLength={5}
-                data-required
+                data-required={true}
                 placeholder="Введите ваш пароль"
                 className="body-popup__input-password input"
                 required
@@ -88,7 +75,7 @@ export const PopupRegPass = ({
                 id="pass2"
                 name="form[]"
                 minLength={5}
-                data-required
+                data-required={true}
                 placeholder="Повторите введенный пароль"
                 className="body-popup__input-password input"
                 required

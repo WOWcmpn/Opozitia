@@ -4,11 +4,28 @@ import { userAccount } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { AnimatePresence } from "framer-motion";
 import { PopupRecovery } from "@/components/PopupLogin/PopupRecovery";
+import { PopupNewPass } from '@/components/PopupLogin/PopupNewPass';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
-export const UserAccount = ({ setChange }: userAccount) => {
+export const UserAccount = ({ setChange, setPassRecovery }: userAccount) => {
   const [recoveryOption, setRecoveryOption] = useState<number>(0);
   const [recovery, setRecovery] = useState<number>(0);
+  const [newPass, setNewPass] = useState<number>(0);
+  const [pass, setPass] = useState<string>('');
+  const [confirmPass, setConfirmPass] = useState<string>('');
   const {data: session, status, update} = useSession()
+
+  async function newPassword() {
+    try {
+      if(pass !== confirmPass) {
+        toast.error('Введенные пароли не совпадают')
+        return
+      }
+    } catch (err) {
+      console.log('User account error ', err);
+    }
+  }
 
   return (
     <div className={`account__body body-account`}>
@@ -51,13 +68,17 @@ export const UserAccount = ({ setChange }: userAccount) => {
               <Link
                 href="#"
                 className="left-blocks-body__link link-account"
+                onClick={() => setNewPass(1)}
               >
                 Изменить пароль
               </Link>
               <Link
                 href="#"
                 className="left-blocks-body__link-password"
-                onClick={() => setRecovery(1)}
+                onClick={() => {
+                  setRecovery(1);
+                  setPassRecovery(1)
+                }}
               >
                 Забыли пароль?
               </Link>
@@ -117,7 +138,16 @@ export const UserAccount = ({ setChange }: userAccount) => {
         </div>
       </div>
       <AnimatePresence>
-        {recovery === 1 && <PopupRecovery setOption={setRecoveryOption} />}
+        {recovery === 1 && <PopupRecovery onClick={setRecovery} setOption={setRecoveryOption} setPassRecovery={setPassRecovery} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {newPass === 1 && <PopupNewPass
+          onClick={setNewPass}
+          pass={pass}
+          setPass={setPass}
+          confirmPass={confirmPass}
+          setConfirmPass={setConfirmPass}
+        />}
       </AnimatePresence>
     </div>
   )

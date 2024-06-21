@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateNewPassword {
   @IsString()
-  @Length(6, 25)
+  @Length(5, 25)
   newPassword: string;
 
   @IsString()
@@ -49,14 +49,13 @@ export class InputUserModel {
   email: string;
 
   @IsString()
-  @Matches('^[a-zA-Z0-9_-]*$')
   @Length(3, 15)
   login: string;
 
-  @Length(6, 25)
+  @Length(5, 25)
   password: string;
 
-  @Length(6, 25)
+  @Length(5, 25)
   confirmPassword: string;
 }
 

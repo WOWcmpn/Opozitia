@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Logo from "@/img/logo.png";
-import { LoginPopupProps, PassPopupProps } from "@/types/types";
+import { PassPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
 

@@ -4,8 +4,6 @@ import { AccountPopupProps } from "@/types/types";
 import { PopupPassword } from "./PopupPassword";
 import { PopupCode } from "./PopupCode";
 import { PopupRegPass } from "./PopupRegPass";
-import { PopupRecovery } from "./PopupRecovery";
-import { PopupRegSend } from "./PopupRegSend";
 import { PopupRegistration } from "./PopupRegistration";
 import { AuthService } from "@/service/auth.service";
 import inMemoryJWT from "@/service/inMemoryJWT";
@@ -24,6 +22,14 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
 
   async function register() {
     try {
+      if(login.length < 3) {
+        toast.error("Логин должен состоять из трёх и более символов");
+        return
+      }
+      if(login.length > 15) {
+        toast.error("Логин должен быть не длиннее 15 символов");
+        return
+      }
       const data = await AuthService.register({
         email,
         login,
@@ -139,8 +145,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
           confirm={confirmCode}
         />
       )}
-      {/* {option == 5 && <PopupRecovery onClick={onClick} setOption={setOption} />}
-      {option == 6 && <PopupRegSend onClick={onClick} setOption={setOption} />} */}
+      {/*{option == 6 && <PopupRegSend onClick={onClick} setOption={setOption} />}*/}
     </>
   );
 };

@@ -1,14 +1,14 @@
-import { LoginPopupProps } from "@/types/types";
+import { RecoveryPopupProps } from "@/types/types";
 import Image from "next/image";
 import React from "react";
-import Logo from "@/img/logo.png";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export const PopupRecovery = ({
   onClick: onOption,
   setOption,
-}: LoginPopupProps) => {
+  setPassRecovery
+}: RecoveryPopupProps) => {
   return (
     <motion.div
       id="popup-registration-recovery"
@@ -26,10 +26,13 @@ export const PopupRecovery = ({
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
-              onClick={() => onOption(0)}
+              onClick={() => {
+                onOption(0);
+                setPassRecovery(0)
+              }}
             ></button>
           </div>
           <div className="popup__body body-popup">
@@ -41,12 +44,12 @@ export const PopupRecovery = ({
             </div>
             <form
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-registration-send"
               className="body-popup__form"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                setOption(6);
+                setOption(0);
               }}
             >
               <input
