@@ -20,6 +20,8 @@ export const Header = ({
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const session = useSession()
 
+  console.log(session);
+
   useEffect(() => {
     async function loadUtils() {
       if(!weather?.conditionIcon) setWeatherIcon("/img/icons/weather/unknown.webp")
