@@ -6780,6 +6780,10 @@ body::after {
     margin-top: 150px;
   }
 
+  .page-search{
+    margin-top: 160px;
+  }
+
   .page-news{
     margin-top: 150px;
   }
@@ -9489,6 +9493,10 @@ body::after {
 
   .main-block {
     top: 95px;
+  }
+
+  .page-search{
+    margin-top: 80px;
   }
 
   .home-page .block {

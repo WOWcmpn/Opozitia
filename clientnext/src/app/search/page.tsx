@@ -57,7 +57,7 @@ export default function Search({searchParams}: {
           : ""
       }`}>
       <Header onLogin={setLogin} className={"header menu-visual"} />
-      <main className="page">
+      <main className="page page-search">
         {isExist ? (
           <section className="page__search-block search-block">
             <div className="search-block__container">
