@@ -57,6 +57,12 @@ export class AuthController {
     return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.recoveryCode);
   }
 
+  // @Post('new-password')
+  // @HttpCode(204)
+  // async newPassword(@Body() data: CreateNewPassword) {
+  //   return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.recoveryCode);
+  // }
+
   @Post('login')
   @ApiResponse({ status: 200, description: 'Success', type: TokenModel })
   @ApiResponse({ status: 400, description: 'Bad Request' })

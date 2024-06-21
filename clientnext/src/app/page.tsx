@@ -361,9 +361,9 @@ export default function Home() {
                             firstLink={n.id}
                             firstCategory={n.category.toLowerCase()}
                             img={n.fullImgUrl}
-                            link1="Чего ожидать Молдове в ближайшие несколько недель?"
-                            link2="Чего ожидать Молдове в ближайшие несколько недель?"
-                            link3="Чего ожидать Молдове в ближайшие несколько недель?"
+                            link1={data?.bottomNewsOne[0].title}
+                            link2={data?.bottomNewsTwo[0].title}
+                            link3={data?.bottomNewsThree[0].title}
                           />
                         </SwiperSlide>
                       ))}

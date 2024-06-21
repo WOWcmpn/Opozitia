@@ -89,10 +89,6 @@
   box-sizing: border-box;
 }
 
-img {
-  background-color: #000 !important;
-}
-
 html,
 body {
   height: 100%;

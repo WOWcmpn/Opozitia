@@ -19,6 +19,7 @@ export interface IProfileInfo {
 
 export type userAccount = {
   setChange: React.Dispatch<React.SetStateAction<number>>;
+  setPassRecovery: React.Dispatch<React.SetStateAction<number>>
 }
 
 export interface ILogin {
@@ -400,6 +401,12 @@ export type AccountPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
 };
 
+export type RecoveryPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setOption: React.Dispatch<React.SetStateAction<number>>;
+  setPassRecovery: React.Dispatch<React.SetStateAction<number>>
+};
+
 export type LoginPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
   setOption: React.Dispatch<React.SetStateAction<number>>;
@@ -438,6 +445,15 @@ export type RegisterPassPopupProps = {
   confirmPass: string;
   setConfirmPass: React.Dispatch<React.SetStateAction<string>>;
   register: () => void;
+};
+
+export type NewPassPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  pass: string;
+  setPass: React.Dispatch<React.SetStateAction<string>>;
+  confirmPass: string;
+  setConfirmPass: React.Dispatch<React.SetStateAction<string>>;
+  newPassword: () => void
 };
 
 export type SearchProps = {
