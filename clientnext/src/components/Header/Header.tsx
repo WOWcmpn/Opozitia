@@ -40,7 +40,6 @@ export const Header = ({
     loadWeather()
   }, []);
 
-  console.log(session.data?.user);
   // const popup = () => {
   //   if (onClick !== undefined) {
   //     onClick(1);

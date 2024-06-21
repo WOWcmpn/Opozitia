@@ -1,7 +1,7 @@
-import { IConfirmationCode, ILogin, ILoginUser, IRegisterUser } from "@/types/types";
-import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import axios from "./axios";
-import inMemoryJWT from "./inMemoryJWT";
+import { IConfirmationCode, ILogin, ILoginUser, IRegisterUser } from '@/types/types';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios from './axios';
+import inMemoryJWT from './inMemoryJWT';
 
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
@@ -20,8 +20,8 @@ axios.interceptors.request.use(
 );
 
 export const AuthService = {
-  async setNewPassword(password: string) {
-    const { data } = await axios.post('/auth/')
+  async setNewPassword(password: string, login: string): Promise<AxiosResponse | null> {
+    return await axios.post('/auth/change-password', { newPassword: password, login })
   },
 
   async register(user: IRegisterUser): Promise<{code: string} | null> {

@@ -7,6 +7,7 @@ import { PopupRecovery } from "@/components/PopupLogin/PopupRecovery";
 import { PopupNewPass } from '@/components/PopupLogin/PopupNewPass';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { AuthService } from '@/service/auth.service';
 
 export const UserAccount = ({ setChange, setPassRecovery }: userAccount) => {
   const [recoveryOption, setRecoveryOption] = useState<number>(0);
@@ -21,6 +22,22 @@ export const UserAccount = ({ setChange, setPassRecovery }: userAccount) => {
       if(pass !== confirmPass) {
         toast.error('Введенные пароли не совпадают')
         return
+      } else if(pass.length < 5) {
+        toast.error('Пароль должен быть длиннее 5 символов')
+        return
+      } else if(pass.length > 25) {
+        toast.error('Пароль должен быть не длиннее 25 символов')
+        return
+      }
+      const data = await AuthService.setNewPassword(pass, session?.user?.name!)
+      console.log(typeof data, data);
+      if(data) {
+        toast.success('Пароль был изменён')
+        setNewPass(0)
+        setPass('')
+        setConfirmPass('')
+      } else {
+        toast.error('Что-то пошло не так')
       }
     } catch (err) {
       console.log('User account error ', err);
@@ -147,6 +164,7 @@ export const UserAccount = ({ setChange, setPassRecovery }: userAccount) => {
           setPass={setPass}
           confirmPass={confirmPass}
           setConfirmPass={setConfirmPass}
+          newPassword={newPassword}
         />}
       </AnimatePresence>
     </div>

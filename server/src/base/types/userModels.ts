@@ -11,6 +11,15 @@ export class CreateNewPassword {
   recoveryCode: string;
 }
 
+export class ChangePassword {
+  @IsString()
+  @Length(5, 25)
+  newPassword: string;
+
+  @IsString()
+  login: string;
+}
+
 export class ResendConfirmation {
   @IsEmail()
   email: string;
