@@ -96,10 +96,10 @@ export default function Home() {
                         spaceBetween={30}
                         loop={true}
                         simulateTouch={false}
-                        // autoplay={{
-                        //   delay: 2000,
-                        //   disableOnInteraction: false,
-                        // }}
+                        autoplay={{
+                          delay: 2000,
+                          disableOnInteraction: false,
+                        }}
                         speed={1000}
                         onBeforeInit={(swiper) => {
                           swiperRef.current = swiper;
@@ -134,10 +134,10 @@ export default function Home() {
                           fadeEffect={{ crossFade: true }}
                           loop={true}
                           simulateTouch={false}
-                          // autoplay={{
-                          //   delay: 3000,
-                          //   disableOnInteraction: false,
-                          // }}
+                          autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                          }}
                           speed={1000}
                         >
                           <SwiperSlide>
@@ -234,10 +234,10 @@ export default function Home() {
                           modules={[Autoplay, EffectFade]}
                           slidesPerView={1}
                           fadeEffect={{ crossFade: false }}
-                          // autoplay={{
-                          //   delay: 3000,
-                          //   disableOnInteraction: false,
-                          // }}
+                          autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                          }}
                           speed={1000}
                         >
                           <SwiperSlide>
@@ -348,10 +348,10 @@ export default function Home() {
                       allowTouchMove={false}
                       simulateTouch={false}
                       touchMoveStopPropagation={true}
-                      // autoplay={{
-                      //   delay: 3000,
-                      //   disableOnInteraction: false,
-                      // }}
+                      autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                      }}
                       speed={1000}
                     >
                       {data?.mainNews.map((n) => (
