@@ -3597,6 +3597,7 @@ body::after {
   font-size: 1.3125rem;
   font-weight: 300;
   line-height: 1.2857142857;
+  word-break: break-all;
 }
 
 .bottom-comments-news__text:not(:last-child) {
@@ -3890,6 +3891,8 @@ body::after {
   border-radius: 60px;
   background: rgb(255, 255, 255);
 }
+
+
 
 .wheather-left-vidgets__temp-week-day {
   display: -webkit-box;
