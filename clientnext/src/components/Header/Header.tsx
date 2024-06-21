@@ -20,6 +20,8 @@ export const Header = ({
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const session = useSession()
 
+  console.log(session);
+
   useEffect(() => {
     async function loadUtils() {
       if(!weather?.conditionIcon) setWeatherIcon("/img/icons/weather/unknown.webp")
@@ -40,7 +42,6 @@ export const Header = ({
     loadWeather()
   }, []);
 
-  console.log(session.data?.user);
   // const popup = () => {
   //   if (onClick !== undefined) {
   //     onClick(1);
@@ -191,17 +192,18 @@ export const Header = ({
                     </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
-                    {/* <a className="menu-item menu-item-widgets" href="#"></a> */}
-                    <Link
-                      href="#"
-                      data-popup="#popup-vote"
-                      className="menu-item menu-item-widgets bottom-header__link menubox-offer-news !py-[16px] !px-[65px] "
-                      onClick={newsPopup}
-                    >
-                      <span className="text-[10px] !whitespace-nowrap">
-                        Сообщить новость
-                      </span>
-                    </Link>
+                      {session.data ? (
+                        <Link
+                          href="#"
+                          data-popup="#popup-vote"
+                          className="menu-item menu-item-widgets bottom-header__link menubox-offer-news !py-[16px] !px-[65px] "
+                          onClick={newsPopup}
+                        >
+                          <span className="bottom-header__link-news">Сообщить новость</span>
+                        </Link>
+                      ) : (
+                        <div></div>
+                      )}
                   </li>
                   <li className="menu-item-widgets-wrapper mt-[30px] ml-[22px]">
                     <Link href={'/oprosi'} className="menu-item-widgets-oprosi ">

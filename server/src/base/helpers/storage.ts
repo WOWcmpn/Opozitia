@@ -7,6 +7,7 @@ const normalizeFileName = (req, file, callback) => {
 };
 
 export const fileStorage = diskStorage({
-  destination: '../clientnext/public/img/fullImage-news',
+  // destination: '../clientnext/public/img/fullImage-news',
+  destination: '../tmp/',
   filename: normalizeFileName,
 });

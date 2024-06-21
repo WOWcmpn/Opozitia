@@ -362,8 +362,8 @@ export default function Home() {
                             firstCategory={n.category.toLowerCase()}
                             img={n.fullImgUrl}
                             link1={data?.bottomNewsOne[0].title}
-                            link2={data?.bottomNewsTwo[0].title}
-                            link3={data?.bottomNewsThree[0].title}
+                            link2={data?.bottomNewsTwo[1].title}
+                            link3={data?.bottomNewsThree[2].title}
                           />
                         </SwiperSlide>
                       ))}

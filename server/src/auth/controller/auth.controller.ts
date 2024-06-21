@@ -1,6 +1,7 @@
-import { Body, Controller, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { RegistrationUseCase } from '../use-cases/registration.use-case';
 import {
+  ChangePassword,
   CreateNewPassword,
   InputConfirmationCode,
   InputUserModel,
@@ -18,6 +19,8 @@ import { RefreshTokenGuard } from '../guards/refreshToken.guard';
 import { PasswordRecoveryUseCase } from '../use-cases/passwordRecovery.use-case';
 import { NewPasswordUseCase } from '../use-cases/newPassword.use-case';
 import { ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UsersRepository } from '../../users/repositories/users.repository';
+import { UsersQueryRepository } from '../../users/repositories/users.query-repository';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -31,6 +34,8 @@ export class AuthController {
     private readonly logoutUseCase: LogoutUseCase,
     private readonly passwordRecoveryUseCase: PasswordRecoveryUseCase,
     private readonly newPasswordUseCase: NewPasswordUseCase,
+    private readonly usersRepo: UsersRepository,
+    private readonly usersQueryRepo: UsersQueryRepository,
   ) {}
 
   @Post('registration-password')
@@ -57,11 +62,15 @@ export class AuthController {
     return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.recoveryCode);
   }
 
-  // @Post('new-password')
-  // @HttpCode(204)
-  // async newPassword(@Body() data: CreateNewPassword) {
-  //   return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.recoveryCode);
-  // }
+  @Post('change-password')
+  @HttpCode(204)
+  async changePassword(@Body() data: ChangePassword) {
+    const user = await this.usersQueryRepo.getUserByLogin(data.login);
+    if (!user) throw new BadRequestException([{ message: "User doesn't exists", field: 'Login' }]);
+    const passwordHash = await this.authService.createPasswordHash(data.newPassword);
+    await this.usersRepo.updatePassword(user.id, passwordHash);
+    return;
+  }
 
   @Post('login')
   @ApiResponse({ status: 200, description: 'Success', type: TokenModel })
