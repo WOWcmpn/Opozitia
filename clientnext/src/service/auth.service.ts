@@ -20,7 +20,35 @@ axios.interceptors.request.use(
 );
 
 export const AuthService = {
-  async setNewPassword(password: string, login: string): Promise<AxiosResponse | null> {
+  async comparePasswords(password: string, login: string): Promise<AxiosResponse | null> {
+    try {
+      return await axios.post('/user/compare-passwords', {password, login})
+    } catch (err) {
+      console.error('compare password error ', err);
+      return null
+    }
+  },
+
+  async setNewPassword(password: string, recoveryCode: string): Promise<AxiosResponse | null> {
+    try {
+      return await axios.post('/auth/new-password', {newPassword: password, recoveryCode})
+    } catch (err) {
+      console.error('new password error ', err);
+      return null
+    }
+  },
+
+  async sendRecoveryPassCode(email: string): Promise<{code: string} | null> {
+    try {
+      const {data} = await axios.post('/auth/password-recovery', { email })
+      return data
+    } catch (err) {
+      console.error('sendRecoveryPassCode error ', err);
+      return null
+    }
+  },
+
+  async changePassword(password: string, login: string): Promise<AxiosResponse | null> {
     return await axios.post('/auth/change-password', { newPassword: password, login })
   },
 

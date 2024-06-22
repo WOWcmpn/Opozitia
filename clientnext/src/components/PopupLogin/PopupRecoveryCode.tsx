@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ConfirmCodeProps } from "@/types/types";
+import { ConfirmRecoveryCodeProps } from '@/types/types';
 import Link from "next/link";
 
-export const PopupCode = ({
+export const PopupRecoveryCode = ({
   onClick: onOption,
   setInputConfirmCode,
   email,
-  confirm
-}: ConfirmCodeProps) => {
+  confirmCode
+}: ConfirmRecoveryCodeProps) => {
   const [first, setFirst] = useState<string>('');
   const [second, setSecond] = useState<string>('');
   const [third, setThird] = useState<string>('');
@@ -34,27 +34,27 @@ export const PopupCode = ({
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
-              onClick={() => onOption(0)}
+              onClick={() => onOption(3)}
             ></button>
           </div>
           <div className="popup__body body-popup">
             <div className="body-popup__top">
               <h3 className="body-popup__title">Введите код</h3>
               <p className="body-popup__text">
-                На {email} отправлен одноразовый код
+                На {email} отправлен одноразовый код для восстановления пароля
               </p>
             </div>
             <form
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-registration-password"
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                confirm()
+                confirmCode()
               }}
             >
               <div className="body-popup__wrap-input">

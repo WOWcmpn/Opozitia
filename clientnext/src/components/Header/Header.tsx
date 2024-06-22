@@ -6,7 +6,7 @@ import Logo from "@/img/logo.png";
 import Link from "next/link";
 import { HeaderProps, IWeather } from "@/types/types";
 import { NewsService } from "@/service/news.service";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export const Header = ({
   className,
@@ -19,8 +19,6 @@ export const Header = ({
   const [weather, setWeather] = useState<IWeather>();
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const session = useSession()
-
-  console.log(session);
 
   useEffect(() => {
     async function loadUtils() {
@@ -95,8 +93,10 @@ export const Header = ({
                 />
               </Link>
               {session?.data ? (
-                <div className={'grid grid-cols-2 gap-0.5 place-items-stretch'}>
-                  <Link href={'/account'} className={'w-[55px]'} >
+                  <Link
+                    href={'/account'}
+                    className="top-header__link-login link-top-header"
+                  >
                     <Image
                       width={55}
                       height={50}
@@ -104,14 +104,6 @@ export const Header = ({
                       alt="Icon"
                     />
                   </Link>
-                  <button
-                    className={'border-solid rounded-2xl border-2 border-red-500' +
-                      ' bg-red-500 h-10 w-20 text-white font-medium items-center'}
-                    onClick={() => signOut({callbackUrl: '/'})}
-                  >
-                    Sign out
-                  </button>
-                </div>
               ) : (
                 <Link
                   data-popup="#popup-login"

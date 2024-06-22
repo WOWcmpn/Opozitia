@@ -1,9 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import Logo from "@/img/logo.png";
 import { LoginPopupProps } from "@/types/types";
-import { AuthService } from "@/service/auth.service";
 import Link from "next/link";
 
 export const PopupLogin = ({

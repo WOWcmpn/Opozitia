@@ -2,6 +2,14 @@ import { IsEmail, IsEnum, IsOptional, IsString, Length, Matches, MaxLength } fro
 import { favoriteNewsCategory } from './newsModels';
 import { ApiProperty } from '@nestjs/swagger';
 
+export class ComparePasswordsData {
+  @IsString()
+  password: string;
+
+  @IsString()
+  login: string;
+}
+
 export class CreateNewPassword {
   @IsString()
   @Length(5, 25)

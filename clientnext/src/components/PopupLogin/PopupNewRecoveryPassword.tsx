@@ -1,19 +1,19 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import { NewPassPopupProps } from '@/types/types';
+import { NewRecoveryPassPopupProps } from '@/types/types';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "next/link";
 
-export const PopupNewPass = ({ onClick: onOption,
-                               pass,
-                               setPass,
-                               confirmPass,
-                               setConfirmPass,
-                               newPassword,
-                               setPrevPassword
-}: NewPassPopupProps) => {
+export const PopupNewRecoveryPassword = ({
+  onClick: onOption,
+  recoveryPass,
+  setRecoveryPass,
+  confirmRecoveryPass,
+  setConfirmRecoveryPass,
+  newRecoveryPassword
+}: NewRecoveryPassPopupProps) => {
   return (
     <motion.div
       id="popup-registration-password"
@@ -52,24 +52,13 @@ export const PopupNewPass = ({ onClick: onOption,
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                if(pass === confirmPass) {
-                  newPassword()
+                if(recoveryPass === confirmRecoveryPass) {
+                  newRecoveryPassword()
                 } else {
                   toast.error('Введенные вами пароли не совпадают')
                 }
               }}
             >
-              <input
-                type="password"
-                id="prevPass"
-                name="form[]"
-                minLength={5}
-                data-required={true}
-                placeholder="Введите ваш старый пароль"
-                className="body-popup__input-password input"
-                required
-                onChange={(e) => setPrevPassword(e.target.value)}
-              />
               <input
                 type="password"
                 id="pass"
@@ -79,8 +68,8 @@ export const PopupNewPass = ({ onClick: onOption,
                 placeholder="Введите ваш пароль"
                 className="body-popup__input-password input"
                 required
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
+                value={recoveryPass}
+                onChange={(e) => setRecoveryPass(e.target.value)}
               />
               <input
                 type="password"
@@ -91,8 +80,8 @@ export const PopupNewPass = ({ onClick: onOption,
                 placeholder="Повторите введенный пароль"
                 className="body-popup__input-password input"
                 required
-                value={confirmPass}
-                onChange={(e) => setConfirmPass(e.target.value)}
+                value={confirmRecoveryPass}
+                onChange={(e) => setConfirmRecoveryPass(e.target.value)}
               />
               <button
                 type="submit"

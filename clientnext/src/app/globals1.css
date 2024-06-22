@@ -4743,6 +4743,14 @@ body::after {
   border-top: 1px solid #acadac;
 }
 
+.left-button-body__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 29px 0 0;
+  margin-top: -2rem;
+}
+
 .left-blocks-body__link-password {
   display: inline-block;
 }

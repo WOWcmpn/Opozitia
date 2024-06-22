@@ -51,7 +51,7 @@ export class AuthController {
   }
 
   @Post('password-recovery')
-  @HttpCode(204)
+  @HttpCode(201)
   async passwordRecovery(@Body() data: ResendConfirmation) {
     return await this.passwordRecoveryUseCase.sendCode(data.email);
   }

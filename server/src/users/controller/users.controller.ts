@@ -1,7 +1,18 @@
-import { Body, Controller, Get, HttpCode, Put, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { Request } from 'express';
-import { ChangeProfile } from '../../base/types/userModels';
+import { ChangeProfile, ComparePasswordsData } from '../../base/types/userModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { ChangeProfileUseCase } from '../use-cases/changeProfile.use-case';
 import { UsersQueryRepository } from '../repositories/users.query-repository';
@@ -35,5 +46,18 @@ export class UsersController {
   async changeProfile(@Body() data: ChangeProfile) {
     await this.changeProfileUseCase.changeInformation(data);
     return true;
+  }
+
+  @Post('compare-passwords')
+  @HttpCode(204)
+  async comparePasswords(@Body() data: ComparePasswordsData) {
+    const user = await this.usersQueryRepository.getUserByLogin(data.login);
+    if (!user) throw new BadRequestException([{ message: 'Это не ваш пароль', field: 'password' }]);
+    const isTrue = await this.authService.comparePasswords(data.password, user.passwordHash);
+    if (isTrue) {
+      return true;
+    } else {
+      throw new BadRequestException([{ message: 'Это не ваш пароль', field: 'password' }]);
+    }
   }
 }

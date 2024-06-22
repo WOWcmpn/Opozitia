@@ -1,13 +1,7 @@
 import Image from "next/image";
-import React, { useState } from "react";
-import Logo from "@/img/logo.png";
-import { LoginPopupProps, RegisterEmailPopupProps } from "@/types/types";
-import Soc1 from "@/img/social/01.svg";
-import Soc2 from "@/img/social/02.svg";
-import Soc3 from "@/img/social/03.svg";
-import Soc4 from "@/img/social/04.svg";
+import React from "react";
+import { RegisterEmailPopupProps } from "@/types/types";
 import { motion } from "framer-motion";
-import { AuthService } from "@/service/auth.service";
 import Link from "next/link";
 
 export const PopupRegistration = ({

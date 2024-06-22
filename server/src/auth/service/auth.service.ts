@@ -6,6 +6,10 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
+  async comparePasswords(inputPassword: string, passwordHash: string) {
+    return await bcrypt.compare(inputPassword, passwordHash);
+  }
+
   async getUserId(accessToken: string) {
     if (accessToken) {
       try {

@@ -13,6 +13,6 @@ export class PasswordRecoveryUseCase {
     const user = await this.usersQueryRepo.getUserByEmail(email);
     if (!user) throw new BadRequestException([{ message: "Email doesn't exists", field: 'email' }]);
     await this.emailManager.sendPasswordRecovery(user.email, user.recoveryConfirmation.recoveryCode);
-    return;
+    return { code: user.recoveryConfirmation.recoveryCode };
   }
 }

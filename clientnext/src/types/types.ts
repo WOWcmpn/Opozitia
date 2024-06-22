@@ -403,8 +403,9 @@ export type AccountPopupProps = {
 
 export type RecoveryPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
-  setOption: React.Dispatch<React.SetStateAction<number>>;
   setPassRecovery: React.Dispatch<React.SetStateAction<number>>
+  setEmail: React.Dispatch<React.SetStateAction<string>>
+  sendRecoveryCode: () => void
 };
 
 export type LoginPopupProps = {
@@ -419,6 +420,13 @@ export type ConfirmCodeProps = {
   setInputConfirmCode: React.Dispatch<React.SetStateAction<string>>
   email: string
   confirm: () => void
+};
+
+export type ConfirmRecoveryCodeProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  setInputConfirmCode: React.Dispatch<React.SetStateAction<string>>
+  email: string
+  confirmCode: () => void
 };
 
 export type PassPopupProps = {
@@ -453,7 +461,17 @@ export type NewPassPopupProps = {
   setPass: React.Dispatch<React.SetStateAction<string>>;
   confirmPass: string;
   setConfirmPass: React.Dispatch<React.SetStateAction<string>>;
+  setPrevPassword: React.Dispatch<React.SetStateAction<string>>;
   newPassword: () => void
+};
+
+export type NewRecoveryPassPopupProps = {
+  onClick: React.Dispatch<React.SetStateAction<number>>;
+  recoveryPass: string;
+  setRecoveryPass: React.Dispatch<React.SetStateAction<string>>;
+  confirmRecoveryPass: string;
+  setConfirmRecoveryPass: React.Dispatch<React.SetStateAction<string>>;
+  newRecoveryPassword: () => void
 };
 
 export type SearchProps = {

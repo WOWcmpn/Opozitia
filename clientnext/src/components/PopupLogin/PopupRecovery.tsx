@@ -6,8 +6,9 @@ import Link from "next/link";
 
 export const PopupRecovery = ({
   onClick: onOption,
-  setOption,
-  setPassRecovery
+  setPassRecovery,
+  setEmail,
+  sendRecoveryCode
 }: RecoveryPopupProps) => {
   return (
     <motion.div
@@ -49,7 +50,7 @@ export const PopupRecovery = ({
               className="body-popup__form"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                setOption(0);
+                sendRecoveryCode()
               }}
             >
               <input
@@ -59,6 +60,7 @@ export const PopupRecovery = ({
                 data-required="email"
                 placeholder="E-mail@mail.ru"
                 className="body-popup__input input"
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button type="submit" className="body-popup__button">
                 Продолжить
