@@ -37,7 +37,6 @@ export const UserAccount = ({ setChange, setPassRecovery }: userAccount) => {
         return
       }
       const isLegit = await AuthService.comparePasswords(prevPassword, session?.user?.name!)
-      console.log(isLegit);
       if(isLegit) {
         const data = await AuthService.changePassword(pass, session?.user?.name!)
         if(data) {

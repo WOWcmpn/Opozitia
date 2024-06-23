@@ -8,6 +8,7 @@ import { AccountSupport } from "@/components/AccountSupport/AccountSupport";
 import { NewsService } from "@/service/news.service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { cities } from '@/utils/cities';
 
 export default function Account() {
   const [option, setOption] = useState<number>(0);
@@ -36,23 +37,27 @@ export default function Account() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     try {
-      const data = await NewsService.changeProfile(
-        //@ts-ignore
-        session!.user?.id,
-        email,
-        login,
-        age,
-        location,
-        favoriteNewsCategory
-      )
-      if(data) {
-        await update({ name: login, email: email, location: location, age: age, favoriteNewsCategory: favoriteNewsCategory})
-        toast.success('Ваши данные были обновлены')
-        setChange(0)
+      const isExists = cities.find(city => city.name === location)
+      if(isExists || location === 'Неизвестно') {
+        const data = await NewsService.changeProfile(
+          //@ts-ignore
+          session!.user?.id,
+          email,
+          login,
+          age,
+          location,
+          favoriteNewsCategory
+        )
+        if(data) {
+          await update({ name: login, email: email, location: location, age: age, favoriteNewsCategory: favoriteNewsCategory})
+          toast.success('Ваши данные были обновлены')
+          setChange(0)
+        } else {
+          toast.error('Введенные вами данные уже заняты либо невалидны')
+        }
       } else {
-        toast.error('Введенные вами данные уже заняты либо невалидны')
+        toast.error('Введите существующий город')
       }
     } catch (err) {
       toast.error('Введенные вами данные уже заняты либо невалидны')
@@ -187,9 +192,10 @@ export default function Account() {
                           Мой профиль
                         </h3>
                         <form
-                          action="#"
+                          method={'put'}
                           data-one-select={true}
                           className="right-blocks-body__form"
+                          onSubmit={handleSubmit}
                         >
                           <div className="right-blocks-body__item">
                             <label
@@ -198,18 +204,16 @@ export default function Account() {
                             >
                               Местоположение
                             </label>
-                            <div className="w-[480px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black  ">
-                              <Select onValueChange={(country) => setLocation(country)}>
-                                <SelectTrigger>
-                                  {/*@ts-ignore*/}
-                                  <SelectValue placeholder={session?.user?.location || 'неизвестно'} />
-                                </SelectTrigger>
-                                <SelectContent className="border-white bg-white rounded-2xl text-black">
-                                  <SelectGroup>
-                                    <SelectItem className="cursor-pointer" key={"Страна"} value="Страна">Страна</SelectItem>
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
+                            <div>
+                              <input
+                                type={'text'}
+                                id={'country'}
+                                name="form[]"
+                                className="left-blocks-body__input select-input"
+                                /*@ts-ignore*/
+                                defaultValue={session!.user!.location!}
+                                onChange={(e) => setLocation(e.target.value)}
+                              />
                             </div>
                           </div>
                           <div className="right-blocks-body__item">
@@ -256,7 +260,7 @@ export default function Account() {
                     </div>
                   </div>
                 ) : (
-                  <AccountSupport />
+                  <AccountSupport location={location} />
                 )}
               </div>
             </div>

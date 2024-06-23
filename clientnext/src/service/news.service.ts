@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from 'axios';
 import {
   IComments,
   ICreateNews,
@@ -16,13 +16,22 @@ import {
   ISearchNews,
   ISingleNews,
   IWeather,
-  quizVotes
-} from "@/types/types";
+  quizVotes,
+} from '@/types/types';
 
 axios.defaults.baseURL = "http://localhost:4000/"
 // axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
+    try {
+      return await axios.post('/user/send-question', { inputData: { name, location, text } })
+    } catch (err) {
+      console.error('Service send email error ', err);
+      return null
+    }
+  },
+
   async changeProfile(
     userId: string,
     email: string,
@@ -90,8 +99,8 @@ export const NewsService = {
     return data
   },
 
-  async getWeather(city?: string): Promise<IWeather> {
-    const {data} = await axios.get('news/weather')
+  async getWeather(city: string): Promise<IWeather> {
+    const {data} = await axios.get('news/weather', {params: { city }})
     return data
   },
 

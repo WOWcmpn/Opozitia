@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 
 export const Header = ({
   className,
-  onClick,
   onLogin,
   onSearch,
   onNews,
@@ -18,7 +17,7 @@ export const Header = ({
   const [burger, setBurger] = useState(false);
   const [weather, setWeather] = useState<IWeather>();
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
-  const session = useSession()
+  const { data: session, status } = useSession()
 
   useEffect(() => {
     async function loadUtils() {
@@ -31,20 +30,20 @@ export const Header = ({
   useEffect(() => {
     async function loadWeather() {
       try {
-        const weather = await NewsService.getWeather()
-        setWeather(weather)
+        if(status === 'authenticated') {
+          // @ts-ignore
+          const weather = await NewsService.getWeather(session!.user!.location)
+          setWeather(weather)
+        } else if (status === 'unauthenticated') {
+          const weather = await NewsService.getWeather('Кишинев')
+          setWeather(weather)
+        }
       } catch (err) {
         console.warn('weather gone wrong: ', err);
       }
     }
     loadWeather()
-  }, []);
-
-  // const popup = () => {
-  //   if (onClick !== undefined) {
-  //     onClick(1);
-  //   }
-  // };
+  }, [session, status]);
 
   const loginPopup = () => {
     if (onLogin !== undefined) {
@@ -92,7 +91,7 @@ export const Header = ({
                   alt="Icon"
                 />
               </Link>
-              {session?.data ? (
+              {status === 'authenticated' ? (
                   <Link
                     href={'/account'}
                     className="top-header__link-login link-top-header"
@@ -184,7 +183,7 @@ export const Header = ({
                     </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
-                      {session.data ? (
+                      {status === 'authenticated' ? (
                         <Link
                           href="#"
                           data-popup="#popup-vote"
@@ -243,7 +242,7 @@ export const Header = ({
               </ul>
             </nav>
           </div>
-          {session.data ? (
+          {status === 'authenticated' ? (
             <Link
               href="#"
               data-popup="#popup-vote"

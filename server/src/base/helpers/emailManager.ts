@@ -28,4 +28,17 @@ export class EmailManager {
           <b>${recoveryCode}</b></p>`,
     });
   }
+
+  async sendQuestion(name: string, location: string, text: string) {
+    await this.mailerService.sendMail({
+      to: 'namelesssyes@gmail.com',
+      from: 'Opozitia <dmitrybackenddev@gmail.com>',
+      subject: 'Вопрос от пользователя',
+      html:
+        `<h3><strong>ФИО</strong> - <em>${name}</em></h3>` +
+        `<h3><strong>Местположение</strong> - <em>${location}</em></h3>` +
+        `<h3>Сообщение: </h3>` +
+        `<p style='font-size: 20px'>${text}</p>`,
+    });
+  }
 }

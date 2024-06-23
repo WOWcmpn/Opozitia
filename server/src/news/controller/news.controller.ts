@@ -52,7 +52,11 @@ export class NewsController {
 
   @Get('weather')
   @HttpCode(200)
-  async getWeather(@Body('city') city: string) {
+  async getWeather(@Query() inputCity: { city: string }) {
+    let city: string = inputCity.city;
+    if (inputCity.city === 'Неизвестно' || !inputCity.city) {
+      city = 'Кишинев';
+    }
     return await this.getWeatherUseCase.getWeather(city);
   }
 

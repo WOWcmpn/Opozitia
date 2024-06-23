@@ -12,11 +12,12 @@ import {
 } from '@nestjs/common';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { Request } from 'express';
-import { ChangeProfile, ComparePasswordsData } from '../../base/types/userModels';
+import { ChangeProfile, ComparePasswordsData, InputSendQuestion } from '../../base/types/userModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { ChangeProfileUseCase } from '../use-cases/changeProfile.use-case';
 import { UsersQueryRepository } from '../repositories/users.query-repository';
 import { ApiTags } from '@nestjs/swagger';
+import { EmailManager } from '../../base/helpers/emailManager';
 
 @Controller('user')
 @ApiTags('Users')
@@ -25,7 +26,14 @@ export class UsersController {
     private readonly authService: AuthService,
     private readonly changeProfileUseCase: ChangeProfileUseCase,
     private readonly usersQueryRepository: UsersQueryRepository,
+    private readonly emailManager: EmailManager,
   ) {}
+
+  @Post('send-question')
+  @HttpCode(204)
+  async sendQuestion(@Body('inputData') inputData: InputSendQuestion) {
+    return await this.emailManager.sendQuestion(inputData.name, inputData.location, inputData.text);
+  }
 
   @Get('profile-login')
   @HttpCode(200)

@@ -1,5 +1,12 @@
 import { StaticImageData } from "next/image";
 
+export interface City {
+  city_id: string
+  country_id: string
+  region_id: string
+  name: string
+}
+
 export interface IChangeProfile {
   originalLogin: string
   email: string
@@ -288,7 +295,6 @@ export type BlockContentProps = {
 
 export type HeaderProps = {
   className?: string;
-  onClick?: React.Dispatch<React.SetStateAction<number>>;
   onLogin?: React.Dispatch<React.SetStateAction<number>>;
   onSearch?: React.Dispatch<React.SetStateAction<number>>;
   onNews?: React.Dispatch<React.SetStateAction<number>>;

@@ -8,7 +8,7 @@ const apiKey = 'bbf0bc598ad041f8944135146242805';
 export class GetWeatherUseCase {
   constructor() {}
 
-  async getWeather(city: string = 'Гомель') {
+  async getWeather(city: string) {
     try {
       const res = await axios.get(
         `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=3`,

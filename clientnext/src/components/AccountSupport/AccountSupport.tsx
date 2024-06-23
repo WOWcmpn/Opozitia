@@ -2,10 +2,36 @@ import Link from "next/link";
 import Image from "next/image";
 import Social1 from "@/img/social/02.svg";
 import Social2 from "@/img/social/04.svg";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React from "react";
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { NewsService } from '@/service/news.service';
 
-export const AccountSupport = ({}) => {
+export const AccountSupport = ({location}: {location: string}) => {
+  const [name, setName] = useState<string>('');
+  const [text, setText] = useState<string>('');
+
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const data = await NewsService.sendEmail(name, location, text)
+      if(data) {
+        toast.success('Ваше сообщение было отправлено')
+        setName('')
+        setText('')
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+        return
+      } else {
+        toast.error('Что-то пошло не так')
+        return
+      }
+    } catch (err) {
+      console.error('Send email error ', err);
+      toast.error('Что-то пошло не так, попробуйте снова')
+    }
+  }
 
   return (
     <div className="account__body body-account">
@@ -25,7 +51,7 @@ export const AccountSupport = ({}) => {
                   href="mailto:ааааа0303@gmail.com"
                   className="left-blocks-body__title-name left-blocks-body__title-name_link"
                 >
-                  ааааа0303@gmail.com
+                  namelesssyes@gmail.com
                 </Link>
               </div>
               <div className="left-blocks-body__item">
@@ -70,10 +96,10 @@ export const AccountSupport = ({}) => {
             Есть вопросы?
           </h3>
           <form
-            action="#"
-            data-dev={true}
+            method={'post'}
             data-popup-message="#popup-account-answer"
             className="right-blocks-body__form right-blocks-body__form_questions"
+            onSubmit={handleSubmit}
           >
             <div className="right-blocks-body__items-wrap">
               <div className="right-blocks-body__item">
@@ -83,32 +109,24 @@ export const AccountSupport = ({}) => {
                   name="form[]"
                   data-error="Ошибка"
                   placeholder="ФИО..."
+                  minLength={5}
+                  maxLength={25}
                   className="right-blocks-body__input select-input"
                   required
+                  onChange={(e) => setName(e.target.value)}
                 />
-              </div>
-              <div className="right-blocks-body__item">
-                <div className="w-[480px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black  ">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Страна" />
-                    </SelectTrigger>
-                    <SelectContent className="border-white bg-white rounded-2xl text-black">
-                      <SelectGroup>
-                        <SelectItem className="cursor-pointer" key={"Страна"} value="Страна">Страна</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
               <div className="right-blocks-body__item">
                 <textarea
                   autoComplete="off"
                   name="form[]"
                   placeholder="Введите вопрос..."
+                  minLength={20}
+                  maxLength={700}
                   data-error="Ошибка"
                   className="right-blocks-body__txt select-input"
                   required
+                  onChange={(e) => setText(e.target.value)}
                 ></textarea>
               </div>
             </div>
@@ -117,6 +135,7 @@ export const AccountSupport = ({}) => {
                 id="c_30"
                 className="checkbox__input"
                 data-required={true}
+                required={true}
                 data-error="Подтвердите свое согласие"
                 type="checkbox"
                 value="1"
