@@ -334,7 +334,7 @@ export default function Widgets() {
                         slidesPerView={1}
                         loop={false}
                         simulateTouch={false}
-                        speed={200}
+                        // speed={200}
                         onBeforeInit={(swiper) => {
                           swiperRef.current = swiper;
                         }}
