@@ -40,7 +40,7 @@ export class NewsController {
     private readonly getWeatherUseCase: GetWeatherUseCase,
   ) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_HOUR)
   handleNews() {
     return this.getNewsUseCase.getNews();
   }
@@ -58,6 +58,12 @@ export class NewsController {
       city = 'Кишинев';
     }
     return await this.getWeatherUseCase.getWeather(city);
+  }
+
+  @Get('amount')
+  @HttpCode(200)
+  async getAmountOfCategory(@Query() query: { category: string; sorting?: string }) {
+    return await this.newsQueryRepository.getAmountOfCategory(query.category, query.sorting);
   }
 
   @Get('sidebar')

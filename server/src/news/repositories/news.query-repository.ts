@@ -51,6 +51,45 @@ export class NewsQueryRepository {
       .getCount();
   }
 
+  async getAmountOfCategory(category: string, sorting: string = 'all') {
+    const DAY = 24 * 3600 * 1000;
+    const MONTH = 30 * DAY;
+    const YEAR = 365.2425 * DAY;
+    const startDate = new Date();
+
+    if (sorting === 'week') {
+      const weekDate = new Date(+startDate - 7 * DAY);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :weekDate', { weekDate })
+        .getCount();
+    } else if (sorting === 'month') {
+      const monthDate = new Date(+startDate - MONTH);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :monthDate', { monthDate })
+        .getCount();
+    } else if (sorting === 'year') {
+      const yearDate = new Date(+startDate - YEAR);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .andWhere('n.createdAtDate > :yearDate', { yearDate })
+        .getCount();
+    } else if (sorting === 'all') {
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+        .where('n.category = :category', { category })
+        .getCount();
+    }
+  }
+
   async getAllNewsByCategory(
     category: string,
     pageNumber: number = 1,

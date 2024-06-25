@@ -20,7 +20,7 @@ export const BlockContent = ({
           <div className="thumbs-images__slide ">
             <Link href={`${firstCategory}/${firstLink}`} className="thumbs-images__image-ibg">
               <picture>
-                <Image fill={true} src={img} alt="Image" className="!h-[280px] " />
+                <Image fill={true} src={img} alt={img} className="!h-[280px] " />
               </picture>
             </Link>
           </div>

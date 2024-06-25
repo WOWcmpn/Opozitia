@@ -14,10 +14,11 @@ import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 export default function Economy() {
   const ItemPerPage = 10
   const [data, setData] = useState<IMainNews[]>([])
+  const [amount, setAmount] = useState<number>(0);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [option, setOption] = useState('');
@@ -55,6 +56,8 @@ export default function Economy() {
           try{
             const newData = await NewsService.getEconomyNews(page, ItemPerPage, option)
             setData(newData)
+            const amount = await NewsService.getAmountOfCategory('Economy', option)
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -64,6 +67,8 @@ export default function Economy() {
           try{
             const newData = await NewsService.getEconomyNews(page, ItemPerPage)
             setData(newData)
+            const amount = await NewsService.getAmountOfCategory('Economy')
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -73,7 +78,7 @@ export default function Economy() {
       }
     }
     loadData()
-  }, [page, option])
+  }, [page, option, amount])
 
   useEffect(() => {
     async function getSidebar() {
@@ -113,7 +118,7 @@ export default function Economy() {
               <div className="news__content content-news">
                 <header className="content-news__header content-news__header_small-select">
                   <span className="content-news__number-news">
-                    {data?.length} статей
+                    {amount} статей
                   </span>
                   <div className="w-[200px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
                     <Select onValueChange={(option) => setOption(option)}>
@@ -122,7 +127,6 @@ export default function Economy() {
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
                         <SelectGroup>
-                          {/*<SelectLabel>Fruits</SelectLabel>*/}
                           <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>

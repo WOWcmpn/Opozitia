@@ -34,9 +34,6 @@ export class NewsEntity extends BaseEntity {
   @Column()
   category: string;
 
-  @Column({ nullable: true })
-  quizVote: string;
-
   @Column({ nullable: true, default: 0 })
   votePositive: number;
 

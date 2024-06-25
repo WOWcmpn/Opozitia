@@ -31,15 +31,12 @@ export default function NewsId({params} : {params: {id: string}}) {
   const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
-  const [isUrl, setIsUrl] = useState<boolean>(false);
-  const [imgPath, setImgPath] = useState<string>('');
-  const [currImg, setCurrImg] = useState<string>('');
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const session = useSession()
 
   const sum = +news?.votePositive! + +news?.voteNegative!
-  const perAgree = (+news?.votePositive! / sum) * 100
-  const perDisagree = (+news?.voteNegative! / sum) * 100
+  const perAgree = ((+news?.votePositive! / sum) * 100).toFixed(1)
+  const perDisagree = ((+news?.voteNegative! / sum) * 100).toFixed(1)
 
   const handleVote = async (vote: quizVotes) => {
     if(!session.data) {
@@ -124,20 +121,6 @@ export default function NewsId({params} : {params: {id: string}}) {
     }
     loadNews()
   }, [params.id]);
-
-  useEffect(() => {
-    async function loadUtils() {
-      if(news?.fullImgUrl?.startsWith('http')) setIsUrl(true)
-      if(!news?.fullImgUrl) {
-        setImgPath('/img/preview-images/')
-        setCurrImg(news?.imgUrl!)
-      } else if(news.fullImgUrl) {
-        setImgPath('/img/fullImage-news/')
-        setCurrImg(news?.fullImgUrl!)
-      }
-    }
-    loadUtils()
-  }, [news?.fullImgUrl, news?.imgUrl]);
 
   return (
     <div className="wrapper">
@@ -237,15 +220,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="main-block-news__image">
                     <picture>
-                      {isUrl ? (
-                        <Image fill={true} src={news!.fullImgUrl} alt="Image" />
-                      ) : (
-                        <Image
-                          fill={true}
-                          src={`${imgPath}${currImg}`}
-                          alt="Image"
-                        />
-                      )}
+                      <Image fill={true} src={news?.fullImgUrl!} alt={news?.fullImgUrl!} />
                     </picture>
                   </div>
                 </div>

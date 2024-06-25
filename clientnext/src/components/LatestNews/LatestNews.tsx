@@ -11,23 +11,12 @@ export const LatestNews = ({
   text,
   category,
 }: LatestNewsProps) => {
-  let isUrl = false;
-  if (img.startsWith("http")) isUrl = true;
 
   return (
     <div className="latest-news__item">
       <Link href={`/${category}/${id}`} className="latest-news__image">
         <picture>
-          {isUrl ? (
-            <Image width={180} height={160} src={img} alt="Image" />
-          ) : (
-            <Image
-              width={180}
-              height={160}
-              src={`/img/preview-images/${img}`}
-              alt="Image"
-            />
-          )}
+          <Image width={180} height={160} src={img} alt={img} />
         </picture>
       </Link>
       <div className="latest-news__right">

@@ -118,7 +118,6 @@ export default function LastNews() {
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
                         <SelectGroup>
-                          {/*<SelectLabel>Fruits</SelectLabel>*/}
                           <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>
