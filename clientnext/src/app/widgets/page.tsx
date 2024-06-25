@@ -362,7 +362,7 @@ export default function Widgets() {
                 data-da=".vidgets__left,660"
                 className="vidgets__calendar calendar-vidgets"
               >
-                <header className="calendar-vidgets__header">
+                <div className="calendar-vidgets__header">
                   <p className="calendar-vidgets__current-date">{`${
                     getStringMonth(currentMonth).monthRu
                   } ${currentYear}`}</p>
@@ -382,7 +382,7 @@ export default function Widgets() {
                       <Image src={ArrowR} alt="Иконка" />
                     </span>
                   </div>
-                </header>
+                </div>
                 <div className="calendar-vidgets__calendar">
                   <ul className="calendar-vidgets__weeks">
                     <li>ВС</li>

@@ -36,7 +36,7 @@ export default function Exchange() {
       <main className="page">
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
-            <header className="content-news__header content-news__header_exchange">
+            <div className="content-news__header content-news__header_exchange">
               <div className="w-[1180px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] select_currency">
                 <Select onValueChange={(option) => handleOption(option)}>
                   <SelectTrigger className="select_currency-trigger">
@@ -50,7 +50,7 @@ export default function Exchange() {
                   </SelectContent>
                 </Select>
               </div>
-            </header>
+            </div>
             {option == "currency" ? (
               <div className="tabs-oprosi__body">
                 <table className="tabs-oprosi__table table-exchange">

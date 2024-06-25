@@ -9540,7 +9540,7 @@ body::after {
     margin-top: 40px;
   }
 
-  .header.menu-visual-hidden-box {
+  header {
     -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
   }
