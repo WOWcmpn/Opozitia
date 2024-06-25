@@ -6122,6 +6122,9 @@ body::after {
   .latest-news::-webkit-scrollbar-thumb:hover {
     background-color: #253861;
   }
+  .right-blocks-body__item textarea::-webkit-scrollbar {
+    width: 0.25em;
+  }
 }
 
 @media (min-width: 61.99875em) {
