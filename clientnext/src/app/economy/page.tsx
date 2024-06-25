@@ -116,7 +116,7 @@ export default function Economy() {
             <h1 className="news__title">Экономика</h1>
             <div id="main-content" className="news__body body-sidebar">
               <div className="news__content content-news">
-                <header className="content-news__header content-news__header_small-select">
+                <div className="content-news__header content-news__header_small-select">
                   <span className="content-news__number-news">
                     {amount} статей
                   </span>
@@ -135,7 +135,7 @@ export default function Economy() {
                       </SelectContent>
                     </Select>
                   </div>
-                </header>
+                </div>
                 <div className="content-news__body">
                   {data?.map((n) => (
                     <PageNews

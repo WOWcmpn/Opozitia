@@ -49,16 +49,16 @@ export default function Widgets() {
 
   useEffect(() => {
     async function loadUtils() {
-      if(weather?.conditionIcon) setWeatherIcon(`https:${weather?.conditionIcon}`)
-      if(weather?.dayConditionIconOne) setWeatherDayIconOne(`https:${weather?.dayConditionIconOne}`)
-      if(weather?.dayConditionIconTwo) setWeatherDayIconTwo(`https:${weather?.dayConditionIconTwo}`)
+      if (weather?.conditionIcon) setWeatherIcon(`https:${weather?.conditionIcon}`)
+      if (weather?.dayConditionIconOne) setWeatherDayIconOne(`https:${weather?.dayConditionIconOne}`)
+      if (weather?.dayConditionIconTwo) setWeatherDayIconTwo(`https:${weather?.dayConditionIconTwo}`)
     }
     loadUtils()
   }, [weather?.conditionIcon, weather?.dayConditionIconOne, weather?.dayConditionIconTwo]);
   useEffect(() => {
     async function loadWeather() {
       try {
-        if(status === 'authenticated') {
+        if (status === 'authenticated') {
           // @ts-ignore
           const weather = await NewsService.getWeather(session!.user!.location)
           setWeather(weather)
@@ -335,6 +335,9 @@ export default function Widgets() {
                         loop={false}
                         simulateTouch={false}
                         speed={0}
+                        allowTouchMove={false}
+
+                        touchMoveStopPropagation={true}
                         onBeforeInit={(swiper) => {
                           swiperRef.current = swiper;
                         }}
@@ -363,9 +366,8 @@ export default function Widgets() {
                 className="vidgets__calendar calendar-vidgets"
               >
                 <div className="calendar-vidgets__header">
-                  <p className="calendar-vidgets__current-date">{`${
-                    getStringMonth(currentMonth).monthRu
-                  } ${currentYear}`}</p>
+                  <p className="calendar-vidgets__current-date">{`${getStringMonth(currentMonth).monthRu
+                    } ${currentYear}`}</p>
                   <div className="calendar-vidgets__icons">
                     <span
                       id="prev"
