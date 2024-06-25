@@ -2178,6 +2178,7 @@ body::after {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .graphics-left-block__trade-info {
@@ -3845,6 +3846,14 @@ body::after {
 
 .wheather-left-vidgets__title:not(:last-child) {
   margin-bottom: 14px;
+}
+
+.block__graphics .swiper-slide{
+  opacity: 0 !important;
+}
+
+.block__graphics .swiper-slide-visible{
+  opacity: 1 !important;
 }
 
 .wheather-left-vidgets__item-week-temp {
@@ -5993,12 +6002,6 @@ body::after {
   .account {
     margin-top: 80px;
   }
-
-  .left-button-body__bottom button {
-    padding: 6px 15px !important;
-    border-radius: 5px !important;
-    font-size: 0.625rem !important;
-  }
 }
 
 @media (min-width: 37.5625em) {
@@ -7785,6 +7788,12 @@ body::after {
 
   .checkbox__input:checked+.checkbox__label:before {
     background-size: 8px 8px;
+  }
+
+  .left-button-body__bottom button {
+    padding: 6px 15px !important;
+    border-radius: 5px !important;
+    font-size: 0.625rem !important;
   }
 
   .checkbox__label:before {
