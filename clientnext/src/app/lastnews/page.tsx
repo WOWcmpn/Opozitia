@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 export default function LastNews() {
   const ItemPerPage = 10
+  const [amount, setAmount] = useState<number>(0);
   const [lastNews, setLastNews] = useState<IMainNews[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [page, setPage] = useState(1)
@@ -53,6 +54,8 @@ export default function LastNews() {
           try{
             const newData = await NewsService.getLastNews(page, ItemPerPage, option)
             setLastNews(newData)
+            const amount = await NewsService.getAmountOfLast(option)
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -62,6 +65,8 @@ export default function LastNews() {
           try{
             const newData = await NewsService.getLastNews(page, ItemPerPage)
             setLastNews(newData)
+            const amount = await NewsService.getAmountOfLast()
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -109,7 +114,7 @@ export default function LastNews() {
               <div className="news__content content-news">
                 <header className="content-news__header content-news__header_small-select">
                   <span className="content-news__number-news">
-                    {lastNews?.length} статей
+                    {amount} статей
                   </span>
                   <div className="w-[200px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
                     <Select onValueChange={(option) => setOption(option)}>

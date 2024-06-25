@@ -150,6 +150,49 @@ export class NewsQueryRepository {
     }
   }
 
+  async getAmountOfLast(sorting: string = 'all') {
+    const DAY = 24 * 3600 * 1000;
+    const MONTH = 30 * DAY;
+    const YEAR = 365.2425 * DAY;
+    const startDate = new Date();
+
+    if (sorting === 'week') {
+      const weekDate = new Date(+startDate - 7 * DAY);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :weekDate', { weekDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .getCount();
+    } else if (sorting === 'month') {
+      const monthDate = new Date(+startDate - MONTH);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :monthDate', { monthDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .getCount();
+    } else if (sorting === 'year') {
+      const yearDate = new Date(+startDate - YEAR);
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.createdAtDate > :yearDate', { yearDate })
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .getCount();
+    } else if (sorting === 'all') {
+      return await this.newsRepository
+        .createQueryBuilder('n')
+        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .orderBy('n.createdAtDate', 'DESC')
+        .addOrderBy('n.createdAtTime', 'DESC')
+        .getCount();
+    }
+  }
+
   async getAllLastNews(pageNumber: number = 1, pageSize: number = 10, sorting: string = 'all') {
     const DAY = 24 * 3600 * 1000;
     const MONTH = 30 * DAY;

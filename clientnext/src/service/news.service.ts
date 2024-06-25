@@ -196,6 +196,11 @@ export const NewsService = {
     return data
   },
 
+  async getAmountOfLast(sorting?: string): Promise<number> {
+    const {data} = await axios.get('news/amount-last', {params: {sorting}})
+    return data
+  },
+
   async getLastNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get<IMainNews[]>("news/last-news", {params: {
         pageNumber, pageSize, sorting

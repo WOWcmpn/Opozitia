@@ -116,6 +116,12 @@ export class NewsController {
     );
   }
 
+  @Get('amount-last')
+  @HttpCode(200)
+  async getAmountOfLast(@Query() query: { sorting?: string }) {
+    return await this.newsQueryRepository.getAmountOfLast(query.sorting);
+  }
+
   @Get('last-news')
   @HttpCode(200)
   async getLastNews(@Query() query: { pageNumber: number; pageSize: number; sorting?: string }) {
