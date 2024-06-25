@@ -69,7 +69,7 @@ export default function Home() {
               <button className="help__btn">x</button>
             </div>
           </div>
-          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
+          <Header onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
           <main className="page home-page">
           <section className="page__main-block main-block">
               <div className="main-block__container">
@@ -361,9 +361,24 @@ export default function Home() {
                             firstLink={n.id}
                             firstCategory={n.category.toLowerCase()}
                             img={n.fullImgUrl}
-                            link1={data?.bottomNewsOne[0].title}
-                            link2={data?.bottomNewsTwo[1].title}
-                            link3={data?.bottomNewsThree[2].title}
+                            link1={{
+                              id: data?.bottomNewsOne[0].id,
+                              title: data?.bottomNewsOne[0].title,
+                              imgUrl: data?.bottomNewsOne[0].imgUrl,
+                              category: data?.bottomNewsOne[0].category.toLowerCase()
+                            }}
+                            link2={{
+                              id: data?.bottomNewsTwo[0].id,
+                              title: data?.bottomNewsTwo[0].title,
+                              imgUrl: data?.bottomNewsTwo[0].imgUrl,
+                              category: data?.bottomNewsTwo[0].category.toLowerCase()
+                            }}
+                            link3={{
+                              id: data?.bottomNewsThree[0].id,
+                              title: data?.bottomNewsThree[0].title,
+                              imgUrl: data?.bottomNewsThree[0].imgUrl,
+                              category: data?.bottomNewsThree[0].category.toLowerCase()
+                            }}
                           />
                         </SwiperSlide>
                       ))}

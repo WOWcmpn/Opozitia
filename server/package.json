@@ -37,6 +37,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/nodemailer": "^6.4.14",
+    "@uploadthing/react": "^6.6.0",
     "adminjs": "^7.8.1",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
@@ -63,6 +64,7 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
+    "uploadthing": "^6.12.0",
     "uuid": "^9.0.1",
     "wget-improved": "^3.4.0"
   },

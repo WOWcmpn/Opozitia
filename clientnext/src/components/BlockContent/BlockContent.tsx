@@ -1,6 +1,6 @@
 import { BlockContentProps } from "@/types/types";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Link from 'next/link';
 
 export const BlockContent = ({
@@ -12,27 +12,15 @@ export const BlockContent = ({
   link2,
   link3,
 }: BlockContentProps) => {
-  const [isUrl, setIsUrl] = useState<boolean>(false);
-
-  if (img.startsWith('http')) setIsUrl(true);
 
   return (
     <div className="block-main_wrapper ">
       <div className="bottom-left-block__thumbs thumbs-images">
         <div className="thumbs-images__wrapper ">
           <div className="thumbs-images__slide ">
-            <Link href="#" className="thumbs-images__image-ibg">
+            <Link href={`${firstCategory}/${firstLink}`} className="thumbs-images__image-ibg">
               <picture>
-                {isUrl ? (
-                  <Image fill={true} src={img} alt="Image" className="!h-[280px] " />
-                ) : (
-                  <Image
-                    fill={true}
-                    src={`/img/fullImage-news/${img}`}
-                    alt="Image"
-                    className="!h-[280px] "
-                  />
-                )}
+                <Image fill={true} src={img} alt="Image" className="!h-[280px] " />
               </picture>
             </Link>
           </div>
@@ -53,8 +41,8 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider slider-bottom-left-block ">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <Link href="#" className="bottom-left-block__link">
-                    {link1}
+                  <Link href={`${link1.category}/${link1.id}`} className="bottom-left-block__link">
+                    {link1.title}
                   </Link>
                 </div>
               </div>
@@ -64,8 +52,8 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider2 slider-bottom-left-block ">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <Link href="#" className="bottom-left-block__link">
-                    {link2}
+                  <Link href={`${link2.category}/${link2.id}`} className="bottom-left-block__link">
+                    {link2.title}
                   </Link>
                 </div>
               </div>
@@ -75,8 +63,8 @@ export const BlockContent = ({
             <div className="bottom-left-block__slider3 slider-bottom-left-block">
               <div className="bottom-left-block__wrapper ">
                 <div className="bottom-left-block__slide ">
-                  <Link href="#" className="bottom-left-block__link">
-                    {link3}
+                  <Link href={`${link3.category}/${link3.id}`} className="bottom-left-block__link">
+                    {link3.title}
                   </Link>
                 </div>
               </div>

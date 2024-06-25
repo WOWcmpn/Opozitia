@@ -25,7 +25,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('mk.ru/economics: ', error);
       });
 
     await axios
@@ -43,7 +43,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('mk.ru/politics: ', error);
       });
 
     await axios
@@ -52,14 +52,17 @@ export class GetNewsUseCase {
         const $ = cheerio.load(res.data);
         $('._4Niiv').each((i, elem) => {
           const link = $(elem).find('._1uRkW').attr('href');
+          console.log(link);
           const title = $(elem).find('._2C1Rd').text();
+          console.log(title);
           const imgUrl = $(elem).find('img').attr('src');
+          console.log(imgUrl);
           const category = newsCategory.Business;
           this.checkNewsForAddUseCase.checkNewsRambler({ title, link, imgUrl, category });
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('finance.rambler.ru/business: ', error);
       });
 
     await axios
@@ -75,7 +78,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('news.rambler.ru/world: ', error);
       });
   }
 }

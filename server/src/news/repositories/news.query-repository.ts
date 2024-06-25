@@ -197,7 +197,7 @@ export class NewsQueryRepository {
   async getBottomNews(pageSize: number, pageNumber: number) {
     return await this.newsRepository
       .createQueryBuilder('n')
-      .select(['n.id', 'n.title'])
+      .select(['n.id', 'n.title', 'n.imgUrl', 'n.category'])
       .orderBy('n.createdAtDate', 'DESC')
       .limit(pageSize)
       .offset(pageNumber)

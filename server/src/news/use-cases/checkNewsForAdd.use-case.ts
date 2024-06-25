@@ -22,20 +22,21 @@ export class CheckNewsForAddUseCase {
       const fullImgUuid = uuidv4();
       const fullNews = await getFullNewsHelper(news.link, fullImgUuid);
       setTimeout(() => {
-        let validFullImg = '';
-        try {
-          const test = fs
-            .readdirSync('../clientnext/public/img/fullImage-news')
-            .find((img) => img === `${fullImgUuid}.webp`);
-          validFullImg = test!;
-        } catch (error) {
-          console.log('1 ', error);
-        }
+        // let validFullImg = '';
+        // try {
+        //   const test = fs
+        //     .readdirSync('../clientnext/public/img/fullImage-news')
+        //     .find((img) => img === `${fullImgUuid}.webp`);
+        //   validFullImg = test!;
+        // } catch (error) {
+        //   console.log('1 ', error);
+        // }
         return this.newsRepository.addNews({
           link: news.link!,
           title: news.title!,
           imgUrl: news.imgUrl!,
-          fullImgUrl: validFullImg!,
+          fullImgUrl: fullNews.fullImgUrl!,
+          //fullImgUrl: validFullImg!,
           description: fullNews.description,
           createdAtTime: fullNews.createdAtTime,
           createdAtDate: news.createdAtDate!,
@@ -47,6 +48,7 @@ export class CheckNewsForAddUseCase {
   }
 
   async checkNewsRambler(news: newsEconomicModel) {
+    console.log(news);
     const isExists = await this.newsQueryRepository.getNewsByTitle(news.title);
     if (isExists) {
       return;
@@ -56,24 +58,26 @@ export class CheckNewsForAddUseCase {
       wget.download(news.imgUrl!, `../clientnext/public/img/preview-images/${uuidImgUrl}.webp`);
       const fullNews = await getFullNewsHelperRambler(news.link, fullImgUuid);
       setTimeout(() => {
-        const validImg = fs
-          .readdirSync('../clientnext/public/img/preview-images')
-          .find((img) => img === `${uuidImgUrl}.webp`);
-        let validFullImg = '';
-        try {
-          const test2 = fs
-            .readdirSync('../clientnext/public/img/fullImage-news')
-            .find((img) => img === `${fullImgUuid}.webp`);
-          validFullImg = test2!;
-        } catch (error) {
-          console.log('2 ', error);
-        }
+        // const validImg = fs
+        //   .readdirSync('../clientnext/public/img/preview-images')
+        //   .find((img) => img === `${uuidImgUrl}.webp`);
+        // let validFullImg = '';
+        // try {
+        //   const test2 = fs
+        //     .readdirSync('../clientnext/public/img/fullImage-news')
+        //     .find((img) => img === `${fullImgUuid}.webp`);
+        //   validFullImg = test2!;
+        // } catch (error) {
+        //   console.log('2 ', error);
+        // }
 
         return this.newsRepository.addNews({
           link: news.link!,
           title: news.title!,
-          imgUrl: validImg!,
-          fullImgUrl: validFullImg!,
+          imgUrl: news.imgUrl!,
+          fullImgUrl: fullNews.fullImgUrl,
+          // imgUrl: validImg!,
+          // fullImgUrl: validFullImg!,
           description: fullNews.description,
           createdAtTime: fullNews.createdAtTime,
           createdAtDate: fullNews.createdAtDate,

@@ -40,7 +40,7 @@ export class NewsController {
     private readonly getWeatherUseCase: GetWeatherUseCase,
   ) {}
 
-  @Cron(CronExpression.EVERY_HOUR)
+  @Cron(CronExpression.EVERY_10_SECONDS)
   handleNews() {
     return this.getNewsUseCase.getNews();
   }

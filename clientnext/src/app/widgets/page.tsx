@@ -24,6 +24,7 @@ import {
 } from "@/utils/calendar";
 import { IWeather } from "@/types/types";
 import { NewsService } from "@/service/news.service";
+import { useSession } from 'next-auth/react';
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -35,6 +36,7 @@ export default function Widgets() {
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconOne, setWeatherDayIconOne] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconTwo, setWeatherDayIconTwo] = useState<string>("/img/icons/weather/unknown.webp");
+  const { data: session, status } = useSession()
 
   const refreshCalendar = useCallback(() => {
     setDate(
@@ -56,14 +58,20 @@ export default function Widgets() {
   useEffect(() => {
     async function loadWeather() {
       try {
-        const weather = await NewsService.getWeather()
-        setWeather(weather)
+        if(status === 'authenticated') {
+          // @ts-ignore
+          const weather = await NewsService.getWeather(session!.user!.location)
+          setWeather(weather)
+        } else if (status === 'unauthenticated') {
+          const weather = await NewsService.getWeather('Кишинев')
+          setWeather(weather)
+        }
       } catch (err) {
         console.warn('weather gone wrong: ', err);
       }
     }
     loadWeather()
-  }, []);
+  }, [session, status]);
 
   const changeMonth = (choice: boolean) => {
     let temp;
@@ -93,108 +101,108 @@ export default function Widgets() {
     refreshCalendar();
   }, [refreshCalendar]);
 
-  // const champs1 = [
-  //   {
-  //     num: 1,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 2,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 3,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 4,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 5,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 6,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 7,
-  //     img: Team,
-  //     name: "Байер",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  // ];
-  // const champs2 = [
-  //   {
-  //     num: 1,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 2,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 3,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 4,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 5,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 6,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  //   {
-  //     num: 7,
-  //     img: Team,
-  //     name: "Барселона",
-  //     games: 38,
-  //     scores: 115,
-  //   },
-  // ];
+  const champs1 = [
+    {
+      num: 1,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 2,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 3,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 4,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 5,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 6,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 7,
+      img: Team,
+      name: "Байер",
+      games: 38,
+      scores: 115,
+    },
+  ];
+  const champs2 = [
+    {
+      num: 1,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 2,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 3,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 4,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 5,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 6,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+    {
+      num: 7,
+      img: Team,
+      name: "Барселона",
+      games: 38,
+      scores: 115,
+    },
+  ];
 
   return (
     <div className="wrapper">
@@ -306,49 +314,49 @@ export default function Widgets() {
                     </ul>
                   </div>
                 </div>
-                {/*<div className="left-vidgets__championship championship">*/}
-                {/*  <div className="championship__slider swiper">*/}
-                {/*    <div className="championship__wrap-btns">*/}
-                {/*      <button*/}
-                {/*        type="button"*/}
-                {/*        className="championship__swiper-button-prev championship-btn championship-btn_left"*/}
-                {/*        onClick={() => swiperRef.current?.slidePrev()}*/}
-                {/*      ></button>*/}
-                {/*      <button*/}
-                {/*        type="button"*/}
-                {/*        className="championship__swiper-button-next championship-btn"*/}
-                {/*        onClick={() => swiperRef.current?.slideNext()}*/}
-                {/*      ></button>*/}
-                {/*    </div>*/}
-                {/*    <div className="championship__wrapper swiper-wrapper">*/}
-                {/*      <Swiper*/}
-                {/*        modules={[Navigation]}*/}
-                {/*        slidesPerView={1}*/}
-                {/*        loop={false}*/}
-                {/*        simulateTouch={false}*/}
-                {/*        speed={200}*/}
-                {/*        onBeforeInit={(swiper) => {*/}
-                {/*          swiperRef.current = swiper;*/}
-                {/*        }}*/}
-                {/*      >*/}
-                {/*        <SwiperSlide>*/}
-                {/*          <Championship*/}
-                {/*            title="Чемпионат Германии"*/}
-                {/*            img={ChampionshipImg}*/}
-                {/*            champs={champs1}*/}
-                {/*          />*/}
-                {/*        </SwiperSlide>*/}
-                {/*        <SwiperSlide>*/}
-                {/*          <Championship*/}
-                {/*            title="Чемпионат Испании"*/}
-                {/*            img={ChampionshipImg}*/}
-                {/*            champs={champs1}*/}
-                {/*          />*/}
-                {/*        </SwiperSlide>*/}
-                {/*      </Swiper>*/}
-                {/*    </div>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
+                <div className="left-vidgets__championship championship">
+                  <div className="championship__slider swiper">
+                    <div className="championship__wrap-btns">
+                      <button
+                        type="button"
+                        className="championship__swiper-button-prev championship-btn championship-btn_left"
+                        onClick={() => swiperRef.current?.slidePrev()}
+                      ></button>
+                      <button
+                        type="button"
+                        className="championship__swiper-button-next championship-btn"
+                        onClick={() => swiperRef.current?.slideNext()}
+                      ></button>
+                    </div>
+                    <div className="championship__wrapper swiper-wrapper">
+                      <Swiper
+                        modules={[Navigation]}
+                        slidesPerView={1}
+                        loop={false}
+                        simulateTouch={false}
+                        speed={200}
+                        onBeforeInit={(swiper) => {
+                          swiperRef.current = swiper;
+                        }}
+                      >
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Германии"
+                            img={ChampionshipImg}
+                            champs={champs1}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Испании"
+                            img={ChampionshipImg}
+                            champs={champs1}
+                          />
+                        </SwiperSlide>
+                      </Swiper>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 data-da=".vidgets__left,660"
