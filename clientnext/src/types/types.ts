@@ -187,9 +187,9 @@ export interface IHomeNews {
   amount: number;
   mainNews: IMainNews[];
   swipeNews: INews[];
-  bottomNewsOne: INews[];
-  bottomNewsTwo: INews[];
-  bottomNewsThree: INews[];
+  bottomNewsOne: BottomNews[];
+  bottomNewsTwo: BottomNews[];
+  bottomNewsThree: BottomNews[];
 }
 
 export interface IComments {
@@ -283,14 +283,21 @@ export type GraphicsBlockProps = {
   img?: string
 };
 
+export type BottomNews = {
+  id: string
+  title: string
+  imgUrl: string
+  category: string
+}
+
 export type BlockContentProps = {
   title: string;
   firstLink: string;
   firstCategory: string;
   img: string;
-  link1: string;
-  link2: string;
-  link3: string;
+  link1: BottomNews;
+  link2: BottomNews;
+  link3: BottomNews;
 };
 
 export type HeaderProps = {

@@ -1,7 +1,7 @@
 "use client";
 import { PollsItemProps, quizVotes } from "@/types/types";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NewsService } from "@/service/news.service";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
@@ -20,19 +20,7 @@ export const PollsItem = ({
   onTitle
 }: PollsItemProps) => {
   const [select, setSelect] = useState<number>(0);
-  const [isUrl, setIsUrl] = useState<boolean>(false);
   const session = useSession()
-
-  useEffect(() => {
-    async function loadUtils() {
-      try {
-        if(img.startsWith('http')) setIsUrl(true)
-      } catch (err) {
-        console.warn('PageNews err ', err);
-      }
-    }
-    loadUtils()
-  }, [img]);
 
   const handleVote = async (vote: quizVotes) => {
     if(!session.data) {
@@ -43,9 +31,9 @@ export const PollsItem = ({
   }
 
   const sum = agree + disagree + neutral
-  const perAgree = (agree / sum) * 100
-  const perDisagree = (disagree / sum) * 100
-  const perNeutral = (neutral / sum) * 100
+  const perAgree = ((agree / sum) * 100).toFixed(1)
+  const perDisagree = ((disagree / sum) * 100).toFixed(1)
+  const perNeutral = ((neutral / sum) * 100).toFixed(1)
 
   return (
     <div className="tabs-oprosi__item item-tabs-oprosi item-block">
@@ -78,14 +66,14 @@ export const PollsItem = ({
                     setSelect(1);
                     onClick(1)
                     handleVote(quizVotes.Dislike)
-                    onNegativeVote(perDisagree)
-                    onPositiveVote(perAgree)
-                    onNeutralVote(perNeutral)
+                    onNegativeVote(+perDisagree)
+                    onPositiveVote(+perAgree)
+                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >
                   <span className="options__text">Не поддерживаю</span>{" "}
-                  <span className="percent percent_nosupport">{perDisagree || 0}%</span>
+                  <span className="percent percent_nosupport">{+perDisagree || 0}%</span>
                   <div className="options__row row">
                     <div
                       className="options__progress progress  progress_nosupport"
@@ -108,14 +96,14 @@ export const PollsItem = ({
                     setSelect(1);
                     onClick(1)
                     handleVote(quizVotes.Like)
-                    onNegativeVote(perDisagree)
-                    onPositiveVote(perAgree)
-                    onNeutralVote(perNeutral)
+                    onNegativeVote(+perDisagree)
+                    onPositiveVote(+perAgree)
+                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >
                   <span className="options__text">Поддерживаю</span>
-                  <span className="percent percent_support">{perAgree || 0}%</span>
+                  <span className="percent percent_support">{+perAgree || 0}%</span>
                   <div className="options__row row">
                     <div className="options__progress progress  progress_support"></div>
                   </div>
@@ -135,14 +123,14 @@ export const PollsItem = ({
                     setSelect(1);
                     onClick(1)
                     handleVote(quizVotes.Whatever)
-                    onNegativeVote(perDisagree)
-                    onPositiveVote(perAgree)
-                    onNeutralVote(perNeutral)
+                    onNegativeVote(+perDisagree)
+                    onPositiveVote(+perAgree)
+                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >
                   <span className="options__text">Нейтрально</span>
-                  <span className="percent percent_neutral">{perNeutral || 0}%</span>
+                  <span className="percent percent_neutral">{+perNeutral || 0}%</span>
                   <div className="options__row row">
                     <div className="options__progress progress  progress_neutral"></div>
                   </div>
@@ -218,15 +206,7 @@ export const PollsItem = ({
           </div>
           <div className="item-tabs-oprosi__image-ibg">
             <picture>
-              {isUrl ? (
-                <Image fill={true} src={img} alt="Image" />
-              ) : (
-                <Image
-                  fill={true}
-                  src={`/img/fullImage-news/${img}`}
-                  alt="Image"
-                />
-              )}
+              <Image fill={true} src={img} alt={img} />
             </picture>
           </div>
         </form>

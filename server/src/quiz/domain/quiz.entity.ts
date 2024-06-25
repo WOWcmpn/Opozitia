@@ -8,7 +8,7 @@ export class QuizEntity extends BaseEntity {
   id: string;
 
   @JoinColumn({ name: 'newsId' })
-  @ManyToOne(() => NewsEntity, (n) => n.quizVote, { onDelete: 'CASCADE' })
+  @ManyToOne(() => NewsEntity, (n) => n.id, { onDelete: 'CASCADE' })
   newsIdKey: string;
 
   @Column()

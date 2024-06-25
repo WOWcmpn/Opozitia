@@ -62,7 +62,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
               </picture>
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={popup}
@@ -79,7 +79,7 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
               <form
                 id="form-pass"
                 action="#"
-                data-dev
+                data-dev={true}
                 data-popup-message="#popup-registration-recovery"
                 className="body-popup__form body-popup__form_code !gap-[25px]"
                 onSubmit={onSubmit}
@@ -92,6 +92,31 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
                   required
                   onChange={e => setTitle(e.target.value)}
                 />
+                {/*<UploadButton*/}
+                {/*  className={'text-black'}*/}
+                {/*  appearance={{*/}
+                {/*    button: {*/}
+                {/*      fontSize: '1.3rem',*/}
+                {/*      fontWeight: 'bold',*/}
+                {/*      color: 'black',*/}
+                {/*      width: '100%',*/}
+                {/*      background: rgba(136, 162, 255, 1.1),*/}
+                {/*    },*/}
+                {/*    allowedContent: {*/}
+                {/*      margin: '0 0 -1em 0'*/}
+                {/*    }*/}
+                {/*}}*/}
+                {/*  endpoint={'imageUploader'}*/}
+                {/*  onClientUploadComplete={(res) => {*/}
+                {/*    toast.success('Изображение успешно загружено')*/}
+                {/*    console.log(res);*/}
+                {/*  }}*/}
+                {/*  onUploadError={(err) => {*/}
+                {/*    console.error('Upload error ', err);*/}
+                {/*    toast.error('Ваше изображение не подходит')*/}
+                {/*  }}*/}
+                {/*/>*/}
+
                 <label
                   htmlFor="file"
                   className={`input flex items-center justify-between !px-[20px] !py-[15px] cursor-pointer !text-inheri ${

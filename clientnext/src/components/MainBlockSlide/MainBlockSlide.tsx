@@ -5,12 +5,10 @@ import React, { useEffect, useState } from "react";
 
 export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps) => {
   const [viewCategory, setViewCategory] = useState<string>('');
-  const [isUrl, setIsUrl] = useState<boolean>(false);
 
   useEffect(() => {
     async function loadData() {
       try {
-        if(img.startsWith('http')) setIsUrl(true)
         if(category === 'policy') setViewCategory('Политика')
         if(category === 'world') setViewCategory('Мир')
         if(category === 'economy') setViewCategory('Экономика')
@@ -20,7 +18,7 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
       }
     }
     loadData()
-  }, [category, img]);
+  }, [category]);
 
   return (
     <div className="main-block__slide slide-main-block swiper-slide">
@@ -29,15 +27,7 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
         className="slide-main-block__right-link"
       >
         <div className='swiper-images'>
-          {isUrl ? (
-            <Image width={130} height={90} src={img} alt="Image" />
-          ) : (
-            <Image
-              width={130} height={90}
-              src={`/img/preview-images/${img}`}
-              alt="Image"
-            />
-          )}
+          <Image width={130} height={90} src={img} alt={img} />
         </div>
       </Link>
       <div className="slide-main-block__right">

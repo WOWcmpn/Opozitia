@@ -21,13 +21,14 @@ import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 export default function Business () {
   const ItemPerPage = 10
   const [data, setData] = useState<IMainNews[]>([])
+  const [amount, setAmount] = useState<number>(0);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
-  const [onNews, setOnNews] = useState<number>(0);
+  const [BusinessonNews, setOnNews] = useState<number>(0);
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -63,6 +64,8 @@ export default function Business () {
           try{
             const newData = await NewsService.getBusinessNews(page, ItemPerPage, option)
             setData(newData)
+            const amount = await NewsService.getAmountOfCategory('Business', option)
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -72,6 +75,8 @@ export default function Business () {
           try{
             const newData = await NewsService.getBusinessNews(page, ItemPerPage)
             setData(newData)
+            const amount = await NewsService.getAmountOfCategory('Business')
+            setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -121,7 +126,7 @@ export default function Business () {
               <div className="news__content content-news">
                 <header className="content-news__header content-news__header_small-select">
                   <span className="content-news__number-news">
-                    {data?.length} статей
+                    {amount} статей
                   </span>
                   <div className="w-[200px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
                     <Select onValueChange={(option) => setOption(option)}>

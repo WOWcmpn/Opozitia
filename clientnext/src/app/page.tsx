@@ -23,7 +23,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
-  const [option, setOption] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [search, setSearch] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
@@ -53,12 +52,12 @@ export default function Home() {
       <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
-          option == 1 || login == 1 || search == 1 || createNews == 1 ? "overflow" : ""
+          login == 1 || search == 1 || createNews == 1 ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            option == 1 || login == 1 || search == 1 || createNews == 1
+            login == 1 || search == 1 || createNews == 1
               ? " wrapper__popup blur"
               : ""
           }`}
@@ -69,7 +68,7 @@ export default function Home() {
               <button className="help__btn">x</button>
             </div>
           </div>
-          <Header onClick={setOption} onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
+          <Header onLogin={setLogin} onSearch={setSearch} onNews={setCreateNews} />
           <main className="page home-page">
           <section className="page__main-block main-block">
               <div className="main-block__container">
@@ -320,13 +319,6 @@ export default function Home() {
                         </Swiper>
                       </div>
                     </div>
-
-                    {/* <a
-                    href="exchange.html#tab-0-1"
-                    className="graphics-left-block__image"
-                  >
-                    <Image fill src="/img/graphics/01.svg" alt="image" />
-                  </a> */}
                   </div>
                 </div>
 
@@ -361,9 +353,24 @@ export default function Home() {
                             firstLink={n.id}
                             firstCategory={n.category.toLowerCase()}
                             img={n.fullImgUrl}
-                            link1={data?.bottomNewsOne[0].title}
-                            link2={data?.bottomNewsTwo[1].title}
-                            link3={data?.bottomNewsThree[2].title}
+                            link1={{
+                              id: data?.bottomNewsOne[0].id,
+                              title: data?.bottomNewsOne[0].title,
+                              imgUrl: data?.bottomNewsOne[0].imgUrl,
+                              category: data?.bottomNewsOne[0].category.toLowerCase()
+                            }}
+                            link2={{
+                              id: data?.bottomNewsTwo[0].id,
+                              title: data?.bottomNewsTwo[0].title,
+                              imgUrl: data?.bottomNewsTwo[0].imgUrl,
+                              category: data?.bottomNewsTwo[0].category.toLowerCase()
+                            }}
+                            link3={{
+                              id: data?.bottomNewsThree[0].id,
+                              title: data?.bottomNewsThree[0].title,
+                              imgUrl: data?.bottomNewsThree[0].imgUrl,
+                              category: data?.bottomNewsThree[0].category.toLowerCase()
+                            }}
                           />
                         </SwiperSlide>
                       ))}
@@ -418,11 +425,6 @@ export default function Home() {
             </div>
           </footer>
         </div>
-        {/*<AnimatePresence>*/}
-        {/*  {option == 1 && (*/}
-        {/*    <PopupPolls onClick={setOption} classes="popup popup__active" />*/}
-        {/*  )}*/}
-        {/*</AnimatePresence>*/}
         <AnimatePresence>
           {login == 1 && <PopupAccount onClick={setLogin} />}
         </AnimatePresence>

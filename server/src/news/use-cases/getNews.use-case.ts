@@ -25,7 +25,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('mk.ru/economics: ', error);
       });
 
     await axios
@@ -43,39 +43,39 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('mk.ru/politics: ', error);
       });
 
     await axios
       .get('https://finance.rambler.ru/business/')
       .then((res) => {
         const $ = cheerio.load(res.data);
-        $('._4Niiv').each((i, elem) => {
-          const link = $(elem).find('._1uRkW').attr('href');
-          const title = $(elem).find('._2C1Rd').text();
+        $('.fCrjS').each((i, elem) => {
+          const link = $(elem).find('.pMDeT').attr('href');
+          const title = $(elem).find('.vmaGn').text();
           const imgUrl = $(elem).find('img').attr('src');
           const category = newsCategory.Business;
           this.checkNewsForAddUseCase.checkNewsRambler({ title, link, imgUrl, category });
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('finance.rambler.ru/business: ', error);
       });
 
     await axios
       .get('https://news.rambler.ru/world/')
       .then((res) => {
         const $ = cheerio.load(res.data);
-        $('._4Niiv').each((i, elem) => {
-          const link = $(elem).find('._1uRkW').attr('href');
-          const title = $(elem).find('._2C1Rd').text();
+        $('.fCrjS').each((i, elem) => {
+          const link = $(elem).find('.pMDeT').attr('href');
+          const title = $(elem).find('.vmaGn').text();
           const imgUrl = $(elem).find('img').attr('src');
           const category = newsCategory.World;
           this.checkNewsForAddUseCase.checkNewsRambler({ title, link, imgUrl, category });
         });
       })
       .catch((error) => {
-        console.error('Test: ', error);
+        console.error('news.rambler.ru/world: ', error);
       });
   }
 }

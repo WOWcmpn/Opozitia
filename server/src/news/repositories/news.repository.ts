@@ -26,14 +26,14 @@ export class NewsRepository {
     await this.newsRepository
       .createQueryBuilder()
       .update()
-      .set({ imgUrl: 'hq720.jpg' })
+      .set({ imgUrl: 'https://i.ytimg.com/vi/lSO0b8n_8BA/maxresdefault.jpg' })
       .where('imgUrl IS NULL')
       .execute();
 
     return await this.newsRepository
       .createQueryBuilder()
       .update()
-      .set({ fullImgUrl: 'hq720.jpg' })
+      .set({ fullImgUrl: 'https://i.ytimg.com/vi/lSO0b8n_8BA/maxresdefault.jpg' })
       .where('fullImgUrl IS NULL')
       .execute();
   }

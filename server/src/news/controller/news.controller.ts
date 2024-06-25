@@ -60,6 +60,12 @@ export class NewsController {
     return await this.getWeatherUseCase.getWeather(city);
   }
 
+  @Get('amount')
+  @HttpCode(200)
+  async getAmountOfCategory(@Query() query: { category: string; sorting?: string }) {
+    return await this.newsQueryRepository.getAmountOfCategory(query.category, query.sorting);
+  }
+
   @Get('sidebar')
   @HttpCode(200)
   async getSidebar(@Query() query: { category: newsCategory }) {
@@ -108,6 +114,12 @@ export class NewsController {
       query.pageSize,
       query.sorting,
     );
+  }
+
+  @Get('amount-last')
+  @HttpCode(200)
+  async getAmountOfLast(@Query() query: { sorting?: string }) {
+    return await this.newsQueryRepository.getAmountOfLast(query.sorting);
   }
 
   @Get('last-news')

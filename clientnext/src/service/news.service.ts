@@ -143,6 +143,13 @@ export const NewsService = {
     return data
   },
 
+  async getAmountOfCategory(category: string, sorting?: string) {
+    const {data} = await axios.get('news/amount', {params: {
+      category, sorting
+      }})
+    return data
+  },
+
   async getBusinessNews(pageNumber?: number, pageSize?: number, sorting?: string): Promise<IMainNews[]> {
     const { data } = await axios.get("news/business", {params: {
         pageNumber, pageSize, sorting
@@ -154,6 +161,7 @@ export const NewsService = {
     const { data } = await axios.get("news/economy", {params: {
         pageNumber, pageSize, sorting
       }});
+    console.log(data);
     return data;
   },
 
@@ -185,6 +193,11 @@ export const NewsService = {
     const {data} = await axios.get<IComments[]>(`news/${id}/comments`, {params: {
       pageNumber
       }})
+    return data
+  },
+
+  async getAmountOfLast(sorting?: string): Promise<number> {
+    const {data} = await axios.get('news/amount-last', {params: {sorting}})
     return data
   },
 
