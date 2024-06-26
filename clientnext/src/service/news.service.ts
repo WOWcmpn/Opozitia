@@ -23,9 +23,23 @@ axios.defaults.baseURL = "http://localhost:4000/"
 // axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async getCountComments(newsId: string): Promise<number> {
+    const {data} = await axios.get(`comments/count-comments/${newsId}`)
+    return data
+  },
+
+  async createBottomComment(commentId: string, text: string, login: string): Promise<AxiosResponse | null> {
+    return await axios.post(`comments/createBottom/${commentId}`, {data: {text, login}})
+  },
+
+  async getBottomComments(commentId: string): Promise<IComments[] | []> {
+    const {data} = await axios.get(`comments/${commentId}`)
+    return data
+  },
+
   async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('/user/send-question', { inputData: { name, location, text } })
+      return await axios.post('user/send-question', { inputData: { name, location, text } })
     } catch (err) {
       console.error('Service send email error ', err);
       return null
@@ -189,9 +203,9 @@ export const NewsService = {
     return data;
   },
 
-  async getComments(id: string, pageNumber: number) {
+  async getComments(id: string, pageNumber: number, sort: 'ASC' | 'DESC' = 'DESC'): Promise<IComments[]> {
     const {data} = await axios.get<IComments[]>(`news/${id}/comments`, {params: {
-      pageNumber
+      pageNumber, sort
       }})
     return data
   },

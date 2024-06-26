@@ -15,7 +15,7 @@ export class CreateCommentUseCase {
 
   async create(newsId: string, text: string, login: string) {
     const user = await this.usersQueryRepo.getUserByLogin(login);
-    if (!user) throw UnauthorizedException;
+    if (!user) throw new UnauthorizedException();
     const news = await this.newsQueryRepo.getNewsById(newsId);
     if (!news) throw new NotFoundException();
 

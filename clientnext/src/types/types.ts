@@ -193,6 +193,7 @@ export interface IHomeNews {
 }
 
 export interface IComments {
+  id: string
   text: string
   username: string
   viewDate: string
@@ -344,12 +345,13 @@ export type CurrencyValueProps = {
 }
 
 export type CommentProps = {
+  commentId: string
   name: string;
   img: string;
   class1: string;
+  class2: string
   time: string;
   text: string;
-  likes: number | string;
 };
 
 export type SearchResultProps = {

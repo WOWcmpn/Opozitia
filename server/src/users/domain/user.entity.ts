@@ -4,6 +4,7 @@ import { add } from 'date-fns/add';
 import { InputUserModel } from '../../base/types/userModels';
 import { AuthWhiteListEntity } from '../../auth/domain/authWhiteList.entity';
 import { CommentsEntity } from '../../comments/domain/comments.entity';
+import { BottomCommentsEntity } from '../../comments/domain/bottomComments.entity';
 
 export class EmailConfirmation {
   confirmationCode: string;
@@ -52,6 +53,9 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => CommentsEntity, (c) => c.user)
   comments: CommentsEntity;
+
+  @OneToMany(() => BottomCommentsEntity, (c) => c.user)
+  bottomComments: BottomCommentsEntity;
 
   @OneToMany(() => AuthWhiteListEntity, (aw) => aw.usersId, { onDelete: 'CASCADE' })
   whiteTokens: AuthWhiteListEntity;

@@ -196,8 +196,8 @@ export class NewsController {
 
   @Get(':id/comments')
   @HttpCode(200)
-  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number }) {
-    return await this.newsQueryRepository.getComments(id, query.pageNumber);
+  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number; sort: 'ASC' | 'DESC' }) {
+    return await this.newsQueryRepository.getComments(id, query.pageNumber, query.sort);
   }
 
   @Post(':newsId/comments')

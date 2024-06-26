@@ -317,11 +317,12 @@ export class NewsQueryRepository {
       .getOne();
   }
 
-  async getComments(newsId: string, pageNumber: number = 1) {
+  async getComments(newsId: string, pageNumber: number = 1, sort: 'ASC' | 'DESC') {
     return await this.commentsRepo
       .createQueryBuilder('c')
-      .select(['c.text', 'c.username', 'c.viewDate', 'c.userImage'])
+      .select(['c.id', 'c.text', 'c.username', 'c.viewDate', 'c.userImage'])
       .where('c.newsId = :newsId', { newsId })
+      .orderBy('c.createdAt', sort)
       .limit(5)
       .offset((pageNumber - 1) * 5)
       .getMany();
