@@ -1,7 +1,6 @@
 import { CommentProps } from "@/types/types";
 import Image from "next/image";
 import React from "react";
-import Like from "@/img/icons/like.svg";
 
 export const Comments = ({
   class1,
@@ -9,13 +8,12 @@ export const Comments = ({
   name,
   time,
   text,
-  likes,
 }: CommentProps) => {
   return (
     <div className={class1}>
       <div className="bottom-comments-news__top-info">
         <div className="bottom-comments-news__image">
-          <Image height={50} width={50} src={`/img/icons/${img}`} alt='Image' />
+          <Image height={50} width={50} src={`/img/icons/user.png`} alt='Image' />
         </div>
         <div className="bottom-comments-news__right">
           <h4 className="bottom-comments-news__name">{name}</h4>
@@ -26,10 +24,6 @@ export const Comments = ({
       </div>
       <p className="bottom-comments-news__text">{text}</p>
       <div className="bottom-comments-news__actions">
-        {/*<button type="button" className="bottom-comments-news__like">*/}
-        {/*  <Image src={Like} alt="Иконка" />*/}
-        {/*  <span className="bottom-comments-news__quantity-likes">{likes}</span>*/}
-        {/*</button>*/}
         <button type="button" className="bottom-comments-news__answer-btn">
           Ответить
         </button>
