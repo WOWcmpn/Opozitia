@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ConfirmRecoveryCodeProps } from '@/types/types';
@@ -16,6 +16,14 @@ export const PopupRecoveryCode = ({
   const [fourth, setFourth] = useState<string>('');
   const [fifth, setFifth] = useState<string>('');
   const [sixth, setSixth] = useState<string>('');
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onOption();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onOption]);
 
   return (
     <motion.div
@@ -27,7 +35,8 @@ export const PopupRecoveryCode = ({
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className="popup_show  content-popup">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
@@ -37,7 +46,7 @@ export const PopupRecoveryCode = ({
               data-close={true}
               type="button"
               className="popup__close"
-              onClick={() => onOption(3)}
+              onClick={() => onOption(0)}
             ></button>
           </div>
           <div className="popup__body body-popup">

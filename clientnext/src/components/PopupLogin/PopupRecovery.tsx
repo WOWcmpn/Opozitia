@@ -1,15 +1,23 @@
 import { RecoveryPopupProps } from "@/types/types";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from 'react';
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export const PopupRecovery = ({
   onClick: onOption,
-  setPassRecovery,
   setEmail,
   sendRecoveryCode
 }: RecoveryPopupProps) => {
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onOption(0);
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onOption]);
+
   return (
     <motion.div
       id="popup-registration-recovery"
@@ -20,7 +28,8 @@ export const PopupRecovery = ({
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className="popup_show content-popup popup__login">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
@@ -32,7 +41,6 @@ export const PopupRecovery = ({
               className="popup__close"
               onClick={() => {
                 onOption(0);
-                setPassRecovery(0)
               }}
             ></button>
           </div>
