@@ -7,6 +7,7 @@ import { ISearchNews } from "@/types/types";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function Search({searchParams}: {
   searchParams?: {
@@ -20,6 +21,7 @@ export default function Search({searchParams}: {
     searchNameTerm = searchParams.query
   }
   const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [isExist, setIsExist] = useState(true);
   const [news, setNews] = useState<ISearchNews[]>([]);
   const [amount, setAmount] = useState<number>(0);
@@ -49,14 +51,15 @@ export default function Search({searchParams}: {
 
   return (
     <div className={`wrapper ${
-      login === 1 ? "overflow" : ""
+      login === 1 || createNews === 1
+        ? "overflow" : ""
     } w-[100vw]`}>
       <div className={`${
-       login === 1
+       login === 1 || createNews === 1
           ? "wrapper__popup blur"
           : ""
       }`}>
-      <Header onLogin={setLogin} className={"header menu-visual"} />
+      <Header onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page page-search">
         {isExist ? (
           <section className="page__search-block search-block">
@@ -154,7 +157,10 @@ export default function Search({searchParams}: {
       </footer>
       </div>
       <AnimatePresence>
-        {login == 1 && <PopupAccount onClick={setLogin} />}
+        {login === 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
       </AnimatePresence>
     </div>
   );

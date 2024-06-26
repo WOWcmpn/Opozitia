@@ -148,6 +148,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToUSD).reverse()}
                               img={'usa.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -159,6 +160,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToJPY).reverse()}
                               img={'china.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -170,6 +172,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.GBPToUSD).reverse()}
                               img={'usa.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -181,6 +184,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToRUB).reverse()}
                               img={'rub.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -192,6 +196,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToRUB).reverse()}
                               img={'rub.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -203,6 +208,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToRON).reverse()}
                               img={'roman.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -214,6 +220,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToRON).reverse()}
                               img={'roman.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                         </Swiper>
@@ -248,6 +255,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBTC).reverse()}
                               img={'btc.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -259,6 +267,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateETH).reverse()}
                               img={'eth.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -270,6 +279,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBNB).reverse()}
                               img={'bnb.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -281,6 +291,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateNOT).reverse()}
                               img={'not.png'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -292,6 +303,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateSOL).reverse()}
                               img={'sol.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -303,6 +315,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateLTC).reverse()}
                               img={'ltc.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -314,6 +327,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBCH).reverse()}
                               img={'bch.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                         </Swiper>
@@ -426,13 +440,13 @@ export default function Home() {
           </footer>
         </div>
         <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
+          {login == 1 &&  <PopupAccount onPopupAccount={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>
         <AnimatePresence>
-          {createNews == 1 && <PopupNews onClick={setCreateNews} />}
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>

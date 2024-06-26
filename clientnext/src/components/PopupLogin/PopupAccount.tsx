@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { signIn } from "next-auth/react";
 
-export const PopupAccount = ({ onClick }: AccountPopupProps) => {
+export const PopupAccount = ({ onPopupAccount }: AccountPopupProps) => {
   const [option, setOption] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
   const [login, setLogin] = useState<string>("");
@@ -102,7 +102,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
     <>
       {option === 1 && (
         <PopupLogin
-          onClick={onClick}
+          onClick={onPopupAccount}
           setOption={setOption}
           email={email}
           setEmail={setEmail}
@@ -110,7 +110,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
       )}
       {option === 2 && (
         <PopupPassword
-          onClick={onClick}
+          onClick={onPopupAccount}
           setOption={setOption}
           pass={pass}
           setPass={setPass}
@@ -119,7 +119,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
       )}
        {option == 7 && (
          <PopupRegistration
-         onClick={onClick}
+         onClick={onPopupAccount}
          setOption={setOption}
          email={email}
          setEmail={setEmail}
@@ -127,7 +127,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
        )}
       {option === 4 && (
         <PopupRegPass
-          onClick={onClick}
+          onClick={onPopupAccount}
           login={login}
           setLogin={setLogin}
           pass={pass}
@@ -139,7 +139,7 @@ export const PopupAccount = ({ onClick }: AccountPopupProps) => {
       )}
       {option === 5 && (
         <PopupCode
-          onClick={onClick}
+          onClick={onPopupAccount}
           setInputConfirmCode={setInputConfirmCode}
           email={email}
           confirm={confirmCode}

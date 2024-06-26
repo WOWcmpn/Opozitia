@@ -25,6 +25,10 @@ import {
 import { IWeather } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { useSession } from 'next-auth/react';
+import { AnimatePresence } from 'framer-motion';
+import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
+import { Search } from '@/components/Search/Search';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -36,6 +40,9 @@ export default function Widgets() {
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconOne, setWeatherDayIconOne] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconTwo, setWeatherDayIconTwo] = useState<string>("/img/icons/weather/unknown.webp");
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const { data: session, status } = useSession()
 
   const refreshCalendar = useCallback(() => {
@@ -205,8 +212,17 @@ export default function Widgets() {
   ];
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div
+      className={`wrapper ${
+        search === 1 || login === 1 || createNews === 1 ? "overflow" : ""
+      } w-[100vw]`}
+    >
+      <div className={`${
+        search === 1 || login === 1 || createNews === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page page-vidgets">
         <section className="page__vidgets vidgets">
           <div className="vidgets__container">
@@ -413,6 +429,16 @@ export default function Widgets() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login === 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search === 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
   );
 }

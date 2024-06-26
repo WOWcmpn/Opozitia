@@ -20,6 +20,7 @@ import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
 import { useSession } from "next-auth/react";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function NewsId({params} : {params: {id: string}}) {
   const [news, setNews] = useState<ISingleNews>();
@@ -31,6 +32,7 @@ export default function NewsId({params} : {params: {id: string}}) {
   const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [isVoted, setIsVoted] = useState<boolean>(false);
   const session = useSession()
 
@@ -80,6 +82,16 @@ export default function NewsId({params} : {params: {id: string}}) {
     }
   }
 
+  const copyUrl = () => {
+    const url = window.location.href
+    navigator.clipboard.writeText(url).then(() => {
+      toast.success('Ссылка скопирована')
+    }).catch((err) => {
+      console.error('copy url error ', err);
+      toast.error('Что-то пошло не так')
+    })
+  }
+
   useEffect(() => {
     async function loadComments() {
       if(page > 1) {
@@ -126,17 +138,18 @@ export default function NewsId({params} : {params: {id: string}}) {
     <div className="wrapper">
       <div
         className={`home ${
-          search === 1 || login === 1 ? "overflow" : ""
+          search === 1 || login === 1 || createNews === 1
+            ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search === 1 || login === 1
+            search === 1 || login === 1 || createNews === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={2500} />
       <main className="page">
         <section className="page__news-single news-single">
@@ -182,6 +195,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                         <button
                           type="button"
                           className="main-block-news__actions"
+                          onClick={copyUrl}
                         >
                           <Image src={CopyImage} alt="Иконка" />
                         </button>
@@ -232,13 +246,13 @@ export default function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="content-news-single__bottom">
                     <span className="content-news-single__time">{news?.createdAtTime}</span>
-                    <Link
-                      href="#"
+                    <button
                       className="content-news-single__share flex gap-[5px]"
+                      onClick={copyUrl}
                     >
                       <Image src={ShareGrey} alt="Иконка" />
                       Поделиться
-                    </Link>
+                    </button>
                   </div>
                   <div className="content-news-single__choose-like">
                     <form action="#" className="content-news-single__form">
@@ -453,10 +467,13 @@ export default function NewsId({params} : {params: {id: string}}) {
       </footer>
         </div>
         <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
+          {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </div>

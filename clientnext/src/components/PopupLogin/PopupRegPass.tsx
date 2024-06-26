@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from 'react';
 import { motion } from "framer-motion";
 import { RegisterPassPopupProps } from "@/types/types";
 import { toast } from "react-toastify";
@@ -16,6 +16,15 @@ export const PopupRegPass = ({
   setConfirmPass,
   register,
 }: RegisterPassPopupProps) => {
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onOption();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onOption]);
+
   return (
     <motion.div
       id="popup-registration-password"
@@ -26,14 +35,15 @@ export const PopupRegPass = ({
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className="popup_show content-popup popup__login">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={() => onOption(0)}
@@ -49,7 +59,7 @@ export const PopupRegPass = ({
             <form
               id="form-pass"
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-registration-recovery"
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {
@@ -76,7 +86,7 @@ export const PopupRegPass = ({
                 id="pass"
                 name="form[]"
                 minLength={5}
-                data-required
+                data-required={true}
                 placeholder="Введите ваш пароль"
                 className="body-popup__input-password input"
                 required
@@ -88,7 +98,7 @@ export const PopupRegPass = ({
                 id="pass2"
                 name="form[]"
                 minLength={5}
-                data-required
+                data-required={true}
                 placeholder="Повторите введенный пароль"
                 className="body-popup__input-password input"
                 required

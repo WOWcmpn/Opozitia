@@ -4,24 +4,31 @@ import { motion } from "framer-motion";
 import Logo from "@/img/logo.png";
 import UploadFile from "@/img/icons/uploadfile.svg";
 import ImageFile from "@/img/icons/imagefile.png";
-import { AccountPopupProps } from "@/types/types";
+import { AccountPopupProps, NewsPopupProps } from '@/types/types';
 import Link from "next/link";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { NewsService } from "@/service/news.service";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-export const PopupNews = ({ onClick }: AccountPopupProps) => {
+export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
   const [option, setOption] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
   const [file, setFile] = useState<File>();
   const [newsCategory, setNewsCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-
   const fileTest = useRef<HTMLInputElement>(null);
   const popup = () => {
-    onClick(0);
+    onPopupNews(0);
   };
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onPopupNews();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onPopupNews]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -52,13 +59,13 @@ export const PopupNews = ({ onClick }: AccountPopupProps) => {
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className=" popup_show popup__content_vote content-popup !px-[40px] !pt-[30px] !pb-[5px]">
           <div className="popup__top !w-[100%]">
             <Link href={'/'} className="popup__logo">
               <picture>
-                <source srcSet="img/logo.webp" type="image/webp" />
-                <Image src={Logo} alt="Logo" height={38} />
+                <Image src={'/img/logo.webp'} width={110} alt="Logo" height={38} />
               </picture>
             </Link>
             <button

@@ -110,7 +110,7 @@ export const AccountSupport = ({location}: {location: string}) => {
                   data-error="Ошибка"
                   placeholder="ФИО..."
                   minLength={5}
-                  maxLength={25}
+                  maxLength={45}
                   className="right-blocks-body__input select-input"
                   required
                   onChange={(e) => setName(e.target.value)}

@@ -6,11 +6,18 @@ import { ICrypto, ICurrency } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CryptoValue } from "@/components/CryptoValue/CryptoValue";
+import { AnimatePresence } from 'framer-motion';
+import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
+import { Search } from '@/components/Search/Search';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
-export default function Exchange() {
-  const [option, setOption] = useState<string>("currency");
+export default function Exchangeb() {
+  const [option, setOption] = useState<string>("crypto");
   const [currency, setCurrency] = useState<ICurrency>();
   const [crypto, setCrypto] = useState<ICrypto>();
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
 
   useEffect(() => {
     async function loadData() {
@@ -31,8 +38,16 @@ export default function Exchange() {
   }
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      search === 1 || login === 1 || createNews === 1
+        ? "overflow" : ""
+    } w-[100vw]`}>
+      <div className={`${
+        search === 1 || login === 1 || createNews === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page">
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
@@ -40,7 +55,7 @@ export default function Exchange() {
               <div className="w-[1180px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] select_currency">
                 <Select onValueChange={(option) => handleOption(option)}>
                   <SelectTrigger className="select_currency-trigger">
-                    <SelectValue placeholder="Валюты" defaultValue={'currency'} />
+                    <SelectValue placeholder="Криптовалюта" defaultValue={'crypto'} />
                   </SelectTrigger>
                   <SelectContent className="bg-white rounded text-black text-[25px]">
                     <SelectGroup className="text-black text-[25px]">
@@ -127,6 +142,16 @@ export default function Exchange() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
   );
 }

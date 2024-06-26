@@ -281,6 +281,7 @@ export type GraphicsBlockProps = {
   labels: string[];
   data: string[];
   img?: string
+  link: string
 };
 
 export type BottomNews = {
@@ -410,8 +411,12 @@ export type PollsItemProps = {
   onTitle: React.Dispatch<React.SetStateAction<string>>
 };
 
+export type NewsPopupProps = {
+  onPopupNews: React.Dispatch<React.SetStateAction<number>>;
+};
+
 export type AccountPopupProps = {
-  onClick: React.Dispatch<React.SetStateAction<number>>;
+  onPopupAccount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type RecoveryPopupProps = {

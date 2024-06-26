@@ -9,10 +9,14 @@ import { ICurrency, IFullCurrency, IMainCurrency, IMainNews, INews } from "@/typ
 import { NewsService } from "@/service/news.service";
 import { CurrencyElement } from "@/components/CurrencyElement/CurrencyElement";
 import { PageNews } from "@/components/PageNews/PageNews";
+import { AnimatePresence } from 'framer-motion';
+import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
+import { Search } from '@/components/Search/Search';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function Currency({params} : {params: { id: string }}) {
-  const [option, setOption] = useState(0);
-  const [graph, setGraph] = useState(0);
+  const [option, setOption] = useState<number>(0);
+  const [graph, setGraph] = useState<number>(0);
   const [weekCurrency, setWeekCurrency] = useState<IFullCurrency[]>([]);
   const [monthCurrency, setMonthCurrency] = useState<IFullCurrency[]>([]);
   const [sixMonthCurrency, setSixMonthCurrency] = useState<IFullCurrency[]>([]);
@@ -26,6 +30,9 @@ export default function Currency({params} : {params: { id: string }}) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [img, setImg] = useState<string>('question.svg');
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
 
   const name1 = params.id.slice(0, 3)
   const name2 = params.id.slice(5, 8)
@@ -114,8 +121,16 @@ export default function Currency({params} : {params: { id: string }}) {
   const avgYearPercentage = ((yearCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 365).toFixed(2)
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <div className={`wrapper ${
+      search === 1 || login === 1 || createNews === 1
+        ? "overflow" : ""
+    } w-[100vw]`}>
+      <div className={`${
+        search === 1 || login === 1 || createNews === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page">
         <section className="page__currency currency">
           <div className="currency__container">
@@ -490,6 +505,16 @@ export default function Currency({params} : {params: { id: string }}) {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search == 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
   );
 }

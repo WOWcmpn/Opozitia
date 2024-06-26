@@ -9,6 +9,9 @@ import { NewsService } from "@/service/news.service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cities } from '@/utils/cities';
+import { AnimatePresence } from 'framer-motion';
+import { Search } from '@/components/Search/Search';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function Account() {
   const [option, setOption] = useState<number>(0);
@@ -19,6 +22,8 @@ export default function Account() {
   const [location, setLocation] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [favoriteNewsCategory, setFavoriteNewsCategory] = useState<string>('');
+  const [search, setSearch] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const { data: session, status, update } = useSession()
 
   useEffect(() => {
@@ -67,15 +72,15 @@ export default function Account() {
 
   return (
     <div className={`wrapper ${
-      passRecovery === 1
+      passRecovery === 1 || search === 1 || createNews === 1
         ? "overflow" : ""
     }`}>
       <div className={`${
-        passRecovery === 1
+        passRecovery === 1 || search === 1 || createNews === 1
           ? "wrapper__popup blur"
           : ""
-      }`}></div>
-      <Header className={"header menu-visual"} />
+      }`}>
+      <Header onSearch={setSearch} onNews={setCreateNews} className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={3000} />
       <main className="page page_account">
         <section className="page__account account">
@@ -272,6 +277,13 @@ export default function Account() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {search === 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
   );
 }
