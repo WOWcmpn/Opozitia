@@ -11,6 +11,8 @@ import { Search } from "@/components/Search/Search";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LastNews() {
   const ItemPerPage = 10
@@ -97,6 +99,7 @@ export default function LastNews() {
 
   return (
     <div className="wrapper">
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
           search === 1 || login === 1 || createNews === 1

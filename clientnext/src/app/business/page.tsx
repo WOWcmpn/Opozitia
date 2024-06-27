@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select"
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Business () {
   const ItemPerPage = 10
@@ -104,6 +106,7 @@ export default function Business () {
 
   return (
     <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
           search === 1 || login === 1 || createNews === 1
@@ -137,7 +140,6 @@ export default function Business () {
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
                         <SelectGroup>
-                          {/*<SelectLabel>Fruits</SelectLabel>*/}
                           <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>

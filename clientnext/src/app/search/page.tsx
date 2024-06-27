@@ -8,6 +8,8 @@ import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Search({searchParams}: {
   searchParams?: {
@@ -50,6 +52,8 @@ export default function Search({searchParams}: {
   }, [searchTerm]);
 
   return (
+    <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
     <div className={`wrapper ${
       login === 1 || createNews === 1
         ? "overflow" : ""
@@ -163,5 +167,6 @@ export default function Search({searchParams}: {
         {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
       </AnimatePresence>
     </div>
+    </>
   );
 }

@@ -38,23 +38,33 @@ export default function NewsId({params} : {params: {id: string}}) {
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
   const [isVoted, setIsVoted] = useState<boolean>(false);
+  const [isClickable, setIsClickable] = useState<boolean>(true);
+  const [lastClicked, setLastClicked] = useState(0);
+  const delay = 5000
   const session = useSession()
 
   const sum = +news?.votePositive! + +news?.voteNegative!
-  const perAgree = ((+news?.votePositive! / sum) * 100).toFixed(1)
-  const perDisagree = ((+news?.voteNegative! / sum) * 100).toFixed(1)
+  const perAgree = ((+news?.votePositive! / sum) * 100).toFixed(0)
+  const perDisagree = ((+news?.voteNegative! / sum) * 100).toFixed(0)
 
   const handleVote = async (vote: quizVotes) => {
     if(!session.data) {
       toast.error("Неавторизованные пользователи не могут голосовать");
       return
     } else {
-      if(vote === quizVotes.Like) toast.success('Вам понравилась данная новость')
-      if(vote === quizVotes.Dislike) toast.success('Вам не понравилась данная новость')
-      await NewsService.sendVote(vote, params.id, session.data?.user?.name!)
-      const newData = await NewsService.getNewsById(params.id)
-      setNews(newData)
-      setIsVoted(true)
+      if(isClickable) {
+        setLastClicked(Date.now())
+        setIsClickable(false)
+        if(vote === quizVotes.Like) toast.success('Вам понравилась данная новость')
+        if(vote === quizVotes.Dislike) toast.success('Вам не понравилась данная новость')
+        await NewsService.sendVote(vote, params.id, session.data?.user?.name!)
+        const newData = await NewsService.getNewsById(params.id)
+        setNews(newData)
+        setIsVoted(true)
+      } else {
+        toast.error('Голосовать можно один раз в 5 секунд')
+        return
+      }
     }
   }
 
@@ -95,6 +105,16 @@ export default function NewsId({params} : {params: {id: string}}) {
       toast.error('Что-то пошло не так')
     })
   }
+
+  useEffect(() => {
+    if(!isClickable) {
+      const timer = setTimeout(() => {
+        setIsClickable(true)
+      }, delay)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isClickable, delay]);
 
   useEffect(() => {
     async function loadComments() {

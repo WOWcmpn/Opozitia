@@ -37,8 +37,8 @@ export enum favoriteNewsCategory {
 }
 
 export class CreateNews {
-  // @ApiProperty({ type: 'string', format: 'binary' })
-  // file: any;
+  @IsString()
+  file: string;
 
   @ApiProperty()
   @IsString()

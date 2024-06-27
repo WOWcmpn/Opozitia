@@ -1,23 +1,21 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "@/img/logo.png";
 import UploadFile from "@/img/icons/uploadfile.svg";
 import ImageFile from "@/img/icons/imagefile.png";
-import { AccountPopupProps, NewsPopupProps } from '@/types/types';
+import { NewsPopupProps } from '@/types/types';
 import Link from "next/link";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { NewsService } from "@/service/news.service";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { UploadButton } from '@/utils/uploadthing';
 
 export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
-  const [option, setOption] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
-  const [file, setFile] = useState<File>();
   const [newsCategory, setNewsCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const fileTest = useRef<HTMLInputElement>(null);
+  const [imgNews, setImgNews] = useState<string>('');
   const popup = () => {
     onPopupNews(0);
   };
@@ -32,20 +30,17 @@ export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(!file) return
     try {
-      const data = new FormData()
-      data.set('file', file)
-      const res = await NewsService.createNews({ file, title, newsCategory, description })
+      const res = await NewsService.createNews({ file: imgNews, title, newsCategory, description })
       if(res) {
         console.log('ok');
-        toast.success('Комментарий был успешно создан')
+        toast.success('Новость была успешно создана')
         setTimeout(() => {
           window.location.reload()
         }, 1500)
       }
     } catch (err) {
-      toast.error('Ваши данные невалидны.')
+      toast.error('Ваши данные невалидны')
       console.warn('PopupNews err ', err);
     }
   }
@@ -99,66 +94,67 @@ export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
                   required
                   onChange={e => setTitle(e.target.value)}
                 />
-                {/*<UploadButton*/}
-                {/*  className={'text-black'}*/}
-                {/*  appearance={{*/}
-                {/*    button: {*/}
-                {/*      fontSize: '1.3rem',*/}
-                {/*      fontWeight: 'bold',*/}
-                {/*      color: 'black',*/}
-                {/*      width: '100%',*/}
-                {/*      background: rgba(136, 162, 255, 1.1),*/}
-                {/*    },*/}
-                {/*    allowedContent: {*/}
-                {/*      margin: '0 0 -1em 0'*/}
-                {/*    }*/}
-                {/*}}*/}
-                {/*  endpoint={'imageUploader'}*/}
-                {/*  onClientUploadComplete={(res) => {*/}
-                {/*    toast.success('Изображение успешно загружено')*/}
-                {/*    console.log(res);*/}
-                {/*  }}*/}
-                {/*  onUploadError={(err) => {*/}
-                {/*    console.error('Upload error ', err);*/}
-                {/*    toast.error('Ваше изображение не подходит')*/}
-                {/*  }}*/}
-                {/*/>*/}
 
-                <label
-                  htmlFor="file"
-                  className={`input flex items-center justify-between !px-[20px] !py-[15px] cursor-pointer !text-inheri ${
-                    option == 1 ? "bg-[#EAE8E8]" : ""
-                  }`}
-                >
-                  <span className="cursor-pointer text-inherit">
-                    {fileTest.current?.files && option == 1
-                      ? fileTest.current.files[0].name
-                      : "Загрузить файл изображения"}
-                  </span>
+                <UploadButton
+                  className={'text-black'}
+                  // appearance={{
+                  //   button: {
+                  //     fontSize: '1.3rem',
+                  //     fontWeight: 'bold',
+                  //     color: 'black',
+                  //     width: '100%',
+                  //     // background: rgba(136, 162, 255, 1.1),
+                  //   },
+                  //   allowedContent: {
+                  //     margin: '0 0 -1em 0'
+                  //   }
+                  // }}
+                  endpoint={'imageUploader'}
+                  onClientUploadComplete={(res) => {
+                    setImgNews(res[0].url)
+                    toast.success('Изображение успешно загружено')
+                    console.log(res);
+                  }}
+                  onUploadError={(err) => {
+                    console.error('Upload error ', err);
+                    toast.error('Ваше изображение не подходит')
+                  }}
+                />
+                {/*<label*/}
+                {/*  htmlFor="file"*/}
+                {/*  className={`input flex items-center justify-between !px-[20px] !py-[15px] cursor-pointer !text-inheri ${*/}
+                {/*    option == 1 ? "bg-[#EAE8E8]" : ""*/}
+                {/*  }`}*/}
+                {/*>*/}
+                {/*  <span className="cursor-pointer text-inherit">*/}
+                {/*    {fileTest.current?.files && option == 1*/}
+                {/*      ? fileTest.current.files[0].name*/}
+                {/*      : "Загрузить файл изображения"}*/}
+                {/*  </span>*/}
 
-                  <input
-                    type="file"
-                    id="fileupload"
-                    name="form[]"
-                    ref={fileTest}
-                    data-required={''}
-                    onChange={(e) => {
-                      setOption(1);
-                      setFile(e.target.files?.[0])
-                    }}
-                    placeholder="Загрузить файл изображения"
-                    accept="image/*"
-                    className="absolute opacity-0 cursor-pointer"
-                    required
-                  />
-                  <Image
-                    src={option == 0 ? UploadFile : ImageFile}
-                    alt="upload"
-                    width={40}
-                    height={40}
-                    className="cursor-pointer"
-                  />
-                </label>
+                {/*  <input*/}
+                {/*    type="file"*/}
+                {/*    id="fileupload"*/}
+                {/*    name="form[]"*/}
+                {/*    ref={fileTest}*/}
+                {/*    data-required={''}*/}
+                {/*    onChange={(e) => {*/}
+                {/*      setOption(1);*/}
+                {/*      setFile(e.target.files?.[0])*/}
+                {/*    }}*/}
+                {/*    placeholder="Загрузить файл изображения"*/}
+                {/*    accept="image/*"*/}
+                {/*    className="absolute opacity-0 cursor-pointer"*/}
+                {/*    required*/}
+                {/*  />*/}
+                {/*  <Image*/}
+                {/*    src={option == 0 ? UploadFile : ImageFile}*/}
+                {/*    alt="upload"*/}
+                {/*    width={40}*/}
+                {/*    height={40}*/}
+                {/*    className="cursor-pointer"*/}
+                {/*  />*/}
+                {/*</label>*/}
 
                 <div className="popup-news__category bg-pink !border-[1px] !border-black border-solid rounded-[12px] text-black py-[10px] pl-[20px] !text-[35px]">
                   <Select onValueChange={(category) => setNewsCategory(category)}>

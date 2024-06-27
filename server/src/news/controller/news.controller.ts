@@ -1,25 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Param,
-  Post,
-  Query,
-  Req,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateNews, newsCategory } from '../../base/types/newsModels';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { fileStorage } from '../../base/helpers/storage';
-import { ApiTags, ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
@@ -159,26 +145,20 @@ export class NewsController {
   }
 
   @Post('create-news')
-  // @UseGuards(AccessTokenGuard)
-  @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
   @ApiResponse({ status: 201, description: 'Success' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'Create news by user' })
   @ApiBearerAuth()
-  @ApiConsumes('multipart/form-data', 'string')
   @ApiBody({ type: CreateNews })
   @HttpCode(201)
-  async createNews(
-    @UploadedFile()
-    file: Express.Multer.File,
-    @Body() inputData: CreateNews,
-  ) {
+  async createNews(@Body() inputData: CreateNews) {
+    console.log(inputData);
     return await this.createNewsUseCase.createNews(
       inputData.title,
       inputData.description,
       inputData.category,
-      file.filename,
+      inputData.file,
     );
   }
 

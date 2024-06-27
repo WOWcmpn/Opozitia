@@ -29,6 +29,8 @@ import { AnimatePresence } from 'framer-motion';
 import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
 import { Search } from '@/components/Search/Search';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -212,6 +214,8 @@ export default function Widgets() {
   ];
 
   return (
+    <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
     <div
       className={`wrapper ${
         search === 1 || login === 1 || createNews === 1 ? "overflow" : ""
@@ -440,5 +444,6 @@ export default function Widgets() {
         {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
       </AnimatePresence>
     </div>
+    </>
   );
 }

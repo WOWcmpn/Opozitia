@@ -125,9 +125,7 @@ export const NewsService = {
 
   async createNews(inputData: ICreateNews): Promise<string> {
     const {data} = await axios.post('news/create-news', {file: inputData.file,
-      title: inputData.title, description: inputData.description, category: inputData.newsCategory}, {headers: {
-        'Content-Type': ['multipart/form-data', 'string']
-      }})
+      title: inputData.title, description: inputData.description, category: inputData.newsCategory})
     return data
   },
 
@@ -157,7 +155,7 @@ export const NewsService = {
     return data
   },
 
-  async getAmountOfCategory(category: string, sorting?: string) {
+  async getAmountOfCategory(category: string, sorting?: string): Promise<number> {
     const {data} = await axios.get('news/amount', {params: {
       category, sorting
       }})

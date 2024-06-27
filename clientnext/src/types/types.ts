@@ -40,7 +40,7 @@ export interface ILogin {
 }
 
 export interface ICreateNews {
-  file: any;
+  file: string;
   title: string;
   newsCategory: string;
   description: string;

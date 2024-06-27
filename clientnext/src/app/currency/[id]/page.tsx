@@ -13,6 +13,8 @@ import { AnimatePresence } from 'framer-motion';
 import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
 import { Search } from '@/components/Search/Search';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function Currency({params} : {params: { id: string }}) {
   const [option, setOption] = useState<number>(0);
@@ -121,6 +123,8 @@ export default function Currency({params} : {params: { id: string }}) {
   const avgYearPercentage = ((yearCurrency.reduce((c, acc) => c + +acc.percentage, 0)) / 365).toFixed(2)
 
   return (
+    <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
     <div className={`wrapper ${
       search === 1 || login === 1 || createNews === 1
         ? "overflow" : ""
@@ -516,5 +520,6 @@ export default function Currency({params} : {params: { id: string }}) {
         {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
       </AnimatePresence>
     </div>
+    </>
   );
 }
