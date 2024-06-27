@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Night from '@/img/icons/weather/01n.png';
-import ChampionshipImg from '@/img/icons/championship.png';
 import ArrowL from '@/img/icons/arrow-left-calendar.svg';
 import ArrowR from '@/img/icons/arrow-right-calendar.svg';
 import Location from '@/img/icons/location.svg';
@@ -281,35 +280,35 @@ export default function Widgets() {
                         <SwiperSlide>
                           <Championship
                             title="Чемпионат Испании"
-                            img={ChampionshipImg}
+                            img={'/img/icons/football/SpainChampionship.png'}
                             champs={championshipSpain}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
                             title="Чемпионат Германии"
-                            img={ChampionshipImg}
+                            img={'/img/icons/football/GermanyChampionship.png'}
                             champs={championshipGermany}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
                             title="Чемпионат Италии"
-                            img={ChampionshipImg}
+                            img={'/img/icons/football/ItalyChampionship.png'}
                             champs={championshipItaly}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
                             title="Чемпионат Франции"
-                            img={ChampionshipImg}
+                            img={'/img/icons/football/FranceChampionship.png'}
                             champs={championshipFrance}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
                             title="Чемпионат Англии"
-                            img={ChampionshipImg}
+                            img={'/img/icons/football/EnglandChampionship.png'}
                             champs={championshipEngland}
                           />
                         </SwiperSlide>

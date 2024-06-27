@@ -413,7 +413,7 @@ interface Champs {
 
 export type ChampionshipProps = {
   title: string;
-  img: StaticImageData;
+  img: string;
   champs: IChampionship[];
 };
 

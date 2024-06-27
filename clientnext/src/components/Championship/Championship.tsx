@@ -9,8 +9,7 @@ export const Championship = ({ img, title, champs }: ChampionshipProps) => {
         <h3 className="championship__title">{title}</h3>
         <div className="championship__image">
           <picture>
-            <source srcSet="img/icons/championship.webp" type="image/webp" />
-            <Image src={img} alt="Иконка" />
+            <Image src={img} width={80} height={40} alt="Иконка" />
           </picture>
         </div>
       </div>
