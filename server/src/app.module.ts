@@ -18,6 +18,7 @@ import { CommentsModule } from './comments/comments.module';
 // import { CommentsEntity } from './comments/domain/comments.entity';
 import { CryptoModule } from './crypto/crypto.module';
 import { CurrencyModule } from './currency/currency.module';
+import { FootballModule } from './football/football.module';
 
 // const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 //
@@ -249,6 +250,7 @@ import { CurrencyModule } from './currency/currency.module';
     CommentsModule,
     CryptoModule,
     CurrencyModule,
+    FootballModule,
   ],
   controllers: [],
   providers: [],

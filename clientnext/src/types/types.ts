@@ -1,5 +1,23 @@
 import { StaticImageData } from "next/image";
 
+export enum Championships {
+  Spain = 'Испания',
+  Germany = 'Германия',
+  Italy = 'Италия',
+  France = 'Франция',
+  England = 'Англия',
+}
+
+export interface IChampionship {
+  id: string;
+  place: number;
+  team: string;
+  games: number;
+  points: number;
+  championship: Championships;
+  img: string;
+}
+
 export interface City {
   city_id: string
   country_id: string
@@ -396,7 +414,7 @@ interface Champs {
 export type ChampionshipProps = {
   title: string;
   img: StaticImageData;
-  champs: Array<Champs>;
+  champs: IChampionship[];
 };
 
 export type PollsItemProps = {

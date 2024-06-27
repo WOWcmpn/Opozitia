@@ -33,6 +33,7 @@ export class GetNewsUseCase {
       .then((res) => {
         const $ = cheerio.load(res.data);
         $('.article-listing__item').each((i, elem) => {
+          console.log(i);
           const link = $(elem).find('.listing-preview__content').attr('href');
           const title = $(elem).find('.listing-preview__content > .listing-preview__title').first().text();
           const imgUrl = $(elem).find('img').attr('src');

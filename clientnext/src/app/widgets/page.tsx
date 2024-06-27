@@ -1,36 +1,30 @@
 "use client";
-import Image from "next/image";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import Night from "@/img/icons/weather/01n.png"
-import ChampionshipImg from "@/img/icons/championship.png";
-import Team from "@/img/icons/team.png";
-import ArrowL from "@/img/icons/arrow-left-calendar.svg";
-import ArrowR from "@/img/icons/arrow-right-calendar.svg";
-import Location from "@/img/icons/location.svg";
-import Wind from "@/img/icons/wind.svg";
-import Humidity1 from "@/img/icons/humidity.svg";
-import Humidity2 from "@/img/icons/humidity2.svg";
-import { Header } from "@/components/Header/Header";
-import { Swiper as SwiperType } from "swiper";
-import { Championship } from "@/components/Championship/Championship";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import {
-  calendar,
-  getDate,
-  getMonth,
-  getStringMonth,
-  getYear,
-} from "@/utils/calendar";
-import { IWeather } from "@/types/types";
-import { NewsService } from "@/service/news.service";
+import Image from 'next/image';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Night from '@/img/icons/weather/01n.png';
+import ChampionshipImg from '@/img/icons/championship.png';
+import ArrowL from '@/img/icons/arrow-left-calendar.svg';
+import ArrowR from '@/img/icons/arrow-right-calendar.svg';
+import Location from '@/img/icons/location.svg';
+import Wind from '@/img/icons/wind.svg';
+import Humidity1 from '@/img/icons/humidity.svg';
+import Humidity2 from '@/img/icons/humidity2.svg';
+import { Header } from '@/components/Header/Header';
+import { Swiper as SwiperType } from 'swiper';
+import { Championship } from '@/components/Championship/Championship';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { calendar, getDate, getMonth, getStringMonth, getYear } from '@/utils/calendar';
+import { Championships, IChampionship, IWeather } from '@/types/types';
+import { NewsService } from '@/service/news.service';
 import { useSession } from 'next-auth/react';
 import { AnimatePresence } from 'framer-motion';
 import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
 import { Search } from '@/components/Search/Search';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
 import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { FootballService } from '@/service/football.service';
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -45,6 +39,11 @@ export default function Widgets() {
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
+  const [championshipSpain, setChampionshipSpain] = useState<IChampionship[]>([]);
+  const [championshipGermany, setChampionshipGermany] = useState<IChampionship[]>([]);
+  const [championshipItaly, setChampionshipItaly] = useState<IChampionship[]>([]);
+  const [championshipFrance, setChampionshipFrance] = useState<IChampionship[]>([]);
+  const [championshipEngland, setChampionshipEngland] = useState<IChampionship[]>([]);
   const { data: session, status } = useSession()
 
   const refreshCalendar = useCallback(() => {
@@ -110,108 +109,25 @@ export default function Widgets() {
     refreshCalendar();
   }, [refreshCalendar]);
 
-  const champs1 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-  ];
-  const champs2 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-  ];
+  useEffect(() => {
+    async function loadChampionships() {
+      try {
+        const spainData = await FootballService.getFootballByChampionship(Championships.Spain)
+        setChampionshipSpain(spainData)
+        const germanyData = await FootballService.getFootballByChampionship(Championships.Germany)
+        setChampionshipGermany(germanyData)
+        const italyData = await FootballService.getFootballByChampionship(Championships.Italy)
+        setChampionshipItaly(italyData)
+        const franceData = await FootballService.getFootballByChampionship(Championships.France)
+        setChampionshipFrance(franceData)
+        const englandData = await FootballService.getFootballByChampionship(Championships.England)
+        setChampionshipEngland(englandData)
+      } catch (err) {
+        console.error('loadChampionships error ', err);
+      }
+    }
+    loadChampionships()
+  }, []);
 
   return (
     <>
@@ -364,16 +280,37 @@ export default function Widgets() {
                       >
                         <SwiperSlide>
                           <Championship
-                            title="Чемпионат Германии"
+                            title="Чемпионат Испании"
                             img={ChampionshipImg}
-                            champs={champs1}
+                            champs={championshipSpain}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
-                            title="Чемпионат Испании"
+                            title="Чемпионат Германии"
                             img={ChampionshipImg}
-                            champs={champs1}
+                            champs={championshipGermany}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Италии"
+                            img={ChampionshipImg}
+                            champs={championshipItaly}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Франции"
+                            img={ChampionshipImg}
+                            champs={championshipFrance}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Англии"
+                            img={ChampionshipImg}
+                            champs={championshipEngland}
                           />
                         </SwiperSlide>
                       </Swiper>
