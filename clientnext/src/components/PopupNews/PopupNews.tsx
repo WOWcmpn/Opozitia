@@ -1,8 +1,6 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import UploadFile from "@/img/icons/uploadfile.svg";
-import ImageFile from "@/img/icons/imagefile.png";
 import { NewsPopupProps } from '@/types/types';
 import Link from "next/link";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,12 +8,14 @@ import { NewsService } from "@/service/news.service";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { UploadButton } from '@/utils/uploadthing';
+import "@uploadthing/react/styles.css";
 
 export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
   const [title, setTitle] = useState<string>('');
   const [newsCategory, setNewsCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [imgNews, setImgNews] = useState<string>('');
+  const [imgName, setImgName] = useState<string | null>(null);
   const popup = () => {
     onPopupNews(0);
   };
@@ -95,31 +95,29 @@ export const PopupNews = ({ onPopupNews }: NewsPopupProps) => {
                   onChange={e => setTitle(e.target.value)}
                 />
 
-                <UploadButton
-                  className={'text-black'}
-                  // appearance={{
-                  //   button: {
-                  //     fontSize: '1.3rem',
-                  //     fontWeight: 'bold',
-                  //     color: 'black',
-                  //     width: '100%',
-                  //     // background: rgba(136, 162, 255, 1.1),
-                  //   },
-                  //   allowedContent: {
-                  //     margin: '0 0 -1em 0'
-                  //   }
-                  // }}
-                  endpoint={'imageUploader'}
-                  onClientUploadComplete={(res) => {
-                    setImgNews(res[0].url)
-                    toast.success('Изображение успешно загружено')
-                    console.log(res);
-                  }}
-                  onUploadError={(err) => {
-                    console.error('Upload error ', err);
-                    toast.error('Ваше изображение не подходит')
-                  }}
-                />
+                {imgName ? (
+                  <p className={'input items-center text-center font-bold !px-[20px] !py-[15px]'}>{imgName}</p>
+                ) : (
+                  <UploadButton
+                    className={'w-full'}
+                    appearance={{
+                      button:
+                        "w-[100%] text-black font-bold ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-[#88a2ff] bg-none after:bg-orange-400 width:100%",
+                      container: "rounded-md"
+                    }}
+                    endpoint={'imageUploader'}
+                    onClientUploadComplete={(res) => {
+                      setImgNews(res[0].url)
+                      setImgName(res[0].name)
+                      toast.success('Изображение успешно загружено')
+                      console.log(res);
+                    }}
+                    onUploadError={(err) => {
+                      console.error('Upload error ', err);
+                      toast.error('Ваше изображение не подходит')
+                    }}
+                  />
+                )}
                 {/*<label*/}
                 {/*  htmlFor="file"*/}
                 {/*  className={`input flex items-center justify-between !px-[20px] !py-[15px] cursor-pointer !text-inheri ${*/}
