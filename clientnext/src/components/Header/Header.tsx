@@ -91,6 +91,7 @@ export const Header = ({
                   alt="Icon"
                 />
               </Link>
+              {/*<Link href={'https://opozitia-server.vercel.app/admin/login'}>Admin</Link>*/}
               {status === 'authenticated' ? (
                   <Link
                     href={'/account'}

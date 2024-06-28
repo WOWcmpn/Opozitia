@@ -15,8 +15,6 @@ import { CommentsModule } from './comments/comments.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { CurrencyModule } from './currency/currency.module';
 import { FootballModule } from './football/football.module';
-import { DefaultAdminModule } from 'nestjs-admin';
-import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -38,7 +36,6 @@ import { AdminModule } from './admin/admin.module';
       ssl: true,
       // logging: ['query'],
     }),
-    DefaultAdminModule,
     MailerModule.forRoot({
       transport: {
         host: 'smtp.gmail.com',
@@ -62,7 +59,6 @@ import { AdminModule } from './admin/admin.module';
     CryptoModule,
     CurrencyModule,
     FootballModule,
-    AdminModule,
   ],
   controllers: [],
   providers: [],
