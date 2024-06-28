@@ -7,7 +7,6 @@ import { HttpExceptionFilter } from './httpExceptionFilter';
 import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-// import { dynamicImport } from './base/helpers/dymicImport';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -42,15 +41,6 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.set('view engine', 'ejs');
   app.setBaseViewsDir(join(__dirname, '..', 'clientnext'));
-
-  // const adminJSModule = await dynamicImport('adminjs');
-  // const AdminJS = adminJSModule.default;
-  // const AdminJSTypeorm = await dynamicImport('@adminjs/typeorm');
-  // AdminJSTypeorm.Resource.validate = validate;
-  // AdminJS.registerAdapter({
-  //   Resource: AdminJSTypeorm.Resource,
-  //   Database: AdminJSTypeorm.Database, // Change with whatever adapter you want to use
-  // });
 
   await app.listen(4000);
   Logger.log(`🚀 Application is running on: http://localhost:4000`);

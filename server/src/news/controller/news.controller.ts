@@ -153,7 +153,6 @@ export class NewsController {
   @ApiBody({ type: CreateNews })
   @HttpCode(201)
   async createNews(@Body() inputData: CreateNews) {
-    console.log(inputData);
     return await this.createNewsUseCase.createNews(
       inputData.title,
       inputData.description,
