@@ -1,3 +1,11 @@
+"use client"
+import { Suspense } from 'react';
+import { NavigateToResource } from "@refinedev/nextjs-router";
+
 export default function Home() {
-  return(<div></div>)
+  return(
+    <Suspense>
+      <NavigateToResource />
+    </Suspense>
+  )
 }
