@@ -14,7 +14,7 @@ import { Championship } from '@/components/Championship/Championship';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { calendar, getDate, getMonth, getStringMonth, getYear } from '@/utils/calendar';
-import { Championships, IChampionship, IWeather } from '@/types/types';
+import { Championships, IChampionship, IDaysEvent, IWeather } from '@/types/types';
 import { NewsService } from '@/service/news.service';
 import { useSession } from 'next-auth/react';
 import { AnimatePresence } from 'framer-motion';
@@ -43,6 +43,7 @@ export default function Widgets() {
   const [championshipItaly, setChampionshipItaly] = useState<IChampionship[]>([]);
   const [championshipFrance, setChampionshipFrance] = useState<IChampionship[]>([]);
   const [championshipEngland, setChampionshipEngland] = useState<IChampionship[]>([]);
+  const [dayEvent, setDayEvent] = useState<IDaysEvent[]>([]);
   const { data: session, status } = useSession()
 
   const refreshCalendar = useCallback(() => {
@@ -121,6 +122,8 @@ export default function Widgets() {
         setChampionshipFrance(franceData)
         const englandData = await FootballService.getFootballByChampionship(Championships.England)
         setChampionshipEngland(englandData)
+        const eventData = await NewsService.getDaysEvent()
+        setDayEvent(eventData)
       } catch (err) {
         console.error('loadChampionships error ', err);
       }
@@ -150,42 +153,11 @@ export default function Widgets() {
                 <div className="left-vidgets__events events-left-vidgets">
                   <h3 className="events-left-vidgets__title">События дня</h3>
                   <ul className="events-left-vidgets__list">
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
+                    {dayEvent.map(e => (
+                      <li key={e.id} className="events-left-vidgets__item events-left-vidgets__item_1">
+                        {e.title}
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="left-vidgets__wheather wheather-left-vidgets">

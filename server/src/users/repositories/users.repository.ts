@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../domain/user.entity';
 import { Repository } from 'typeorm';
-import { ViewUserModel } from '../../base/types/userModels';
+import { CreateUserByAdmin, ViewUserModel } from '../../base/types/userModels';
 import { favoriteNewsCategory } from '../../base/types/newsModels';
 
 @Injectable()
@@ -47,5 +47,13 @@ export class UsersRepository {
         { email, location, age, favoriteNewsCategory },
       );
     }
+  }
+
+  async deleteById(id: string) {
+    return await this.usersRepository.delete({ id });
+  }
+
+  async updateUserByAdmin(id: string, data: CreateUserByAdmin) {
+    return await this.usersRepository.update({ id }, data);
   }
 }

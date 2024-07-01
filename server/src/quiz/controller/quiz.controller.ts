@@ -5,7 +5,7 @@ import { quizVotes, sendVoteModel } from '../../base/types/quizModels';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('quiz')
-@ApiTags('Quiz news')
+@ApiTags('Quiz dssadsa')
 export class QuizController {
   constructor(
     private readonly sendVoteUseCase: SendVoteUseCase,

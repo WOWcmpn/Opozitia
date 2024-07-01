@@ -3,7 +3,7 @@ import {
   IComments,
   ICreateNews,
   ICrypto,
-  ICurrency,
+  ICurrency, IDaysEvent,
   IFullCrypto,
   IFullCurrency,
   IHomeNews,
@@ -23,6 +23,11 @@ axios.defaults.baseURL = "http://localhost:4000/"
 // axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async getDaysEvent(): Promise<IDaysEvent[] | []> {
+    const {data} = await axios.get('daysEvent/all')
+    return data
+  },
+
   async getCountComments(newsId: string): Promise<number> {
     const {data} = await axios.get(`comments/count-comments/${newsId}`)
     return data
@@ -33,13 +38,13 @@ export const NewsService = {
   },
 
   async getBottomComments(commentId: string): Promise<IComments[] | []> {
-    const {data} = await axios.get(`comments/${commentId}`)
+    const {data} = await axios.get(`comments/bottom/${commentId}`)
     return data
   },
 
   async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('user/send-question', { inputData: { name, location, text } })
+      return await axios.post('users/send-question', { inputData: { name, location, text } })
     } catch (err) {
       console.error('Service send email error ', err);
       return null
@@ -54,7 +59,7 @@ export const NewsService = {
     location: string,
     favoriteNewsCategory: string
   ) {
-    return await axios.put('user/profile/change-information', {
+    return await axios.put('users/profile/change-information', {
       userId,
       email,
       login,
@@ -65,7 +70,7 @@ export const NewsService = {
   },
 
   async getUserProfile(login: string): Promise<IProfileInfo> {
-    const {data} = await axios.get('user/profile-login', {params: {
+    const {data} = await axios.get('users/profile-login', {params: {
       login
       }})
     return data

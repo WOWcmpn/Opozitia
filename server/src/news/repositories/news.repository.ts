@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NewsEntity } from '../domain/news.entity';
 import { Repository } from 'typeorm';
-import { fullNewsModel } from '../../base/types/newsModels';
+import { fullNewsModel, UpdateNews } from '../../base/types/newsModels';
 import { CommentsEntity } from '../../comments/domain/comments.entity';
 import { CommentModel } from '../../base/types/commentsModels';
 
@@ -12,6 +12,14 @@ export class NewsRepository {
     @InjectRepository(NewsEntity) private readonly newsRepository: Repository<NewsEntity>,
     @InjectRepository(CommentsEntity) private readonly commentsRepo: Repository<CommentsEntity>,
   ) {}
+
+  async deleteNews(id: string) {
+    return await this.newsRepository.delete({ id });
+  }
+
+  async updateNews(id: string, data: UpdateNews) {
+    return await this.newsRepository.update({ id }, data);
+  }
 
   async addNews(news: fullNewsModel) {
     return this.newsRepository.insert(news);

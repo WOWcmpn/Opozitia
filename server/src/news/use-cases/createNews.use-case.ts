@@ -13,6 +13,32 @@ export class CreateNewsUseCase {
     private readonly newsRepo: NewsRepository,
   ) {}
 
+  async createNewsAdmin(
+    title: string,
+    description: string,
+    category: newsCategory,
+    imgUrl: string,
+    fullImgUrl: string,
+  ) {
+    const isExists = await this.newsQueryRepo.getNewsByTitle(title);
+    if (isExists) throw new BadRequestException([{ message: 'This news already exists', field: 'title' }]);
+    const time = formatTime(new Date());
+    const news: fullNewsModel = {
+      link: uuidv4(),
+      title: title,
+      imgUrl: imgUrl,
+      fullImgUrl: fullImgUrl,
+      description: description,
+      createdAtTime: time,
+      createdAtDate: new Date(),
+      category: category,
+      viewDate: formatDate(new Date().toLocaleDateString()),
+    };
+
+    await this.newsRepo.addNews(news);
+    return 'News have created';
+  }
+
   async createNews(title: string, description: string, category: newsCategory, img: string) {
     const isExists = await this.newsQueryRepo.getNewsByTitle(title);
     if (isExists) throw new BadRequestException([{ message: 'This news already exists', field: 'title' }]);

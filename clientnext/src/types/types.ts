@@ -1,5 +1,11 @@
 import { StaticImageData } from "next/image";
 
+export interface IDaysEvent {
+  id: string
+  title: string
+  viewDate: string
+}
+
 export enum Championships {
   Spain = 'Испания',
   Germany = 'Германия',

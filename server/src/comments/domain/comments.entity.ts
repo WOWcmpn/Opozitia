@@ -48,7 +48,7 @@ export class CommentsEntity extends BaseEntity {
     comment.newsId = newsId;
     comment.createdAt = new Date();
     comment.viewDate = formatDate(new Date().toLocaleDateString());
-    comment.userImage = 'user.png';
+    comment.userImage = 'users.png';
 
     return comment;
   }

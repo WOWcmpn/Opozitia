@@ -32,4 +32,19 @@ export class CommentsQueryRepository {
       .where('c.newsId = :newsId', { newsId })
       .getCount();
   }
+
+  async getAll(
+    login: string = '',
+    text: string = '',
+    sort: string = 'createdAt',
+    order: 'ASC' | 'DESC' = 'DESC',
+  ) {
+    return await this.commentsRepo
+      .createQueryBuilder('c')
+      .select()
+      .where('c.username ilike :login', { login: `%${login}%` })
+      .andWhere('c.text ilike :text', { text: `%${text}%` })
+      .orderBy(`c.${sort}`, order)
+      .getMany();
+  }
 }

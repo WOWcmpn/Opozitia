@@ -15,12 +15,13 @@ import { CommentsModule } from './comments/comments.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { CurrencyModule } from './currency/currency.module';
 import { FootballModule } from './football/football.module';
+import { DaysEventModule } from './days-event/days-event.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../clientnext'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '../../clientnext'),
+    // }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -59,6 +60,7 @@ import { FootballModule } from './football/football.module';
     CryptoModule,
     CurrencyModule,
     FootballModule,
+    DaysEventModule,
   ],
   controllers: [],
   providers: [],

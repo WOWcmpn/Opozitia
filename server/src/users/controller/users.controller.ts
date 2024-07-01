@@ -2,8 +2,11 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
+  Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -12,20 +15,29 @@ import {
 } from '@nestjs/common';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { Request } from 'express';
-import { ChangeProfile, ComparePasswordsData, InputSendQuestion } from '../../base/types/userModels';
+import {
+  ChangeProfile,
+  ComparePasswordsData,
+  CreateUserByAdmin,
+  InputSendQuestion,
+} from '../../base/types/userModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { ChangeProfileUseCase } from '../use-cases/changeProfile.use-case';
 import { UsersQueryRepository } from '../repositories/users.query-repository';
 import { ApiTags } from '@nestjs/swagger';
 import { EmailManager } from '../../base/helpers/emailManager';
+import { favoriteNewsCategory } from '../../base/types/newsModels';
+import { UserEntity } from '../domain/user.entity';
+import { UsersRepository } from '../repositories/users.repository';
 
-@Controller('user')
+@Controller('users')
 @ApiTags('Users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,
     private readonly changeProfileUseCase: ChangeProfileUseCase,
     private readonly usersQueryRepository: UsersQueryRepository,
+    private readonly usersRepo: UsersRepository,
     private readonly emailManager: EmailManager,
   ) {}
 
@@ -67,5 +79,145 @@ export class UsersController {
     } else {
       throw new BadRequestException([{ message: 'Это не ваш пароль', field: 'password' }]);
     }
+  }
+
+  @Get()
+  @HttpCode(200)
+  async getAllUsersAdmin(
+    @Query()
+    query: {
+      login_like: string;
+      _sort: string;
+      _order: 'asc' | 'desc';
+      favoriteNewsCategory: favoriteNewsCategory;
+      isConfirmed: string;
+    },
+  ) {
+    let confirmed: boolean;
+    let sortBy: 'ASC' | 'DESC';
+    if (query.isConfirmed === 'true') {
+      confirmed = true;
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      }
+    }
+    if (query.isConfirmed === 'false') {
+      confirmed = false;
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+          confirmed,
+        );
+      }
+    } else {
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.usersQueryRepository.getAllUsersAdmin(
+          query.login_like,
+          query._sort,
+          sortBy,
+          query.favoriteNewsCategory,
+        );
+      }
+    }
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  async getByIdAdmin(@Param('id') id: string) {
+    const user = await this.usersQueryRepository.getUserById(id);
+    return {
+      id: user?.id,
+      login: user?.login,
+      email: user?.email,
+      location: user?.location,
+      favoriteNewsCategory: user?.favoriteNewsCategory,
+      isConfirmed: user?.isConfirmed,
+      age: user?.age,
+      createdAt: user?.createdAt.toDateString(),
+    };
+  }
+
+  @Post()
+  @HttpCode(201)
+  async createByAdmin(@Body() data: CreateUserByAdmin) {
+    const passwordHash = await this.authService.createPasswordHash(data.password);
+    const user = UserEntity.createUserByAdmin(data, passwordHash);
+    return await this.usersRepo.createUser(user);
+  }
+
+  @Patch(':id')
+  @HttpCode(204)
+  async updateByAdmin(@Param('id') id: string, @Body() data: CreateUserByAdmin) {
+    return await this.usersRepo.updateUserByAdmin(id, data);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async deleteById(@Param('id') id: string) {
+    return await this.usersRepo.deleteById(id);
   }
 }

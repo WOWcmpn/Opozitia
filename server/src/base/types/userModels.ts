@@ -1,6 +1,23 @@
-import { IsEmail, IsEnum, IsOptional, IsString, Length, Matches, MaxLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  MaxLength,
+} from 'class-validator';
 import { favoriteNewsCategory } from './newsModels';
 import { ApiProperty } from '@nestjs/swagger';
+
+export enum favoriteUsersNewsCategory {
+  Экономика = 'Экономика',
+  Политика = 'Политика',
+  Бизнес = 'Бизнес',
+  Мир = 'Мир',
+  Неизвестно = 'Неизвестно',
+}
 
 export class InputSendQuestion {
   name: string;
@@ -65,6 +82,29 @@ export class ChangeProfile {
   @IsEnum(favoriteNewsCategory)
   @IsOptional()
   favoriteNewsCategory: favoriteNewsCategory;
+}
+
+export class CreateUserByAdmin {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  login: string;
+
+  password: string;
+
+  @IsOptional()
+  @IsString()
+  location: string;
+
+  @IsOptional()
+  favoriteNewsCategory: favoriteNewsCategory;
+
+  @IsOptional()
+  age: string;
+
+  @IsBoolean()
+  isConfirmed: boolean;
 }
 
 export class InputUserModel {
