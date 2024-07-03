@@ -3408,9 +3408,9 @@ body::after {
 .comments-content-news__comments-form button[type="submit"] {
   width: auto;
   height: auto;
-  padding: 12px 26px;
+  padding: 12px 20px;
   border-radius: 10px;
-  font-size: 1.3125rem;
+  font-size: 0.9125rem;
 }
 
 .comments-content-news__input {
@@ -3451,7 +3451,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .comments-content-news__input::-webkit-scrollbar {
   border-radius: 8px;
-  width: 9px;
+  width: 0.25rem;
   background-color: rgb(172, 173, 172);
 }
 
@@ -3462,6 +3462,22 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .comments-content-news__input::-webkit-scrollbar-thumb:hover {
+  background-color: #253861;
+}
+
+.bottom-comments-content-news__input::-webkit-scrollbar {
+  border-radius: 8px;
+  width: 0.25rem;
+  background-color: rgb(172, 173, 172);
+}
+
+.bottom-comments-content-news__input::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: rgb(90, 112, 192);
+  border-radius: 8px;
+}
+
+.bottom-comments-content-news__input::-webkit-scrollbar-thumb:hover {
   background-color: #253861;
 }
 
@@ -3593,6 +3609,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .bottom-comments-news__level-2 {
+  padding-top: 10px;
   padding-left: 27px;
   position: relative;
 }
@@ -8759,6 +8776,7 @@ body::-webkit-scrollbar-thumb:hover {
     padding: 9px 130px 9px 12px;
     height: 5.5625rem;
     font-size: .875rem;
+    border-radius: 10px;
   }
 
   .comments-content-news__comments-form button[type=submit] {
@@ -9680,6 +9698,6 @@ body::-webkit-scrollbar-thumb:hover {
 
 @media (max-width: 330px) {
   .page__main-block {
-    top: 630px !important;
+    top: 610px !important;
   }
 }
