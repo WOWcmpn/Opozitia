@@ -316,6 +316,12 @@ export type BottomNews = {
   category: string
 }
 
+export type BottomBlockContentProps = {
+  link1: BottomNews;
+  link2: BottomNews;
+  link3: BottomNews;
+}
+
 export type BlockContentProps = {
   title: string;
   firstLink: string;

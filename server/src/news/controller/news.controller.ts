@@ -199,9 +199,9 @@ export class NewsController {
     const news = await this.newsQueryRepository.getLastNewsSidebar('');
     const swipeNews = await this.newsQueryRepository.getSwipeNews();
     const mainNews = await this.newsQueryRepository.getMainNews();
-    const bottomNewsOne = await this.newsQueryRepository.getBottomNews(3, 20);
-    const bottomNewsTwo = await this.newsQueryRepository.getBottomNews(3, 22);
-    const bottomNewsThree = await this.newsQueryRepository.getBottomNews(3, 24);
+    const bottomNewsOne = await this.newsQueryRepository.getBottomNews(5, 2);
+    const bottomNewsTwo = await this.newsQueryRepository.getBottomNews(5, 8);
+    const bottomNewsThree = await this.newsQueryRepository.getBottomNews(5, 13);
     return { amount: news.length, news, swipeNews, mainNews, bottomNewsOne, bottomNewsTwo, bottomNewsThree };
   }
 

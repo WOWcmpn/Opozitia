@@ -19,9 +19,9 @@ import { DaysEventModule } from './days-event/days-event.module';
 
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '../../clientnext'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../clientnext'),
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
