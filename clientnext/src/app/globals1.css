@@ -3400,9 +3400,9 @@ body::after {
 }
 
 .mt-2{
-  position: absolute;
-  top: 5px;
-  right: 10px;
+  position: absolute !important;
+  top: 5px !important;
+  right: 10px !important;
 }
 
 .comments-content-news__comments-form button[type="submit"]{
@@ -3623,7 +3623,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .bottom-comments-content-news__input{
-  padding: 5px 198px 25px 20px
+  padding: 20px 198px 25px 20px
 }
 
 .bottom-comments-news__top-info:not(:last-child) {
