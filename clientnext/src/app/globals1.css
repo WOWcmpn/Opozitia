@@ -9380,7 +9380,7 @@ body::-webkit-scrollbar-thumb:hover {
     border: 1px solid rgb(136, 162, 255);
   }
 
-  .comments-content-news__comments-form button[type=submit]{
+  .comments-content-news__comments-form button[type=submit]:hover{
     background-color: rgba(136, 162, 255, 0.8);
   }
 
