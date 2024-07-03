@@ -3428,7 +3428,7 @@ body::after {
   height: 8.5rem;
   border-radius: 20px;
   background: rgb(239, 239, 239);
-  padding: 5px 200px 22px 31px;
+  padding: 20px 200px 22px 31px;
   outline: none;
   resize: none;
 }
