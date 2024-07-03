@@ -183,6 +183,11 @@ export default function Economy() {
           </div>
         </section>
       </main>
+      <footer className="footer">
+            <div className="footer__container">
+              <p className="footer__text">©2024 Opozitia</p>
+            </div>
+          </footer>
         </div>
         <AnimatePresence>
           {login === 1 && <PopupAccount onPopupAccount={setLogin} />}

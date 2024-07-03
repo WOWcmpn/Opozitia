@@ -52,7 +52,7 @@ export default function Exchangec() {
           : ""
       }`}>
       <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
-      <main className="page">
+      <main className="page page-exchange">
         <section className="page__exchange exchange">
           <div className="exchange__container content-news">
             <div className="content-news__header content-news__header_exchange">

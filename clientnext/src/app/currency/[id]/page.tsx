@@ -135,7 +135,7 @@ export default function Currency({params} : {params: { id: string }}) {
           : ""
       }`}>
       <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
-      <main className="page">
+      <main className="page page-currency">
         <section className="page__currency currency">
           <div className="currency__container">
             <div className="currency__left">
