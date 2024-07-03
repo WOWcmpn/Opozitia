@@ -3546,7 +3546,7 @@ body::-webkit-scrollbar-thumb:hover {
 .bottom-comments-content-news__button {
   position: absolute;
   bottom: 22px;
-  right: 20px;
+  right: 33px;
   display: inline-block;
   border-radius: 8px;
   background-color: rgb(136, 162, 255);
@@ -8812,7 +8812,6 @@ body::-webkit-scrollbar-thumb:hover {
   .comments-content-news__button {
     font-size: 0.625rem;
     padding: 6px 15px;
-    right: 17px;
     bottom: 13px;
     border-radius: 5px;
   }
@@ -9379,6 +9378,10 @@ body::-webkit-scrollbar-thumb:hover {
   .list-bottom-search__link-bottom:hover {
     color: rgb(136, 162, 255);
     border: 1px solid rgb(136, 162, 255);
+  }
+
+  .comments-content-news__comments-form button[type=submit]{
+    background-color: rgba(136, 162, 255, 0.8);
   }
 
   .btn-more:hover {
