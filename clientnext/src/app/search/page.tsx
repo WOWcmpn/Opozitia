@@ -81,7 +81,7 @@ export default function Search({searchParams}: {
                 </div>
               </form>
               <div className="search-block__results results-search-block">
-                <header className="results-search-block__header">
+                <div className="results-search-block__header">
                   <p className="results-search-block__top-text">Показано </p>
                   <p className="results-search-block__wrap-results">
                     <span className="results-search-block__results-numbers">
@@ -92,7 +92,7 @@ export default function Search({searchParams}: {
                       {amount}
                     </span>
                   </p>
-                </header>
+                </div>
                 <div className="results-search-block__body">
                   {news?.map(n => (
                     <SearchResult key={n.id}

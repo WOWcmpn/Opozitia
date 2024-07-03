@@ -120,7 +120,7 @@ export default function Polls() {
           <section className="page__oprosi oprosi">
             <div className="oprosi__container content-news">
               <div className="content-news__wrap-header">
-                <header className="content-news__header content-news__header_oprosi">
+                <div className="content-news__header content-news__header_oprosi">
                   <div className="w-[780px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black mt-[50px] ">
                     <Select onValueChange={(category) => setCategory(category)}>
                       <SelectTrigger className="text-black text-[25px] max-h-xs">
@@ -136,7 +136,7 @@ export default function Polls() {
                       </SelectContent>
                     </Select>
                   </div>
-                </header>
+                </div>
               </div>
               <div
                 id="main-content"
