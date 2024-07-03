@@ -1,5 +1,29 @@
 import { StaticImageData } from "next/image";
 
+export interface IDaysEvent {
+  id: string
+  title: string
+  viewDate: string
+}
+
+export enum Championships {
+  Spain = 'Испания',
+  Germany = 'Германия',
+  Italy = 'Италия',
+  France = 'Франция',
+  England = 'Англия',
+}
+
+export interface IChampionship {
+  id: string;
+  place: number;
+  team: string;
+  games: number;
+  points: number;
+  championship: Championships;
+  img: string;
+}
+
 export interface City {
   city_id: string
   country_id: string
@@ -40,7 +64,7 @@ export interface ILogin {
 }
 
 export interface ICreateNews {
-  file: any;
+  file: string;
   title: string;
   newsCategory: string;
   description: string;
@@ -193,6 +217,7 @@ export interface IHomeNews {
 }
 
 export interface IComments {
+  id: string
   text: string
   username: string
   viewDate: string
@@ -281,6 +306,7 @@ export type GraphicsBlockProps = {
   labels: string[];
   data: string[];
   img?: string
+  link: string
 };
 
 export type BottomNews = {
@@ -288,6 +314,12 @@ export type BottomNews = {
   title: string
   imgUrl: string
   category: string
+}
+
+export type BottomBlockContentProps = {
+  link1: BottomNews;
+  link2: BottomNews;
+  link3: BottomNews;
 }
 
 export type BlockContentProps = {
@@ -343,12 +375,13 @@ export type CurrencyValueProps = {
 }
 
 export type CommentProps = {
+  commentId: string
   name: string;
   img: string;
   class1: string;
+  class2: string
   time: string;
   text: string;
-  likes: number | string;
 };
 
 export type SearchResultProps = {
@@ -392,8 +425,8 @@ interface Champs {
 
 export type ChampionshipProps = {
   title: string;
-  img: StaticImageData;
-  champs: Array<Champs>;
+  img: string;
+  champs: IChampionship[];
 };
 
 export type PollsItemProps = {
@@ -410,13 +443,17 @@ export type PollsItemProps = {
   onTitle: React.Dispatch<React.SetStateAction<string>>
 };
 
+export type NewsPopupProps = {
+  onPopupNews: React.Dispatch<React.SetStateAction<number>>;
+};
+
 export type AccountPopupProps = {
-  onClick: React.Dispatch<React.SetStateAction<number>>;
+  onPopupAccount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type RecoveryPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
-  setPassRecovery: React.Dispatch<React.SetStateAction<number>>
+  // setPassRecovery: React.Dispatch<React.SetStateAction<number>>
   setEmail: React.Dispatch<React.SetStateAction<string>>
   sendRecoveryCode: () => void
 };

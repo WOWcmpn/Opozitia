@@ -9,16 +9,22 @@ import { IMainNews, INews } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LastNews() {
   const ItemPerPage = 10
   const [amount, setAmount] = useState<number>(0);
   const [lastNews, setLastNews] = useState<IMainNews[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [search, setSearch] = useState(0);
+  const [page, setPage] = useState<number>(1)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -93,19 +99,21 @@ export default function LastNews() {
 
   return (
     <div className="wrapper">
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
-          search == 1 ? "overflow" : ""
+          search === 1 || login === 1 || createNews === 1
+            ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search == 1
+            search === 1 || login === 1 || createNews === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page page-news last-news">
         <section className="page__news news">
           <div className="news__container">
@@ -175,7 +183,13 @@ export default function LastNews() {
       </main>
         </div>
         <AnimatePresence>
+          {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
+        </AnimatePresence>
+        <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </div>

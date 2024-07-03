@@ -31,9 +31,9 @@ export const PollsItem = ({
   }
 
   const sum = agree + disagree + neutral
-  const perAgree = ((agree / sum) * 100).toFixed(1)
-  const perDisagree = ((disagree / sum) * 100).toFixed(1)
-  const perNeutral = ((neutral / sum) * 100).toFixed(1)
+  const perAgree = ((agree / sum) * 100).toFixed(0)
+  const perDisagree = ((disagree / sum) * 100).toFixed(0)
+  const perNeutral = ((neutral / sum) * 100).toFixed(0)
 
   return (
     <div className="tabs-oprosi__item item-tabs-oprosi item-block">

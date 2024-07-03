@@ -14,12 +14,14 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { Search } from "@/components/Search/Search";
 import { ToastContainer } from "react-toastify";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function Polls() {
   const ItemPerPage = 10
   const [option, setOption] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [search, setSearch] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [mainNews, setMainNews] = useState<IPollsNews[]>([]);
   const [data, setData] = useState<IHomeNews | null>(null);
   const [category, setCategory] = useState<string | null>(null);
@@ -30,6 +32,7 @@ export default function Polls() {
   const [positive, setPositive] = useState<number>(0);
   const [neutral, setNeutral] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
 
   useEffect(() => {
     const loadData = async () => {
@@ -79,6 +82,8 @@ export default function Polls() {
           try{
             const newData = await NewsService.getNewsByCategory(page, ItemPerPage, category)
             setMainNews(newData)
+            const dataAmount = await NewsService.getAmountOfCategory(category)
+            setAmount(dataAmount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -88,6 +93,8 @@ export default function Polls() {
           try{
             const newData = await NewsService.getNewsByCategory(page, ItemPerPage)
             setMainNews(newData)
+            const dataAmount = await NewsService.getAmountOfCategory('Economy')
+            setAmount(dataAmount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -112,10 +119,11 @@ export default function Polls() {
   }
 
   return (
-    <div className={`wrapper ${option === 1 || login === 1 || search === 1 ? "overflow" : ""} `}>
-      <div className={` ${option === 1 || login === 1 || search === 1 ? "wrapper__popup blur" : ""}`}>
-        <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
-        <ToastContainer position={'top-center'} autoClose={3000} />
+    <>
+      <ToastContainer position={'top-center'} autoClose={3000} />
+    <div className={`wrapper ${option === 1 || login === 1 || search === 1 || createNews === 1 ? "overflow" : ""} `}>
+      <div className={` ${option === 1 || login === 1 || search === 1 || createNews === 1 ? "wrapper__popup blur" : ""}`}>
+        <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
         <main className={`page ${option == 1 ? "wrapper__popup blur" : ""}`}>
           <section className="page__oprosi oprosi">
             <div className="oprosi__container content-news">
@@ -144,12 +152,12 @@ export default function Polls() {
               >
                 <div className="news__content content-news content-news_oprosi">
                   <span className="content-news__number-news content-news__number-news_oprosi">
-                    {mainNews.length === 0 ? (
+                    {amount === 0 ? (
                         <div>
                           загрузка
                         </div>
                     ) : (
-                      <div>{mainNews.length} опросов</div>
+                      <div>{amount} опросов</div>
                     )}
                   </span>
                   <div className="content-news__body tabs-oprosi tabs-oprosi_oprosi">
@@ -219,17 +227,21 @@ export default function Polls() {
         </footer>
       </div>
       <AnimatePresence>
-        {login == 1 && <PopupAccount onClick={setLogin} />}
+        {login === 1 && <PopupAccount onPopupAccount={setLogin} />}
       </AnimatePresence>
       <AnimatePresence>
-        {option == 1 && (
+        {option === 1 && (
           <PopupPolls onClick={setOption} classes="popup popup__active" positive={positive}
                       negative={negative} neutral={neutral} title={title} />
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {search == 1 && <Search onSearch={setSearch} />}
+        {search === 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
       </AnimatePresence>
     </div>
+    </>
   );
 }

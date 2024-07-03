@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
 import SearchIMG from "@/img/icons/search-black.svg";
 import { SearchProps } from "@/types/types";
 import { motion } from "framer-motion";
@@ -8,6 +8,14 @@ import { useRouter } from "next/navigation";
 export const Search = ({ onSearch }: SearchProps) => {
   const {replace} = useRouter();
   const [search, setSearch] = useState<string>();
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onSearch();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onSearch]);
 
   const toSearch = (e: any) => {
     e.preventDefault();
@@ -27,7 +35,8 @@ export const Search = ({ onSearch }: SearchProps) => {
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper popup__wrapper_search">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper popup__wrapper_search" ref={root}>
         <div className="popup_show popup__content_search w-[800px] mt-[100px]">
           <form
             action="#"

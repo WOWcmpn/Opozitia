@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from 'react';
 import { motion } from "framer-motion";
 import { LoginPopupProps } from "@/types/types";
 import Link from "next/link";
@@ -13,6 +13,14 @@ export const PopupLogin = ({
   const popup = () => {
     onOption(0);
   };
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onOption();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onOption]);
 
   return (
     <motion.div
@@ -24,14 +32,15 @@ export const PopupLogin = ({
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className="popup_show  content-popup popup__content_first popup__login">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={popup}
@@ -46,7 +55,7 @@ export const PopupLogin = ({
             </div>
             <form
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-login-password"
               className="body-popup__form"
               onSubmit={(e: any) => {

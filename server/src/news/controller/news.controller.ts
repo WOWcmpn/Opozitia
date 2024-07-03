@@ -1,25 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
+  Patch,
   Post,
   Query,
   Req,
-  UploadedFile,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { CreateNews, newsCategory } from '../../base/types/newsModels';
+import { CreateNews, CreateNewsAdmin, newsCategory, UpdateNews } from '../../base/types/newsModels';
 import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { fileStorage } from '../../base/helpers/storage';
-import { ApiTags, ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCommentModel } from '../../base/types/commentsModels';
 import { AuthService } from '../../auth/service/auth.service';
 import { Request } from 'express';
@@ -48,6 +46,73 @@ export class NewsController {
   @Cron(CronExpression.EVERY_MINUTE)
   handleImg() {
     return this.newsRepo.updateFullImg();
+  }
+
+  @Get()
+  @HttpCode(200)
+  async getAllAdmin(
+    @Query()
+    query: {
+      title_like: string;
+      id_like: string;
+      _sort: string;
+      _order: 'asc' | 'desc';
+      category: newsCategory;
+    },
+  ) {
+    let sortBy: 'ASC' | 'DESC';
+    if (!query._order) {
+      sortBy = 'DESC';
+      return await this.newsQueryRepository.getAll(
+        query.title_like,
+        query.id_like,
+        query._sort,
+        sortBy,
+        query.category,
+      );
+    } else if (query._order === 'asc') {
+      sortBy = 'ASC';
+      return await this.newsQueryRepository.getAll(
+        query.title_like,
+        query.id_like,
+        query._sort,
+        sortBy,
+        query.category,
+      );
+    } else {
+      sortBy = 'DESC';
+      return await this.newsQueryRepository.getAll(
+        query.title_like,
+        query.id_like,
+        query._sort,
+        sortBy,
+        query.category,
+      );
+    }
+  }
+
+  @Patch(':id')
+  @HttpCode(204)
+  async updateNewsAdmin(@Param('id') id: string, @Body() data: UpdateNews) {
+    return await this.newsRepo.updateNews(id, data);
+  }
+
+  @Post()
+  @HttpCode(201)
+  async createNewsByAdmin(@Body() inputData: CreateNewsAdmin) {
+    return await this.createNewsUseCase.createNewsAdmin(
+      inputData.title,
+      inputData.description,
+      inputData.category,
+      inputData.imgUrl,
+      inputData.fullImgUrl,
+    );
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async deleteByAdmin(@Param('id') id: string) {
+    return await this.newsRepo.deleteNews(id);
   }
 
   @Get('weather')
@@ -134,9 +199,9 @@ export class NewsController {
     const news = await this.newsQueryRepository.getLastNewsSidebar('');
     const swipeNews = await this.newsQueryRepository.getSwipeNews();
     const mainNews = await this.newsQueryRepository.getMainNews();
-    const bottomNewsOne = await this.newsQueryRepository.getBottomNews(3, 20);
-    const bottomNewsTwo = await this.newsQueryRepository.getBottomNews(3, 22);
-    const bottomNewsThree = await this.newsQueryRepository.getBottomNews(3, 24);
+    const bottomNewsOne = await this.newsQueryRepository.getBottomNews(5, 2);
+    const bottomNewsTwo = await this.newsQueryRepository.getBottomNews(5, 8);
+    const bottomNewsThree = await this.newsQueryRepository.getBottomNews(5, 13);
     return { amount: news.length, news, swipeNews, mainNews, bottomNewsOne, bottomNewsTwo, bottomNewsThree };
   }
 
@@ -159,26 +224,19 @@ export class NewsController {
   }
 
   @Post('create-news')
-  // @UseGuards(AccessTokenGuard)
-  @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
   @ApiResponse({ status: 201, description: 'Success' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'Create news by user' })
+  @ApiOperation({ summary: 'Create news by users' })
   @ApiBearerAuth()
-  @ApiConsumes('multipart/form-data', 'string')
   @ApiBody({ type: CreateNews })
   @HttpCode(201)
-  async createNews(
-    @UploadedFile()
-    file: Express.Multer.File,
-    @Body() inputData: CreateNews,
-  ) {
+  async createNews(@Body() inputData: CreateNews) {
     return await this.createNewsUseCase.createNews(
       inputData.title,
       inputData.description,
       inputData.category,
-      file.filename,
+      inputData.file,
     );
   }
 
@@ -196,8 +254,8 @@ export class NewsController {
 
   @Get(':id/comments')
   @HttpCode(200)
-  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number }) {
-    return await this.newsQueryRepository.getComments(id, query.pageNumber);
+  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number; sort: 'ASC' | 'DESC' }) {
+    return await this.newsQueryRepository.getComments(id, query.pageNumber, query.sort);
   }
 
   @Post(':newsId/comments')

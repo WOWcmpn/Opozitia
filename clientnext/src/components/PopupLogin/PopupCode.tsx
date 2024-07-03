@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ConfirmCodeProps } from "@/types/types";
@@ -16,6 +16,14 @@ export const PopupCode = ({
   const [fourth, setFourth] = useState<string>('');
   const [fifth, setFifth] = useState<string>('');
   const [sixth, setSixth] = useState<string>('');
+  const root = useRef()
+
+  React.useEffect(() => {
+    //@ts-ignore
+    const onClick = e => root.current.contains(e.target) || onOption();
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [onOption]);
 
   return (
     <motion.div
@@ -27,14 +35,15 @@ export const PopupCode = ({
       exit={{ scale: 0.6 }}
       transition={{ ease: "all", duration: 0 }}
     >
-      <div className="popup__wrapper">
+      {/*@ts-ignore*/}
+      <div className="popup__wrapper" ref={root}>
         <div className="popup_show  content-popup">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
               <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={() => onOption(0)}
@@ -49,7 +58,7 @@ export const PopupCode = ({
             </div>
             <form
               action="#"
-              data-dev
+              data-dev={true}
               data-popup-message="#popup-registration-password"
               className="body-popup__form body-popup__form_code"
               onSubmit={(e: any) => {

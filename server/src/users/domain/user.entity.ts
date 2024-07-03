@@ -1,9 +1,10 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { favoriteNewsCategory } from '../../base/types/newsModels';
 import { add } from 'date-fns/add';
-import { InputUserModel } from '../../base/types/userModels';
+import { CreateUserByAdmin, InputUserModel } from '../../base/types/userModels';
 import { AuthWhiteListEntity } from '../../auth/domain/authWhiteList.entity';
 import { CommentsEntity } from '../../comments/domain/comments.entity';
+import { BottomCommentsEntity } from '../../comments/domain/bottomComments.entity';
 
 export class EmailConfirmation {
   confirmationCode: string;
@@ -53,6 +54,9 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => CommentsEntity, (c) => c.user)
   comments: CommentsEntity;
 
+  @OneToMany(() => BottomCommentsEntity, (c) => c.user)
+  bottomComments: BottomCommentsEntity;
+
   @OneToMany(() => AuthWhiteListEntity, (aw) => aw.usersId, { onDelete: 'CASCADE' })
   whiteTokens: AuthWhiteListEntity;
 
@@ -78,6 +82,33 @@ export class UserEntity extends BaseEntity {
     };
     user.isConfirmed = false;
     user.createdAt = new Date();
+
+    return user;
+  }
+
+  static createUserByAdmin(userModel: CreateUserByAdmin, passwordHash: string) {
+    const user = new UserEntity();
+    const confirmationCode = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, '0');
+    const recoveryCode = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, '0');
+
+    user.email = userModel.email;
+    user.login = userModel.login;
+    user.passwordHash = passwordHash;
+    user.emailConfirmation = {
+      confirmationCode: confirmationCode,
+      expirationDate: add(new Date(), { minutes: 3 }),
+    };
+    user.recoveryConfirmation = {
+      recoveryCode: recoveryCode,
+      expirationDate: add(new Date(), { months: 100 }),
+    };
+    user.isConfirmed = userModel.isConfirmed;
+    user.createdAt = new Date();
+    user.age = userModel.age;
 
     return user;
   }

@@ -75,7 +75,7 @@ export class GetNewsUseCase {
         });
       })
       .catch((error) => {
-        console.error('news.rambler.ru/world: ', error);
+        console.error('dssadsa.rambler.ru/world: ', error);
       });
   }
 }

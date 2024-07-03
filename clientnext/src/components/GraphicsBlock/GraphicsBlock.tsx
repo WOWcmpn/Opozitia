@@ -11,7 +11,8 @@ export const GraphicsBlock = ({
   percentage,
   labels,
   data,
-  img
+  img,
+  link
 }: GraphicsBlockProps) => {
   const [isNegative, setIsNegative] = useState<boolean>();
   useEffect(() => {
@@ -27,11 +28,11 @@ export const GraphicsBlock = ({
         <div className="graphics-left-block__wrapper ">
           <div className="graphics-left-block__slide ">
             <div className="graphics-left-block__top ml-[10px]">
-              <Link href={'/exchange'} className="graphics-left-block__info">
+              <Link href={link} className="graphics-left-block__info">
                 <span className="graphics-left-block__name">{name}</span>
                 <h4 className="graphics-left-block__title">{title}</h4>
               </Link>
-              <Link href={'/exchange'} className="graphics-left-block__trade">
+              <Link href={link} className="graphics-left-block__trade">
                 <Image
                   width={50}
                   height={25}
@@ -56,7 +57,6 @@ export const GraphicsBlock = ({
                   {percentage}%
                 </span>
                 }
-
               </Link>
             </div>
           </div>

@@ -12,11 +12,15 @@ import { CryptoBody } from "@/components/CryptoBody/CryptoBody";
 import { AnimatePresence } from "framer-motion";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { Search } from "@/components/Search/Search";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function Crypto({params} : {params: { id: string }}) {
   const [option, setOption] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [search, setSearch] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [graph, setGraph] = useState<number>(0);
   const [weekCrypto, setWeekCrypto] = useState<IFullCrypto[]>([]);
   const [monthCrypto, setMonthCrypto] = useState<IFullCrypto[]>([]);
@@ -129,15 +133,18 @@ export default function Crypto({params} : {params: { id: string }}) {
   const avgYearPercentage = ((yearCrypto.reduce((c, acc) => c + +acc.percentage, 0)) / 365).toFixed(2)
 
   return (
+    <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
     <div className={`wrapper ${
-      login === 1 || search === 1 ? "overflow" : ""
+      login === 1 || search === 1 || createNews === 1
+        ? "overflow" : ""
     } w-[100vw]`}>
       <div className={`${
-        login === 1 || search === 1
+        login === 1 || search === 1 || createNews === 1
           ? "wrapper__popup blur"
           : ""
       }`}>
-      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page">
         <section className="page__currency currency">
           <div className="currency__container">
@@ -512,12 +519,16 @@ export default function Crypto({params} : {params: { id: string }}) {
         </div>
       </footer>
       </div>
-        <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
-        </AnimatePresence>
+      <AnimatePresence>
+        {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
       <AnimatePresence>
         {search == 1 && <Search onSearch={setSearch} />}
       </AnimatePresence>
+      <AnimatePresence>
+        {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
+    </>
   );
 }

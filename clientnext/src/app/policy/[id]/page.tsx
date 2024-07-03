@@ -20,35 +20,51 @@ import { AnimatePresence } from "framer-motion";
 import { Search } from "@/components/Search/Search";
 import { useSession } from "next-auth/react";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
 
 export default function NewsId({params} : {params: {id: string}}) {
+  const [defaultOption, setDefaultOption] = useState<'ASC' | 'DESC'>('DESC');
+  const [option, setOption] = useState<'ASC' | 'DESC'>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [countComments, setCountComments] = useState<number>(0);
   const [news, setNews] = useState<ISingleNews>();
   const [comments, setComments] = useState<IComments[]>([]);
   const [sidebar, setSidebar] = useState<INews[]>([]);
   const [comment, setComment] = useState<string>();
   const [page, setPage] = useState<number>(1)
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [isVoted, setIsVoted] = useState<boolean>(false);
+  const [isClickable, setIsClickable] = useState<boolean>(true);
+  const [lastClicked, setLastClicked] = useState(0);
+  const delay = 5000
   const session = useSession()
 
   const sum = +news?.votePositive! + +news?.voteNegative!
-  const perAgree = ((+news?.votePositive! / sum) * 100).toFixed(1)
-  const perDisagree = ((+news?.voteNegative! / sum) * 100).toFixed(1)
+  const perAgree = ((+news?.votePositive! / sum) * 100).toFixed(0)
+  const perDisagree = ((+news?.voteNegative! / sum) * 100).toFixed(0)
 
   const handleVote = async (vote: quizVotes) => {
     if(!session.data) {
       toast.error("Неавторизованные пользователи не могут голосовать");
       return
     } else {
-      if(vote === quizVotes.Like) toast.success('Вам понравилась данная новость')
-      if(vote === quizVotes.Dislike) toast.success('Вам не понравилась данная новость')
-      await NewsService.sendVote(vote, params.id, session.data?.user?.name!)
-      const newData = await NewsService.getNewsById(params.id)
-      setNews(newData)
-      setIsVoted(true)
+      if(isClickable) {
+        setLastClicked(Date.now())
+        setIsClickable(false)
+        if(vote === quizVotes.Like) toast.success('Вам понравилась данная новость')
+        if(vote === quizVotes.Dislike) toast.success('Вам не понравилась данная новость')
+        await NewsService.sendVote(vote, params.id, session.data?.user?.name!)
+        const newData = await NewsService.getNewsById(params.id)
+        setNews(newData)
+        setIsVoted(true)
+      } else {
+        toast.error('Голосовать можно один раз в 5 секунд')
+        return
+      }
     }
   }
 
@@ -80,33 +96,106 @@ export default function NewsId({params} : {params: {id: string}}) {
     }
   }
 
+  const copyUrl = () => {
+    const url = window.location.href
+    navigator.clipboard.writeText(url).then(() => {
+      toast.success('Ссылка скопирована')
+    }).catch((err) => {
+      console.error('copy url error ', err);
+      toast.error('Что-то пошло не так')
+    })
+  }
+
+  useEffect(() => {
+    if(!isClickable) {
+      const timer = setTimeout(() => {
+        setIsClickable(true)
+      }, delay)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isClickable, delay]);
+
   useEffect(() => {
     async function loadComments() {
       if(page > 1) {
-        setLoading(true)
-        try{
-          const newComments = await NewsService.getComments(params.id, page)
-          setComments(prevData => [...prevData, ...newComments])
-          setLoading(false)
-          setHasMore(newComments.length === 5)
-        } catch (error) {
-          console.log('Error loading data:', error);
-        } finally {
-          setLoading(false)
+        if(option) {
+          if(option !== defaultOption) {
+            setLoading(true)
+            setPage(1)
+            setDefaultOption(option)
+            try{
+              const newComments = await NewsService.getComments(params.id, page, option)
+              setComments(newComments)
+              setHasMore(newComments.length === 5)
+              setLoading(false)
+            } catch (error) {
+              console.log('Error loading data:', error);
+            } finally {
+              setLoading(false)
+            }
+          } else {
+            setLoading(true)
+            try{
+              const newComments = await NewsService.getComments(params.id, page, option)
+              setComments(prevData => [...prevData, ...newComments])
+              setHasMore(newComments.length === 5)
+              setLoading(false)
+            } catch (error) {
+              console.log('Error loading data:', error);
+            } finally {
+              setLoading(false)
+            }
+          }
+        } else {
+          setLoading(true)
+          try{
+            const newComments = await NewsService.getComments(params.id, page)
+            setComments(prevData => [...prevData, ...newComments])
+            setHasMore(newComments.length === 5)
+            setLoading(false)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          } finally {
+            setLoading(false)
+          }
         }
       } else {
-        try{
-          const newComments = await NewsService.getComments(params.id, page)
-          setComments(newComments)
-          setLoading(false)
-          setHasMore(newComments.length === 5)
-        } catch (error) {
-          console.log('Error loading data:', error);
+        if(option) {
+          try{
+            const newComments = await NewsService.getComments(params.id, page, option)
+            setComments(newComments)
+            setHasMore(newComments.length === 5)
+            setLoading(false)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          }
+        } else {
+          try{
+            const newComments = await NewsService.getComments(params.id, page)
+            setComments(newComments)
+            setHasMore(newComments.length === 5)
+            setLoading(false)
+          } catch (error) {
+            console.log('Error loading data:', error);
+          }
         }
       }
     }
     loadComments()
-  }, [page, params.id])
+  }, [page, params.id, option, defaultOption])
+
+  useEffect(() => {
+    async function loadCountComments() {
+      try {
+        const data = await NewsService.getCountComments(params.id)
+        setCountComments(data)
+      } catch (err) {
+        console.error('loadCountComments error ', err);
+      }
+    }
+    loadCountComments()
+  }, [params.id]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1)
@@ -126,17 +215,18 @@ export default function NewsId({params} : {params: {id: string}}) {
     <div className="wrapper">
       <div
         className={`home ${
-          search === 1 || login === 1 ? "overflow" : ""
+          search === 1 || login === 1 || createNews === 1
+            ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search === 1 || login === 1
+            search === 1 || login === 1 || createNews === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} onLogin={setLogin} className={"header menu-visual"} />
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <ToastContainer position={'top-center'} autoClose={2500} />
       <main className="page">
         <section className="page__news-single news-single">
@@ -175,13 +265,14 @@ export default function NewsId({params} : {params: {id: string}}) {
                       >
                         <Image src={CommentsImage} alt="Иконка" />
                         <span className="main-block-news__comments-number">
-                          {comments?.length}
+                          {countComments}
                         </span>
                       </Link>
                       <div className="main-block-news__right-share">
                         <button
                           type="button"
                           className="main-block-news__actions"
+                          onClick={copyUrl}
                         >
                           <Image src={CopyImage} alt="Иконка" />
                         </button>
@@ -232,13 +323,13 @@ export default function NewsId({params} : {params: {id: string}}) {
                   </div>
                   <div className="content-news-single__bottom">
                     <span className="content-news-single__time">{news?.createdAtTime}</span>
-                    <Link
-                      href="#"
+                    <button
                       className="content-news-single__share flex gap-[5px]"
+                      onClick={copyUrl}
                     >
                       <Image src={ShareGrey} alt="Иконка" />
                       Поделиться
-                    </Link>
+                    </button>
                   </div>
                   <div className="content-news-single__choose-like">
                     <form action="#" className="content-news-single__form">
@@ -336,24 +427,39 @@ export default function NewsId({params} : {params: {id: string}}) {
                   <div className="content-news-single__comments comments-content-news">
                     <div className="comments-content-news__top top-comments-news">
                       <p className="top-comments-news__comments-quantity">
-                        <span className="top-comments-news__number">{comments?.length}</span>{" "}
+                        <span className="top-comments-news__number">{countComments}</span>{" "}
                         комментариев
                       </p>
                       <div className="top-comments-news__sort">
                         <button
                           type="button"
                           className="top-comments-news__btn-sort"
+                          onClick={() => setIsOpen(!isOpen)}
                         >
                           <Image src={SortIcon} alt="Иконка" />
                         </button>
-                        <ul className="top-comments-news__list">
+                        <ul className={`top-comments-news__list ${isOpen ? 'active' : ''}`}>
                           <li className="top-comments-news__item">
-                            <Link href="#" className="top-comments-news__link">
-                              Лучшие
+                            <Link
+                              href="#"
+                              className="top-comments-news__link"
+                              onClick={() => {
+                                setOption('ASC')
+                                setIsOpen(!isOpen);
+                              }}
+                            >
+                              Старые
                             </Link>
                           </li>
                           <li className="top-comments-news__item">
-                            <Link href="#" className="top-comments-news__link">
+                            <Link
+                              href="#"
+                              className="top-comments-news__link"
+                              onClick={() => {
+                                setOption('DESC')
+                                setIsOpen(!isOpen);
+                              }}
+                            >
                               Последние
                             </Link>
                           </li>
@@ -407,12 +513,13 @@ export default function NewsId({params} : {params: {id: string}}) {
                       <div className="bottom-comments-news__level-1">
                         {comments?.map((item, index) => (
                           <Comments key={index}
+                                    commentId={item.id}
                                     name={item.username}
                                     text={item.text!}
-                                    class1="bottom-comments-news__comment-item"
+                                    class1={'bottom-comments-news__comment-item'}
+                                    class2={'bottom-comments-news__level-2'}
                                     img={item.userImage!}
                                     time={item.viewDate!}
-                                    likes={0}
                           />
                         ))}
                       </div>
@@ -420,7 +527,7 @@ export default function NewsId({params} : {params: {id: string}}) {
                     {loading && <p>Загрузка...</p>}
                     {hasMore && !loading &&
                       <button onClick={handleLoadMore} className="comments-content-news__btn-more btn-more">
-                        Ещё 5 комментариев
+                        Показать еще
                       </button>}
                   </div>
                 </div>
@@ -453,10 +560,13 @@ export default function NewsId({params} : {params: {id: string}}) {
       </footer>
         </div>
         <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
+          {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </div>

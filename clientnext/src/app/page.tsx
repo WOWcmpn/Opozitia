@@ -148,6 +148,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToUSD).reverse()}
                               img={'usa.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -159,6 +160,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToJPY).reverse()}
                               img={'china.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -170,6 +172,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.GBPToUSD).reverse()}
                               img={'usa.webp'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -181,6 +184,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToRUB).reverse()}
                               img={'rub.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -192,6 +196,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToRUB).reverse()}
                               img={'rub.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -203,6 +208,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.USDToRON).reverse()}
                               img={'roman.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -214,6 +220,7 @@ export default function Home() {
                               labels={currency.map(c => c.viewDate).reverse()}
                               data={currency.map(c => c.EURToRON).reverse()}
                               img={'roman.svg'}
+                              link={'/exchangec'}
                             />
                           </SwiperSlide>
                         </Swiper>
@@ -248,6 +255,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBTC).reverse()}
                               img={'btc.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -259,6 +267,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateETH).reverse()}
                               img={'eth.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -270,6 +279,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBNB).reverse()}
                               img={'bnb.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -281,6 +291,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateNOT).reverse()}
                               img={'not.png'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -292,6 +303,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateSOL).reverse()}
                               img={'sol.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -303,6 +315,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateLTC).reverse()}
                               img={'ltc.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                           <SwiperSlide>
@@ -314,6 +327,7 @@ export default function Home() {
                               labels={crypto.map(c => c.viewDate).reverse()}
                               data={crypto.map(c => c.rateBCH).reverse()}
                               img={'bch.svg'}
+                              link={'/exchangeb'}
                             />
                           </SwiperSlide>
                         </Swiper>
@@ -341,59 +355,141 @@ export default function Home() {
                       simulateTouch={false}
                       touchMoveStopPropagation={true}
                       autoplay={{
-                        delay: 3000,
+                        delay: 3500,
                         disableOnInteraction: false,
                       }}
-                      speed={1000}
+                      speed={1500}
                     >
-                      {data?.mainNews.map((n) => (
-                        <SwiperSlide key={n.id}>
-                          <BlockContent
-                            title={n.title}
-                            firstLink={n.id}
-                            firstCategory={n.category.toLowerCase()}
-                            img={n.fullImgUrl}
-                            link1={{
-                              id: data?.bottomNewsOne[0].id,
-                              title: data?.bottomNewsOne[0].title,
-                              imgUrl: data?.bottomNewsOne[0].imgUrl,
-                              category: data?.bottomNewsOne[0].category.toLowerCase()
-                            }}
-                            link2={{
-                              id: data?.bottomNewsTwo[0].id,
-                              title: data?.bottomNewsTwo[0].title,
-                              imgUrl: data?.bottomNewsTwo[0].imgUrl,
-                              category: data?.bottomNewsTwo[0].category.toLowerCase()
-                            }}
-                            link3={{
-                              id: data?.bottomNewsThree[0].id,
-                              title: data?.bottomNewsThree[0].title,
-                              imgUrl: data?.bottomNewsThree[0].imgUrl,
-                              category: data?.bottomNewsThree[0].category.toLowerCase()
-                            }}
-                          />
-                        </SwiperSlide>
-                      ))}
-                      {/*<SwiperSlide>*/}
-                      {/*  <BlockContent*/}
-                      {/*    title="В Японии госпитализировали 26 человек после приема*/}
-                      {/*    БАДов"*/}
-                      {/*    img={ActualNews1}*/}
-                      {/*    link1="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*    link2="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*    link3="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*  />*/}
-                      {/*</SwiperSlide>*/}
-                      {/*<SwiperSlide>*/}
-                      {/*  <BlockContent*/}
-                      {/*    title="В Японии госпитализировали 36 человек после приема*/}
-                      {/*    БАДов"*/}
-                      {/*    img={ActualNews2}*/}
-                      {/*    link1="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*    link2="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*    link3="Чего ожидать Молдове в ближайшие несколько недель?"*/}
-                      {/*  />*/}
-                      {/*</SwiperSlide>*/}
+                      <SwiperSlide>
+                        <BlockContent
+                          title={data?.mainNews[0].title!}
+                          firstLink={data?.mainNews[0].id!}
+                          firstCategory={data?.mainNews[0]?.category.toLowerCase()!}
+                          img={data?.mainNews[0].fullImgUrl!}
+                          link1={{
+                            id: data?.bottomNewsOne[0].id!,
+                            title: data?.bottomNewsOne[0].title!,
+                            imgUrl: data?.bottomNewsOne[0].imgUrl!,
+                            category: data?.bottomNewsOne[0].category.toLowerCase()!
+                          }}
+                          link2={{
+                            id: data?.bottomNewsTwo[0].id!,
+                            title: data?.bottomNewsTwo[0].title!,
+                            imgUrl: data?.bottomNewsTwo[0].imgUrl!,
+                            category: data?.bottomNewsTwo[0].category.toLowerCase()!
+                          }}
+                          link3={{
+                            id: data?.bottomNewsThree[0].id!,
+                            title: data?.bottomNewsThree[0].title!,
+                            imgUrl: data?.bottomNewsThree[0].imgUrl!,
+                            category: data?.bottomNewsThree[0].category.toLowerCase()!
+                          }}
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <BlockContent
+                          title={data?.mainNews[1].title!}
+                          firstLink={data?.mainNews[1].id!}
+                          firstCategory={data?.mainNews[1]?.category.toLowerCase()!}
+                          img={data?.mainNews[1].fullImgUrl!}
+                          link1={{
+                            id: data?.bottomNewsOne[1].id!,
+                            title: data?.bottomNewsOne[1].title!,
+                            imgUrl: data?.bottomNewsOne[1].imgUrl!,
+                            category: data?.bottomNewsOne[1].category.toLowerCase()!
+                          }}
+                          link2={{
+                            id: data?.bottomNewsTwo[1].id!,
+                            title: data?.bottomNewsTwo[1].title!,
+                            imgUrl: data?.bottomNewsTwo[1].imgUrl!,
+                            category: data?.bottomNewsTwo[1].category.toLowerCase()!
+                          }}
+                          link3={{
+                            id: data?.bottomNewsThree[1].id!,
+                            title: data?.bottomNewsThree[1].title!,
+                            imgUrl: data?.bottomNewsThree[1].imgUrl!,
+                            category: data?.bottomNewsThree[1].category.toLowerCase()!
+                          }}
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <BlockContent
+                          title={data?.mainNews[2].title!}
+                          firstLink={data?.mainNews[2].id!}
+                          firstCategory={data?.mainNews[2]?.category.toLowerCase()!}
+                          img={data?.mainNews[2].fullImgUrl!}
+                          link1={{
+                            id: data?.bottomNewsOne[2].id!,
+                            title: data?.bottomNewsOne[2].title!,
+                            imgUrl: data?.bottomNewsOne[2].imgUrl!,
+                            category: data?.bottomNewsOne[2].category.toLowerCase()!
+                          }}
+                          link2={{
+                            id: data?.bottomNewsTwo[2].id!,
+                            title: data?.bottomNewsTwo[2].title!,
+                            imgUrl: data?.bottomNewsTwo[2].imgUrl!,
+                            category: data?.bottomNewsTwo[2].category.toLowerCase()!
+                          }}
+                          link3={{
+                            id: data?.bottomNewsThree[2].id!,
+                            title: data?.bottomNewsThree[2].title!,
+                            imgUrl: data?.bottomNewsThree[2].imgUrl!,
+                            category: data?.bottomNewsThree[2].category.toLowerCase()!
+                          }}
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <BlockContent
+                          title={data?.mainNews[3]?.title!}
+                          firstLink={data?.mainNews[3]?.id!}
+                          firstCategory={data?.mainNews[3]?.category.toLowerCase()!}
+                          img={data?.mainNews[3]?.fullImgUrl!}
+                          link1={{
+                            id: data?.bottomNewsOne[3]?.id!,
+                            title: data?.bottomNewsOne[3]?.title!,
+                            imgUrl: data?.bottomNewsOne[3]?.imgUrl!,
+                            category: data?.bottomNewsOne[3]?.category.toLowerCase()!
+                          }}
+                          link2={{
+                            id: data?.bottomNewsTwo[3]?.id!,
+                            title: data?.bottomNewsTwo[3]?.title!,
+                            imgUrl: data?.bottomNewsTwo[3]?.imgUrl!,
+                            category: data?.bottomNewsTwo[3]?.category.toLowerCase()!
+                          }}
+                          link3={{
+                            id: data?.bottomNewsThree[3]?.id!,
+                            title: data?.bottomNewsThree[3]?.title!,
+                            imgUrl: data?.bottomNewsThree[3]?.imgUrl!,
+                            category: data?.bottomNewsThree[3]?.category.toLowerCase()!
+                          }}
+                        />
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <BlockContent
+                          title={data?.mainNews[4]?.title!}
+                          firstLink={data?.mainNews[4]?.id!}
+                          firstCategory={data?.mainNews[4]?.category.toLowerCase()!}
+                          img={data?.mainNews[4]?.fullImgUrl!}
+                          link1={{
+                            id: data?.bottomNewsOne[4]?.id!,
+                            title: data?.bottomNewsOne[4]?.title!,
+                            imgUrl: data?.bottomNewsOne[4]?.imgUrl!,
+                            category: data?.bottomNewsOne[4]?.category.toLowerCase()!
+                          }}
+                          link2={{
+                            id: data?.bottomNewsTwo[4]?.id!,
+                            title: data?.bottomNewsTwo[4]?.title!,
+                            imgUrl: data?.bottomNewsTwo[4]?.imgUrl!,
+                            category: data?.bottomNewsTwo[4]?.category.toLowerCase()!
+                          }}
+                          link3={{
+                            id: data?.bottomNewsThree[4]?.id!,
+                            title: data?.bottomNewsThree[4]?.title!,
+                            imgUrl: data?.bottomNewsThree[4]?.imgUrl!,
+                            category: data?.bottomNewsThree[4]?.category.toLowerCase()!
+                          }}
+                        />
+                      </SwiperSlide>
                     </Swiper>
                   </div>
                   {/* </div> */}
@@ -426,13 +522,13 @@ export default function Home() {
           </footer>
         </div>
         <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
+          {login == 1 &&  <PopupAccount onPopupAccount={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
         </AnimatePresence>
         <AnimatePresence>
-          {createNews == 1 && <PopupNews onClick={setCreateNews} />}
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </NextUIProvider>

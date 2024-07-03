@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NewsEntity } from '../domain/news.entity';
 import { Repository } from 'typeorm';
 import { CommentsEntity } from '../../comments/domain/comments.entity';
+import { newsCategory } from '../../base/types/newsModels';
 
 @Injectable()
 export class NewsQueryRepository {
@@ -10,6 +11,52 @@ export class NewsQueryRepository {
     @InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>,
     @InjectRepository(CommentsEntity) private readonly commentsRepo: Repository<CommentsEntity>,
   ) {}
+
+  async getAll(
+    title_like: string = '',
+    id_like: string,
+    _sort: string = 'createdAtDate',
+    _order: 'ASC' | 'DESC' = 'DESC',
+    category: newsCategory | null,
+  ) {
+    if (id_like) {
+      if (!category) {
+        return await this.newsRepository
+          .createQueryBuilder('n')
+          .select()
+          .where('n.title ilike :title', { title: `%${title_like}%` })
+          .andWhere('n.id = :id', { id: id_like })
+          .orderBy(`n.${_sort}`, _order)
+          .getMany();
+      } else {
+        return await this.newsRepository
+          .createQueryBuilder('n')
+          .select()
+          .where('n.title ilike :title', { title: `%${title_like}%` })
+          .andWhere('n.category = :category', { category })
+          .andWhere('n.id = :id', { id: id_like })
+          .orderBy(`n.${_sort}`, _order)
+          .getMany();
+      }
+    } else {
+      if (!category) {
+        return await this.newsRepository
+          .createQueryBuilder('n')
+          .select()
+          .where('n.title ilike :title', { title: `%${title_like}%` })
+          .orderBy(`n.${_sort}`, _order)
+          .getMany();
+      } else {
+        return await this.newsRepository
+          .createQueryBuilder('n')
+          .select()
+          .where('n.title ilike :title', { title: `%${title_like}%` })
+          .andWhere('n.category = :category', { category })
+          .orderBy(`n.${_sort}`, _order)
+          .getMany();
+      }
+    }
+  }
 
   async getNewsByCategory(pageNumber: number, pageSize: number, category: string = 'Economy') {
     return await this.newsRepository
@@ -35,7 +82,7 @@ export class NewsQueryRepository {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-      .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
+      .where('n.title ilike :title', { title: `%${searchNameTerm.trimStart()}%` })
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(30)
@@ -47,7 +94,7 @@ export class NewsQueryRepository {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-      .where('n.title ilike :title', { title: `%${searchNameTerm}%` })
+      .where('n.title ilike :title', { title: `%${searchNameTerm.trimStart()}%` })
       .getCount();
   }
 
@@ -305,6 +352,7 @@ export class NewsQueryRepository {
         'n.id',
         'n.title',
         'n.description',
+        'n.category',
         'n.imgUrl',
         'n.fullImgUrl',
         'n.createdAtTime',
@@ -317,11 +365,12 @@ export class NewsQueryRepository {
       .getOne();
   }
 
-  async getComments(newsId: string, pageNumber: number = 1) {
+  async getComments(newsId: string, pageNumber: number = 1, sort: 'ASC' | 'DESC') {
     return await this.commentsRepo
       .createQueryBuilder('c')
-      .select(['c.text', 'c.username', 'c.viewDate', 'c.userImage'])
+      .select(['c.id', 'c.text', 'c.username', 'c.viewDate', 'c.userImage'])
       .where('c.newsId = :newsId', { newsId })
+      .orderBy('c.createdAt', sort)
       .limit(5)
       .offset((pageNumber - 1) * 5)
       .getMany();

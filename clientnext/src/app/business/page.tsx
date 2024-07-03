@@ -17,6 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
+import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Business () {
   const ItemPerPage = 10
@@ -28,7 +31,7 @@ export default function Business () {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
-  const [BusinessonNews, setOnNews] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
   const [option, setOption] = useState('');
 
   useEffect(() => {
@@ -103,19 +106,21 @@ export default function Business () {
 
   return (
     <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
       <div
         className={`home ${
-          search === 1 || login === 1 ? "overflow" : ""
+          search === 1 || login === 1 || createNews === 1
+            ? "overflow" : ""
         } w-[100vw]`}
       >
         <div
           className={`wrapper ${
-            search === 1 || login === 1
+            search === 1 || login === 1 || createNews === 1
               ? "wrapper__popup blur"
               : ""
           }`}
         >
-      <Header onSearch={setSearch} onNews={setOnNews} onLogin={setLogin} className={"header menu-visual"}/>
+      <Header onSearch={setSearch} onNews={setCreateNews} onLogin={setLogin} className={"header menu-visual"}/>
       <br />
       <br />
       <main className="page page-news">
@@ -135,7 +140,6 @@ export default function Business () {
                       </SelectTrigger>
                       <SelectContent className="bg-white rounded">
                         <SelectGroup>
-                          {/*<SelectLabel>Fruits</SelectLabel>*/}
                           <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
                           <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>
@@ -188,10 +192,13 @@ export default function Business () {
       </main>
         </div>
         <AnimatePresence>
-          {login == 1 && <PopupAccount onClick={setLogin} />}
+          {login == 1 && <PopupAccount onPopupAccount={setLogin} />}
         </AnimatePresence>
         <AnimatePresence>
           {search == 1 && <Search onSearch={setSearch} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {createNews == 1 && <PopupNews onPopupNews={setCreateNews} />}
         </AnimatePresence>
       </div>
     </>

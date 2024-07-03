@@ -1,7 +1,8 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { NewsEntity } from '../../news/domain/news.entity';
 import { UserEntity } from '../../users/domain/user.entity';
 import { formatDate } from '../../base/helpers/formatDate';
+import { BottomCommentsEntity } from './bottomComments.entity';
 
 @Entity()
 export class CommentsEntity extends BaseEntity {
@@ -35,6 +36,9 @@ export class CommentsEntity extends BaseEntity {
   @ManyToOne(() => UserEntity, (u) => u.comments)
   user: UserEntity;
 
+  @OneToMany(() => BottomCommentsEntity, (b) => b.comment)
+  bottomComments: BottomCommentsEntity[];
+
   static createComment(text: string, userId: string, username: string, newsId: string) {
     const comment = new CommentsEntity();
 
@@ -44,7 +48,7 @@ export class CommentsEntity extends BaseEntity {
     comment.newsId = newsId;
     comment.createdAt = new Date();
     comment.viewDate = formatDate(new Date().toLocaleDateString());
-    comment.userImage = 'comments-image.webp';
+    comment.userImage = 'users.png';
 
     return comment;
   }

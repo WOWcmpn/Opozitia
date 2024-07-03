@@ -3,7 +3,7 @@ import {
   IComments,
   ICreateNews,
   ICrypto,
-  ICurrency,
+  ICurrency, IDaysEvent,
   IFullCrypto,
   IFullCurrency,
   IHomeNews,
@@ -19,13 +19,32 @@ import {
   quizVotes,
 } from '@/types/types';
 
-axios.defaults.baseURL = "http://localhost:4000/"
-// axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
+// axios.defaults.baseURL = "http://localhost:4000/"
+axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 
 export const NewsService = {
+  async getDaysEvent(): Promise<IDaysEvent[] | []> {
+    const {data} = await axios.get('daysEvent/all')
+    return data
+  },
+
+  async getCountComments(newsId: string): Promise<number> {
+    const {data} = await axios.get(`comments/count-comments/${newsId}`)
+    return data
+  },
+
+  async createBottomComment(commentId: string, text: string, login: string): Promise<AxiosResponse | null> {
+    return await axios.post(`comments/createBottom/${commentId}`, {data: {text, login}})
+  },
+
+  async getBottomComments(commentId: string): Promise<IComments[] | []> {
+    const {data} = await axios.get(`comments/bottom/${commentId}`)
+    return data
+  },
+
   async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('/user/send-question', { inputData: { name, location, text } })
+      return await axios.post('users/send-question', { inputData: { name, location, text } })
     } catch (err) {
       console.error('Service send email error ', err);
       return null
@@ -40,7 +59,7 @@ export const NewsService = {
     location: string,
     favoriteNewsCategory: string
   ) {
-    return await axios.put('user/profile/change-information', {
+    return await axios.put('users/profile/change-information', {
       userId,
       email,
       login,
@@ -51,7 +70,7 @@ export const NewsService = {
   },
 
   async getUserProfile(login: string): Promise<IProfileInfo> {
-    const {data} = await axios.get('user/profile-login', {params: {
+    const {data} = await axios.get('users/profile-login', {params: {
       login
       }})
     return data
@@ -111,9 +130,7 @@ export const NewsService = {
 
   async createNews(inputData: ICreateNews): Promise<string> {
     const {data} = await axios.post('news/create-news', {file: inputData.file,
-      title: inputData.title, description: inputData.description, category: inputData.newsCategory}, {headers: {
-        'Content-Type': ['multipart/form-data', 'string']
-      }})
+      title: inputData.title, description: inputData.description, category: inputData.newsCategory})
     return data
   },
 
@@ -143,7 +160,7 @@ export const NewsService = {
     return data
   },
 
-  async getAmountOfCategory(category: string, sorting?: string) {
+  async getAmountOfCategory(category: string, sorting?: string): Promise<number> {
     const {data} = await axios.get('news/amount', {params: {
       category, sorting
       }})
@@ -189,9 +206,9 @@ export const NewsService = {
     return data;
   },
 
-  async getComments(id: string, pageNumber: number) {
+  async getComments(id: string, pageNumber: number, sort: 'ASC' | 'DESC' = 'DESC'): Promise<IComments[]> {
     const {data} = await axios.get<IComments[]>(`news/${id}/comments`, {params: {
-      pageNumber
+      pageNumber, sort
       }})
     return data
   },

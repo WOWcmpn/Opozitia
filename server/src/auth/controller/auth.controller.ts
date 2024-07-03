@@ -76,7 +76,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Success', type: TokenModel })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'Login user' })
+  @ApiOperation({ summary: 'Login users' })
   @ApiConsumes('multipart/form-data', 'string')
   @ApiBody({ type: LoginUserModel })
   @HttpCode(200)

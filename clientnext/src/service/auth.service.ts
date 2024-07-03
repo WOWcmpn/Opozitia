@@ -22,7 +22,7 @@ axios.interceptors.request.use(
 export const AuthService = {
   async comparePasswords(password: string, login: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('/user/compare-passwords', {password, login})
+      return await axios.post('/users/compare-passwords', {password, login})
     } catch (err) {
       console.error('compare password error ', err);
       return null

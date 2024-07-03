@@ -3395,6 +3395,8 @@ body::after {
 .mt{
   margin-top: .8rem !important;
   margin-right: .8rem !important;
+  background: rgb(239, 239, 239);
+  border-radius: 20px;
 }
 
 .comments-content-news__input {
@@ -3403,6 +3405,16 @@ body::after {
   border-radius: 20px;
   background: rgb(239, 239, 239);
   padding: 25px 200px 22px 31px;
+  outline: none;
+  resize: none;
+}
+
+.bottom-comments-content-news__input {
+  width: 100%;
+  height: 8.5rem;
+  border-radius: 20px;
+  background: rgb(239, 239, 239);
+  padding: 5px 200px 22px 31px;
   outline: none;
   resize: none;
 }
@@ -3501,6 +3513,21 @@ body::-webkit-scrollbar-thumb:hover {
   transition: background-color 0.3s;
 }
 
+.bottom-comments-content-news__button {
+  position: absolute;
+  bottom: 22px;
+  right: 20px;
+  display: inline-block;
+  border-radius: 8px;
+  background-color: rgb(136, 162, 255);
+  color: rgb(255, 255, 255);
+  font-size: 1.1125rem;
+  font-weight: 600;
+  line-height: 1.2857142857;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
 .comments-content-news__btn-more {
   margin-top: 29px;
 }
@@ -3559,10 +3586,9 @@ body::-webkit-scrollbar-thumb:hover {
 .bottom-comments-news__level-2::before {
   content: "";
   position: absolute;
-  height: 107%;
+  height: 100%;
   width: 0.0625rem;
   background-color: rgb(172, 173, 172);
-  top: -13px;
   left: 0;
 }
 

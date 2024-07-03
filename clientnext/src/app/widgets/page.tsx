@@ -1,30 +1,29 @@
 "use client";
-import Image from "next/image";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import Night from "@/img/icons/weather/01n.png"
-import ChampionshipImg from "@/img/icons/championship.png";
-import Team from "@/img/icons/team.png";
-import ArrowL from "@/img/icons/arrow-left-calendar.svg";
-import ArrowR from "@/img/icons/arrow-right-calendar.svg";
-import Location from "@/img/icons/location.svg";
-import Wind from "@/img/icons/wind.svg";
-import Humidity1 from "@/img/icons/humidity.svg";
-import Humidity2 from "@/img/icons/humidity2.svg";
-import { Header } from "@/components/Header/Header";
-import { Swiper as SwiperType } from "swiper";
-import { Championship } from "@/components/Championship/Championship";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import {
-  calendar,
-  getDate,
-  getMonth,
-  getStringMonth,
-  getYear,
-} from "@/utils/calendar";
-import { IWeather } from "@/types/types";
-import { NewsService } from "@/service/news.service";
+import Image from 'next/image';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Night from '@/img/icons/weather/01n.png';
+import ArrowL from '@/img/icons/arrow-left-calendar.svg';
+import ArrowR from '@/img/icons/arrow-right-calendar.svg';
+import Location from '@/img/icons/location.svg';
+import Wind from '@/img/icons/wind.svg';
+import Humidity1 from '@/img/icons/humidity.svg';
+import Humidity2 from '@/img/icons/humidity2.svg';
+import { Header } from '@/components/Header/Header';
+import { Swiper as SwiperType } from 'swiper';
+import { Championship } from '@/components/Championship/Championship';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { calendar, getDate, getMonth, getStringMonth, getYear } from '@/utils/calendar';
+import { Championships, IChampionship, IDaysEvent, IWeather } from '@/types/types';
+import { NewsService } from '@/service/news.service';
 import { useSession } from 'next-auth/react';
+import { AnimatePresence } from 'framer-motion';
+import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
+import { Search } from '@/components/Search/Search';
+import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FootballService } from '@/service/football.service';
 
 export default function Widgets() {
   const swiperRef = useRef<SwiperType>();
@@ -36,6 +35,15 @@ export default function Widgets() {
   const [weatherIcon, setWeatherIcon] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconOne, setWeatherDayIconOne] = useState<string>("/img/icons/weather/unknown.webp");
   const [weatherDayIconTwo, setWeatherDayIconTwo] = useState<string>("/img/icons/weather/unknown.webp");
+  const [search, setSearch] = useState<number>(0);
+  const [login, setLogin] = useState<number>(0);
+  const [createNews, setCreateNews] = useState<number>(0);
+  const [championshipSpain, setChampionshipSpain] = useState<IChampionship[]>([]);
+  const [championshipGermany, setChampionshipGermany] = useState<IChampionship[]>([]);
+  const [championshipItaly, setChampionshipItaly] = useState<IChampionship[]>([]);
+  const [championshipFrance, setChampionshipFrance] = useState<IChampionship[]>([]);
+  const [championshipEngland, setChampionshipEngland] = useState<IChampionship[]>([]);
+  const [dayEvent, setDayEvent] = useState<IDaysEvent[]>([]);
   const { data: session, status } = useSession()
 
   const refreshCalendar = useCallback(() => {
@@ -101,112 +109,42 @@ export default function Widgets() {
     refreshCalendar();
   }, [refreshCalendar]);
 
-  const champs1 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Байер",
-      games: 38,
-      scores: 115,
-    },
-  ];
-  const champs2 = [
-    {
-      num: 1,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 2,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 3,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 4,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 5,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 6,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-    {
-      num: 7,
-      img: Team,
-      name: "Барселона",
-      games: 38,
-      scores: 115,
-    },
-  ];
+  useEffect(() => {
+    async function loadChampionships() {
+      try {
+        const spainData = await FootballService.getFootballByChampionship(Championships.Spain)
+        setChampionshipSpain(spainData)
+        const germanyData = await FootballService.getFootballByChampionship(Championships.Germany)
+        setChampionshipGermany(germanyData)
+        const italyData = await FootballService.getFootballByChampionship(Championships.Italy)
+        setChampionshipItaly(italyData)
+        const franceData = await FootballService.getFootballByChampionship(Championships.France)
+        setChampionshipFrance(franceData)
+        const englandData = await FootballService.getFootballByChampionship(Championships.England)
+        setChampionshipEngland(englandData)
+        const eventData = await NewsService.getDaysEvent()
+        setDayEvent(eventData)
+      } catch (err) {
+        console.error('loadChampionships error ', err);
+      }
+    }
+    loadChampionships()
+  }, []);
 
   return (
-    <div className="wrapper">
-      <Header className={"header menu-visual"} />
+    <>
+      <ToastContainer position={'top-center'} autoClose={2500} />
+    <div
+      className={`wrapper ${
+        search === 1 || login === 1 || createNews === 1 ? "overflow" : ""
+      } w-[100vw]`}
+    >
+      <div className={`${
+        search === 1 || login === 1 || createNews === 1
+          ? "wrapper__popup blur"
+          : ""
+      }`}>
+      <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
       <main className="page page-vidgets">
         <section className="page__vidgets vidgets">
           <div className="vidgets__container">
@@ -215,42 +153,11 @@ export default function Widgets() {
                 <div className="left-vidgets__events events-left-vidgets">
                   <h3 className="events-left-vidgets__title">События дня</h3>
                   <ul className="events-left-vidgets__list">
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_1">
-                      День конституции Молдовы
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_2">
-                      Новый год по лунному календарю
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_3">
-                      Европейский день безопасного Интернета
-                    </li>
-                    <li className="events-left-vidgets__item events-left-vidgets__item_4">
-                      Всемирный день зернобобовых
-                    </li>
+                    {dayEvent.map(e => (
+                      <li key={e.id} className="events-left-vidgets__item events-left-vidgets__item_1">
+                        {e.title}
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="left-vidgets__wheather wheather-left-vidgets">
@@ -344,16 +251,37 @@ export default function Widgets() {
                       >
                         <SwiperSlide>
                           <Championship
-                            title="Чемпионат Германии"
-                            img={ChampionshipImg}
-                            champs={champs1}
+                            title="Чемпионат Испании"
+                            img={'/img/icons/football/SpainChampionship.png'}
+                            champs={championshipSpain}
                           />
                         </SwiperSlide>
                         <SwiperSlide>
                           <Championship
-                            title="Чемпионат Испании"
-                            img={ChampionshipImg}
-                            champs={champs1}
+                            title="Чемпионат Германии"
+                            img={'/img/icons/football/GermanyChampionship.png'}
+                            champs={championshipGermany}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Италии"
+                            img={'/img/icons/football/ItalyChampionship.png'}
+                            champs={championshipItaly}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Франции"
+                            img={'/img/icons/football/FranceChampionship.png'}
+                            champs={championshipFrance}
+                          />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <Championship
+                            title="Чемпионат Англии"
+                            img={'/img/icons/football/EnglandChampionship.png'}
+                            champs={championshipEngland}
                           />
                         </SwiperSlide>
                       </Swiper>
@@ -413,6 +341,17 @@ export default function Widgets() {
           <p className="footer__text">©2024 Opozitia</p>
         </div>
       </footer>
+      </div>
+      <AnimatePresence>
+        {login === 1 && <PopupAccount onPopupAccount={setLogin} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {search === 1 && <Search onSearch={setSearch} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {createNews === 1 && <PopupNews onPopupNews={setCreateNews} />}
+      </AnimatePresence>
     </div>
+    </>
   );
 }
