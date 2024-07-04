@@ -193,7 +193,14 @@ export const Header = ({
                           <span className="bottom-header__link-news">Сообщить новость</span>
                         </Link>
                       ) : (
-                        <div></div>
+                        <Link
+                          href="#"
+                          data-popup="#popup-vote"
+                          className="menu-item menu-item-widgets bottom-header__link menubox-offer-news !py-[16px] !px-[65px] "
+                          onClick={loginPopup}
+                        >
+                          <span className="bottom-header__link-news">Сообщить новость</span>
+                        </Link>
                       )}
                   </li>
                   <li className="menu-item-widgets-wrapper mt-[30px] ml-[22px]">
@@ -252,7 +259,14 @@ export const Header = ({
               <span className="bottom-header__link-news">Сообщить новость</span>
             </Link>
           ) : (
-            <div></div>
+            <Link
+              href="#"
+              data-popup="#popup-vote"
+              className="bottom-header__link"
+              onClick={loginPopup}
+            >
+              <span className="bottom-header__link-news">Сообщить новость</span>
+            </Link>
           )}
         </div>
       </div>

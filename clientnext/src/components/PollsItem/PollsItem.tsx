@@ -1,7 +1,7 @@
 "use client";
-import { PollsItemProps, quizVotes } from "@/types/types";
+import { IPollsNews, PollsItemProps, quizVotes } from '@/types/types';
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { NewsService } from "@/service/news.service";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
@@ -9,9 +9,6 @@ import { toast } from "react-toastify";
 export const PollsItem = ({
   id,
   title,
-  agree,
-  neutral,
-  disagree,
   img,
   onClick,
   onPositiveVote,
@@ -19,21 +16,59 @@ export const PollsItem = ({
   onNeutralVote,
   onTitle
 }: PollsItemProps) => {
+  const [mainNews, setMainNews] = useState<IPollsNews | null>(null);
   const [select, setSelect] = useState<number>(0);
+  const [isClickable, setIsClickable] = useState<boolean>(true);
+  const [lastClicked, setLastClicked] = useState<number>(0);
+  const delay = 5000
   const session = useSession()
+
+  const sum = +mainNews?.votePositive! + +mainNews?.voteNegative! + +mainNews?.voteNeutral!
+  const perAgree = ((+mainNews?.votePositive! / sum) * 100).toFixed(0)
+  const perDisagree = ((+mainNews?.voteNegative! / sum) * 100).toFixed(0)
+  const perNeutral = ((+mainNews?.voteNeutral! / sum) * 100).toFixed(0)
 
   const handleVote = async (vote: quizVotes) => {
     if(!session.data) {
       toast.error('Неавторизованные пользователи не могут голосовать')
+      return
     } else {
-      await NewsService.sendVote(vote, id, session.data?.user?.name!)
+      if(isClickable) {
+        setLastClicked(Date.now())
+        setIsClickable(false)
+        onClick(1)
+        await NewsService.sendVote(vote, id, session.data?.user?.name!)
+        const newData = await NewsService.getNewsByCategoryById(id)
+        setMainNews(newData)
+      } else {
+        toast.error('Голосовать можно один раз в 5 секунд')
+        return
+      }
     }
   }
 
-  const sum = agree + disagree + neutral
-  const perAgree = ((agree / sum) * 100).toFixed(0)
-  const perDisagree = ((disagree / sum) * 100).toFixed(0)
-  const perNeutral = ((neutral / sum) * 100).toFixed(0)
+  useEffect(() => {
+    async function loadVotes() {
+      try {
+        onPositiveVote(+perAgree)
+        onNegativeVote(+perDisagree)
+        onNeutralVote(+perNeutral)
+      } catch (err) {
+        console.error('Load votes error ', err);
+      }
+    }
+    loadVotes()
+  }, [onPositiveVote, onNegativeVote, onNeutralVote, perAgree, perDisagree, perNeutral]);
+
+  useEffect(() => {
+    if(!isClickable) {
+      const timer = setTimeout(() => {
+        setIsClickable(true)
+      }, delay)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isClickable, delay]);
 
   return (
     <div className="tabs-oprosi__item item-tabs-oprosi item-block">
@@ -64,11 +99,7 @@ export const PollsItem = ({
                   className="options__label options__label_1"
                   onClick={() => {
                     setSelect(1);
-                    onClick(1)
                     handleVote(quizVotes.Dislike)
-                    onNegativeVote(+perDisagree)
-                    onPositiveVote(+perAgree)
-                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >
@@ -94,11 +125,7 @@ export const PollsItem = ({
                   className="options__label options__label_2"
                   onClick={() => {
                     setSelect(1);
-                    onClick(1)
                     handleVote(quizVotes.Like)
-                    onNegativeVote(+perDisagree)
-                    onPositiveVote(+perAgree)
-                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >
@@ -121,11 +148,7 @@ export const PollsItem = ({
                   className="options__label options__label_3"
                   onClick={() => {
                     setSelect(1);
-                    onClick(1)
                     handleVote(quizVotes.Whatever)
-                    onNegativeVote(+perDisagree)
-                    onPositiveVote(+perAgree)
-                    onNeutralVote(+perNeutral)
                     onTitle(title)
                   }}
                 >

@@ -27,7 +27,7 @@ export default function Polls() {
   const [category, setCategory] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [negative, setNegative] = useState<number>(0);
   const [positive, setPositive] = useState<number>(0);
   const [neutral, setNeutral] = useState<number>(0);
@@ -166,9 +166,6 @@ export default function Polls() {
                         id={n.id}
                         title={n.title}
                         img={n.fullImgUrl}
-                        agree={+n.votePositive}
-                        disagree={+n.voteNegative}
-                        neutral={+n.voteNeutral}
                         onClick={setOption}
                         onPositiveVote={setPositive}
                         onNegativeVote={setNegative}
@@ -231,7 +228,7 @@ export default function Polls() {
       </AnimatePresence>
       <AnimatePresence>
         {option === 1 && (
-          <PopupPolls onClick={setOption} classes="popup popup__active" positive={positive}
+            <PopupPolls onClick={setOption} classes="popup popup__active" positive={positive}
                       negative={negative} neutral={neutral} title={title} />
         )}
       </AnimatePresence>

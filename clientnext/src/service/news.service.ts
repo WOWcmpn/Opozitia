@@ -19,7 +19,7 @@ import {
   quizVotes,
 } from '@/types/types';
 
-// axios.defaults.baseURL = "http://localhost:4000/"
+//axios.defaults.baseURL = "http://localhost:4000/"
 axios.defaults.baseURL = "https://opozitia-server.vercel.app/";
 // axios.defaults.baseURL = "https://superm0m.beget.tech";
 
@@ -144,6 +144,11 @@ export const NewsService = {
     const { data } = await axios.get('news/category', { params: {
       pageNumber, pageSize, category
     }})
+    return data
+  },
+
+  async getNewsByCategoryById(id: string): Promise<IPollsNews> {
+    const { data } = await axios.get(`news/category/${id}`)
     return data
   },
 

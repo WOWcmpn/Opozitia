@@ -433,9 +433,6 @@ export type PollsItemProps = {
   id: string
   img: string;
   title: string;
-  agree: number;
-  neutral: number;
-  disagree: number;
   onClick: React.Dispatch<React.SetStateAction<number>>;
   onPositiveVote: React.Dispatch<React.SetStateAction<number>>
   onNegativeVote: React.Dispatch<React.SetStateAction<number>>

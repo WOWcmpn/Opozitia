@@ -4,9 +4,9 @@ import React from "react";
 import Logo from "@/img/logo.png";
 import { PopupProps } from "@/types/types";
 import Link from "next/link";
+import DelayWrapper from '@/components/DelayWrapper/DelayWrapper';
 
 export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neutral, title }: PopupProps) => {
-
   const popup = () => {
     onClick(0);
     if (onPolls !== undefined) onPolls(0);
@@ -24,14 +24,14 @@ export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neut
       <div className="popup__wrapper">
         <div className=" popup_show popup__content_vote content-popup">
           <div className="popup__top popup__top_vote">
-            <Link href="#" className="popup__logo">
+            <Link href={'/'} className="popup__logo">
               <picture>
                 <source srcSet="img/logo.webp" type="image/webp" />
                 <Image src={Logo} alt="Logo" height={38} />
               </picture>
             </Link>
             <button
-              data-close
+              data-close={true}
               type="button"
               className="popup__close"
               onClick={popup}
@@ -55,7 +55,8 @@ export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neut
                 <form action="#" className="item-tabs-oprosi__form">
                   <fieldset>
                     <div className="options options_vote">
-                      <div className="options__item selected">
+                      <DelayWrapper>
+                        <div className="options__item selected">
                         <input
                           hidden
                           id="o_41"
@@ -112,6 +113,7 @@ export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neut
                           </div>
                         </label>
                       </div>
+                      </DelayWrapper>
                     </div>
                   </fieldset>
                 </form>

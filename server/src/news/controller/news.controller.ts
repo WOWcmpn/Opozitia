@@ -211,6 +211,12 @@ export class NewsController {
     return await this.newsQueryRepository.getNewsByCategory(query.pageNumber, query.pageSize, query.category);
   }
 
+  @Get('category/:id')
+  @HttpCode(200)
+  async getByCategoryById(@Param('id') id: string) {
+    return await this.newsQueryRepository.getNewsByCategoryById(id);
+  }
+
   @Get('search')
   @HttpCode(200)
   async findBySearch(@Query() query: { searchNameTerm: string; pageNumber: number }) {

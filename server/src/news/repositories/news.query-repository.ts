@@ -78,6 +78,22 @@ export class NewsQueryRepository {
       .getMany();
   }
 
+  async getNewsByCategoryById(id: string) {
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select([
+        'n.id',
+        'n.title',
+        'n.fullImgUrl',
+        'n.category',
+        'n.votePositive',
+        'n.voteNegative',
+        'n.voteNeutral',
+      ])
+      .where('n.id = :id', { id })
+      .getOne();
+  }
+
   async getBySearch(searchNameTerm: string = '', pageNumber: number = 1) {
     return await this.newsRepository
       .createQueryBuilder('n')
