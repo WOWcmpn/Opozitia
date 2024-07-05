@@ -12,6 +12,7 @@ export const LatestNews = ({
   category,
 }: LatestNewsProps) => {
 
+  console.log(img);
   return (
     <div className="latest-news__item">
       <Link href={`/${category}/${id}`} className="latest-news__image">
