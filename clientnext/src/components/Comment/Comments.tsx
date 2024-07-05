@@ -1,10 +1,10 @@
 import { CommentProps, IComments } from '@/types/types';
 import Image from "next/image";
 import React, { useEffect, useState } from 'react';
-import { NewsService } from '@/service/news.service';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CommentsService } from '@/service/comments.service';
 
 export const Comments = ({
   commentId,
@@ -24,7 +24,7 @@ export const Comments = ({
   useEffect(() => {
     async function loadBottomComments() {
       try {
-        const data = await NewsService.getBottomComments(commentId)
+        const data = await CommentsService.getBottomComments(commentId)
         setBottomComments(data)
       } catch (err) {
         console.error('loadBottomComments error ', err);
@@ -40,7 +40,7 @@ export const Comments = ({
     } else if(status === "authenticated") {
       e.preventDefault()
       try {
-        await NewsService.createBottomComment(commentId, commentText, session?.user?.name!)
+        await CommentsService.createBottomComment(commentId, commentText, session?.user?.name!)
         setCommentText('')
         toast.success('Комментарий был успешно создан')
         setTimeout(() => {

@@ -4,7 +4,6 @@ import { Header } from "@/components/Header/Header";
 import { signOut, useSession } from 'next-auth/react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AccountSupport } from "@/components/AccountSupport/AccountSupport";
-import { NewsService } from "@/service/news.service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cities } from '@/utils/cities';
@@ -18,6 +17,7 @@ import { PopupNewRecoveryPassword } from '@/components/PopupLogin/PopupNewRecove
 import { PopupNewPass } from '@/components/PopupLogin/PopupNewPass';
 import { AuthService } from '@/service/auth.service';
 import { useRouter } from 'next/navigation'
+import { UsersService } from '@/service/users.service';
 
 export default function Account() {
   const [option, setOption] = useState<number>(0);
@@ -64,7 +64,7 @@ export default function Account() {
     try {
       const isExists = cities.find(city => city.name === location)
       if(isExists || location === 'Неизвестно') {
-        const data = await NewsService.changeProfile(
+        const data = await UsersService.changeProfile(
           //@ts-ignore
           session!.user?.id,
           email,

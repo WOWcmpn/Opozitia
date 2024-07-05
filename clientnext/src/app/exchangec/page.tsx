@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Header/Header";
 import { CurrencyValue } from "@/components/CurrencyValue/CurrencyValue";
 import { ICrypto, ICurrency } from "@/types/types";
-import { NewsService } from "@/service/news.service";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CryptoValue } from "@/components/CryptoValue/CryptoValue";
 import { AnimatePresence } from 'framer-motion';
@@ -12,6 +11,7 @@ import { PopupAccount } from '@/components/PopupLogin/PopupAccount';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CryptoCurrency } from '@/service/cryptoCurrency';
 
 export default function Exchangec() {
   const [option, setOption] = useState<string>("currency");
@@ -24,9 +24,9 @@ export default function Exchangec() {
   useEffect(() => {
     async function loadData() {
       try {
-        const currencyData = await NewsService.getCurrency()
+        const currencyData = await CryptoCurrency.getCurrency()
         setCurrency(currencyData)
-        const cryptoData = await NewsService.getLastCrypto()
+        const cryptoData = await CryptoCurrency.getLastCrypto()
         setCrypto(cryptoData)
       } catch (err) {
         console.warn('Currency error: ', err);
