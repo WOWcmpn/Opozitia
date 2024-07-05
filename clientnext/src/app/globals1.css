@@ -2530,7 +2530,7 @@ body::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid rgb(0, 0, 0);
-  border-radius: 40px;
+  border-radius: 15px;
   background: rgb(255, 255, 255);
   overflow: hidden;
 }
@@ -2981,7 +2981,7 @@ body::after {
   display: -ms-flexbox;
   display: flex;
   border: 1px solid rgb(0, 0, 0);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 24px;
   min-height: 245px;
   -webkit-box-pack: justify;
@@ -9615,7 +9615,7 @@ body::-webkit-scrollbar-thumb:hover {
     flex-direction: column !important;
   }
 
-  .account {
+  .page_account {
     margin-top: 0 !important;
   }
 
