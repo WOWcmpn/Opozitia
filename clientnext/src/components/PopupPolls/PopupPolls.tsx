@@ -26,8 +26,7 @@ export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neut
           <div className="popup__top popup__top_vote">
             <Link href={'/'} className="popup__logo">
               <picture>
-                <source srcSet="img/logo.webp" type="image/webp" />
-                <Image src={Logo} alt="Logo" height={38} />
+                <Image src={'/img/logo.webp'} width={110} alt="Logo" height={38} />
               </picture>
             </Link>
             <button

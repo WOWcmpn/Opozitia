@@ -67,11 +67,8 @@ export const Header = ({
     <header className={className ? className : "header menu-visual-hidden-box"}>
       <div className="header__container">
         <div className="header__top top-header">
-          <Link href="/" className="top-header__logo">
-            <picture>
-              <source srcSet="img/logo.webp" type="image-webp" />
-              <Image src={Logo} alt="Logo" />
-            </picture>
+          <Link href={'/'} className="top-header__logo">
+            <Image height={120} width={240} src={'/img/logo.webp'} alt={'logo'} />
           </Link>
           <div className="top-header__right">
             <div className="top-header__actions">
@@ -155,11 +152,8 @@ export const Header = ({
                 </div>
                 <ul className={`menubox ${burger ? "active-burger" : ""}`}>
                   <li>
-                    <Link href={"home"} className="top-header__logo">
-                      <picture>
-                        <source srcSet="img/logo.webp" type="image/webp" />
-                        <Image src={Logo} alt="Logo" />
-                      </picture>
+                    <Link href={'/'} className="top-header__logo">
+                      <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
                     </Link>
                   </li>
                   <li>
@@ -204,7 +198,7 @@ export const Header = ({
                       )}
                   </li>
                   <li className="menu-item-widgets-wrapper mt-[30px] ml-[22px]">
-                    <Link href={'/oprosi'} className="menu-item-widgets-oprosi ">
+                    <Link href={'/polls'} className="menu-item-widgets-oprosi ">
                       <p>Выскажи свое мнение!</p>
                       <div className="menu-item-widgets-oprosi__img">
                         <Image src={Message} alt="Icon" />
