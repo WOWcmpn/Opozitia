@@ -4,12 +4,19 @@ import React from "react";
 import { PopupProps } from "@/types/types";
 import Link from "next/link";
 import DelayWrapper from '@/components/DelayWrapper/DelayWrapper';
+import { useRouter } from "next/navigation";
 
 export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neutral, title }: PopupProps) => {
+  const router = useRouter()
+
   const popup = () => {
     onClick(0);
     if (onPolls !== undefined) onPolls(0);
   };
+
+  const handleLink = () => {
+    router.push('/account')
+  }
 
   return (
     <motion.div
@@ -123,7 +130,7 @@ export const PopupPolls = ({ onClick, classes, onPolls, positive, negative, neut
               <span className="bottom-popup__text-vote">
                 Не приходят результаты?
               </span>{" "}
-              <Link className="bottom-popup__link-ok" href="#">
+              <Link className="bottom-popup__link-ok" href={'/account?option=1'}>
                 Нажмите сюда, чтобы обратититься в поддержку
               </Link>
             </p>

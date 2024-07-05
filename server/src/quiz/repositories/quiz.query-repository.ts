@@ -12,6 +12,10 @@ export class QuizQueryRepository {
     @InjectRepository(NewsEntity) private newsRepo: Repository<NewsEntity>,
   ) {}
 
+  async getAllVotes() {
+    return await this.quizRepository.find();
+  }
+
   async getVoteByLogin(login: string, newsId: string) {
     return await this.quizRepository.findOneBy({ login, newsId });
   }

@@ -16,7 +16,7 @@ import { PopupRecoveryCode } from '@/components/PopupLogin/PopupRecoveryCode';
 import { PopupNewRecoveryPassword } from '@/components/PopupLogin/PopupNewRecoveryPassword';
 import { PopupNewPass } from '@/components/PopupLogin/PopupNewPass';
 import { AuthService } from '@/service/auth.service';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation';
 import { UsersService } from '@/service/users.service';
 
 export default function Account() {
@@ -41,6 +41,17 @@ export default function Account() {
   const [confirmRecoveryPass, setConfirmRecoveryPass] = useState<string>('');
   const { data: session, status, update } = useSession()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const searchOption = searchParams.get('option')
+
+  useEffect(() => {
+    async function loadOption() {
+      if(searchOption) {
+        setOption(+searchOption)
+      }
+    }
+    loadOption()
+  }, [searchOption]);
 
   useEffect(() => {
     async function loadUtils() {
