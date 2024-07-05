@@ -5,7 +5,7 @@ import Social2 from "@/img/social/04.svg";
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { NewsService } from '@/service/news.service';
+import { UsersService } from '@/service/users.service';
 
 export const AccountSupport = ({location}: {location: string}) => {
   const [name, setName] = useState<string>('');
@@ -14,7 +14,7 @@ export const AccountSupport = ({location}: {location: string}) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const data = await NewsService.sendEmail(name, location, text)
+      const data = await UsersService.sendEmail(name, location, text)
       if(data) {
         toast.success('Ваше сообщение было отправлено')
         setName('')

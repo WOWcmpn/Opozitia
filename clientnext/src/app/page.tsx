@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { PopupNews } from "@/components/PopupNews/PopupNews";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { CryptoCurrency } from '@/service/cryptoCurrency';
 
 export default function Home() {
   const swiperRef = useRef<SwiperType>();
@@ -35,9 +36,9 @@ export default function Home() {
       try {
         const data = await NewsService.getNewsHome();
         setData(data);
-        const currencyData = await NewsService.getGraphicCurrency()
+        const currencyData = await CryptoCurrency.getGraphicCurrency()
         setCurrency(currencyData)
-        const cryptoData = await NewsService.getGraphicCrypto()
+        const cryptoData = await CryptoCurrency.getGraphicCrypto()
         setCrypto(cryptoData)
       } catch (err) {
         console.warn(err);

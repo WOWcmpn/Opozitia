@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
-import Logo from "@/img/logo.png";
 import { PopupProps } from "@/types/types";
 import Link from "next/link";
 import DelayWrapper from '@/components/DelayWrapper/DelayWrapper';

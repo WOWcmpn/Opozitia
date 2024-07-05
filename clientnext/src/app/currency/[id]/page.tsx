@@ -15,6 +15,7 @@ import { Search } from '@/components/Search/Search';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { CryptoCurrency } from '@/service/cryptoCurrency';
 
 export default function Currency({params} : {params: { id: string }}) {
   const [option, setOption] = useState<number>(0);
@@ -42,17 +43,17 @@ export default function Currency({params} : {params: { id: string }}) {
   useEffect(() => {
     async function loadData() {
       try {
-        const mainData = await NewsService.getCurrencyById(params.id)
+        const mainData = await CryptoCurrency.getCurrencyById(params.id)
         setMainCurrency(mainData)
-        const data = await NewsService.getCurrency()
+        const data = await CryptoCurrency.getCurrency()
         setCurrency(data)
-        const weekData = await NewsService.getCurrencyParams(params.id, 7)
+        const weekData = await CryptoCurrency.getCurrencyParams(params.id, 7)
         setWeekCurrency(weekData)
-        const monthData = await NewsService.getCurrencyParams(params.id, 30)
+        const monthData = await CryptoCurrency.getCurrencyParams(params.id, 30)
         setMonthCurrency(monthData)
-        const sixMonthData = await NewsService.getCurrencyParams(params.id, 182)
+        const sixMonthData = await CryptoCurrency.getCurrencyParams(params.id, 182)
         setSixMonthCurrency(sixMonthData)
-        const yearData = await NewsService.getCurrencyParams(params.id, 365)
+        const yearData = await CryptoCurrency.getCurrencyParams(params.id, 365)
         setYearCurrency(yearData)
       } catch (err) {
         console.warn('Currency error: ', err);

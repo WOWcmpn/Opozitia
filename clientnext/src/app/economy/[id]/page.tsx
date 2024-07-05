@@ -21,6 +21,7 @@ import { Search } from "@/components/Search/Search";
 import { useSession } from "next-auth/react";
 import { PopupAccount } from "@/components/PopupLogin/PopupAccount";
 import { PopupNews } from '@/components/PopupNews/PopupNews';
+import { CommentsService } from '@/service/comments.service';
 
 export default function NewsId({params} : {params: {id: string}}) {
   const [defaultOption, setDefaultOption] = useState<'ASC' | 'DESC'>('DESC');
@@ -83,7 +84,7 @@ export default function NewsId({params} : {params: {id: string}}) {
         return
       } else {
         e.preventDefault()
-        await NewsService.createComment(params.id, comment!, session.data.user?.name!)
+        await CommentsService.createComment(params.id, comment!, session.data.user?.name!)
         setComment('')
         toast.success('Комментарий был успешно создан')
         setTimeout(() => {
@@ -115,7 +116,7 @@ export default function NewsId({params} : {params: {id: string}}) {
             setPage(1)
             setDefaultOption(option)
             try{
-              const newComments = await NewsService.getComments(params.id, page, option)
+              const newComments = await CommentsService.getComments(params.id, page, option)
               setComments(newComments)
               setHasMore(newComments.length === 5)
               setLoading(false)
@@ -127,7 +128,7 @@ export default function NewsId({params} : {params: {id: string}}) {
           } else {
             setLoading(true)
             try{
-              const newComments = await NewsService.getComments(params.id, page, option)
+              const newComments = await CommentsService.getComments(params.id, page, option)
               setComments(prevData => [...prevData, ...newComments])
               setHasMore(newComments.length === 5)
               setLoading(false)
@@ -140,7 +141,7 @@ export default function NewsId({params} : {params: {id: string}}) {
         } else {
           setLoading(true)
           try{
-            const newComments = await NewsService.getComments(params.id, page)
+            const newComments = await CommentsService.getComments(params.id, page)
             setComments(prevData => [...prevData, ...newComments])
             setHasMore(newComments.length === 5)
             setLoading(false)
@@ -153,7 +154,7 @@ export default function NewsId({params} : {params: {id: string}}) {
       } else {
         if(option) {
           try{
-            const newComments = await NewsService.getComments(params.id, page, option)
+            const newComments = await CommentsService.getComments(params.id, page, option)
             setComments(newComments)
             setHasMore(newComments.length === 5)
             setLoading(false)
@@ -162,7 +163,7 @@ export default function NewsId({params} : {params: {id: string}}) {
           }
         } else {
           try{
-            const newComments = await NewsService.getComments(params.id, page)
+            const newComments = await CommentsService.getComments(params.id, page)
             setComments(newComments)
             setHasMore(newComments.length === 5)
             setLoading(false)
@@ -178,7 +179,7 @@ export default function NewsId({params} : {params: {id: string}}) {
   useEffect(() => {
     async function loadCountComments() {
       try {
-        const data = await NewsService.getCountComments(params.id)
+        const data = await CommentsService.getCountComments(params.id)
         setCountComments(data)
       } catch (err) {
         console.error('loadCountComments error ', err);

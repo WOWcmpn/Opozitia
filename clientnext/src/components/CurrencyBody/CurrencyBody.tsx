@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { CurrencyBodyProps, IFullCurrency } from "@/types/types";
-import { NewsService } from "@/service/news.service";
 import Schedule from "@/components/Schedule/Schedule";
+import { CryptoCurrency } from '@/service/cryptoCurrency';
 
 export const CurrencyBody = ({
   name,
   page
 }: CurrencyBodyProps) => {
-  // const [option, setOption] = useState(0);
   const [currency, setCurrency] = useState<IFullCurrency[]>([]);
 
   useEffect(() => {
     async function loadCurrency() {
       try {
-        const data = await NewsService.getCurrencyParams(name, page)
+        const data = await CryptoCurrency.getCurrencyParams(name, page)
         setCurrency(data)
       } catch (err) {
         console.warn('Currency body: ', err);
@@ -24,28 +23,8 @@ export const CurrencyBody = ({
 
   return (
     <div className="body-main-currency__body">
-      <div data-tabs className="body-main-currency-inside">
-        {/*<nav data-tabs-titles className="body-main-currency-inside__navigation">*/}
-        {/*  <button*/}
-        {/*    type="button"*/}
-        {/*    className={`body-main-currency-inside__title ${*/}
-        {/*      option == 0 ? " _tab-active" : ""*/}
-        {/*    }`}*/}
-        {/*    onClick={() => setOption(0)}*/}
-        {/*  >*/}
-        {/*    <Image src={btn1} alt="Иконка" />*/}
-        {/*  </button>*/}
-        {/*  <button*/}
-        {/*    type="button"*/}
-        {/*    className={`body-main-currency-inside__title ${*/}
-        {/*      option == 1 ? " _tab-active" : ""*/}
-        {/*    }`}*/}
-        {/*    onClick={() => setOption(1)}*/}
-        {/*  >*/}
-        {/*    <Image src={btn2} alt="Иконка" />*/}
-        {/*  </button>*/}
-        {/*</nav>*/}
-        <div data-tabs-body className="body-main-currency-inside__content">
+      <div data-tabs={true} className="body-main-currency-inside">
+        <div data-tabs-body={true} className="body-main-currency-inside__content">
           <div className="body-main-currency-inside__body">
             <div className="body-main-currency-inside__wrap">
               <div className="graphics-left-block__item">
@@ -54,67 +33,6 @@ export const CurrencyBody = ({
               </div>
             </div>
           </div>
-          {/*{option == 0 ? (*/}
-          {/*  <div className="body-main-currency-inside__body">*/}
-          {/*    <div className="body-main-currency-inside__wrap">*/}
-          {/*      <div className="body-main-currency-inside__main">*/}
-          {/*        <div className="body-main-currency-inside__image body-main-currency-inside__image_dot">*/}
-          {/*          <Image src={graph1} alt="График" />*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*      <div className="body-main-currency-inside__right">*/}
-          {/*        {colr.map((el) => (*/}
-          {/*          <span*/}
-          {/*            className="body-main-currency-inside__info-right body-main-currency-inside__info-right_desktop"*/}
-          {/*            key={el}*/}
-          {/*          >*/}
-          {/*            {el}*/}
-          {/*          </span>*/}
-          {/*        ))}*/}
-          {/*      </div>*/}
-          {/*      <div className="body-main-currency-inside__bottom">*/}
-          {/*        {colb.map((el) => (*/}
-          {/*          <span*/}
-          {/*            className="body-main-currency-inside__info-bottom"*/}
-          {/*            key={el}*/}
-          {/*          >*/}
-          {/*            {el}*/}
-          {/*          </span>*/}
-          {/*        ))}*/}
-          {/*      </div>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div className="body-main-currency-inside__body">*/}
-          {/*    <div className="body-main-currency-inside__wrap">*/}
-          {/*      <div className="body-main-currency-inside__main">*/}
-          {/*        <div className="body-main-currency-inside__image body-main-currency-inside__image_1">*/}
-          {/*          <Image src={graph2} alt="График" />*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*      <div className="body-main-currency-inside__right">*/}
-          {/*        {colr.map((el) => (*/}
-          {/*          <span*/}
-          {/*            className="body-main-currency-inside__info-right body-main-currency-inside__info-right_desktop"*/}
-          {/*            key={el}*/}
-          {/*          >*/}
-          {/*            {el}*/}
-          {/*          </span>*/}
-          {/*        ))}*/}
-          {/*      </div>*/}
-          {/*      <div className="body-main-currency-inside__bottom">*/}
-          {/*        {colb.map((el) => (*/}
-          {/*          <span*/}
-          {/*            className="body-main-currency-inside__info-bottom"*/}
-          {/*            key={el}*/}
-          {/*          >*/}
-          {/*            {el}*/}
-          {/*          </span>*/}
-          {/*        ))}*/}
-          {/*      </div>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*)}*/}
         </div>
       </div>
     </div>

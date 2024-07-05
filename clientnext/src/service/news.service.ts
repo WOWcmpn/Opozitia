@@ -1,19 +1,12 @@
-import { AxiosResponse } from 'axios';
 import axios from './axios';
 import {
-  IComments,
   ICreateNews,
-  ICrypto,
-  ICurrency, IDaysEvent,
-  IFullCrypto,
-  IFullCurrency,
+  IDaysEvent,
   IHomeNews,
-  IMainCrypto,
   IMainNews,
   INews,
   INewsVotes,
   IPollsNews,
-  IProfileInfo,
   ISearchNews,
   ISingleNews,
   IWeather,
@@ -23,96 +16,6 @@ import {
 export const NewsService = {
   async getDaysEvent(): Promise<IDaysEvent[] | []> {
     const {data} = await axios.get('daysEvent/all')
-    return data
-  },
-
-  async getCountComments(newsId: string): Promise<number> {
-    const {data} = await axios.get(`comments/count-comments/${newsId}`)
-    return data
-  },
-
-  async createBottomComment(commentId: string, text: string, login: string): Promise<AxiosResponse | null> {
-    return await axios.post(`comments/createBottom/${commentId}`, {data: {text, login}})
-  },
-
-  async getBottomComments(commentId: string): Promise<IComments[] | []> {
-    const {data} = await axios.get(`comments/bottom/${commentId}`)
-    return data
-  },
-
-  async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
-    try {
-      return await axios.post('users/send-question', { inputData: { name, location, text } })
-    } catch (err) {
-      console.error('Service send email error ', err);
-      return null
-    }
-  },
-
-  async changeProfile(
-    userId: string,
-    email: string,
-    login: string,
-    age: string,
-    location: string,
-    favoriteNewsCategory: string
-  ) {
-    return await axios.put('users/profile/change-information', {
-      userId,
-      email,
-      login,
-      age,
-      location,
-      favoriteNewsCategory
-    })
-  },
-
-  async getUserProfile(login: string): Promise<IProfileInfo> {
-    const {data} = await axios.get('users/profile-login', {params: {
-      login
-      }})
-    return data
-  },
-
-  async getCryptoFull(id: string, pageSize: number): Promise<IFullCrypto[]> {
-    const {data} = await axios.get(`crypto/full/${id}`, {params: {
-      pageSize
-      }})
-    return data
-  },
-
-  async getCryptoById(id: string): Promise<IMainCrypto> {
-    const {data} = await axios.get(`crypto/${id}`)
-    return data
-  },
-
-  async getLastCrypto(): Promise<ICrypto> {
-    const {data} = await axios.get('crypto/last')
-    return data
-  },
-
-  async getGraphicCrypto(): Promise<ICrypto[]> {
-    const {data} = await axios.get('crypto/graphic')
-    return data
-  },
-
-  async getCurrencyParams(id: string, pageSize: number): Promise<IFullCurrency[]> {
-    const {data} = await axios.get(`currency/params/${id}`, { params: { pageSize} })
-    return data
-  },
-
-  async getCurrencyById(id: string) {
-    const {data} = await axios.get(`currency/${id}`)
-    return data
-  },
-
-  async getCurrency(): Promise<ICurrency> {
-    const {data} = await axios.get('currency')
-    return data
-  },
-
-  async getGraphicCurrency(): Promise<ICurrency[]> {
-    const {data} = await axios.get('currency/graphic')
     return data
   },
 
@@ -181,7 +84,6 @@ export const NewsService = {
     const { data } = await axios.get("news/economy", {params: {
         pageNumber, pageSize, sorting
       }});
-    console.log(data);
     return data;
   },
 
@@ -209,13 +111,6 @@ export const NewsService = {
     return data;
   },
 
-  async getComments(id: string, pageNumber: number, sort: 'ASC' | 'DESC' = 'DESC'): Promise<IComments[]> {
-    const {data} = await axios.get<IComments[]>(`news/${id}/comments`, {params: {
-      pageNumber, sort
-      }})
-    return data
-  },
-
   async getAmountOfLast(sorting?: string): Promise<number> {
     const {data} = await axios.get('news/amount-last', {params: {sorting}})
     return data
@@ -231,10 +126,5 @@ export const NewsService = {
   async getNewsHome(): Promise<IHomeNews | null> {
     const { data } = await axios.get<IHomeNews>("news/home");
     return data;
-  },
-
-  async createComment(id: string, text: string, login: string) {
-    const {data} = await axios.post(`news/${id}/test`, { data: { text, login } })
-    return data
   }
 };
