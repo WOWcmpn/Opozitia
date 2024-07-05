@@ -414,7 +414,6 @@ export const AccountPage = () => {
                                 <button
                                   type="submit"
                                   className="left-blocks-body__btn link-account"
-                                  // onClick={() => update({ name: login })}
                                 >
                                   Сохранить
                                 </button>
