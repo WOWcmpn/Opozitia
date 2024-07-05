@@ -19,7 +19,7 @@ import { AuthService } from '@/service/auth.service';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UsersService } from '@/service/users.service';
 
-export default function Account() {
+const Account = () => {
   const [option, setOption] = useState<number>(0);
   const [change, setChange] = useState<number>(0);
   const [login, setLogin] = useState<string>('');
@@ -572,3 +572,5 @@ export default function Account() {
     </Suspense>
   );
 }
+
+export default Account
