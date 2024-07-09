@@ -26,6 +26,9 @@ export class UpdateNews {
 
   @IsString()
   fullImgUrl: string;
+
+  @IsBoolean()
+  isPublished: boolean;
 }
 
 export interface newsEconomicModel {
@@ -89,7 +92,7 @@ export class CreateNews {
 
   @ApiProperty()
   @IsString()
-  @Length(8, 35)
+  @Length(5, 85)
   title: string;
 
   @ApiProperty()

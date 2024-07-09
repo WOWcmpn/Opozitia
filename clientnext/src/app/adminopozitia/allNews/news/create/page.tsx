@@ -2,7 +2,7 @@
 import React from 'react';
 import { Create, useForm, useSelect } from '@refinedev/antd';
 import { INews } from '@/app/adminopozitia/interfaces';
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Radio, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 export default function NewsCreate() {
@@ -87,6 +87,20 @@ export default function NewsCreate() {
           ]}
         >
           <Input placeholder={'https://i.ytimg.com/vi/lSO0b8n_8BA/maxresdefault.jpg'} />
+        </Form.Item>
+        <Form.Item
+          label={'Опубликовать'}
+          name={'isPublished'}
+          rules={[
+            {
+              required: true
+            }
+          ]}
+        >
+          <Radio.Group>
+            <Radio value={true}>Да</Radio>
+            <Radio value={false}>Нет</Radio>
+          </Radio.Group>
         </Form.Item>
       </Form>
     </Create>

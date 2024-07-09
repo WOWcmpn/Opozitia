@@ -18,6 +18,7 @@ export interface IDaysEvent {
   title: string
   viewDate: string
   createdAt: Date
+  isPublished: boolean
 }
 
 export interface INews {

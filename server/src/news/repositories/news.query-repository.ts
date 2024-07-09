@@ -20,7 +20,6 @@ export class NewsQueryRepository {
     category: newsCategory | null,
     isPublished?: boolean | null,
   ) {
-    console.log(isPublished);
     if (isPublished === true || isPublished === false) {
       if (id_like) {
         if (!category) {
@@ -117,6 +116,7 @@ export class NewsQueryRepository {
         'n.voteNeutral',
       ])
       .where('n.category = :category', { category })
+      .andWhere('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(pageSize)
@@ -145,6 +145,7 @@ export class NewsQueryRepository {
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
       .where('n.title ilike :title', { title: `%${searchNameTerm.trimStart()}%` })
+      .andWhere('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(30)
@@ -157,6 +158,7 @@ export class NewsQueryRepository {
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.description', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
       .where('n.title ilike :title', { title: `%${searchNameTerm.trimStart()}%` })
+      .andWhere('n.isPublished != false')
       .getCount();
   }
 
@@ -173,6 +175,7 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :weekDate', { weekDate })
+        .andWhere('n.isPublished != false')
         .getCount();
     } else if (sorting === 'month') {
       const monthDate = new Date(+startDate - MONTH);
@@ -181,6 +184,7 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :monthDate', { monthDate })
+        .andWhere('n.isPublished != false')
         .getCount();
     } else if (sorting === 'year') {
       const yearDate = new Date(+startDate - YEAR);
@@ -189,12 +193,14 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :yearDate', { yearDate })
+        .andWhere('n.isPublished != false')
         .getCount();
     } else if (sorting === 'all') {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
+        .andWhere('n.isPublished != false')
         .getCount();
     }
   }
@@ -217,6 +223,7 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :weekDate', { weekDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -229,6 +236,7 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :monthDate', { monthDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -241,6 +249,7 @@ export class NewsQueryRepository {
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.createdAtDate > :yearDate', { yearDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -251,6 +260,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -271,6 +281,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :weekDate', { weekDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .getCount();
@@ -280,6 +291,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :monthDate', { monthDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .getCount();
@@ -289,6 +301,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :yearDate', { yearDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .getCount();
@@ -296,6 +309,7 @@ export class NewsQueryRepository {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .getCount();
@@ -314,6 +328,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :weekDate', { weekDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -325,6 +340,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :monthDate', { monthDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -336,6 +352,7 @@ export class NewsQueryRepository {
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
         .where('n.createdAtDate > :yearDate', { yearDate })
+        .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -345,6 +362,7 @@ export class NewsQueryRepository {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
+        .where('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
@@ -358,6 +376,7 @@ export class NewsQueryRepository {
       .createQueryBuilder('n')
       .select()
       .where('n.category != :category', { category })
+      .andWhere('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(20)
@@ -368,6 +387,7 @@ export class NewsQueryRepository {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select()
+      .where('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .addOrderBy('n.createdAtTime', 'DESC')
       .limit(10)
@@ -379,6 +399,7 @@ export class NewsQueryRepository {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.category', 'n.description'])
+      .where('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .limit(5)
       .offset(15)
@@ -389,6 +410,7 @@ export class NewsQueryRepository {
     return await this.newsRepository
       .createQueryBuilder('n')
       .select(['n.id', 'n.title', 'n.imgUrl', 'n.category'])
+      .where('n.isPublished != false')
       .orderBy('n.createdAtDate', 'DESC')
       .limit(pageSize)
       .offset(pageNumber)
@@ -422,6 +444,7 @@ export class NewsQueryRepository {
         'n.votePositive',
         'n.voteNegative',
         'n.voteNeutral',
+        'n.isPublished',
       ])
       .where('n.id = :id', { id })
       .getOne();

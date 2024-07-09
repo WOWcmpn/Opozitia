@@ -1,8 +1,9 @@
 "use client"
 import { useOne, useShow } from '@refinedev/core';
-import { Show } from '@refinedev/antd';
+import { BooleanField, Show } from '@refinedev/antd';
 import { Typography } from 'antd';
 import Image from 'next/image';
+import React from 'react';
 
 enum newsCategory {
   Economy = 'Economy',
@@ -24,6 +25,7 @@ interface INews {
   votePositive: number
   voteNegative: number
   voteNeutral: number
+  isPublished: boolean
 }
 
 const {Title, Text} = Typography
@@ -39,6 +41,9 @@ export default function NewsShow() {
       enabled: !!record?.id
     }
   })
+
+  const TrueIcon = () => <span>✅</span>;
+  const FalseIcon = () => <span>❌</span>;
 
   return (
     <Show isLoading={isLoading}>
@@ -85,6 +90,17 @@ export default function NewsShow() {
           Не понравилось - {categoryData?.data.voteNegative} |
           Нейтрально - {categoryData?.data.voteNeutral}
         </Text>
+      </div>
+      <div>
+        <Title level={5} className={'mt-5'}>Подтверждён</Title>
+        <BooleanField
+          value={categoryData?.data.isPublished === true}
+          trueIcon={<TrueIcon/>}
+          falseIcon={<FalseIcon />}
+          valueLabelTrue={'true'}
+          valueLabelFalse={'false'}
+          className={'font-xl'}>
+        </BooleanField>
       </div>
     </Show>)
 }

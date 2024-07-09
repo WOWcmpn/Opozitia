@@ -61,7 +61,6 @@ export class NewsController {
       isPublished: string;
     },
   ) {
-    console.log(query);
     let isPublished: boolean;
     let sortBy: 'ASC' | 'DESC';
     if (query.isPublished === 'true') {

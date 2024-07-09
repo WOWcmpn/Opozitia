@@ -11,16 +11,43 @@ export class DaysEventController {
 
   @Get()
   @HttpCode(200)
-  async getAll(@Query() query: { title_like: string; _order: 'asc' | 'desc'; _sort: string }) {
+  async getAll(
+    @Query() query: { title_like: string; _order: 'asc' | 'desc'; _sort: string; isPublished: string },
+  ) {
+    let isPublished: boolean;
     let order: 'ASC' | 'DESC';
-    if (query._order === 'asc') {
-      order = 'ASC';
-      return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order);
-    } else if (query._order === 'desc') {
-      order = 'DESC';
-      return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order);
+    if (query.isPublished === 'true') {
+      isPublished = true;
+      if (query._order === 'asc') {
+        order = 'ASC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order, isPublished);
+      } else if (query._order === 'desc') {
+        order = 'DESC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order, isPublished);
+      } else {
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, 'DESC', isPublished);
+      }
+    } else if (query.isPublished === 'false') {
+      isPublished = false;
+      if (query._order === 'asc') {
+        order = 'ASC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order, isPublished);
+      } else if (query._order === 'desc') {
+        order = 'DESC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order, isPublished);
+      } else {
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, 'DESC', isPublished);
+      }
     } else {
-      return await this.daysEventQueryRepo.getAll(query.title_like, query._sort);
+      if (query._order === 'asc') {
+        order = 'ASC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order);
+      } else if (query._order === 'desc') {
+        order = 'DESC';
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, order);
+      } else {
+        return await this.daysEventQueryRepo.getAll(query.title_like, query._sort, 'DESC');
+      }
     }
   }
 

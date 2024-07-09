@@ -2,7 +2,7 @@
 import React from 'react';
 import { Edit, useForm } from '@refinedev/antd';
 import { INews } from '@/app/adminopozitia/interfaces';
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Radio, Select } from 'antd';
 
 export default function NewsEdit(){
   const {formProps, saveButtonProps, queryResult} = useForm<INews>({
@@ -92,6 +92,20 @@ export default function NewsEdit(){
           ]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label={'Опубликовано'}
+          name={'isPublished'}
+          rules={[
+            {
+              required: true
+            }
+          ]}
+        >
+          <Radio.Group>
+            <Radio value={true}>Да</Radio>
+            <Radio value={false}>Нет</Radio>
+          </Radio.Group>
         </Form.Item>
       </Form>
     </Edit>
