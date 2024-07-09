@@ -42,27 +42,49 @@ export default function NewsShow() {
 
   return (
     <Show isLoading={isLoading}>
-      <Title level={5}>Заголовок</Title>
-      <Text>{categoryData?.data.title}</Text>
-      <Title level={5}>Дата публикации</Title>
-      <Text>{categoryData?.data.viewDate}</Text>
-      <Title level={5}>Категория</Title>
-      <Text>{categoryData?.data.category}</Text>
-      <Title level={5}>Содержание</Title>
-      <Text>{categoryData?.data.description}</Text>
-      <Title level={5}>Картинка</Title>
-      <Image
-        width={400}
-        height={250}
-        src={categoryData?.data!.fullImgUrl!}
-        alt={'image'}
-        className={'rounded'}
-      />
-      <Title level={5} className={'mt-2'}>Голоса</Title>
-      <Text>
-        Понравилось - {categoryData?.data.votePositive} |
-        Не понравилось - {categoryData?.data.voteNegative} |
-        Нейтрально - {categoryData?.data.voteNeutral}
-      </Text>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5}>Заголовок</Title>
+        <Text>{categoryData?.data.title}</Text>
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-4'}>Дата публикации</Title>
+        <Text>{categoryData?.data.viewDate}</Text>
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-4'}>Категория</Title>
+        <Text>{categoryData?.data.category}</Text>
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-4'}>Содержание</Title>
+        <Text>{categoryData?.data.description}</Text>
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-4'}>Превью картинка</Title>
+        <Image
+          width={220}
+          height={100}
+          src={categoryData?.data!.imgUrl!}
+          alt={'image'}
+          className={'border-solid border-2 border-black rounded'}
+        />
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-4'}>Главная картинка</Title>
+        <Image
+          width={400}
+          height={250}
+          src={categoryData?.data!.fullImgUrl!}
+          alt={'image'}
+          className={'border-solid border-2 border-black rounded'}
+        />
+      </div>
+      <div className={'border-solid border-b border-black pb-2'}>
+        <Title level={5} className={'mt-5'}>Голоса</Title>
+        <Text>
+          Понравилось - {categoryData?.data.votePositive} |
+          Не понравилось - {categoryData?.data.voteNegative} |
+          Нейтрально - {categoryData?.data.voteNeutral}
+        </Text>
+      </div>
     </Show>)
 }

@@ -18,8 +18,8 @@ export default function NewsEdit(){
           rules={[
             {
               required: true,
-              min: 8,
-              max: 35
+              min: 5,
+              max: 85
             }
           ]}
         >
@@ -76,7 +76,16 @@ export default function NewsEdit(){
           <Input />
         </Form.Item>
         <Form.Item
-          label={'Картинка'}
+          label={'Превью картинка'}
+          name={'imgUrl'}
+          rules={[
+            {required: true}
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label={'Главная картинка'}
           name={'fullImgUrl'}
           rules={[
             {required: true}

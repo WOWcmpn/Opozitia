@@ -19,6 +19,7 @@ export class CreateNewsUseCase {
     category: newsCategory,
     imgUrl: string,
     fullImgUrl: string,
+    isPublished: boolean,
   ) {
     const isExists = await this.newsQueryRepo.getNewsByTitle(title);
     if (isExists) throw new BadRequestException([{ message: 'This news already exists', field: 'title' }]);
@@ -33,6 +34,7 @@ export class CreateNewsUseCase {
       createdAtDate: new Date(),
       category: category,
       viewDate: formatDate(new Date().toLocaleDateString()),
+      isPublished: isPublished,
     };
 
     await this.newsRepo.addNews(news);
@@ -53,6 +55,7 @@ export class CreateNewsUseCase {
       createdAtDate: new Date(),
       category: category,
       viewDate: formatDate(new Date().toLocaleDateString()),
+      isPublished: false,
     };
 
     await this.newsRepo.addNews(news);

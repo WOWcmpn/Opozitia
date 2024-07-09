@@ -58,36 +58,110 @@ export class NewsController {
       _sort: string;
       _order: 'asc' | 'desc';
       category: newsCategory;
+      isPublished: string;
     },
   ) {
+    console.log(query);
+    let isPublished: boolean;
     let sortBy: 'ASC' | 'DESC';
-    if (!query._order) {
-      sortBy = 'DESC';
-      return await this.newsQueryRepository.getAll(
-        query.title_like,
-        query.id_like,
-        query._sort,
-        sortBy,
-        query.category,
-      );
-    } else if (query._order === 'asc') {
-      sortBy = 'ASC';
-      return await this.newsQueryRepository.getAll(
-        query.title_like,
-        query.id_like,
-        query._sort,
-        sortBy,
-        query.category,
-      );
+    if (query.isPublished === 'true') {
+      isPublished = true;
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      }
+    } else if (query.isPublished === 'false') {
+      isPublished = false;
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          isPublished,
+        );
+      }
     } else {
-      sortBy = 'DESC';
-      return await this.newsQueryRepository.getAll(
-        query.title_like,
-        query.id_like,
-        query._sort,
-        sortBy,
-        query.category,
-      );
+      if (!query._order) {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          null,
+        );
+      } else if (query._order === 'asc') {
+        sortBy = 'ASC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          null,
+        );
+      } else {
+        sortBy = 'DESC';
+        return await this.newsQueryRepository.getAll(
+          query.title_like,
+          query.id_like,
+          query._sort,
+          sortBy,
+          query.category,
+          null,
+        );
+      }
     }
   }
 
@@ -106,6 +180,7 @@ export class NewsController {
       inputData.category,
       inputData.imgUrl,
       inputData.fullImgUrl,
+      inputData.isPublished,
     );
   }
 

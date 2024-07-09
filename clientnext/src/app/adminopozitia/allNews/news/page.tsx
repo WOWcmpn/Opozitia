@@ -5,6 +5,7 @@ import {
   ShowButton,
   useTable,
   DeleteButton, FilterDropdown, SaveButton, getDefaultSortOrder, TagField,
+  BooleanField,
 } from '@refinedev/antd';
 import { Form, Input, Radio, Space, Table } from 'antd';
 import { INews, ISearchNews } from '@/app/adminopozitia/interfaces';
@@ -38,6 +39,9 @@ export default function NewsList(){
       ]
     }
   });
+
+  const TrueIcon = () => <span>✅</span>;
+  const FalseIcon = () => <span>❌</span>;
 
   return (
     <List>
@@ -77,6 +81,27 @@ export default function NewsList(){
                 <Radio value={"Economy"}>Экономика</Radio>
                 <Radio value={"Policy"}>Политика</Radio>
                 <Radio value={"World"}>Мир</Radio>
+              </Radio.Group>
+            </FilterDropdown>
+          )}
+        />
+        <Table.Column
+          dataIndex="isPublished"
+          title="Опубликовано"
+          render={(value) => (
+            <BooleanField
+              value={value === true}
+              trueIcon={<TrueIcon/>}
+              falseIcon={<FalseIcon />}
+              valueLabelTrue={'true'}
+              valueLabelFalse={'false'}
+            />
+          )}
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Radio.Group defaultValue={'true'}>
+                <Radio value={'true'}>Опубликовано</Radio>
+                <Radio value={'false'}>Не опубликовано</Radio>
               </Radio.Group>
             </FilterDropdown>
           )}

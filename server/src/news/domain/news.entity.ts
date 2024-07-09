@@ -43,6 +43,9 @@ export class NewsEntity extends BaseEntity {
   @Column({ nullable: true, default: 0 })
   voteNeutral: number;
 
+  @Column({ nullable: false, type: 'boolean' })
+  isPublished: boolean;
+
   @OneToMany(() => CommentsEntity, (c) => c.news)
   comments: CommentsEntity[];
 }

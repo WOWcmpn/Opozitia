@@ -2,7 +2,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Message from "@/img/icons/message.svg";
-import Logo from "@/img/logo.png";
 import Link from "next/link";
 import { HeaderProps, IWeather } from "@/types/types";
 import { NewsService } from "@/service/news.service";
@@ -68,7 +67,7 @@ export const Header = ({
       <div className="header__container">
         <div className="header__top top-header">
           <Link href={'/'} className="top-header__logo">
-            <Image height={120} width={240} src={'/img/logo.webp'} alt={'logo'} />
+            <Image height={120} width={240} src={'/img/logo.png'} alt={'logo'} />
           </Link>
           <div className="top-header__right">
             <div className="top-header__actions">
@@ -153,7 +152,7 @@ export const Header = ({
                 <ul className={`menubox ${burger ? "active-burger" : ""}`}>
                   <li>
                     <Link href={'/'} className="top-header__logo">
-                      <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
+                      <Image height={60} width={120} src={'/img/logo.png'} alt={'logo'} />
                     </Link>
                   </li>
                   <li>

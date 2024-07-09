@@ -18,42 +18,88 @@ export class NewsQueryRepository {
     _sort: string = 'createdAtDate',
     _order: 'ASC' | 'DESC' = 'DESC',
     category: newsCategory | null,
+    isPublished?: boolean | null,
   ) {
-    if (id_like) {
-      if (!category) {
-        return await this.newsRepository
-          .createQueryBuilder('n')
-          .select()
-          .where('n.title ilike :title', { title: `%${title_like}%` })
-          .andWhere('n.id = :id', { id: id_like })
-          .orderBy(`n.${_sort}`, _order)
-          .getMany();
+    console.log(isPublished);
+    if (isPublished === true || isPublished === false) {
+      if (id_like) {
+        if (!category) {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.isPublished = :isPublished', { isPublished })
+            .andWhere('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.id = :id', { id: id_like })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        } else {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.isPublished = :isPublished', { isPublished })
+            .andWhere('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.category = :category', { category })
+            .andWhere('n.id = :id', { id: id_like })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        }
       } else {
-        return await this.newsRepository
-          .createQueryBuilder('n')
-          .select()
-          .where('n.title ilike :title', { title: `%${title_like}%` })
-          .andWhere('n.category = :category', { category })
-          .andWhere('n.id = :id', { id: id_like })
-          .orderBy(`n.${_sort}`, _order)
-          .getMany();
+        if (!category) {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.isPublished = :isPublished', { isPublished })
+            .andWhere('n.title ilike :title', { title: `%${title_like}%` })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        } else {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.isPublished = :isPublished', { isPublished })
+            .andWhere('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.category = :category', { category })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        }
       }
     } else {
-      if (!category) {
-        return await this.newsRepository
-          .createQueryBuilder('n')
-          .select()
-          .where('n.title ilike :title', { title: `%${title_like}%` })
-          .orderBy(`n.${_sort}`, _order)
-          .getMany();
+      if (id_like) {
+        if (!category) {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.id = :id', { id: id_like })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        } else {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.category = :category', { category })
+            .andWhere('n.id = :id', { id: id_like })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        }
       } else {
-        return await this.newsRepository
-          .createQueryBuilder('n')
-          .select()
-          .where('n.title ilike :title', { title: `%${title_like}%` })
-          .andWhere('n.category = :category', { category })
-          .orderBy(`n.${_sort}`, _order)
-          .getMany();
+        if (!category) {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.title ilike :title', { title: `%${title_like}%` })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        } else {
+          return await this.newsRepository
+            .createQueryBuilder('n')
+            .select()
+            .where('n.title ilike :title', { title: `%${title_like}%` })
+            .andWhere('n.category = :category', { category })
+            .orderBy(`n.${_sort}`, _order)
+            .getMany();
+        }
       }
     }
   }

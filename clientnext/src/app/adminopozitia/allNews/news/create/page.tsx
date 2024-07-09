@@ -20,8 +20,8 @@ export default function NewsCreate() {
           rules={[
             {
               required: true,
-              min: 8,
-              max: 35
+              min: 5,
+              max: 85
             }
           ]}
         >

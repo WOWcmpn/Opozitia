@@ -1,4 +1,4 @@
-import { IsEnum, IsString, Length } from 'class-validator';
+import { IsBoolean, IsEnum, IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum newsCategory {
@@ -20,6 +20,9 @@ export class UpdateNews {
 
   @IsString()
   viewDate: string;
+
+  @IsString()
+  imgUrl: string;
 
   @IsString()
   fullImgUrl: string;
@@ -44,6 +47,7 @@ export interface fullNewsModel {
   createdAtDate: Date;
   category: string;
   viewDate: string;
+  isPublished: boolean;
 }
 
 export enum favoriteNewsCategory {
@@ -74,6 +78,9 @@ export class CreateNewsAdmin {
   @ApiProperty()
   @IsEnum(newsCategory)
   category: newsCategory;
+
+  @IsBoolean()
+  isPublished: boolean;
 }
 
 export class CreateNews {

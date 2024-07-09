@@ -28,6 +28,7 @@ export class CheckNewsForAddUseCase {
           createdAtDate: news.createdAtDate!,
           category: news.category,
           viewDate: news.viewDate!,
+          isPublished: true,
         });
       }, 3000);
     }
@@ -50,6 +51,7 @@ export class CheckNewsForAddUseCase {
           createdAtDate: fullNews.createdAtDate,
           category: news.category,
           viewDate: fullNews.viewDate,
+          isPublished: true,
         });
       }, 3000);
     }

@@ -19,7 +19,7 @@ export const PopupRegSend = ({ onClick: onOption }: LoginPopupProps) => {
         <div className="popup_show content-popup popup__login">
           <div className="popup__top">
             <Link href={'/'} className="popup__logo">
-              <Image height={60} width={120} src={'/img/logo.webp'} alt={'logo'} />
+              <Image height={60} width={120} src={'/img/logo.png'} alt={'logo'} />
             </Link>
             <button
               data-close={true}
