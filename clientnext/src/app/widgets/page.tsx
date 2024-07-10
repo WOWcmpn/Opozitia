@@ -63,6 +63,7 @@ export default function Widgets() {
     }
     loadUtils()
   }, [weather?.conditionIcon, weather?.dayConditionIconOne, weather?.dayConditionIconTwo]);
+
   useEffect(() => {
     async function loadWeather() {
       try {

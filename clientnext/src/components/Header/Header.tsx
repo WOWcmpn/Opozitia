@@ -175,6 +175,16 @@ export const Header = ({
                       МИРОВЫЕ НОВОСТИ
                     </Link>
                   </li>
+                  <li>
+                    <Link className="menu-item menu__link" href={'/about'}>
+                      О нас
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="menu-item menu__link" href={'/sport'}>
+                      Футбол
+                    </Link>
+                  </li>
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
                       {status === 'authenticated' ? (
                         <Link
@@ -237,6 +247,16 @@ export const Header = ({
                 <li className="menu__item">
                   <Link href={"/world"} className="menu__link">
                     МИРОВЫЕ НОВОСТИ
+                  </Link>
+                </li>
+                <li className="menu__item">
+                  <Link className="menu__link" href={'/about'}>
+                    О нас
+                  </Link>
+                </li>
+                <li className="menu__item">
+                  <Link className="menu__link" href={'/sport'}>
+                    Футбол
                   </Link>
                 </li>
               </ul>
