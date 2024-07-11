@@ -450,7 +450,7 @@ export type AccountPopupProps = {
 
 export type RecoveryPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
-  // setPassRecovery: React.Dispatch<React.SetStateAction<number>>
+  setRecovery?: React.Dispatch<React.SetStateAction<number>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>
   sendRecoveryCode: () => void
 };
@@ -474,11 +474,13 @@ export type ConfirmRecoveryCodeProps = {
   setInputConfirmCode: React.Dispatch<React.SetStateAction<string>>
   email: string
   confirmCode: () => void
+  sendCodeAgain: () => void
 };
 
 export type PassPopupProps = {
   onClick: React.Dispatch<React.SetStateAction<number>>;
   setOption: React.Dispatch<React.SetStateAction<number>>;
+  setRecovery: React.Dispatch<React.SetStateAction<number>>;
   pass: string;
   setPass: React.Dispatch<React.SetStateAction<string>>;
   login: () => void;

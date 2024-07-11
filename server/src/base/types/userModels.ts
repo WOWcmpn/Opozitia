@@ -39,7 +39,7 @@ export class CreateNewPassword {
   newPassword: string;
 
   @IsString()
-  recoveryCode: string;
+  email: string;
 }
 
 export class ChangePassword {

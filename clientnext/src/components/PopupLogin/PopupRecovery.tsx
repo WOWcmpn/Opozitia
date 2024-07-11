@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export const PopupRecovery = ({
   onClick: onOption,
+  setRecovery,
   setEmail,
   sendRecoveryCode
 }: RecoveryPopupProps) => {
@@ -41,6 +42,7 @@ export const PopupRecovery = ({
               className="popup__close"
               onClick={() => {
                 onOption(0);
+                if(setRecovery !== undefined) setRecovery(0)
               }}
             ></button>
           </div>

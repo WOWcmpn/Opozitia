@@ -11,16 +11,17 @@ export class NewPasswordUseCase {
     private readonly authService: AuthService,
   ) {}
 
-  async createNewPassword(password: string, code: string) {
-    const user = await this.usersQueryRepo.getUserByRecoveryCode(code);
+  async createNewPassword(password: string, email: string) {
+    const user = await this.usersQueryRepo.getUserByEmail(email);
     if (!user) throw new BadRequestException([{ message: 'User not found', field: 'login' }]);
-    if (user.recoveryConfirmation.recoveryCode !== code)
-      throw new BadRequestException([{ message: 'RecoveryCode is false', field: 'recoveryCode' }]);
-    if (user.recoveryConfirmation.expirationDate < new Date())
-      throw new BadRequestException([{ message: 'Date has expired', field: 'expirationDate' }]);
 
+    const newCode = Math.floor(Math.random() * 1000000)
+      .toString()
+      .padStart(6, '0');
     const newPassword = await this.authService.createPasswordHash(password);
+
     await this.usersRepo.updatePassword(user.id, newPassword);
+    await this.usersRepo.updateRecoveryCode(user.id, newCode);
     return;
   }
 }

@@ -13,7 +13,6 @@ export const BlockContent = ({
   link3,
 }: BlockContentProps) => {
 
-  console.log(img);
   return (
     <div className="block-main_wrapper ">
       <div className="bottom-left-block__thumbs thumbs-images">

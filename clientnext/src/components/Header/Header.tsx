@@ -156,6 +156,11 @@ export const Header = ({
                     </Link>
                   </li>
                   <li>
+                    <Link className="menu-item menu__link" href={'/about'}>
+                      О нас
+                    </Link>
+                  </li>
+                  <li>
                     <Link className="menu-item menu__link" href={'/economy'}>
                       ЭКОНОМИКА
                     </Link>
@@ -176,13 +181,8 @@ export const Header = ({
                     </Link>
                   </li>
                   <li>
-                    <Link className="menu-item menu__link" href={'/about'}>
-                      О нас
-                    </Link>
-                  </li>
-                  <li>
                     <Link className="menu-item menu__link" href={'/sport'}>
-                      Футбол
+                      Спорт
                     </Link>
                   </li>
                   <li className="menu-item-widgets-wrapper menu-item-widgets-news mt-[50px] ml-[22px]">
@@ -230,6 +230,11 @@ export const Header = ({
             <nav className="menu__body">
               <ul className="menu__list">
                 <li className="menu__item">
+                  <Link className="menu__link" href={'/about'}>
+                    О нас
+                  </Link>
+                </li>
+                <li className="menu__item">
                   <Link href={"/economy"} className="menu__link">
                     ЭКОНОМИКА
                   </Link>
@@ -250,13 +255,8 @@ export const Header = ({
                   </Link>
                 </li>
                 <li className="menu__item">
-                  <Link className="menu__link" href={'/about'}>
-                    О нас
-                  </Link>
-                </li>
-                <li className="menu__item">
                   <Link className="menu__link" href={'/sport'}>
-                    Футбол
+                    Спорт
                   </Link>
                 </li>
               </ul>

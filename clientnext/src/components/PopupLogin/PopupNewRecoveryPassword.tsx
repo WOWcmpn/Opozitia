@@ -66,6 +66,7 @@ export const PopupNewRecoveryPassword = ({
                   newRecoveryPassword()
                 } else {
                   toast.error('Введенные вами пароли не совпадают')
+                  return
                 }
               }}
             >

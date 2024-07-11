@@ -20,7 +20,6 @@ export const MainBlockSlide = ({ img, title, category, id }: MainBlockSlideProps
     loadData()
   }, [category]);
 
-  console.log(img);
   return (
     <div className="main-block__slide slide-main-block swiper-slide">
       <Link

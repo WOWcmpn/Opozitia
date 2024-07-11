@@ -18,7 +18,7 @@ import { ICrypto, ICurrency, IHomeNews } from "@/types/types";
 import { NewsService } from "@/service/news.service";
 import Link from 'next/link';
 import { PopupNews } from "@/components/PopupNews/PopupNews";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CryptoCurrency } from '@/service/cryptoCurrency';
 
