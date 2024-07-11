@@ -41,13 +41,15 @@ export class CommentsEntity extends BaseEntity {
 
   static createComment(text: string, userId: string, username: string, newsId: string) {
     const comment = new CommentsEntity();
+    const formatedDate = formatDate(new Date().toLocaleDateString());
+    console.log(4, formatedDate);
 
     comment.text = text;
     comment.userId = userId;
     comment.username = username;
     comment.newsId = newsId;
     comment.createdAt = new Date();
-    comment.viewDate = formatDate(new Date().toLocaleDateString());
+    comment.viewDate = formatedDate;
     comment.userImage = 'users.png';
 
     return comment;
