@@ -47,6 +47,21 @@ const nextConfig = {
         hostname: 'img.championat.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'img01.rl0.ru',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img02.rl0.ru',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img03.rl0.ru',
+        port: '',
+      },
     ],
   },
 };

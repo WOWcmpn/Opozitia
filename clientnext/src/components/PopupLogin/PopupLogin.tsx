@@ -77,7 +77,7 @@ export const PopupLogin = ({
                 <input
                   id="c_1"
                   className="checkbox__input"
-                  data-required
+                  data-required={true}
                   type="checkbox"
                   value="1"
                   name="form[]"
@@ -95,42 +95,17 @@ export const PopupLogin = ({
                 Продолжить
               </button>
             </form>
-            {/*<ul className="body-popup__list-social">*/}
-            {/*  <li className="body-popup__item-social">*/}
-            {/*    <a href="#" className="body-popup__link-social link-social">*/}
-            {/*      <Image src={Soc1} alt="icon" />*/}
-            {/*    </a>*/}
-            {/*  </li>*/}
-            {/*  <li className="body-popup__item-social">*/}
-            {/*    <a*/}
-            {/*      href="#"*/}
-            {/*      className="body-popup__link-social link-social link-social_facebook"*/}
-            {/*    >*/}
-            {/*      <Image src={Soc2} alt="icon" />*/}
-            {/*    </a>*/}
-            {/*  </li>*/}
-            {/*  <li className="body-popup__item-social">*/}
-            {/*    <a href="#" className="body-popup__link-social link-social">*/}
-            {/*      <Image src={Soc3} alt="icon" />*/}
-            {/*    </a>*/}
-            {/*  </li>*/}
-            {/*  <li className="body-popup__item-social">*/}
-            {/*    <a href="#" className="body-popup__link-social link-social">*/}
-            {/*      <Image src={Soc4} alt="icon" />*/}
-            {/*    </a>*/}
-            {/*  </li>*/}
-            {/*</ul>*/}
           </div>
           <div className="popup__bottom bottom-popup">
             <p className="bottom-popup__text">
               Ещё нет аккаунта?{" "}
-              <a
+              <Link
                 data-popup="#popup-registration"
                 href="#"
                 onClick={() => setOption(7)}
               >
                 Зарегистрируйтесь!
-              </a>
+              </Link>
             </p>
           </div>
         </div>

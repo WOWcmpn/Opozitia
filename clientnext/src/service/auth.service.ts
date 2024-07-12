@@ -29,9 +29,9 @@ export const AuthService = {
     }
   },
 
-  async setNewPassword(password: string, recoveryCode: string): Promise<AxiosResponse | null> {
+  async setNewPassword(password: string, email: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('/auth/new-password', {newPassword: password, recoveryCode})
+      return await axios.post('/auth/new-password', {newPassword: password, email})
     } catch (err) {
       console.error('new password error ', err);
       return null

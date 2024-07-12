@@ -59,7 +59,7 @@ export class AuthController {
   @Post('new-password')
   @HttpCode(204)
   async newPassword(@Body() data: CreateNewPassword) {
-    return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.recoveryCode);
+    return await this.newPasswordUseCase.createNewPassword(data.newPassword, data.email);
   }
 
   @Post('change-password')

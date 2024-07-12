@@ -38,10 +38,23 @@ export const AccountPage = () => {
   const [inputConfirmationCode, setInputConfirmationCode] = useState<string>('');
   const [recoveryPass, setRecoveryPass] = useState<string>('');
   const [confirmRecoveryPass, setConfirmRecoveryPass] = useState<string>('');
+  const [isClickable, setIsClickable] = useState<boolean>(true);
+  const [lastClicked, setLastClicked] = useState(0);
   const { data: session, status, update } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams()
   const searchOption = searchParams.get('option')
+  const delay = 180000
+
+  useEffect(() => {
+    if(!isClickable) {
+      const timer = setTimeout(() => {
+        setIsClickable(true)
+      }, delay)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isClickable, delay]);
 
   useEffect(() => {
     async function loadOption() {
@@ -176,7 +189,7 @@ export const AccountPage = () => {
         toast.error('Пароль должен быть не длиннее 25 символов')
         return
       }
-      const data = await AuthService.setNewPassword(recoveryPass, confirmationCode)
+      const data = await AuthService.setNewPassword(recoveryPass, email)
       if(data) {
         toast.success('Вы успешно изменили пароль')
         setRecoveryPass('')
@@ -189,6 +202,28 @@ export const AccountPage = () => {
       }
     } catch (err) {
       console.error('newRecoveryPassword error ', err);
+    }
+  }
+
+  async function sendConfirmationCodeAgain() {
+    try {
+      if(isClickable) {
+        setLastClicked(Date.now())
+        setIsClickable(false)
+        toast.warn('Идет отправка...')
+        const data = await AuthService.sendRecoveryPassCode(email)
+        if(data) {
+          toast.success(`Код повторно был отправлен на ${email}`)
+          setConfirmationCode(data.code)
+        } else {
+          toast.error('Что-то пошло не так')
+        }
+      } else {
+        toast.error('Повторно отправить код можно через 3 минуты')
+        return
+      }
+    } catch (err) {
+      console.error('sendConfirmationCodeAgain ERROR ', err);
     }
   }
 
@@ -249,20 +284,20 @@ export const AccountPage = () => {
                             <div className="left-blocks-body__actual">
                               <div className="left-blocks-body__top">
                                 <div className="left-blocks-body__item">
-                <span className="left-blocks-body__title-info">
-                  Имя
-                </span>
+                                  <span className="left-blocks-body__title-info">
+                                    Имя
+                                  </span>
                                   <span className="left-blocks-body__title-name">
-                  {session?.user?.name || 'Неизвестно'}
-                </span>
+                                    {session?.user?.name || 'Неизвестно'}
+                                  </span>
                                 </div>
                                 <div className="left-blocks-body__item">
-                <span className="left-blocks-body__title-info">
-                  E-mail
-                </span>
+                                  <span className="left-blocks-body__title-info">
+                                    E-mail
+                                  </span>
                                   <span className="left-blocks-body__title-name">
-                  {session?.user?.email || 'Неизвестно'}
-                </span>
+                                    {session?.user?.email || 'Неизвестно'}
+                                  </span>
                                 </div>
                                 <Link
                                   href="#"
@@ -537,6 +572,7 @@ export const AccountPage = () => {
             setInputConfirmCode={setInputConfirmationCode}
             email={email}
             confirmCode={confirmCode}
+            sendCodeAgain={sendConfirmationCodeAgain}
           />
         }
       </AnimatePresence>

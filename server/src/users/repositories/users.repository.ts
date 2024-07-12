@@ -13,6 +13,18 @@ export class UsersRepository {
     return await this.usersRepository.insert(user);
   }
 
+  async updateRecoveryCode(userId: string, code: string) {
+    await this.usersRepository
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set({
+        recoveryConfirmation: () => `jsonb_set("recoveryConfirmation", '{recoveryCode}', '"${code}"')`,
+      })
+      .where('id = :userId', { userId })
+      .execute();
+    return;
+  }
+
   async updateConfirmation(userId: string) {
     return await this.usersRepository.update({ id: userId }, { isConfirmed: true });
   }

@@ -8,7 +8,8 @@ export const PopupRecoveryCode = ({
   onClick: onOption,
   setInputConfirmCode,
   email,
-  confirmCode
+  confirmCode,
+  sendCodeAgain
 }: ConfirmRecoveryCodeProps) => {
   const [first, setFirst] = useState<string>('');
   const [second, setSecond] = useState<string>('');
@@ -128,7 +129,7 @@ export const PopupRecoveryCode = ({
           <div className="popup__bottom bottom-popup mt-6">
             <p className="bottom-popup__text">
               Код не пришел?{" "}
-              <Link data-popup="#popup-login" href="#">
+              <Link data-popup="#popup-login" href={'#'} onClick={sendCodeAgain}>
                 Нажмите сюда, чтобы прислать заново
               </Link>
             </p>

@@ -7,6 +7,7 @@ import Link from "next/link";
 export const PopupPassword = ({
   onClick: onOption,
   setOption,
+  setRecovery,
   pass,
   setPass,
   login,
@@ -77,7 +78,13 @@ export const PopupPassword = ({
           </div>
           <div className="popup__bottom bottom-popup mt-20">
             <p className="bottom-popup__text">
-              Забыли пароль? <Link href="#">Нажмите сюда для восстановления</Link>
+              Забыли пароль? <Link href={'#'} onClick={(e: any) => {
+                e.preventDefault();
+                setRecovery(1);
+                setOption(0)
+              }}>
+              Нажмите сюда для восстановления
+            </Link>
             </p>
           </div>
         </div>
