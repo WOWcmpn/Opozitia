@@ -8482,7 +8482,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .currency{
-    margin-top: 90px;
+    margin-top: 90px !important;
   }
 
   .main-block__slide {
