@@ -26,9 +26,9 @@ export default function About() {
   useEffect(() => {
     async function loadSession() {
       try {
-        if(status === "unauthenticated") {
+        if (status === "unauthenticated") {
           setLocation('Неизвестно')
-        } else if (status ===  "authenticated") {
+        } else if (status === "authenticated") {
           //@ts-ignore
           setLocation(session?.user?.location!)
         }
@@ -41,30 +41,30 @@ export default function About() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-      if(status === "unauthenticated") {
-        toast.error('Неавторизованные пользователи не могут оставлять комментарии')
-        return
-      }
-      else if (status ===  "authenticated") {
-        try {
-          const data = await UsersService.sendEmail(name, location, text)
-          if(data) {
-            toast.success('Ваше сообщение было отправлено')
-            setName('')
-            setText('')
-            setTimeout(() => {
-              window.location.reload()
-            }, 1500)
-            return
-          } else {
-            toast.error('Что-то пошло не так')
-            return
-          }
-        } catch (err) {
-          console.error('Send email error ', err);
-          toast.error('Что-то пошло не так, попробуйте снова')
+    if (status === "unauthenticated") {
+      toast.error('Неавторизованные пользователи не могут оставлять комментарии')
+      return
     }
+    else if (status === "authenticated") {
+      try {
+        const data = await UsersService.sendEmail(name, location, text)
+        if (data) {
+          toast.success('Ваше сообщение было отправлено')
+          setName('')
+          setText('')
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500)
+          return
+        } else {
+          toast.error('Что-то пошло не так')
+          return
+        }
+      } catch (err) {
+        console.error('Send email error ', err);
+        toast.error('Что-то пошло не так, попробуйте снова')
       }
+    }
 
   }
 
@@ -77,35 +77,37 @@ export default function About() {
           <div className={`wrapper ${search === 1 || login === 1 || createNews === 1
             ? "wrapper__popup blur" : ""}`}>
             <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} />
-            <main className={'mt-80 item-about items-center'}>
-              <div className="about__image mt-60 ml-[19%]">
-                <Image src={'/moldova.webp'} alt={'About'} fill={true} />
-                <h1 className={'text-white relative mt-[15%] ml-[8%] text-5xl font-bold-'}>О партии «NOI»</h1>
-                <h2 className={'text-white relative mt-[5%] ml-[8%] text-3xl font-bold-'}>Здесь находится всё то, что
-                нам хотелось бы рассказать вам</h2>
-                <div className={'mt-80'}>
-                  <h2 className={'text-xl'}>Чем отличается партия «NOI» от десятков других партий в Республике Молдова? В молдове партии чаще всего
-                  создаются действующими и бывшими политиками, чтобы сохранить или снова вернуться во власть. Это и есть самое
-                  важное отличие, так как эта партия создана патриотически настроенными гражданами, которые ранее не были
-                  испачканы участием в молдавской политике и их финансовых схемах.</h2>
+            <main className='page-about'>
+              <div className="about__container about__image mt-60">
+                {/* <Image src={'/moldova.webp'} alt={'About'} fill={true} /> */}
+                <div className='background-image-container'>
+                  <h1 className={'relative text-5xl'}>О партии “NOI”</h1>
+                  <p className={'relative text-3xl'}>Здесь находится всё то, что
+                    нам хотелось бы рассказать вам</p>
                 </div>
-                <div className={'mt-16'}>
-                  <h2 className={'text-xl font-bold'}>Лидер партии «NOI» Владимир Даки сочетает в себе успешного бизнесмена
-                  и дисциплину военного человека.</h2>
+                <div className={'about__information'}>
+                  <h2 className={'text-xl about__information-text'}>Чем отличается партия <div className='about__information-world'>«NOI»</div> от десятков других партий в Республике Молдова? В молдове партии чаще всего
+                    создаются действующими и бывшими политиками, чтобы сохранить или снова вернуться во <div className='about__information-world'>власть.</div> Это и есть самое
+                    важное отличие, так как эта партия создана патриотически настроенными гражданами, которые ранее не были
+                    испачканы участием в молдавской политике и их финансовых схемах.</h2>
                 </div>
-                <div className={'mt-16'}>
-                  <h2 className={'text-xl'}>Это человек, который привык отдавать приказы и наводить порядок, плюс хорошее знание
-                  экономики на собственном удачном опыте. Поэтому в партии состоят люди с хорошими знаниями и опытом, имеющие хорошую репутацию
-                  в обществе.</h2>
+                <div className={'about__information'}>
+                  <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Лидер партии <div className='about__information-world'>«NOI»</div> Владимир Даки сочетает в себе успешного <br/> бизнесмена
+                    и <div className='about__information-world'>дисциплину</div> военного человека.</h2>
                 </div>
-                <div className={'mt-16'}>
-                  <h2 className={'text-xl font-bold'}>Наша главная цель - навести порядок в стране на основе собственного богатого опыта.</h2>
+                <div className={'about__information'}>
+                  <h2 className={'text-xl about__information-text'}>Это человек, который привык отдавать приказы и наводить порядок, плюс хорошее знание
+                    экономики на собственном удачном опыте. Поэтому в партии состоят люди с хорошими знаниями и опытом, имеющие хорошую репутацию
+                    в обществе.</h2>
                 </div>
-                <div className={'mt-16'}>
-                  <h2 className={'text-xl'}>Мы не идём во власть ради обогощения, так как являемся уже достаточно успешными
-                  и обеспеченными людьми.</h2>
+                <div className={'about__information'}>
+                  <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Наша главная <div className='about__information-world'>цель</div> - навести порядок в <div className='about__information-world'>стране</div> на основе <br/> собственного богатого опыта.</h2>
                 </div>
-                <div className="account-support-about__body body-account">
+                <div className={'about__information'}>
+                  <h2 className={'text-xl about__information-text'}>Мы не идём во власть ради обогощения, так как являемся уже достаточно успешными
+                    и обеспеченными людьми.</h2>
+                </div>
+                <div className="account-support-about__body body-account about__information">
                   <div className="body-account__blocks body-account__blocks_support blocks-body-account">
                     <div className="blocks-body-account__block left-blocks-body">
                       <h3 className="left-blocks-body__title title-account title-account_main">
@@ -234,11 +236,13 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-                    <div className="footer__container footer">
-                      <p className="footer__text">©2024 Opozitia</p>
-                    </div>
               </div>
             </main>
+            <footer className="footer">
+              <div className="footer__container">
+                <p className="footer__text">©2024 Opozitia</p>
+              </div>
+            </footer>
           </div>
         </div>
         <AnimatePresence>
