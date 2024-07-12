@@ -2591,7 +2591,7 @@ body::after {
 }
 
 .oprosi {
-  margin: 120px auto 50px;
+  margin: 130px auto 50px;
 }
 
 .item-tabs-oprosi {
@@ -7022,7 +7022,7 @@ body::-webkit-scrollbar-thumb:hover {
 
   .main-block {
     position: relative;
-    top: 170px;
+    top: 180px;
   }
 
   .main-block__wrap-btns {
