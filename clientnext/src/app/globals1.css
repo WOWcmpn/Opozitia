@@ -1106,6 +1106,11 @@ body::after {
   max-width: 231px;
 }
 
+.bottom-popup__text textarea{
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
 .bottom-popup__text {
   font-size: 1.25rem;
   line-height: 1.3;
@@ -1118,6 +1123,7 @@ body::after {
   -webkit-column-gap: 10px;
   -moz-column-gap: 10px;
   column-gap: 10px;
+  white-space: pre;
 }
 
 .bottom-popup__text a {

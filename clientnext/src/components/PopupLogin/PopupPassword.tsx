@@ -76,7 +76,7 @@ export const PopupPassword = ({
               </button>
             </form>
           </div>
-          <div className="popup__bottom bottom-popup mt-20">
+          <div className="popup__bottom bottom-popup">
             <p className="bottom-popup__text">
               Забыли пароль? <Link href={'#'} onClick={(e: any) => {
                 e.preventDefault();
