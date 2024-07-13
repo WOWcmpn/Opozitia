@@ -535,7 +535,7 @@ export const AccountPage = () => {
                         </div>
                       </div>
                     ) : (
-                      <AccountSupport location={location} />
+                      <AccountSupport location={location} email={email} />
                     )}
                   </div>
                 </div>

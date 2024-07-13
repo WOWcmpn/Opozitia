@@ -44,7 +44,12 @@ export class UsersController {
   @Post('send-question')
   @HttpCode(204)
   async sendQuestion(@Body('inputData') inputData: InputSendQuestion) {
-    return await this.emailManager.sendQuestion(inputData.name, inputData.location, inputData.text);
+    return await this.emailManager.sendQuestion(
+      inputData.name,
+      inputData.location,
+      inputData.text,
+      inputData.email,
+    );
   }
 
   @Get('profile-login')

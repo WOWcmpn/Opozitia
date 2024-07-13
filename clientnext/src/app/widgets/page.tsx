@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Night from '@/img/icons/weather/01n.png';
 import ArrowL from '@/img/icons/arrow-left-calendar.svg';
 import ArrowR from '@/img/icons/arrow-right-calendar.svg';
@@ -9,12 +9,8 @@ import Wind from '@/img/icons/wind.svg';
 import Humidity1 from '@/img/icons/humidity.svg';
 import Humidity2 from '@/img/icons/humidity2.svg';
 import { Header } from '@/components/Header/Header';
-import { Swiper as SwiperType } from 'swiper';
-import { Championship } from '@/components/Championship/Championship';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 import { calendar, getDate, getMonth, getStringMonth, getYear } from '@/utils/calendar';
-import { Championships, IChampionship, IDaysEvent, IWeather } from '@/types/types';
+import { IDaysEvent, IWeather } from '@/types/types';
 import { NewsService } from '@/service/news.service';
 import { useSession } from 'next-auth/react';
 import { AnimatePresence } from 'framer-motion';
@@ -23,10 +19,8 @@ import { Search } from '@/components/Search/Search';
 import { PopupNews } from '@/components/PopupNews/PopupNews';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FootballService } from '@/service/football.service';
 
 export default function Widgets() {
-  const swiperRef = useRef<SwiperType>();
   const [currentMonth, setCurrentMonth] = useState<number>(getMonth(new Date()));
   const [currentYear, setCurrentYear] = useState<number>(getYear(new Date()));
   const [date, setDate] = useState<string>(`${getStringMonth(currentMonth).month} ${getDate(new Date())}, ${currentYear}`);
@@ -38,11 +32,6 @@ export default function Widgets() {
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
-  const [championshipSpain, setChampionshipSpain] = useState<IChampionship[]>([]);
-  const [championshipGermany, setChampionshipGermany] = useState<IChampionship[]>([]);
-  const [championshipItaly, setChampionshipItaly] = useState<IChampionship[]>([]);
-  const [championshipFrance, setChampionshipFrance] = useState<IChampionship[]>([]);
-  const [championshipEngland, setChampionshipEngland] = useState<IChampionship[]>([]);
   const [dayEvent, setDayEvent] = useState<IDaysEvent[]>([]);
   const { data: session, status } = useSession()
 
@@ -111,25 +100,15 @@ export default function Widgets() {
   }, [refreshCalendar]);
 
   useEffect(() => {
-    async function loadChampionships() {
+    async function loadDaysEvent() {
       try {
-        const spainData = await FootballService.getFootballByChampionship(Championships.Spain)
-        setChampionshipSpain(spainData)
-        const germanyData = await FootballService.getFootballByChampionship(Championships.Germany)
-        setChampionshipGermany(germanyData)
-        const italyData = await FootballService.getFootballByChampionship(Championships.Italy)
-        setChampionshipItaly(italyData)
-        const franceData = await FootballService.getFootballByChampionship(Championships.France)
-        setChampionshipFrance(franceData)
-        const englandData = await FootballService.getFootballByChampionship(Championships.England)
-        setChampionshipEngland(englandData)
         const eventData = await NewsService.getDaysEvent()
         setDayEvent(eventData)
       } catch (err) {
-        console.error('loadChampionships error ', err);
+        console.error('loadDaysEvent error ', err);
       }
     }
-    loadChampionships()
+    loadDaysEvent()
   }, []);
 
   return (
@@ -220,73 +199,6 @@ export default function Widgets() {
                         </span>
                       </li>
                     </ul>
-                  </div>
-                </div>
-                <div className="left-vidgets__championship championship">
-                  <div className="championship__slider swiper">
-                    <div className="championship__wrap-btns">
-                      <button
-                        type="button"
-                        className="championship__swiper-button-prev championship-btn championship-btn_left"
-                        onClick={() => swiperRef.current?.slidePrev()}
-                      ></button>
-                      <button
-                        type="button"
-                        className="championship__swiper-button-next championship-btn"
-                        onClick={() => swiperRef.current?.slideNext()}
-                      ></button>
-                    </div>
-                    <div className="championship__wrapper swiper-wrapper">
-                      <Swiper
-                        modules={[Navigation]}
-                        slidesPerView={1}
-                        loop={false}
-                        simulateTouch={false}
-                        speed={0}
-                        allowTouchMove={false}
-
-                        touchMoveStopPropagation={true}
-                        onBeforeInit={(swiper) => {
-                          swiperRef.current = swiper;
-                        }}
-                      >
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Испании"
-                            img={'/img/icons/football/SpainChampionship.png'}
-                            champs={championshipSpain}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Германии"
-                            img={'/img/icons/football/GermanyChampionship.png'}
-                            champs={championshipGermany}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Италии"
-                            img={'/img/icons/football/ItalyChampionship.png'}
-                            champs={championshipItaly}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Франции"
-                            img={'/img/icons/football/FranceChampionship.png'}
-                            champs={championshipFrance}
-                          />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <Championship
-                            title="Чемпионат Англии"
-                            img={'/img/icons/football/EnglandChampionship.png'}
-                            champs={championshipEngland}
-                          />
-                        </SwiperSlide>
-                      </Swiper>
-                    </div>
                   </div>
                 </div>
               </div>

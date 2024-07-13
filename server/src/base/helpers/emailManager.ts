@@ -29,14 +29,15 @@ export class EmailManager {
     });
   }
 
-  async sendQuestion(name: string, location: string, text: string) {
+  async sendQuestion(name: string, location: string, text: string, email: string) {
     await this.mailerService.sendMail({
       to: 'namelesssyes@gmail.com',
-      from: 'Opozitia <dmitrybackenddev@gmail.com>',
+      from: 'Opozitia <namelesssyes@gmail.com>',
       subject: 'Вопрос от пользователя',
       html:
         `<h3><strong>ФИО</strong> - <em>${name}</em></h3>` +
         `<h3><strong>Местположение</strong> - <em>${location}</em></h3>` +
+        `<h3><strong>Почта</strong> - <em>${email}</em></h3>` +
         `<h3>Сообщение: </h3>` +
         `<p style='font-size: 20px'>${text}</p>`,
     });
