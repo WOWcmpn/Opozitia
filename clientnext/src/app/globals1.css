@@ -902,6 +902,10 @@ body::after {
   font-size: 1.5625rem;
 }
 
+.indent-8{
+  text-indent: 1rem;
+}
+
 .search-popup__input::-moz-placeholder {
   color: rgb(86, 87, 86);
   font-size: 1.5625rem;
