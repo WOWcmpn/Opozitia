@@ -3608,15 +3608,13 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .right-blocks-body__item textarea::-webkit-scrollbar {
-  border-radius: 8px;
-  width: 9px;
+  width: 0.25rem;
   background-color: rgb(172, 173, 172);
 }
 
 .right-blocks-body__item textarea::-webkit-scrollbar-thumb {
   cursor: pointer;
   background-color: rgb(90, 112, 192);
-  border-radius: 8px;
 }
 
 .right-blocks-body__item textarea::-webkit-scrollbar-thumb:hover {
