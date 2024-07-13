@@ -8085,6 +8085,10 @@ body::-webkit-scrollbar-thumb:hover {
     background-size: 8px 8px;
   }
 
+  .page-vidgets{
+    margin-top: 80px !important;
+  }
+
   .right-blocks-body__item div {
     font-size: .75rem;
   }
