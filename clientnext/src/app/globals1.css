@@ -9933,6 +9933,12 @@ body::-webkit-scrollbar-thumb:hover {
   }
 }
 
+@media (max-width: 560px){
+  .content-popup{
+    width: 100%;
+  }
+}
+
 @media (max-width: 450px) {
   .page__main-block {
     top: 595px !important;
