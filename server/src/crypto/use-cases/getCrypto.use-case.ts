@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { CryptoEntity } from '../domain/crypto.entity';
-import { formatCurrencyDate } from '../../base/helpers/formatCurrencyDate';
 import { CryptoRepo } from '../repositories/crypto.repo';
 
 @Injectable()
@@ -38,7 +37,7 @@ export class GetCryptoUseCase {
     });
 
     const prevCrypto = await this.cryptoRepo.getLastCrypto();
-    const viewDate = formatCurrencyDate(new Date().toLocaleDateString());
+    const viewDate = new Date().toLocaleDateString();
     const time = new Date(resBTC.data.time).toLocaleTimeString();
 
     const percentageBTC = ((resBTC.data.rate / prevCrypto!.rateBTC - 1) * 100).toFixed(2);

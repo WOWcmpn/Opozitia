@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { NewsEntity } from '../../news/domain/news.entity';
 import { UserEntity } from '../../users/domain/user.entity';
-import { formatDate, formatDate123 } from '../../base/helpers/formatDate';
+import { formatDate } from '../../base/helpers/formatDate';
 import { BottomCommentsEntity } from './bottomComments.entity';
 
 @Entity()
@@ -41,9 +41,7 @@ export class CommentsEntity extends BaseEntity {
 
   static createComment(text: string, userId: string, username: string, newsId: string) {
     const comment = new CommentsEntity();
-    // const formatedDate = formatDate(new Date().toLocaleDateString());
-    const formatedDate = formatDate123(new Date());
-    console.log(4, formatedDate);
+    const formatedDate = formatDate(new Date());
 
     comment.text = text;
     comment.userId = userId;
