@@ -180,23 +180,23 @@ body {
   flex-direction: column;
 }
 
-.bottom-left-block__title{
+.bottom-left-block__title {
   overflow: hidden;
-      text-overflow: ellipsis;
-      display: -moz-box;
-      -moz-box-orient: vertical;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      line-clamp: 3;
-      box-orient: vertical;
+  text-overflow: ellipsis;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  box-orient: vertical;
 }
 
-main{
+main {
   padding-bottom: 15px;
 }
 
-footer{
+footer {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -280,7 +280,7 @@ footer{
 }
 
 .checkbox__label_account {
-  gap: 4px;
+  gap: 15px;
   padding-top: 10px;
 }
 
@@ -1371,8 +1371,6 @@ body::after {
 .hidden {
   display: flex;
   align-items: center;
-  -moz-column-gap: 65px;
-  column-gap: 65px;
 }
 
 .item-block.hidden {
@@ -1803,6 +1801,10 @@ body::after {
   line-height: 1.25;
 }
 
+.page-sport .vidgets__body {
+  display: block;
+}
+
 .top-header__link-search {
   background-color: #88a2ff;
   -webkit-transition: background-color 0.3s ease 0s;
@@ -1929,11 +1931,11 @@ body::after {
   flex-shrink: 0;
 }
 
-.page-about{
+.page-about {
   margin-top: 220px;
 }
 
-.background-image-container{
+.background-image-container {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1948,24 +1950,24 @@ body::after {
   color: #fff;
 }
 
-.about__custom-information{
+.about__custom-information {
   padding: 5px 0 5px 25px;
   border-left: 2px solid #374883;
 }
 
-.about__information{
+.about__information {
   margin-top: 50px;
 }
 
-.page-about .account-support-about__body{
+.page-about .account-support-about__body {
   margin-bottom: 80px;
 }
 
-.page-about .account-support-about__body{
+.page-about .account-support-about__body {
   padding: 0;
 }
 
-.background-image-container::before{
+.background-image-container::before {
   content: "";
   position: absolute;
   background: #000000B2;
@@ -1976,14 +1978,14 @@ body::after {
   right: 0;
 }
 
-.background-image-container h1{
+.background-image-container h1 {
   position: relative;
   font-weight: 800;
   padding: 0 100px;
   padding-bottom: 80px;
 }
 
-.background-image-container h1::before{
+.background-image-container h1::before {
   content: "";
   position: absolute;
   bottom: 37px;
@@ -1992,7 +1994,7 @@ body::after {
   height: 1px;
 }
 
-.background-image-container p{
+.background-image-container p {
   padding: 0 100px;
 }
 
@@ -3181,7 +3183,7 @@ body::after {
   align-items: start;
 }
 
-.page-vidgets{
+.page-vidgets {
   margin-top: 230px;
 }
 
@@ -3401,7 +3403,7 @@ body::after {
   object-fit: contain;
 }
 
-.about__information-world{
+.about__information-world {
   color: #374883;
   display: inline;
   font-weight: 700;
@@ -3734,7 +3736,7 @@ body::-webkit-scrollbar-thumb:hover {
   position: relative;
 }
 
-.page__news-single .options__text{
+.page__news-single .options__text {
   text-align: center;
 }
 
@@ -4290,7 +4292,6 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: 1.6875rem;
   font-weight: 700;
   text-transform: capitalize;
-  max-width: 160px;
 }
 
 .championship__image img {
@@ -5075,11 +5076,10 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .right-blocks-body__item .select__options::-webkit-scrollbar {
-  width: 14px;
+  width: 0.25rem;
 }
 
 .right-blocks-body__item .select__options::-webkit-scrollbar-track {
-  border-radius: 8px;
   -webkit-box-shadow: inset 0 0 14px 14px #acadac;
   box-shadow: inset 0 0 14px 14px #acadac;
   border: solid 4px transparent;
@@ -5089,7 +5089,6 @@ body::-webkit-scrollbar-thumb:hover {
   -webkit-box-shadow: inset 0 0 14px 14px #5a70c0;
   box-shadow: inset 0 0 14px 14px #5a70c0;
   border: solid 4px transparent;
-  border-radius: 14px;
 }
 
 .right-blocks-body__item .select__options::-webkit-scrollbar-button {
@@ -6225,7 +6224,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .account {
-    margin-top: 80px;
+    margin-top: 100px;
   }
 }
 
@@ -6451,7 +6450,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 }
 
-.page-search{
+.page-search {
   margin-top: 235px;
 }
 
@@ -6621,7 +6620,7 @@ body::-webkit-scrollbar-thumb:hover {
     max-width: 46.875rem;
   }
 
-  .page-about{
+  .page-about {
     margin-top: 180px;
   }
 
@@ -6629,23 +6628,28 @@ body::-webkit-scrollbar-thumb:hover {
     padding: 0 50px;
     padding-bottom: 20px;
     font-size: 30px;
-}
+  }
 
-.background-image-container h1::before{
-  bottom: 6px;
-}
+  .about__information-size {
+    font-size: 1rem;
+    line-height: 1.3rem;
+  }
 
-.about__information{
-  margin-top: 30px;
-  font-size: .9375rem;
-}
+  .background-image-container h1::before {
+    bottom: 6px;
+  }
 
-.background-image-container p{
-  font-size: 17px;
-  padding: 0 50px;
-}
+  .about__information {
+    margin-top: 30px;
+  }
 
-  .background-image-container{
+  .background-image-container p {
+    font-size: 17px;
+    padding: 0 50px;
+    line-height: 1.4rem;
+  }
+
+  .background-image-container {
     min-height: 315px;
   }
 
@@ -6833,7 +6837,8 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .text {
-    font-size: 0.9375rem;
+    font-size: 1rem;
+    line-height: 1.3rem;
   }
 
   .btn-slider {
@@ -6958,16 +6963,16 @@ body::-webkit-scrollbar-thumb:hover {
     padding: 9.5px 11px;
   }
 
-  .menu__item{
+  .menu__item {
     align-items: baseline;
     column-gap: 10px;
   }
 
-  .menu__list{
+  .menu__list {
     column-gap: 10px;
   }
 
-  .menu__link{
+  .menu__link {
     column-gap: 10px;
   }
 
@@ -7043,7 +7048,7 @@ body::-webkit-scrollbar-thumb:hover {
     grid-template-columns: 1fr 312px;
   }
 
-  .text__information-text{
+  .text__information-text {
     font-size: 15px !important;
   }
 
@@ -7603,6 +7608,16 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: 0.9375rem;
   }
 
+  .page-sport .vidgets__left {
+    display: block;
+    max-width: none;
+    min-width: none;
+  }
+
+  .page-sport .championship{
+    width: 100%;
+  }
+
   .body-main-currency__navigation {
     flex-wrap: wrap;
     justify-content: center;
@@ -7673,7 +7688,7 @@ body::-webkit-scrollbar-thumb:hover {
     margin-bottom: 40px;
   }
 
-  .page-about{
+  .page-about {
     margin-top: 150px;
   }
 
@@ -7695,7 +7710,7 @@ body::-webkit-scrollbar-thumb:hover {
     flex: 0 1 275px;
   }
 
-  .page-search{
+  .page-search {
     margin-top: 150px;
   }
 
@@ -7764,7 +7779,7 @@ body::-webkit-scrollbar-thumb:hover {
     width: 100% !important;
   }
 
-  .page-vidgets{
+  .page-vidgets {
     margin-top: 150px;
   }
 
@@ -8075,7 +8090,7 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: 0.625rem !important;
   }
 
-  .account{
+  .account {
     margin-top: 80px;
   }
 
@@ -8093,8 +8108,18 @@ body::-webkit-scrollbar-thumb:hover {
     gap: 5px;
   }
 
-  .page-search{
+  .page-search {
     margin-top: 85px !important;
+  }
+
+  .page-about {
+    margin-top: 59px;
+  }
+
+  .background-image-container {
+    min-height: 270px;
+    width: 0 -15px;
+    width: 100vw;
   }
 
   .checkbox__text {
@@ -8481,7 +8506,7 @@ body::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
-  .currency{
+  .currency {
     margin-top: 90px !important;
   }
 
@@ -8511,6 +8536,18 @@ body::-webkit-scrollbar-thumb:hover {
 
   .graphics-left-block__name {
     font-size: 0.3125rem;
+  }
+
+  .background-image-container h1 {
+    padding: 0 20px 20px;
+  }
+
+  .background-image-container p {
+    padding: 0 20px;
+  }
+
+  .about__custom-information {
+    padding: 5px 0 5px 13px;
   }
 
   .graphics-left-block__title {
@@ -8835,6 +8872,10 @@ body::-webkit-scrollbar-thumb:hover {
     min-height: 270px;
   }
 
+  .background-image-container:before {
+    border-radius: 0px;
+  }
+
   .main-block-news::after {
     border-radius: 0px;
   }
@@ -8965,13 +9006,13 @@ body::-webkit-scrollbar-thumb:hover {
     padding: 7px 11px;
     border-radius: 5px;
     font-size: 0.625rem;
-}
+  }
 
   .comments-content-news__input::-webkit-input-placeholder {
     font-size: 0.6875rem;
   }
 
-  .bottom-comments-content-news__input::placeholder{
+  .bottom-comments-content-news__input::placeholder {
     font-size: 0.6875rem;
   }
 
@@ -9151,6 +9192,11 @@ body::-webkit-scrollbar-thumb:hover {
 
   .championship__table thead tr th {
     padding-bottom: 10px;
+  }
+
+  #form-pass p {
+    padding-top: 0 !important;
+    font-size: 0.625rem;
   }
 
   .championship__table tbody tr td {
@@ -9507,8 +9553,8 @@ body::-webkit-scrollbar-thumb:hover {
     -ms-grid-row-span: 1;
     -ms-grid-column: 2;
   }
-  
-  .page-exchange{
+
+  .page-exchange {
     margin-top: 30px !important;
   }
 
@@ -9566,7 +9612,7 @@ body::-webkit-scrollbar-thumb:hover {
     border: 1px solid rgb(136, 162, 255);
   }
 
-  .comments-content-news__comments-form button[type=submit]:hover{
+  .comments-content-news__comments-form button[type=submit]:hover {
     background-color: rgba(136, 162, 255, 0.8);
   }
 
@@ -9764,7 +9810,7 @@ body::-webkit-scrollbar-thumb:hover {
     margin-top: 0 !important;
   }
 
-  .page-about{
+  .page-about {
     margin-top: 100px;
   }
 

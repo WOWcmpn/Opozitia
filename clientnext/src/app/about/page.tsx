@@ -85,25 +85,25 @@ export default function About() {
                   <p className={'relative text-3xl'}>Здесь находится всё то, что
                     нам хотелось бы рассказать вам</p>
                 </div>
-                <div className={'about__information'}>
+                <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text'}>Чем отличается партия <div className='about__information-world'>«NOI»</div> от десятков других партий в Республике Молдова? В молдове партии чаще всего
                     создаются действующими и бывшими политиками, чтобы сохранить или снова вернуться во <div className='about__information-world'>власть.</div> Это и есть самое
                     важное отличие, так как эта партия создана патриотически настроенными гражданами, которые ранее не были
                     испачканы участием в молдавской политике и их финансовых схемах.</h2>
                 </div>
-                <div className={'about__information'}>
+                <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Лидер партии <div className='about__information-world'>«NOI»</div> Владимир Даки сочетает в себе успешного <br/> бизнесмена
                     и <div className='about__information-world'>дисциплину</div> военного человека.</h2>
                 </div>
-                <div className={'about__information'}>
+                <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text'}>Это человек, который привык отдавать приказы и наводить порядок, плюс хорошее знание
                     экономики на собственном удачном опыте. Поэтому в партии состоят люди с хорошими знаниями и опытом, имеющие хорошую репутацию
                     в обществе.</h2>
                 </div>
-                <div className={'about__information'}>
+                <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Наша главная <div className='about__information-world'>цель</div> - навести порядок в <div className='about__information-world'>стране</div> на основе <br/> собственного богатого опыта.</h2>
                 </div>
-                <div className={'about__information'}>
+                <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text'}>Мы не идём во власть ради обогощения, так как являемся уже достаточно успешными
                     и обеспеченными людьми.</h2>
                 </div>

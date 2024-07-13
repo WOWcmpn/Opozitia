@@ -58,7 +58,7 @@ export default function Sport() {
             : ""
         }`}>
           <Header onSearch={setSearch} onLogin={setLogin} onNews={setCreateNews} className={"header menu-visual"} />
-          <main className="page page-vidgets">
+          <main className="page page-vidgets page-sport">
             <section className="page__vidgets vidgets">
               <div className="vidgets__container">
                 <div className="vidgets__body">
