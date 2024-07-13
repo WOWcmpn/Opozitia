@@ -7525,6 +7525,16 @@ body::-webkit-scrollbar-thumb:hover {
     min-width: 200px;
   }
 
+  .page-sport .championship{
+    max-width: none;
+    min-width: none;
+  }
+
+  .championship {
+    max-width: 359.48px;
+    min-width: 200px;
+  }
+
   .championship__top {
     -webkit-column-gap: 15px;
     -moz-column-gap: 15px;
