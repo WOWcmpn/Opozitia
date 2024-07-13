@@ -85,8 +85,7 @@ export const PopupLogin = ({
                 />
                 <label htmlFor="c_1" className="checkbox__label">
                   <span className="checkbox__text">
-                    Отправляя свои данные, я принимаю политику <br />
-                    конфиденциальности
+                    Отправляя свои данные, я принимаю политику конфиденциальности
                   </span>
                 </label>
               </div>
