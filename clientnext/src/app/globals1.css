@@ -1118,7 +1118,6 @@ body::after {
   -webkit-column-gap: 10px;
   -moz-column-gap: 10px;
   column-gap: 10px;
-  white-space: pre;
 }
 
 .bottom-popup__text a {
