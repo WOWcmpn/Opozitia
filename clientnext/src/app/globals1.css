@@ -1106,11 +1106,6 @@ body::after {
   max-width: 231px;
 }
 
-.bottom-popup__text textarea{
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-}
-
 .bottom-popup__text {
   font-size: 1.25rem;
   line-height: 1.3;
@@ -3614,12 +3609,14 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .right-blocks-body__item textarea::-webkit-scrollbar {
-  width: 0.25rem;
+  width: 8px;
+  border-radius: 8px;
   background-color: rgb(172, 173, 172);
 }
 
 .right-blocks-body__item textarea::-webkit-scrollbar-thumb {
   cursor: pointer;
+  border-radius: 8px;
   background-color: rgb(90, 112, 192);
 }
 
