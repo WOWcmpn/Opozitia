@@ -6630,9 +6630,9 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: 30px;
   }
 
-  .about__information-size {
-    font-size: 1rem;
-    line-height: 1.3rem;
+  .about__information-size h2{
+    font-size: 1rem !important;
+    line-height: 1.3rem !important;
   }
 
   .background-image-container h1::before {
@@ -8113,13 +8113,14 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .page-about {
-    margin-top: 59px;
+    margin-top: 59px !important;
   }
 
   .background-image-container {
     min-height: 270px;
-    width: 0 -15px;
+    margin: 0 -15px;
     width: 100vw;
+    border-radius: 0px;
   }
 
   .checkbox__text {
