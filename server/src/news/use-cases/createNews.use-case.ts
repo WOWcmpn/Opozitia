@@ -33,7 +33,7 @@ export class CreateNewsUseCase {
       createdAtTime: time,
       createdAtDate: new Date(),
       category: category,
-      viewDate: formatDate(new Date().toLocaleDateString()),
+      viewDate: formatDate(new Date()),
       isPublished: isPublished,
     };
 
@@ -54,7 +54,7 @@ export class CreateNewsUseCase {
       createdAtTime: time,
       createdAtDate: new Date(),
       category: category,
-      viewDate: formatDate(new Date().toLocaleDateString()),
+      viewDate: formatDate(new Date()),
       isPublished: false,
     };
 

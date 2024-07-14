@@ -1,4 +1,4 @@
-export function formatDate(dateString: string) {
+export function formatDate(date: Date) {
   const months = [
     'января',
     'февраля',
@@ -13,10 +13,9 @@ export function formatDate(dateString: string) {
     'ноября',
     'декабря',
   ];
-  console.log(1, dateString);
-  const [day, month, year] = dateString.split('.');
-  console.log(2, day, month, year);
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
 
-  console.log(3, `${day} ${months[parseInt(month) - 1]} ${year}`);
-  return `${day} ${months[parseInt(month) - 1]} ${year}`;
+  return `${day} ${months[month]} ${year}`;
 }

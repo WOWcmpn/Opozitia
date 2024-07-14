@@ -41,8 +41,7 @@ export class CommentsEntity extends BaseEntity {
 
   static createComment(text: string, userId: string, username: string, newsId: string) {
     const comment = new CommentsEntity();
-    const formatedDate = formatDate(new Date().toLocaleDateString());
-    console.log(4, formatedDate);
+    const formatedDate = formatDate(new Date());
 
     comment.text = text;
     comment.userId = userId;

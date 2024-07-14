@@ -43,7 +43,7 @@ export class BottomCommentsEntity extends BaseEntity {
     bottomComment.username = username;
     bottomComment.commentId = commentId;
     bottomComment.createdAt = new Date();
-    bottomComment.viewDate = formatDate(new Date().toLocaleDateString());
+    bottomComment.viewDate = formatDate(new Date());
     bottomComment.userImage = 'users.png';
 
     return bottomComment;

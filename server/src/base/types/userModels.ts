@@ -23,6 +23,7 @@ export class InputSendQuestion {
   name: string;
   location: string;
   text: string;
+  email: string;
 }
 
 export class ComparePasswordsData {

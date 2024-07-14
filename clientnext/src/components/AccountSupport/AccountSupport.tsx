@@ -7,14 +7,14 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { UsersService } from '@/service/users.service';
 
-export const AccountSupport = ({location}: {location: string}) => {
+export const AccountSupport = ({location, email}: {location: string, email: string}) => {
   const [name, setName] = useState<string>('');
   const [text, setText] = useState<string>('');
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const data = await UsersService.sendEmail(name, location, text)
+      const data = await UsersService.sendEmail(name, location, text, email)
       if(data) {
         toast.success('Ваше сообщение было отправлено')
         setName('')

@@ -3,9 +3,9 @@ import { IProfileInfo } from '@/types/types';
 import { AxiosResponse } from 'axios';
 
 export const UsersService = {
-  async sendEmail(name: string, location: string, text: string): Promise<AxiosResponse | null> {
+  async sendEmail(name: string, location: string, text: string, email: string): Promise<AxiosResponse | null> {
     try {
-      return await axios.post('users/send-question', { inputData: { name, location, text } })
+      return await axios.post('users/send-question', { inputData: { name, location, text, email } })
     } catch (err) {
       console.error('Service send email error ', err);
       return null

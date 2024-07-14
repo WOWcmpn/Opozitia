@@ -1,5 +1,4 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { formatCurrencyDate } from '../../base/helpers/formatCurrencyDate';
 
 @Entity()
 export class CurrencyEntity extends BaseEntity {
@@ -99,7 +98,7 @@ export class CurrencyEntity extends BaseEntity {
     differenceEURToRON: string,
   ) {
     const currency = new CurrencyEntity();
-    const viewDate = formatCurrencyDate(new Date().toLocaleDateString());
+    const viewDate = new Date().toLocaleDateString();
 
     currency.date = new Date();
     currency.viewDate = viewDate;

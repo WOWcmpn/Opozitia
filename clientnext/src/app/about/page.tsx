@@ -19,6 +19,7 @@ export default function About() {
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
   const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [text, setText] = useState<string>('');
   const [location, setLocation] = useState<string>('');
   const { data: session, status } = useSession()
@@ -31,6 +32,7 @@ export default function About() {
         } else if (status === "authenticated") {
           //@ts-ignore
           setLocation(session?.user?.location!)
+          setEmail(session?.user?.email!)
         }
       } catch (err) {
         console.warn('Load session error - about ', err);
@@ -42,12 +44,11 @@ export default function About() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (status === "unauthenticated") {
-      toast.error('Неавторизованные пользователи не могут оставлять комментарии')
+      toast.error('Неавторизованные пользователи не могут отправлять вопросы')
       return
-    }
-    else if (status === "authenticated") {
+    } else if (status === "authenticated") {
       try {
-        const data = await UsersService.sendEmail(name, location, text)
+        const data = await UsersService.sendEmail(name, location, text, email)
         if (data) {
           toast.success('Ваше сообщение было отправлено')
           setName('')
