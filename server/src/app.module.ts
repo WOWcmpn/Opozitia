@@ -4,8 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { QuizModule } from './quiz/quiz.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
@@ -19,37 +17,33 @@ import { DaysEventModule } from './days-event/days-event.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../clientnext'),
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'ep-little-hat-a5brmjlw.us-east-2.aws.neon.tech',
+      host: process.env.HOST,
       port: 5432,
-      username: 'pilyak003',
-      password: '4XeKmwaybIR3',
-      database: 'NewsDb',
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
       ssl: true,
-      // logging: ['query'],
     }),
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.gmail.com',
+        host: process.env.EMAIL_HOST,
         auth: {
-          user: 'dmitrybackenddev@gmail.com',
-          pass: 'tzcjafbdsjqrpmwl',
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
         },
-        service: 'gmail',
+        service: process.env.EMAIL_SERVICE,
       },
     }),
     JwtModule.register({
       global: true,
-      secret: process.env.SECRET || '123',
+      secret: process.env.JWT_SECRET || 'superOpozitiaSecret',
     }),
     ScheduleModule.forRoot(),
     NewsModule,
