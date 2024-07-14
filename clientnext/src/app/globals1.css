@@ -8131,7 +8131,7 @@ body::-webkit-scrollbar-thumb:hover {
 
   .background-image-container {
     min-height: 270px;
-    margin: 0 -15px;
+    margin: 0 0 0 -15px;
     width: 100vw;
     border-radius: 0px;
   }
