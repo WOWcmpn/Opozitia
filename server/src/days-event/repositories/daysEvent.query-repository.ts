@@ -38,6 +38,7 @@ export class DaysEventQueryRepository {
       .createQueryBuilder('d')
       .select()
       .where('d.isPublished != false')
+      .orderBy('d.createdAt', 'DESC')
       .getMany();
   }
 

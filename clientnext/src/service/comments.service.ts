@@ -4,12 +4,12 @@ import { AxiosResponse } from 'axios';
 
 export const CommentsService = {
   async createComment(id: string, text: string, login: string) {
-    const {data} = await axios.post(`news/${id}/test`, { data: { text, login } })
+    const {data} = await axios.post(`comments/${id}`, { data: { text, login } })
     return data
   },
 
   async getComments(id: string, pageNumber: number, sort: 'ASC' | 'DESC' = 'DESC'): Promise<IComments[]> {
-    const {data} = await axios.get<IComments[]>(`news/${id}/comments`, {params: {
+    const {data} = await axios.get<IComments[]>(`comments/${id}/comments`, {params: {
         pageNumber, sort
       }})
     return data

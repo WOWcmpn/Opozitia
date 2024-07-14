@@ -2,15 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NewsEntity } from '../domain/news.entity';
 import { Repository } from 'typeorm';
-import { CommentsEntity } from '../../comments/domain/comments.entity';
 import { newsCategory } from '../../base/types/newsModels';
 
 @Injectable()
 export class NewsQueryRepository {
-  constructor(
-    @InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>,
-    @InjectRepository(CommentsEntity) private readonly commentsRepo: Repository<CommentsEntity>,
-  ) {}
+  constructor(@InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>) {}
 
   async getAll(
     title_like: string = '',
@@ -448,16 +444,5 @@ export class NewsQueryRepository {
       ])
       .where('n.id = :id', { id })
       .getOne();
-  }
-
-  async getComments(newsId: string, pageNumber: number = 1, sort: 'ASC' | 'DESC') {
-    return await this.commentsRepo
-      .createQueryBuilder('c')
-      .select(['c.id', 'c.text', 'c.username', 'c.viewDate', 'c.userImage'])
-      .where('c.newsId = :newsId', { newsId })
-      .orderBy('c.createdAt', sort)
-      .limit(5)
-      .offset((pageNumber - 1) * 5)
-      .getMany();
   }
 }

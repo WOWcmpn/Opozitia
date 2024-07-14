@@ -11,9 +11,13 @@ import { UserEntity } from '../users/domain/user.entity';
 import { BottomCommentsController } from './controller/bottomComments.controller';
 import { BottomCommentsQueryRepository } from './repositories/bottomComments.query-repository';
 import { BottomCommentsRepository } from './repositories/bottomComments.repository';
+import { CreateCommentUseCase } from './use-cases/createComment.use-case';
+import { NewsRepository } from '../news/repositories/news.repository';
+import { NewsQueryRepository } from '../news/repositories/news.query-repository';
+import { NewsEntity } from '../news/domain/news.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CommentsEntity, BottomCommentsEntity, UserEntity])],
+  imports: [TypeOrmModule.forFeature([CommentsEntity, BottomCommentsEntity, UserEntity, NewsEntity])],
   controllers: [CommentsController, BottomCommentsController],
   providers: [
     CommentsQueryRepository,
@@ -22,6 +26,9 @@ import { BottomCommentsRepository } from './repositories/bottomComments.reposito
     UsersQueryRepository,
     BottomCommentsQueryRepository,
     BottomCommentsRepository,
+    CreateCommentUseCase,
+    NewsRepository,
+    NewsQueryRepository,
   ],
 })
 export class CommentsModule {}

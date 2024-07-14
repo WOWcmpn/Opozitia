@@ -37,7 +37,8 @@ export class GetCryptoUseCase {
     });
 
     const prevCrypto = await this.cryptoRepo.getLastCrypto();
-    const viewDate = new Date().toLocaleDateString();
+    const date = new Date().toLocaleDateString().replaceAll('/', '.');
+    const viewDate = date.substring(0, 6) + date.substring(8, 10);
     const time = new Date(resBTC.data.time).toLocaleTimeString();
 
     const percentageBTC = ((resBTC.data.rate / prevCrypto!.rateBTC - 1) * 100).toFixed(2);

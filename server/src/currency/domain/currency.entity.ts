@@ -98,7 +98,8 @@ export class CurrencyEntity extends BaseEntity {
     differenceEURToRON: string,
   ) {
     const currency = new CurrencyEntity();
-    const viewDate = new Date().toLocaleDateString();
+    const date = new Date().toLocaleDateString().replaceAll('/', '.');
+    const viewDate = date.substring(0, 6) + date.substring(8, 10);
 
     currency.date = new Date();
     currency.viewDate = viewDate;

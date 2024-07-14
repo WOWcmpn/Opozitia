@@ -1,27 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  Param,
-  Patch,
-  Post,
-  Query,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
 import { GetNewsUseCase } from '../use-cases/getNews.use-case';
 import { NewsQueryRepository } from '../repositories/news.query-repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateNews, CreateNewsAdmin, newsCategory, UpdateNews } from '../../base/types/newsModels';
-import { AccessTokenGuard } from '../../auth/guards/accessToken.guard';
 import { CreateNewsUseCase } from '../use-cases/createNews.use-case';
 import { ApiTags, ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateCommentModel } from '../../base/types/commentsModels';
-import { AuthService } from '../../auth/service/auth.service';
-import { Request } from 'express';
-import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 import { NewsRepository } from '../repositories/news.repository';
 import { GetWeatherUseCase } from '../use-cases/getWeather.use-case';
 
@@ -33,8 +16,6 @@ export class NewsController {
     private readonly newsQueryRepository: NewsQueryRepository,
     private readonly newsRepo: NewsRepository,
     private readonly createNewsUseCase: CreateNewsUseCase,
-    private readonly authService: AuthService,
-    private readonly createCommentUseCase: CreateCommentUseCase,
     private readonly getWeatherUseCase: GetWeatherUseCase,
   ) {}
 
@@ -330,29 +311,5 @@ export class NewsController {
   @HttpCode(200)
   async findOne(@Param('id') id: string) {
     return await this.newsQueryRepository.getNewsById(id);
-  }
-
-  @Get(':id/comments')
-  @HttpCode(200)
-  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number; sort: 'ASC' | 'DESC' }) {
-    return await this.newsQueryRepository.getComments(id, query.pageNumber, query.sort);
-  }
-
-  @Post(':newsId/comments')
-  @UseGuards(AccessTokenGuard)
-  @HttpCode(201)
-  async createComment(
-    @Param('newsId') newsId: string,
-    @Body() data: CreateCommentModel,
-    @Req() req: Request,
-  ) {
-    const userId = await this.authService.getUserId(req.headers.authorization!.split(' ')[1]);
-    return await this.createCommentUseCase.create(newsId, data.text, userId);
-  }
-
-  @Post(':newsId/test')
-  @HttpCode(201)
-  async createComment1(@Param('newsId') newsId: string, @Body('data') data: CreateCommentModel) {
-    return await this.createCommentUseCase.create(newsId, data.text, data.login);
   }
 }

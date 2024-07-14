@@ -3,6 +3,7 @@ import { CreateCommentModel } from '../../base/types/commentsModels';
 import { CreateBottomCommentUseCase } from '../use-cases/createBottomComment.use-case';
 import { CommentsQueryRepository } from '../repositories/comments.query-repository';
 import { CommentsRepository } from '../repositories/comments.repository';
+import { CreateCommentUseCase } from '../use-cases/createComment.use-case';
 
 @Controller('comments')
 export class CommentsController {
@@ -10,12 +11,19 @@ export class CommentsController {
     private readonly createBottomCommentUseCase: CreateBottomCommentUseCase,
     private readonly commentsQueryRepo: CommentsQueryRepository,
     private readonly commentsRepo: CommentsRepository,
+    private readonly createCommentUseCase: CreateCommentUseCase,
   ) {}
 
   @Post('createBottom/:commentId')
   @HttpCode(201)
   async createBottomComment(@Param('commentId') commentId: string, @Body('data') data: CreateCommentModel) {
     return await this.createBottomCommentUseCase.createBottomComment(commentId, data.text, data.login);
+  }
+
+  @Post(':newsId')
+  @HttpCode(201)
+  async createComment(@Param('newsId') newsId: string, @Body('data') data: CreateCommentModel) {
+    return await this.createCommentUseCase.create(newsId, data.text, data.login);
   }
 
   @Get('count-comments/:newsId')
@@ -28,6 +36,12 @@ export class CommentsController {
   @HttpCode(200)
   async getBottomComments(@Param('id') id: string) {
     return await this.commentsQueryRepo.getBottomComments(id);
+  }
+
+  @Get(':id/comments')
+  @HttpCode(200)
+  async getComments(@Param('id') id: string, @Query() query: { pageNumber: number; sort: 'ASC' | 'DESC' }) {
+    return await this.commentsQueryRepo.getComments(id, query.pageNumber, query.sort);
   }
 
   @Get()

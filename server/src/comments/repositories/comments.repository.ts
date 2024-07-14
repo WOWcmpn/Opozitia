@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BottomCommentsEntity } from '../domain/bottomComments.entity';
-import { BottomCommentModel } from '../../base/types/commentsModels';
+import { BottomCommentModel, CommentModel } from '../../base/types/commentsModels';
 import { Injectable } from '@nestjs/common';
 import { CommentsEntity } from '../domain/comments.entity';
 
@@ -13,6 +13,11 @@ export class CommentsRepository {
     @InjectRepository(CommentsEntity)
     private readonly commentsRepo: Repository<CommentsEntity>,
   ) {}
+
+  async addComment(comment: CommentModel) {
+    await this.commentsRepo.insert(comment);
+    return;
+  }
 
   async createBottomComment(bottomComment: BottomCommentModel) {
     return await this.bottomCommentsRepo.insert(bottomComment);
