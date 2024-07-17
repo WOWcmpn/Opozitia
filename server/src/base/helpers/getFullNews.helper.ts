@@ -29,9 +29,9 @@ export async function getFullNewsHelperRambler(link: string | undefined) {
   };
   await axios.get(link!).then((res) => {
     const $ = cheerio.load(res.data);
-    $('.t8kpv').each((i, elem) => {
+    $('.DhNxCs8u').each((i, elem) => {
       const description = $(elem).find('p').text();
-      const rawDateTime = $(elem).parent().find('._bX60').find('.Bs6M0').find('time').text();
+      const rawDateTime = $(elem).parent().find('.trydH9DS').find('.WkZl0ZQ3').find('time').text();
       const fullImgUrl = $(elem).find('img').attr('src');
       const createdAtTime = rawDateTime.slice(rawDateTime.length - 5, rawDateTime.length);
       const viewDate = `${rawDateTime.slice(0, rawDateTime.length - 7)} 2024`;

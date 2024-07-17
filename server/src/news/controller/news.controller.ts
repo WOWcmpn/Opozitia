@@ -182,8 +182,8 @@ export class NewsController {
 
   @Get('amount')
   @HttpCode(200)
-  async getAmountOfCategory(@Query() query: { category: string; sorting?: string }) {
-    return await this.newsQueryRepository.getAmountOfCategory(query.category, query.sorting);
+  async getAmountOfCategory(@Query() query: { category: string }) {
+    return await this.newsQueryRepository.getAmountOfCategory(query.category);
   }
 
   @Get('sidebar')
@@ -238,8 +238,8 @@ export class NewsController {
 
   @Get('amount-last')
   @HttpCode(200)
-  async getAmountOfLast(@Query() query: { sorting?: string }) {
-    return await this.newsQueryRepository.getAmountOfLast(query.sorting);
+  async getAmountOfLast() {
+    return await this.newsQueryRepository.getAmountOfLast();
   }
 
   @Get('last-news')

@@ -50,9 +50,9 @@ export class GetNewsUseCase {
       .get('https://finance.rambler.ru/business/')
       .then((res) => {
         const $ = cheerio.load(res.data);
-        $('.fCrjS').each((i, elem) => {
-          const link = $(elem).find('.pMDeT').attr('href');
-          const title = $(elem).find('.vmaGn').text();
+        $('.XSvLK2D0').each((i, elem) => {
+          const link = $(elem).find('.sctsxhdV').attr('href');
+          const title = $(elem).find('.lNJ9PP5h').text();
           const imgUrl = $(elem).find('img').attr('src');
           const category = newsCategory.Business;
           this.checkNewsForAddUseCase.checkNewsRambler({ title, link, imgUrl, category });
@@ -66,9 +66,9 @@ export class GetNewsUseCase {
       .get('https://news.rambler.ru/world/')
       .then((res) => {
         const $ = cheerio.load(res.data);
-        $('.fCrjS').each((i, elem) => {
-          const link = $(elem).find('.pMDeT').attr('href');
-          const title = $(elem).find('.vmaGn').text();
+        $('.XSvLK2D0').each((i, elem) => {
+          const link = $(elem).find('.sctsxhdV').attr('href');
+          const title = $(elem).find('.lNJ9PP5h').text();
           const imgUrl = $(elem).find('img').attr('src');
           const category = newsCategory.World;
           this.checkNewsForAddUseCase.checkNewsRambler({ title, link, imgUrl, category });

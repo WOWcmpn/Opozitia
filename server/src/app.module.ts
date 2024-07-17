@@ -14,9 +14,16 @@ import { CryptoModule } from './crypto/crypto.module';
 import { CurrencyModule } from './currency/currency.module';
 import { FootballModule } from './football/football.module';
 import { DaysEventModule } from './days-event/days-event.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 10000,
+        limit: 200,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

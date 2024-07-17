@@ -25,7 +25,7 @@ export default function LastNews() {
   const [search, setSearch] = useState<number>(0);
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
-  const [option, setOption] = useState('');
+  const [option, setOption] = useState<string>('new');
 
   useEffect(() => {
     async function loadData() {
@@ -60,7 +60,7 @@ export default function LastNews() {
           try {
             const newData = await NewsService.getLastNews(page, ItemPerPage, option)
             setLastNews(newData)
-            const amount = await NewsService.getAmountOfLast(option)
+            const amount = await NewsService.getAmountOfLast()
             setAmount(amount)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
@@ -123,16 +123,14 @@ export default function LastNews() {
                         {amount} статей
                       </span>
                       <div className="w-[200px] bg-white !border-[1px] !border-black border-solid rounded-[12px] text-black">
-                        <Select onValueChange={(option) => setOption(option)}>
+                        <Select defaultValue={'new'} onValueChange={(option) => setOption(option)}>
                           <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="За период" />
+                            <SelectValue placeholder="Сортировать" />
                           </SelectTrigger>
                           <SelectContent className="bg-white rounded">
                             <SelectGroup>
-                              <SelectItem className="cursor-pointer" key={"week"} value="week">За неделю</SelectItem>
-                              <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"month"} value="month">За месяц</SelectItem>
-                              <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"year"} value="year">За год</SelectItem>
-                              <SelectItem className="cursor-pointer hover:bg-[#ededed]" key={"all"} value="all">За всё время</SelectItem>
+                              <SelectItem className="cursor-pointer" key={"new"} value="new">Новые</SelectItem>
+                              <SelectItem className="cursor-pointer" key={"popular"} value="popular">Популярные</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>

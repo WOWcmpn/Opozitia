@@ -158,209 +158,63 @@ export class NewsQueryRepository {
       .getCount();
   }
 
-  async getAmountOfCategory(category: string, sorting: string = 'all') {
-    const DAY = 24 * 3600 * 1000;
-    const MONTH = 30 * DAY;
-    const YEAR = 365.2425 * DAY;
-    const startDate = new Date();
-
-    if (sorting === 'week') {
-      const weekDate = new Date(+startDate - 7 * DAY);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :weekDate', { weekDate })
-        .andWhere('n.isPublished != false')
-        .getCount();
-    } else if (sorting === 'month') {
-      const monthDate = new Date(+startDate - MONTH);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :monthDate', { monthDate })
-        .andWhere('n.isPublished != false')
-        .getCount();
-    } else if (sorting === 'year') {
-      const yearDate = new Date(+startDate - YEAR);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :yearDate', { yearDate })
-        .andWhere('n.isPublished != false')
-        .getCount();
-    } else if (sorting === 'all') {
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.isPublished != false')
-        .getCount();
-    }
+  async getAmountOfCategory(category: string) {
+    return await this.newsRepository
+      .createQueryBuilder('n')
+      .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
+      .where('n.category = :category', { category })
+      .getCount();
   }
 
   async getAllNewsByCategory(
     category: string,
     pageNumber: number = 1,
     pageSize: number = 10,
-    sorting: string = 'all',
+    sorting: string = 'new',
   ) {
-    const DAY = 24 * 3600 * 1000;
-    const MONTH = 30 * DAY;
-    const YEAR = 365.2425 * DAY;
-    const startDate = new Date();
-
-    if (sorting === 'week') {
-      const weekDate = new Date(+startDate - 7 * DAY);
+    if (sorting === 'new') {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :weekDate', { weekDate })
         .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
         .offset((pageNumber - 1) * pageSize)
         .getMany();
-    } else if (sorting === 'month') {
-      const monthDate = new Date(+startDate - MONTH);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :monthDate', { monthDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .limit(pageSize)
-        .offset((pageNumber - 1) * pageSize)
-        .getMany();
-    } else if (sorting === 'year') {
-      const yearDate = new Date(+startDate - YEAR);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
-        .where('n.category = :category', { category })
-        .andWhere('n.createdAtDate > :yearDate', { yearDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .limit(pageSize)
-        .offset((pageNumber - 1) * pageSize)
-        .getMany();
-    } else if (sorting === 'all') {
+    } else {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.createdAtTime', 'n.category', 'n.fullImgUrl'])
         .where('n.category = :category', { category })
         .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
         .offset((pageNumber - 1) * pageSize)
         .getMany();
     }
   }
 
-  async getAmountOfLast(sorting: string = 'all') {
-    const DAY = 24 * 3600 * 1000;
-    const MONTH = 30 * DAY;
-    const YEAR = 365.2425 * DAY;
-    const startDate = new Date();
-
-    if (sorting === 'week') {
-      const weekDate = new Date(+startDate - 7 * DAY);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :weekDate', { weekDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .getCount();
-    } else if (sorting === 'month') {
-      const monthDate = new Date(+startDate - MONTH);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :monthDate', { monthDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .getCount();
-    } else if (sorting === 'year') {
-      const yearDate = new Date(+startDate - YEAR);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :yearDate', { yearDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .getCount();
-    } else if (sorting === 'all') {
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .getCount();
-    }
+  async getAmountOfLast() {
+    return await this.newsRepository.createQueryBuilder('n').select().getCount();
   }
 
-  async getAllLastNews(pageNumber: number = 1, pageSize: number = 10, sorting: string = 'all') {
-    const DAY = 24 * 3600 * 1000;
-    const MONTH = 30 * DAY;
-    const YEAR = 365.2425 * DAY;
-    const startDate = new Date();
-
-    if (sorting === 'week') {
-      const weekDate = new Date(+startDate - 7 * DAY);
+  async getAllLastNews(pageNumber: number = 1, pageSize: number = 10, sorting: string = 'new') {
+    if (sorting === 'new') {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :weekDate', { weekDate })
         .andWhere('n.isPublished != false')
         .orderBy('n.createdAtDate', 'DESC')
         .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
         .offset((pageNumber - 1) * pageSize)
         .getMany();
-    } else if (sorting === 'month') {
-      const monthDate = new Date(+startDate - MONTH);
+    } else {
       return await this.newsRepository
         .createQueryBuilder('n')
         .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :monthDate', { monthDate })
         .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .limit(pageSize)
-        .offset((pageNumber - 1) * pageSize)
-        .getMany();
-    } else if (sorting === 'year') {
-      const yearDate = new Date(+startDate - YEAR);
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.createdAtDate > :yearDate', { yearDate })
-        .andWhere('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
-        .limit(pageSize)
-        .offset((pageNumber - 1) * pageSize)
-        .getMany();
-    } else if (sorting === 'all') {
-      return await this.newsRepository
-        .createQueryBuilder('n')
-        .select(['n.id', 'n.title', 'n.fullImgUrl', 'n.createdAtTime', 'n.description', 'n.category'])
-        .where('n.isPublished != false')
-        .orderBy('n.createdAtDate', 'DESC')
-        .addOrderBy('n.createdAtTime', 'DESC')
         .limit(pageSize)
         .offset((pageNumber - 1) * pageSize)
         .getMany();

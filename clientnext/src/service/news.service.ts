@@ -66,9 +66,9 @@ export const NewsService = {
     return data
   },
 
-  async getAmountOfCategory(category: string, sorting?: string): Promise<number> {
+  async getAmountOfCategory(category: string): Promise<number> {
     const {data} = await axios.get('news/amount', {params: {
-      category, sorting
+      category
       }})
     return data
   },
@@ -111,8 +111,8 @@ export const NewsService = {
     return data;
   },
 
-  async getAmountOfLast(sorting?: string): Promise<number> {
-    const {data} = await axios.get('news/amount-last', {params: {sorting}})
+  async getAmountOfLast(): Promise<number> {
+    const {data} = await axios.get('news/amount-last')
     return data
   },
 

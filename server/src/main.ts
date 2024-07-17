@@ -7,6 +7,8 @@ import { HttpExceptionFilter } from './httpExceptionFilter';
 import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import compression from 'compression';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,6 +16,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('swagger', app, document);
+  app.use(helmet());
+  app.enableCors();
+  app.use(compression({ threshold: 300 }));
   app.use(cookieParser());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.enableCors({ credentials: true, origin: true });
