@@ -33,11 +33,12 @@ export default function Business () {
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
   const [option, setOption] = useState<string>('new');
+  const [prevOption, setPrevOption] = useState<string>('');
 
   useEffect(() => {
     async function loadData() {
       if(page > 1) {
-        if(option) {
+        if(option === prevOption) {
           setLoading(true)
           try{
             const newData = await NewsService.getBusinessNews(page, ItemPerPage, option)
@@ -50,10 +51,12 @@ export default function Business () {
             setLoading(false)
           }
         } else {
+          setData([])
           setLoading(true)
           try{
-            const newData = await NewsService.getBusinessNews(page, ItemPerPage)
-            setData(prevData => [...prevData, ...newData])
+            const newData = await NewsService.getBusinessNews(page, ItemPerPage, option)
+            setData(newData)
+            setPage(1)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -63,33 +66,20 @@ export default function Business () {
           }
         }
       } else {
-        if(option) {
-          try{
-            const newData = await NewsService.getBusinessNews(page, ItemPerPage, option)
-            setData(newData)
-            const amount = await NewsService.getAmountOfCategory('Business')
-            setAmount(amount)
-            setLoading(false)
-            setHasMore(newData.length === ItemPerPage)
-          } catch (error) {
-            console.log('Error loading data:', error);
-          }
-        } else {
-          try{
-            const newData = await NewsService.getBusinessNews(page, ItemPerPage)
-            setData(newData)
-            const amount = await NewsService.getAmountOfCategory('Business')
-            setAmount(amount)
-            setLoading(false)
-            setHasMore(newData.length === ItemPerPage)
-          } catch (error) {
-            console.log('Error loading data:', error);
-          }
+        try{
+          const newData = await NewsService.getBusinessNews(page, ItemPerPage, option)
+          setData(newData)
+          const amount = await NewsService.getAmountOfCategory('Business')
+          setAmount(amount)
+          setLoading(false)
+          setHasMore(newData.length === ItemPerPage)
+        } catch (error) {
+          console.log('Error loading data:', error);
         }
       }
     }
     loadData()
-  }, [page, option])
+  }, [page, option, prevOption])
 
   useEffect(() => {
     async function getSidebar() {
@@ -101,6 +91,7 @@ export default function Business () {
   }, []);
 
   const handleLoadMore = () => {
+    setPrevOption(option)
     setPage(prevPage => prevPage + 1)
   }
 

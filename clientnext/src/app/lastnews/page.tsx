@@ -26,11 +26,12 @@ export default function LastNews() {
   const [login, setLogin] = useState<number>(0);
   const [createNews, setCreateNews] = useState<number>(0);
   const [option, setOption] = useState<string>('new');
+  const [prevOption, setPrevOption] = useState<string>('');
 
   useEffect(() => {
     async function loadData() {
       if (page > 1) {
-        if (option) {
+        if (option === prevOption) {
           setLoading(true)
           try {
             const newData = await NewsService.getLastNews(page, ItemPerPage, option)
@@ -44,9 +45,11 @@ export default function LastNews() {
           }
         } else {
           setLoading(true)
+          setLastNews([])
           try {
             const newData = await NewsService.getLastNews(page, ItemPerPage)
-            setLastNews(prevData => [...prevData, ...newData])
+            setLastNews(newData)
+            setPage(1)
             setLoading(false)
             setHasMore(newData.length === ItemPerPage)
           } catch (error) {
@@ -56,33 +59,20 @@ export default function LastNews() {
           }
         }
       } else {
-        if (option) {
-          try {
-            const newData = await NewsService.getLastNews(page, ItemPerPage, option)
-            setLastNews(newData)
-            const amount = await NewsService.getAmountOfLast()
-            setAmount(amount)
-            setLoading(false)
-            setHasMore(newData.length === ItemPerPage)
-          } catch (error) {
-            console.log('Error loading data:', error);
-          }
-        } else {
-          try {
-            const newData = await NewsService.getLastNews(page, ItemPerPage)
-            setLastNews(newData)
-            const amount = await NewsService.getAmountOfLast()
-            setAmount(amount)
-            setLoading(false)
-            setHasMore(newData.length === ItemPerPage)
-          } catch (error) {
-            console.log('Error loading data:', error);
-          }
+        try{
+          const newData = await NewsService.getLastNews(page, ItemPerPage, option)
+          setLastNews(newData)
+          const amount = await NewsService.getAmountOfLast()
+          setAmount(amount)
+          setLoading(false)
+          setHasMore(newData.length === ItemPerPage)
+        } catch (error) {
+          console.log('Error loading data:', error);
         }
       }
     }
     loadData()
-  }, [page, option])
+  }, [page, option, prevOption])
 
   useEffect(() => {
     async function getSidebar() {
@@ -94,6 +84,7 @@ export default function LastNews() {
   }, []);
 
   const handleLoadMore = () => {
+    setPrevOption(option)
     setPage(prevPage => prevPage + 1)
   }
 
