@@ -124,7 +124,7 @@ export default function About() {
                               href="mailto:ааааа0303@gmail.com"
                               className="left-blocks-body__title-name left-blocks-body__title-name_link"
                             >
-                              namelesssyes@gmail.com
+                              opozitia@gmail.com
                             </Link>
                           </div>
                           <div className="left-blocks-body__item">
