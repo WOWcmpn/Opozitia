@@ -8,7 +8,7 @@ export class EmailManager {
   async sendEmailConfirmationCode(email: string, confirmationCode: string) {
     await this.mailerService.sendMail({
       to: email,
-      from: 'Opozitia <dmitrybackenddev@gmail.com>',
+      from: 'Opozitia <opozitia@gmail.com>',
       subject: 'Confirmation code',
       html:
         '<h1>Thanks for your registration</h1>' +
@@ -20,7 +20,7 @@ export class EmailManager {
   async sendPasswordRecovery(email: string, recoveryCode: string) {
     await this.mailerService.sendMail({
       to: email,
-      from: 'Opozitia <dmitrybackenddev@gmail.com>',
+      from: 'Opozitia <opozitia@gmail.com>',
       subject: 'Recovery code',
       html:
         '<h1>Instruction to recover your password</h1>' +
@@ -31,8 +31,8 @@ export class EmailManager {
 
   async sendQuestion(name: string, location: string, text: string, email: string) {
     await this.mailerService.sendMail({
-      to: 'namelesssyes@gmail.com',
-      from: 'Opozitia <namelesssyes@gmail.com>',
+      to: 'opozitia@gmail.com',
+      from: 'Opozitia <opozitia@gmail.com>',
       subject: 'Вопрос от пользователя',
       html:
         `<h3><strong>ФИО</strong> - <em>${name}</em></h3>` +

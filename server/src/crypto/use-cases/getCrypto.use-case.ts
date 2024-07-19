@@ -9,31 +9,31 @@ export class GetCryptoUseCase {
 
   async getCrypto() {
     const resBTC = await axios.get(`https://rest.coinapi.io/v1/exchangerate/BTC/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resETH = await axios.get(`https://rest.coinapi.io/v1/exchangerate/ETH/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resBNB = await axios.get(`https://rest.coinapi.io/v1/exchangerate/BNB/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resNOT = await axios.get(`https://rest.coinapi.io/v1/exchangerate/NOT/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resSOL = await axios.get(`https://rest.coinapi.io/v1/exchangerate/SOL/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resLTC = await axios.get(`https://rest.coinapi.io/v1/exchangerate/LTC/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const resBCH = await axios.get(`https://rest.coinapi.io/v1/exchangerate/BCH/USD`, {
-      headers: { 'X-CoinAPI-Key': 'D50055AD-2966-44AE-86F5-650E313BEAB7' },
+      headers: { 'X-CoinAPI-Key': '08e97dd5-7277-4081-aaf5-c6919536a59f' },
     });
 
     const prevCrypto = await this.cryptoRepo.getLastCrypto();
