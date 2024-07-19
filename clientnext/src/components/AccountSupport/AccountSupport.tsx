@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import Social1 from "@/img/social/02.svg";
-import Social2 from "@/img/social/04.svg";
+import Social1 from '@/img/social/instagram.svg';
+import Social2 from '@/img/social/02.svg';
+import Social3 from '@/img/social/telegramm.svg';
+import Social4 from '@/img/social/whatssapp.svg';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -48,13 +50,13 @@ export const AccountSupport = ({location, email}: {location: string, email: stri
                   Наш e-mail
                 </span>
                 <Link
-                  href="mailto:ааааа0303@gmail.com"
+                  href="mailto:opozitia@gmail.com"
                   className="left-blocks-body__title-name left-blocks-body__title-name_link"
                 >
-                  namelesssyes@gmail.com
+                  opozitia@gmail.com
                 </Link>
               </div>
-              <div className="left-blocks-body__item">
+              {/* <div className="left-blocks-body__item">
                 <span className="left-blocks-body__title-info">
                   Наш номер
                 </span>
@@ -64,30 +66,46 @@ export const AccountSupport = ({location, email}: {location: string, email: stri
                 >
                   +7 777 777 77 77
                 </Link>
-              </div>
-              <div className="left-blocks-body__item">
-                <span className="left-blocks-body__title-info">
-                  Наши соцсети
-                </span>
-                <ul className="left-blocks-body__social-list">
-                  <li className="left-blocks-body__social-item">
-                    <Link
-                      href="#"
-                      className="left-blocks-body__social-link link-social link-social_small link-social_small-facebook"
-                    >
-                      <Image src={Social1} alt="icon" />
-                    </Link>
-                  </li>
-                  <li className="left-blocks-body__social-item">
-                    <Link
-                      href="#"
-                      className="left-blocks-body__social-link link-social link-social_small link-social_small-twitter"
-                    >
-                      <Image src={Social2} alt="icon" />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              </div> */}
+               <div className="left-blocks-body__item">
+                            <span className="left-blocks-body__title-info">
+                              Наши соцсети
+                            </span>
+                            <ul className="left-blocks-body__social-list">
+                              <li className="left-blocks-body__social-item">
+                                <Link
+                                  href="https://www.instagram.com/opozitia_md?igsh=MW95enJsd2hpMDEyYQ%3D%3D&utm_source=qr" target='_blank'
+                                  className="left-blocks-body__social-link link-social link-social_small link-social_small-instagram"
+                                >
+                                  <Image src={Social1} alt="icon" />
+                                </Link>
+                              </li>
+                              <li className="left-blocks-body__social-item">
+                                <Link
+                                  href="https://www.facebook.com/opozitia.md?mibextid=LQQJ4d" target='_blank'
+                                  className="left-blocks-body__social-link link-social link-social_small link-social_small-facebook"
+                                >
+                                  <Image src={Social2} alt="icon" />
+                                </Link>
+                              </li>
+                              <li className="left-blocks-body__social-item">
+                                <Link
+                                  href="https://t.me/+UCduDNfmDl82ZTUy" target='_blank'
+                                  className="left-blocks-body__social-link link-social link-social_small link-social_small-telegram"
+                                >
+                                  <Image src={Social3} alt="icon" />
+                                </Link>
+                              </li>
+                              <li className="left-blocks-body__social-item">
+                                <Link
+                                  href="https://chat.whatsapp.com/KCzk91cGR2625dhw70DSaj" target='_blank'
+                                  className="left-blocks-body__social-link link-social link-social_small link-social_small-whatssapp"
+                                >
+                                  <Image src={Social4} alt="icon" />
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
             </div>
           </div>
         </div>

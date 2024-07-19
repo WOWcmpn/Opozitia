@@ -1568,7 +1568,8 @@ body::after {
 }
 
 .link-social_small img {
-  width: 0.9375rem;
+  width: 1.5rem;
+  max-height: 2rem;
 }
 
 .link-social_small-twitter img {
@@ -4305,7 +4306,7 @@ body::-webkit-scrollbar-thumb:hover {
   object-fit: cover;
 }
 
-.championship__wrap-table {
+/* .championship__wrap-table {
   max-height: 280px;
   overflow-y: scroll;
   -ms-overflow-style: 4px;
@@ -4326,7 +4327,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .championship__wrap-table::-webkit-scrollbar-thumb:hover {
   background-color: #253861;
-}
+} */
 
 .championship__table {
   width: 100%;
@@ -8452,6 +8453,7 @@ body::-webkit-scrollbar-thumb:hover {
 
   .link-social_small-facebook img {
     width: 0.625rem;
+    max-height: 1.3rem;
   }
 
   .header {
