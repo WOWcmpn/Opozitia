@@ -84,31 +84,18 @@ export default function About() {
               <div className="about__container about__image mt-60">
                 {/* <Image src={'/moldova.webp'} alt={'About'} fill={true} /> */}
                 <div className='background-image-container'>
-                  <h1 className={'relative text-5xl'}>О партии “NOI”</h1>
+                  <h1 className={'relative text-5xl'}>О портале «Оппозиция»</h1>
                   <p className={'relative text-3xl'}>Здесь находится всё то, что
                     нам хотелось бы рассказать вам</p>
                 </div>
                 <div className={'about__information about__information-size'}>
-                  <h2 className={'text-xl about__information-text'}>Чем отличается партия <div className='about__information-world'>«NOI»</div> от десятков других партий в Республике Молдова? В молдове партии чаще всего
-                    создаются действующими и бывшими политиками, чтобы сохранить или снова вернуться во <div className='about__information-world'>власть.</div> Это и есть самое
-                    важное отличие, так как эта партия создана патриотически настроенными гражданами, которые ранее не были
-                    испачканы участием в молдавской политике и их финансовых схемах.</h2>
-                </div>
-                <div className={'about__information about__information-size'}>
-                  <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Лидер партии <div className='about__information-world'>«NOI»</div> Владимир Даки сочетает в себе успешного <br/> бизнесмена
-                    и <div className='about__information-world'>дисциплину</div> военного человека.</h2>
-                </div>
-                <div className={'about__information about__information-size'}>
-                  <h2 className={'text-xl about__information-text'}>Это человек, который привык отдавать приказы и наводить порядок, плюс хорошее знание
-                    экономики на собственном удачном опыте. Поэтому в партии состоят люди с хорошими знаниями и опытом, имеющие хорошую репутацию
-                    в обществе.</h2>
+                  <h2 className={'text-xl about__information-text'}>Портал <div className='about__information-world'>«Оппозиция»</div> создан для знакомства молдавского избирателя с лидерами оппозиционных партий Молдовы, их основными тезисами и отличиями. У нас можно ознакомиться с биографиями <div className='about__information-world'>политиков,</div> узнать интересные факты из их жизни и многое другое.</h2>
                 </div>
                 <div className={'about__information about__information-size'}>
                   <h2 className={'text-xl about__information-text font-bold about__custom-information'}>Наша главная <div className='about__information-world'>цель</div> - навести порядок в <div className='about__information-world'>стране</div> на основе <br/> собственного богатого опыта.</h2>
                 </div>
                 <div className={'about__information about__information-size'}>
-                  <h2 className={'text-xl about__information-text'}>Мы не идём во власть ради обогощения, так как являемся уже достаточно успешными
-                    и обеспеченными людьми.</h2>
+                  <h2 className={'text-xl about__information-text'}>Мы – сообщество <div className='about__information-world'>независимых</div> авторов, которые стремятся максимально информировать жителей <div className='about__information-world'>Молдовы</div> о основных игроках на политической арене страны.</h2>
                 </div>
                 <div className="account-support-about__body body-account about__information">
                   <div className="body-account__blocks body-account__blocks_support blocks-body-account">
