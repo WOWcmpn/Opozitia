@@ -3,6 +3,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ConfirmRecoveryCodeProps } from '@/types/types';
 import Link from "next/link";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
 
 export const PopupRecoveryCode = ({
   onClick: onOption,
@@ -11,12 +13,7 @@ export const PopupRecoveryCode = ({
   confirmCode,
   sendCodeAgain
 }: ConfirmRecoveryCodeProps) => {
-  const [first, setFirst] = useState<string>('');
-  const [second, setSecond] = useState<string>('');
-  const [third, setThird] = useState<string>('');
-  const [fourth, setFourth] = useState<string>('');
-  const [fifth, setFifth] = useState<string>('');
-  const [sixth, setSixth] = useState<string>('');
+  const [code, setCode] = useState<string>('');
   const root = useRef()
 
   React.useEffect(() => {
@@ -67,60 +64,27 @@ export const PopupRecoveryCode = ({
                 confirmCode()
               }}
             >
-              <div className="body-popup__wrap-input">
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit1"
-                  onChange={(e) => setFirst(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit2"
-                  onChange={(e) => setSecond(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit3"
-                  onChange={(e) => setThird(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit4"
-                  onChange={(e) => setFourth(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit5"
-                  onChange={(e) => setFifth(e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  maxLength={1}
-                  className="body-popup__block "
-                  name="digit6"
-                  onChange={(e) =>  setSixth(e.target.value)}
-                  required
-                />
+              <div>
+                <InputOTP
+                  maxLength={6}
+                  pattern={REGEXP_ONLY_DIGITS}
+                  value={code}
+                  onChange={(value) => setCode(value)}
+                >
+                  <InputOTPGroup className="body-popup__wrap-input ">
+                    <InputOTPSlot className="body-popup__block " index={0} />
+                    <InputOTPSlot className="body-popup__block " index={1} />
+                    <InputOTPSlot className="body-popup__block " index={2} />
+                    <InputOTPSlot className="body-popup__block " index={3} />
+                    <InputOTPSlot className="body-popup__block " index={4} />
+                    <InputOTPSlot className="body-popup__block " index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
               </div>
               <button
                 type="submit"
                 className="body-popup__button"
-                onClick={() => setInputConfirmCode(first + second + third + fourth + fifth + sixth)}
+                onClick={() => setInputConfirmCode(code)}
               >
                 Продолжить
               </button>

@@ -1038,7 +1038,7 @@ body::after {
   border: 1px solid rgb(0, 0, 0);
   border-radius: 10px;
   width: 4.1875rem;
-  height: 4.1875rem;
+  height: 3.1875rem;
   border: 1px solid rgb(0, 0, 0);
   background-color: transparent;
   outline: none;
@@ -6815,7 +6815,7 @@ body::-webkit-scrollbar-thumb:hover {
 
   .body-popup__block {
     width: 3.125rem;
-    height: 3.125rem;
+    height: 2.125rem;
   }
 
   .body-popup__checkbox:not(:last-child) {
