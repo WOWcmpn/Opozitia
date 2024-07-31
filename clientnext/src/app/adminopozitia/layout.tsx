@@ -10,7 +10,7 @@ import { ConfigProvider, App as AntdApp } from 'antd';
 import "@refinedev/antd/dist/reset.css";
 import { Suspense } from 'react';
 
-const API_URL = "https://rerodega.beget.app"; //hosting
+const API_URL = "https://obenesieb.beget.app"; //hosting
 //const API_URL = "http://localhost:4000";
 
 export default function RootLayout({ children }:
